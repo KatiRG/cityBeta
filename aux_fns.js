@@ -67,6 +67,7 @@ function setupData(ghg){
       "delta_GHG_reason": delta_GHG_reason
     };
   })
+  // console.log("data_GHG", data_GHG)
 
 } // ./setupData()
 
@@ -76,7 +77,7 @@ function setup_vData(vdata){
 
     city = d.city
     country = d.country
-    GDP_cap = +d["GDP/capita"]//+d.gdp_per_cap
+    GDP_cap = +d["GDP/capita"]//+d.gdp_per_cap    
     GHG_total = "N/A" //[tCO2]
     GHG_cap = "N/A"
     GHG_GDP = "N/A" //[kgCO2/$]
@@ -210,7 +211,8 @@ function dim_colourMapping(dim) {
   // Colour scale for different dimensions (6 colours)
   num_colours = 6;
   cb_hex = [];
-  if (dim === "GHG/capita") {//light to dark    
+  if (dim === "GHG/capita") {//light to dark
+    // cb_hex = ['#ffffd4','#fee391','#fec44f','#fe9929','#c3834c','#926239'];
     cb_hex = ['#E0B122', '#D9901C','#9C6C1F', '#875505','#4F370F','#3D2704'];
   } else if (dim === "GHGe intensity 2004") {
     cb_hex = ["#fee5d9","#fcbba1","#fc9272","#fb6a4a","#de2d26","#a50f15"];
@@ -256,34 +258,42 @@ function dim_colourMapping(dim) {
 function voronoiCirclesOverlay() {
   d3.select("#mapSim").select("svg")
     .selectAll(".node").selectAll("circle")
+    // .selectAll(".circles-vcentre")
     .attr('fill', function(d) {
       return fillVoronoiCircles(d);
     });
 }
-function fillVoronoiCircles(d) {//READS df_Z COLUMNS!!
+function fillVoronoiCircles(d) {//READS df_Z COLUMNS!
 
   if (dim === "GHG/capita") {
     matchCity = data_GHG.find(x => x.city === d.city)
+    if (matchCity) {
+      console.log("matchCity: ", matchCity)
+      console.log("colour: ", colourmapDim(matchCity[dim]))
+    }
     return matchCity ? colourmapDim(matchCity[dim]) : nodataColour;
-  } else if (dim === "region") {  
-    
-    d3.selectAll(".circles-vcentre").selectAll(".groupUSAAusNZ")
-      .style("fill", simregionColourMap["groupUSAAusNZ"]);   
+  } else if (dim === "region") {
 
-    d3.selectAll(".circles-vcentre").selectAll(".groupEurope")
-      .style("fill", simregionColourMap["groupEurope"]);
+    // d3.selectAll(".groupUSAAusNZ:not(ellipse)")
+    //   .style("fill", simregionColourMap["groupUSAAusNZ"]);
 
-    d3.selectAll(".circles-vcentre").selectAll(".groupAfricaAsia")
-      .style("fill", simregionColourMap["groupAfricaAsia"]);  
+    d3.selectAll(".groupUSAAusNZ")
+      .attr("fill", simregionColourMap["groupUSAAusNZ"]);
 
-    d3.selectAll(".circles-vcentre").selectAll(".groupEast")
-      .style("fill", simregionColourMap["groupEast"]);
+    d3.selectAll(".groupEurope")
+      .attr("fill", simregionColourMap["groupEurope"]);
 
-    d3.selectAll(".circles-vcentre").selectAll(".groupLatinAmer")
-      .style("fill", simregionColourMap["groupLatinAmer"]);
+    d3.selectAll(".groupAfricaAsia")
+      .attr("fill", simregionColourMap["groupAfricaAsia"]);  
 
-    d3.selectAll(".circles-vcentre").selectAll(".groupNordic")
-      .style("fill", simregionColourMap["groupNordic"]);
+    d3.selectAll(".groupEast")
+      .attr("fill", simregionColourMap["groupEast"]);
+
+    d3.selectAll(".groupLatinAmer")
+      .attr("fill", simregionColourMap["groupLatinAmer"]);
+
+    d3.selectAll(".groupNordic")
+      .attr("fill", simregionColourMap["groupNordic"]);
 
   } else if (dim === "GHGe intensity 2004" || dim === "GHGe intensity 2009") {
     if (d[dim] != "") return colourmapDim(d[dim]);
