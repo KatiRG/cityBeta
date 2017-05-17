@@ -337,6 +337,9 @@ function change() {
   dim = d3.select("#cb_label").text();
   dimExtent = dimExtentDict[dim];
 
+  console.log("dim: ", dim)
+
+
   create_colourBar();
   
   // Fill colourbar rects according to new dim
@@ -363,15 +366,45 @@ function change() {
 
 // d3.csv("data/Creutzig2014_dataset_wb.csv", function(ghg) {
 d3.csv("data/match_GEA_UITP_CDP2017_adaptedRegions_selectedColumns.csv", function(ghg) {
+  console.log("ghg read: ", ghg)
 
   // Similar city voronois
   d3.csv("data/df_Z_dims_country_dfs_truncSVD_gea_uitp_noWaterBd_ncomp5_perplexity40.csv", function(error, vdata) //country column added manually
   // d3.csv("data/df_Z_dims_dfs_truncSVD_gea_uitp_noWaterBd_ncomp5_perplexity40.csv", function(error, vdata)
   {
-      if (error) throw error;  
+                if (error) throw error;
+    // console.log("vdata: ", vdata)
+
+    //ghg is an array of json objects containing the data in the csv
+    //Columns in the csv:
+    //['City name',
+    // 'city',
+    // 'country',
+    // 'region',
+    // 'Total city-wide emissions, tonnes CO2 ', -> total_GHG
+    // 'Increase/Decrease from last year', -> delta_GHG
+    // 'Reason for increase/decrease in emissions', -> delta_GHG_reason
+    // 'Current population', -> Current_population
+    // 'City location', -> City_location
+    // 'population',
+    // 'population_density',
+    // 'gdp_per_cap',
+    // 'HDD_15.5C', -> HDD_155C
+    // 'CDD_23C', -> CDD_23C
+    // 'diesel_price',
+    // 'gasoline_price',
+    // 'emission_intensity_2004',
+    // 'emission_intensity_2009',
+    // 'household_size',
+    // 'year_household_size',
+    // 'water_bounded',
+    // 'other_bounded',
+    // 'center_of_commerce_index',
+    // 'urbanization_ratio']
 
     // Scales for voronoi polygon centre points
     // use d3.extent to find the min and max values of selected dimension
+    console.log("dim after ghg read: ", dim)
     dimExtent = d3.extent(ghg, function (d) {
       if (dim === "GHG/capita") return +d.total_GHG/+d.Current_population;
       else if (dim === "GHGe intensity 2004") return +d["GHGe intensity 2004"];
@@ -439,7 +472,7 @@ function drawMap() {
     svg.append("use")
       .attr("class", "stroke")
       .attr("xlink:href", "#sphere")
-      .style("fill", "#add8e6");  
+      .style("fill", "#fcfcef"); //#e6f3f7"); // "#add8e6"
 
     svg.append("path")
       .datum(graticule)
@@ -461,7 +494,7 @@ function drawMap() {
     d3.json("geojson/world_countries.json", function(error, world) {
       if (error) throw error;
      
-      d3.json("geojson/band1_q1e4.topojson", function(error, world2) {
+      d3.json("geojson/cities_edited.geojson", function(error, cities) {
         if (error) throw error;
 
         //world countries
@@ -479,31 +512,38 @@ function drawMap() {
             .style('stroke', '#555')  //#555
             .style('stroke-width', 1.5)
             // tooltips
-              .style('stroke-width', 1)
-              .on('mouseover',function (d) {
-                //tip.show(d);
-                d3.select(this)
-                  // .style("opacity", 1)
-                  .style("stroke","#CBBF31")
-                  .style("stroke-width",3);
-              })
-              .on('mouseout', function (d) {
-                // tip.hide(d);
-                //highlightElements(idName, d.country);
-                d3.select(this)
-                  // .style("opacity", 0.8)
-                  .style("stroke","white")
-                  .style("stroke-width",0.3);
-              });
+              .style('stroke-width', 1);
+              // .on('mouseover',function (d) {
+              //   //tip.show(d);
+              //   d3.select(this)
+              //     // .style("opacity", 1)
+              //     .style("stroke","#CBBF31")
+              //     .style("stroke-width",3);
+              // })
+              // .on('mouseout', function (d) {
+              //   // tip.hide(d);
+              //   //highlightElements(idName, d.country);
+              //   d3.select(this)
+              //     // .style("opacity", 0.8)
+              //     .style("stroke","white")
+              //     .style("stroke-width",0.3);
+              // });
         
-        //city lights from ODIAC nc file
-        svg.insert("path")
-            .datum(topojson.feature(world2, world2.objects.band1))
-            // .attr("class", "land")
-            .style("fill", "none")
-            .style("stroke", "#E4ED43") //#CBBF31, "#969696"            
-            .style("stroke-width", ".5")
-            .attr("d", path);
+        // City markers from geojson file     
+        svg.selectAll('path')
+            .data(cities.features)
+            .enter().append('path')
+            .attr('d', path)
+            .attr("id", function (d, i) {
+              return "city" + format_idName(d.id);
+            })
+            .attr("class", "worldcity")
+            .style("fill", function (d) {
+              if (data_GHG.find(x => x.city === d.id)) {                
+                return simregionColourMap[data_GHG.find(x => x.city === d.id).region];
+              }
+              else return "none";
+            });
 
       }); // ./inner d3.json
     }); // ./outer d3.json
@@ -530,11 +570,20 @@ function highlightElements(idName, countryName) {
   d3.selectAll(".node:not(#node" + idName + ")")
     .style("fill-opacity", 0.1)
     .style("stroke-opacity", 0.1);
+  
+  d3.selectAll(".worldcity:not(#city" + idName + ")")
+    .style("fill-opacity", 0.1)
+    .style("stroke-opacity", 0.1);
+  d3.selectAll(".countries").selectAll("path").style("opacity", 0.1);
+  d3.select("#city" + idName)
+    .attr("stroke", "black")
+    .attr("stroke-width", 2);
 
+  // Display stats
   // For data_GHG
   if (data_GHG.find(x => x.idName.includes(idName))) {
     // Highlight country on world map
-    highlightCountry(countryName, idName, data_GHG);
+    // highlightCountry(countryName, idName, data_GHG);
 
     // Display stats table
     if (data_GHG.find(x => x.idName.includes(idName))) {
@@ -545,7 +594,7 @@ function highlightElements(idName, countryName) {
   } //for data_noGHG
   else if (data_noGHG.find(x => x.idName.includes(idName))) {//use data from df_Z
     // Highlight country on world map
-    highlightCountry(countryName, idName, data_noGHG);
+    // highlightCountry(countryName, idName, data_noGHG);
     
     // Display statsTable
     matchCity = data_noGHG.find(x => x.idName.includes(idName)).city;
@@ -561,6 +610,8 @@ function updateRegionLabel(region) {
 }
 
 function mapSimilarCities(vdata, ghg){
+  console.log("vdata[0]: ", vdata[0])
+  console.log("ghg[0]: ", ghg[0])
 
   // Convert string to num
   vdata.forEach(function(d) {
@@ -1203,6 +1254,7 @@ function statsTable(matchCity, dataObj) {
     .enter()
     .append('td')
       .text(function (d, i) {
+        // console.log("statsTable d: ", d)
         return i === 0 ? 
           //column 1 display for i = 0
           d.column :
