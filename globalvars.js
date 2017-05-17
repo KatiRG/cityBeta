@@ -21,7 +21,8 @@ var regionLabel_dict = {
 };
 
 var simregionColourMap = { 
-  "groupEurope": "#A6D4FF", "groupUSAAusNZ": "#C399D9",
+  "groupEurope": "#6BACBF", //"#A6D4FF", 
+  "groupUSAAusNZ": "#C399D9",
   "groupAfricaAsia": "#BD1550", "groupEast": "#E97F02", 
   "groupNordic": "#F99DD3", "groupLatinAmer": "#F8CA00"
 };
@@ -71,6 +72,19 @@ var usaAusNZ = ["Phoenix", "Austin", "Houston",
                       "Chicago", "Vancouver", "Portland, OR", "Seattle", "New York City",
                       "Moscow", "Montreal", "Toronto", "Denver", "Boulder",
                       "Ottawa", "Fort Collins", "Minneapolis", "Calgary"];
+
+
+// d3.csv("data/df_Z_dims_dfs_truncSVD_gea_uitp_noWaterBd_ncomp5_perplexity40.csv", function(error, vdata) {
+//                 if (error) throw error;
+//   var europe=[], africaAsia = [], east = [];
+//   vdata.forEach(function (d) {
+//     if (d.region === "ASIA" || d.region === "MAF") africaAsia.push(d.city);
+//     else if (d.region === "REF") east.push(d.city);
+//     else if (d.region === "OECD90") europe.push(d.city);
+//   })
+//   console.log("east: ", east)
+//   console.log("africaAsia: ", africaAsia)
+// })
 
  var europe = ["Amsterdam", "Athens", "Barcelona", "Barnsley, Doncaster and Rotherham", 
 "Bath and North East Somerset, North Somerset and South Gloucestershire", "Bedfordshire CC", "Belfast", 
@@ -125,4 +139,4 @@ var africaAsia = ["Kyoto", "Ahmadabad", "Bangalore", "Beijing", "Buffalo City", 
 var usa = ["Austin", "Boulder", "Buffalo City", "Denver", "Fort Collins", "Los Angeles", 
   "Minneapolis", "Monmouthshire and Newport", "New York City", "Portland, OR", "Portsmouth",
   "Seattle", "Atlanta", "Chicago", "Houston", "Phoenix", "San Diego", "San Francisco",
-  "Washington"];
+  "Washington"];    

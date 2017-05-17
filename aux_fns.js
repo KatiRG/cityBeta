@@ -17,7 +17,9 @@ function setupData(ghg){
 
     city = d.city
     GCA_region = d.GCA_region //Global Carbon Atlas regions
-    // cityLocation = +d.City_location
+    cityLocationString = d.City_location
+    cityLocation = [parseFloat(cityLocationString.split("(")[1].split(",")[0]), 
+                    parseFloat(cityLocationString.split("(")[1].split(",")[1])]
     country = d.country
     GDP_cap = +d["GDP/capita"]//+d.gdp_per_cap
     popn_cdp = +d.Current_population
@@ -41,13 +43,14 @@ function setupData(ghg){
     idName = format_idName(d.city);
 
     cityName_array.push(city)
+    // lat = parseFloat(cityLocationString.split("(")[1].split(",")[0])
    
-    return {
+    return {      
       "city": city,
       "idName": idName,
       "country": country,
       "region": GCA_region,
-      // "cityLocation": cityLocation,
+      "cityLocation": cityLocation,
       "GHG total": GHG_total,
       "GHGe intensity 2004": emissions_int2004,
       "GHGe intensity 2009": emissions_int2009,
@@ -145,6 +148,14 @@ function resetElements() {
     .style("stroke","#555")
     .style("stroke-width", 1)
     .style("opacity", 1);
+
+  //reset opacity of world cites and map
+  d3.selectAll(".worldcity").style("fill-opacity", 1)
+    .style("stroke-opacity", 1);
+  d3.selectAll(".countries").selectAll("path").style("opacity", 1) ;
+  d3.selectAll(".worldcity")
+    .attr("stroke", "none")
+    .attr("stroke-width", 0);   
 }
 
 //----------------------------------------------
@@ -267,10 +278,6 @@ function fillVoronoiCircles(d) {//READS df_Z COLUMNS!
 
   if (dim === "GHG/capita") {
     matchCity = data_GHG.find(x => x.city === d.city)
-    if (matchCity) {
-      console.log("matchCity: ", matchCity)
-      console.log("colour: ", colourmapDim(matchCity[dim]))
-    }
     return matchCity ? colourmapDim(matchCity[dim]) : nodataColour;
   } else if (dim === "region") {
 
@@ -358,15 +365,18 @@ function highlightCountry(countryName, idName, dataObj)  {
   if (countryName === "South Africa") {
       d3.select("#mapSouth Africa")
         .style("stroke-width", 4)
-        .style("stroke", matchColour === "#A6D4FF" ? "blue" : matchColour);
+        // .style("stroke", matchColour === "#A6D4FF" ? "blue" : matchColour);
+        .style("stroke", "#555");
   }
   else {
     d3.select("#map" + countryName)
-      .style("stroke-width", 4)      
-      .style("stroke", matchColour === "#A6D4FF" ? "blue" : matchColour);
+      .style("stroke-width", 4)
+      .style("stroke", "#555")
+      .style("stroke-opacity", 1);
+      // .style("stroke", matchColour === "#A6D4FF" ? "blue" : matchColour);
 
-    d3.selectAll(".countries")
-      .selectAll("path:not(#map" + countryName + ")")
-      .style("opacity", 0.3);
+    // d3.selectAll(".countries")
+    //   .selectAll("path:not(#map" + countryName + ")")
+    //   .style("opacity", 0.3);
   }
 }
