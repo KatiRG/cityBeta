@@ -339,7 +339,8 @@ function vcircleMouseover(d) {
   idName = format_idName(d.city);
 
   // Highlight current vcircle, polygon and bar  
-  highlightElements(idName, d.country);
+  // highlightElements(idName, d.country);
+  highlightElements(idName);
 
   if (data_GHG.find(x => x.city === d.city)) updateRegionLabel(d.city);
   else d3.select("#regionLabel").text("GHG/capita emissions grouped by world region");

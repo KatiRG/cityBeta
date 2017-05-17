@@ -92,7 +92,7 @@
     /* bar chart */
     #ghgBarChart {
       position: absolute;
-      left:1080px;
+      left:820px;
       top:100px;
     }
     .barChartRegionLabel {
@@ -109,6 +109,18 @@
     }
     .x.axis path {
       display: none;
+    }
+
+    /*Stats table*/
+    #displayStats {
+      position: absolute;
+      margin-top: -40px;
+      margin-left: 1505px;
+    }
+    #displayGHGstats {
+      position: absolute;
+      margin-top: 4px;
+      margin-left: 819px;
     }
     
 
@@ -150,16 +162,7 @@
     }
     /* ./similarity map */
 
-    #displayStats {
-      position: absolute;
-      margin-top: -40px;
-      margin-left: 819px;
-    }
-    #displayGHGstats {
-      position: absolute;
-      margin-top: 4px;
-      margin-left: 819px;
-    }
+    
     #ghgStory {
       margin-top: 20px;
     }
@@ -182,15 +185,13 @@
     <div id="map"></div>
   </div>
 
-  <div id="displayStats" class="col-xs-3">
-    <!--<div id="dimTable"></div>-->
-  </div>
-
   <div id="ghgBarChart" class="col-xs-4">
     <div id="regionLabel"><h4>GHG/capita emissions grouped by world region</h4></div>
     <ul class="nytg-sort" style='position: absolute; left: 463px; top: 6px;'>
       <li id="barButton">GHG/GDP</li>
     </ul>
+  </div>
+  <div id="displayStats" class="col-xs-3">
 
   </div>
 
@@ -543,6 +544,13 @@ function drawMap() {
                 return simregionColourMap[data_GHG.find(x => x.city === d.id).region];
               }
               else return "none";
+            })
+            .on("mouseover", function (d) {
+              console.log("d: ", d)
+              highlightElements(format_idName(d.properties.city));
+            })
+            .on('mouseout', function (d) {
+              resetElements();
             });
 
       }); // ./inner d3.json
@@ -551,12 +559,12 @@ function drawMap() {
 
 } // ./drawMap()
 
-function highlightElements(idName, countryName) {
+function highlightElements(idName) {
   // clear any previous story first
   d3.select("#ghgStory").text("");
 
-  if (countryName === "United Kingdom") countryName = "England";
-  countryName = countryName.replace(/\s/g, '_');
+  // if (countryName === "United Kingdom") countryName = "England";
+  // countryName = countryName.replace(/\s/g, '_');
 
   //Clear Previous
   //--------------
@@ -1062,7 +1070,8 @@ function ghgBarChart() {
         d3.select("#mapSim").select("div.vtooltip").style("opacity", 0);
 
         idName = format_idName(d.city);
-        highlightElements(idName, d.country);
+        // highlightElements(idName, d.country);
+        highlightElements(idName);
         
         // Enlarge city label of selected bar
         d3.select("#tick" + idName).style("font-size", "16px");
