@@ -338,7 +338,7 @@ function vcircleMouseover(d) {
 
   idName = format_idName(d.city);
 
-  // Highlight current vcircle, polygon and bar  
+  // Highlight current vcircle, polygon and bar
   // highlightElements(idName, d.country);
   highlightElements(idName);
 
