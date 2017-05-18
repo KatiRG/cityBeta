@@ -7315,7 +7315,177 @@
 			"city": "Bournemouth"
 		},
 		"id": "Bournemouth"
-	}
+	}, {
+	 "geometry": {
+        "type": "Point",
+        "coordinates": [
+          17.64,
+          59.86
+        ]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Uppsala"
+      },
+		"id": "Uppsala"
+    },{
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.01,
+          57.72
+        ]
+      },
+      "type": "Feature",
+      "properties": {
+      "wikipedia": "Göteborg",
+        "city": "Västra Götaland county"
+      },
+		"id": "Västra Götaland county"
+    },{
+     "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.60,
+          55.99
+        ]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Skåne county"
+      },
+		"id": "Skåne county"
+    },{
+     "geometry": {
+        "type": "Point",
+        "coordinates": [
+          13.51,
+          59.38
+        ]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Karlstad"
+      },
+		"id": "Karlstad"
+    },{
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+          12.86,
+          56.67
+        ]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Halmstad"
+      },
+		"id": "Halmstad"
+    },{
+     "geometry": {
+        "type": "Point",
+        "coordinates": [
+          17.33,
+          62.4
+        ]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Sundsvall"
+      },
+		"id": "Sundsvall"
+    },{
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+          14.8,
+          56.88
+        ]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Växjö"
+      },
+		"id": "Växjö"
+    },{
+     "geometry": {
+        "type": "Point",
+        "coordinates": [
+          17.13,
+          60.69
+        ]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Gävle"
+      },
+		"id": "Gävle"
+    },{
+    	 "geometry": {
+        "type": "Point",
+        "coordinates": [
+          20.24,
+          63.83
+        ]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Umeå"
+      },
+		"id": "Umeå"
+    },{
+    	 "geometry": {
+        "type": "Point",
+        "coordinates": [
+         16.17,
+          58.6
+        ]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Norrköping"
+      },
+		"id": "Norrköping"
+    },{
+    	 "geometry": {
+        "type": "Point",
+        "coordinates": [
+          14.17,
+          57.78
+        ]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Jönköping"
+      },
+		"id": "Jönköping"
+    },{
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.63,
+          58.41
+        ]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Linköping"
+      },
+		"id": "Linköping"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          15.22,
+          59.28
+        ]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Örebro"
+      },
+		"id": "Örebro"
+    }
 	
 	]
 }

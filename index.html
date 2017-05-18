@@ -741,6 +741,7 @@ function mapSimilarCities(vdata, ghg){
         if (label === "groupNordic" || label === "groupEurope") {
           d3.select("#nodeTextGävle").style("opacity", 1).classed("nodeTextSelected", true);
           d3.select("#nodeTextSkåne_county").style("opacity", 1).classed("nodeTextSelected", true);
+          d3.select("#nodeTextHalmstad").style("opacity", 1).classed("nodeTextSelected", true);
           d3.select("#nodeTextCopenhagen").style("opacity", 1).classed("nodeTextSelected", true);
         }
         if (label === "groupEurope") {
@@ -880,6 +881,7 @@ function mapSimilarCities(vdata, ghg){
           //Outsiders in Europe cluster
           else if (d.city === "Gävle") return xScale(d.x) + 8;
           else if (d.city === "Skåne county") return xScale(d.x) + 6;
+          else if (d.city === "Halmstad") return xScale(d.x) + 6;
           else if (d.city === "Copenhagen") return xScale(d.x) + 6;
           else if (d.city === "Kyoto") return xScale(d.x) - 4;
           else if (d.city === "Tokyo") return xScale(d.x) + 6;
@@ -904,7 +906,8 @@ function mapSimilarCities(vdata, ghg){
           else if (d.city === "Singapore") return yScale(d.y) + 4;
 
           //Outsiders in Europe cluster
-          else if (d.city === "Gävle" || d.city === "Skåne county" ) return yScale(d.y) + 4;
+          else if (d.city === "Gävle" || d.city === "Skåne county") return yScale(d.y) + 4;
+          else if (d.city === "Halmstad") return yScale(d.y) - 6;
           else if (d.city === "Copenhagen") return yScale(d.y) + 8;
           else if (d.city === "Tokyo") return yScale(d.y) + 3;
           else if (d.city === "Kyoto") return yScale(d.y) - 9;
@@ -928,7 +931,7 @@ function mapSimilarCities(vdata, ghg){
              || d.city === "Gävle" || d.city === "Skåne county" || d.city === "Copenhagen"
              || d.city === "Tokyo" || d.city === "Kyoto" || d.city === "Sapporo"
              || d.city === "Tel Aviv" || d.city === "Mexico City" || d.city === "Bogotá"
-             || d.city === "Istanbul") {
+             || d.city === "Istanbul" || d.city === "Halmstad") {
             return d.city;
           }
         })
