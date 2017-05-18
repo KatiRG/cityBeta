@@ -28,11 +28,11 @@ var simregionColourMap = {
 };
 
 var regionLabelTooltip_dict = {
-  "groupEurope": "European cities cluster together except for <b>Barcelona</b> and <b>Athens</b>. <i>Outsiders: <b>Tokyo</b>, <b>Hong Kong</b>, and <b>3 Nordic cities</b></i>.",
+  "groupEurope": "European cities cluster together except for <b>Barcelona</b> and <b>Athens</b>. <i>Outsiders: <b>Tokyo</b>, <b>Hong Kong</b>, and <b>4 Nordic cities</b></i>.",
   "groupUSAAusNZ": "US, Canada, Australia and New Zealand are all together. <i><b>Outsiders</b>: Hong Kong, Singapore and Graz (Austria).</i> ",
   "groupAfricaAsia": "African/Asian cities not in this cluster are found in the Europe, USA/Aus/NZ and Eastern Europe clusters. <i>Outsiders: <b>Mexico</b>, <b>Bogotá</b></i>.",
   "groupEast": "Contains eastern cities except <b>Istanbul</b> which is in the Mix cluster. <i>Outsider: <b>Sapporo</b> (Japan).</i>",
-  "groupNordic": "Sweden, Norway, Finland. Exceptions: <b>Skåne</b> and <b>Gävle</b> (Sweden), and <b>Copenhagen</b> which are  in the Europe cluster.",
+  "groupNordic": "Sweden, Norway, Finland. Exceptions: <b>Skåne</b>, <b>Gävle</b> and <b>Halmstad</b> (Sweden), and <b>Copenhagen</b> which are  in the Europe cluster.",
   "groupMix": "Contains a mix of cities from Latin America, Europe, Eastern Europe and Asia."
 };
 
@@ -60,7 +60,7 @@ var dimUnits =  {
 // For similarity map
 var nordics = ["Oslo", "Helsinki", "Copenhagen", "Sundsvall", "Stockholm", 
 					"Västra Götaland county", "Uppsala", "Örebro", "Linköping", "Karlstad",
-					"Norrköping", "Jönköping", "Växjö", "Gävle", "Skåne county", "Umeå"];
+					"Norrköping", "Jönköping", "Växjö", "Gävle", "Skåne county", "Umeå", "Halmstad"];
 
 var latinAmer = ["Bogotá", "Mexico City", "Rio de Janeiro", "Sao Paulo", "Brasília",
                 "Curitiba"];
@@ -99,7 +99,7 @@ var usaAusNZ = ["Phoenix", "Austin", "Houston",
 "East Lothian and Midlothian", "East Merseyside", "East of Northern Ireland", 
 "East Riding of Yorkshire", "East Sussex CC", "Edinburgh, City of", "Essex CC", 
 "Falkirk", "Flintshire and Wrexham", "Gävle", "Geneva", "Glasgow", 
-"Gloucestershire", "Gwent Valleys", "Halmstad", "Halton and Warrington", "Hamburg", 
+"Gloucestershire", "Gwent Valleys", "Halton and Warrington", "Hamburg", 
 "Hampshire CC", "Hartlepool and Stockton-on-Tees", "Helsinki", 
 "Herefordshire, County of", "Hertfordshire", "Inverclyde, East Renfrewshire and Renfrewshire", 
 "Kent CC", "Kingston upon Hull, City of", "Lancashire CC", "Leicester", 
