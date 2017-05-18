@@ -154,6 +154,7 @@ function resetElements() {
     .style("stroke-opacity", 1);
   d3.selectAll(".countries").selectAll("path").style("opacity", 1) ;
   d3.selectAll(".worldcity")
+    .attr("stroke-width", 1)
     .attr("stroke-opacity", 1);   
 }
 
