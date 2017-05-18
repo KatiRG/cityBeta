@@ -1342,18 +1342,7 @@
 			"city": "Kinshasa"
 		},
 		"id": "Kinshasa"
-	}, {
-		"geometry": {
-			"type": "Point",
-			"coordinates": [15.433, 47.067]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Graz",
-			"city": "Graz"
-		},
-		"id": "Graz"
-	}, {
+	}, {		
 		"geometry": {
 			"type": "Point",
 			"coordinates": [15.55, 78.217]
@@ -4584,9 +4573,9 @@
 		"type": "Feature",
 		"properties": {
 			"wikipedia": "Newcastle,_New_South_Wales",
-			"city": "Newcastle"
+			"city": "Newcastle_NSW"
 		},
-		"id": "Newcastle"
+		"id": "Newcastle_NSW"
 	}, {
 		"geometry": {
 			"type": "Point",
@@ -7304,6 +7293,17 @@
 			"city": "Ljubljana"
 		},
 		"id": "Ljubljana"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [15.433, 47.067]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Graz",
+			"city": "Graz"
+		},
+		"id": "Graz"
 	}, {
 		"geometry": {
 			"type": "Point",
