@@ -1279,17 +1279,6 @@
 	}, {
 		"geometry": {
 			"type": "Point",
-			"coordinates": [14.417, 50.083]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Prague",
-			"city": "Prague"
-		},
-		"id": "Prague"
-	}, {
-		"geometry": {
-			"type": "Point",
 			"coordinates": [14.433, 27.033]
 		},
 		"type": "Feature",
@@ -1309,17 +1298,6 @@
 			"city": "Birkirkara"
 		},
 		"id": "Birkirkara"
-	}, {
-		"geometry": {
-			"type": "Point",
-			"coordinates": [14.5, 46.067]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Ljubljana",
-			"city": "Ljubljana"
-		},
-		"id": "Ljubljana"
 	}, {
 		"geometry": {
 			"type": "Point",
@@ -1389,17 +1367,6 @@
 	}, {
 		"geometry": {
 			"type": "Point",
-			"coordinates": [15.983, 45.817]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Zagreb",
-			"city": "Zagreb"
-		},
-		"id": "Zagreb"
-	}, {
-		"geometry": {
-			"type": "Point",
 			"coordinates": [16.367, 48.2]
 		},
 		"type": "Feature",
@@ -1419,17 +1386,6 @@
 			"city": "Split (city)"
 		},
 		"id": "Split (city)"
-	}, {
-		"geometry": {
-			"type": "Point",
-			"coordinates": [17.1, 48.133]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Bratislava",
-			"city": "Bratislava"
-		},
-		"id": "Bratislava"
 	}, {
 		"geometry": {
 			"type": "Point",
@@ -1466,17 +1422,6 @@
 	}, {
 		"geometry": {
 			"type": "Point",
-			"coordinates": [19.05, 47.467]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Budapest",
-			"city": "Budapest"
-		},
-		"id": "Budapest"
-	}, {
-		"geometry": {
-			"type": "Point",
 			"coordinates": [19.267, 42.467]
 		},
 		"type": "Feature",
@@ -1496,28 +1441,6 @@
 			"city": "Tirana"
 		},
 		"id": "Tirana"
-	}, {
-		"geometry": {
-			"type": "Point",
-			"coordinates": [19.933, 50.05]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Cracow",
-			"city": "Cracow"
-		},
-		"id": "Cracow"
-	}, {
-		"geometry": {
-			"type": "Point",
-			"coordinates": [20.45, 44.817]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Belgrade",
-			"city": "Belgrade"
-		},
-		"id": "Belgrade"
 	}, {
 		"geometry": {
 			"type": "Point",
@@ -1576,17 +1499,6 @@
 	}, {
 		"geometry": {
 			"type": "Point",
-			"coordinates": [23.333, 42.7]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Sofia",
-			"city": "Sofia"
-		},
-		"id": "Sofia"
-	}, {
-		"geometry": {
-			"type": "Point",
 			"coordinates": [23.75, 61.5]
 		},
 		"type": "Feature",
@@ -1609,17 +1521,6 @@
 	}, {
 		"geometry": {
 			"type": "Point",
-			"coordinates": [24.133, 56.967]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Riga",
-			"city": "Riga"
-		},
-		"id": "Riga"
-	}, {
-		"geometry": {
-			"type": "Point",
 			"coordinates": [24.65, 60.2]
 		},
 		"type": "Feature",
@@ -1628,28 +1529,6 @@
 			"city": "Espoo"
 		},
 		"id": "Espoo"
-	}, {
-		"geometry": {
-			"type": "Point",
-			"coordinates": [24.75, 59.433]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Tallinn",
-			"city": "Tallinn"
-		},
-		"id": "Tallinn"
-	}, {
-		"geometry": {
-			"type": "Point",
-			"coordinates": [25.283, 54.683]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Vilnius",
-			"city": "Vilnius"
-		},
-		"id": "Vilnius"
 	}, {
 		"geometry": {
 			"type": "Point",
@@ -1683,17 +1562,6 @@
 			"city": "Gaborone"
 		},
 		"id": "Gaborone"
-	}, {
-		"geometry": {
-			"type": "Point",
-			"coordinates": [26.1, 44.433]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Bucharest",
-			"city": "Bucharest"
-		},
-		"id": "Bucharest"
 	}, {
 		"geometry": {
 			"type": "Point",
@@ -1829,17 +1697,6 @@
 	}, {
 		"geometry": {
 			"type": "Point",
-			"coordinates": [28.967, 41]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Istanbul",
-			"city": "Istanbul"
-		},
-		"id": "Istanbul"
-	}, {
-		"geometry": {
-			"type": "Point",
 			"coordinates": [29.067, 40.183]
 		},
 		"type": "Feature",
@@ -1906,17 +1763,6 @@
 	}, {
 		"geometry": {
 			"type": "Point",
-			"coordinates": [30.517, 50.45]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Kiev",
-			"city": "Kiev"
-		},
-		"id": "Kiev"
-	}, {
-		"geometry": {
-			"type": "Point",
 			"coordinates": [30.733, 46.467]
 		},
 		"type": "Feature",
@@ -1925,17 +1771,6 @@
 			"city": "Odessa"
 		},
 		"id": "Odessa"
-	}, {
-		"geometry": {
-			"type": "Point",
-			"coordinates": [31.05, -17.817]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Harare",
-			"city": "Harare"
-		},
-		"id": "Harare"
 	}, {
 		"geometry": {
 			"type": "Point",
@@ -2874,17 +2709,6 @@
 	}, {
 		"geometry": {
 			"type": "Point",
-			"coordinates": [72.567, 23.017]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Ahmedabad",
-			"city": "Ahmedabad"
-		},
-		"id": "Ahmedabad"
-	}, {
-		"geometry": {
-			"type": "Point",
 			"coordinates": [72.817, 18.95]
 		},
 		"type": "Feature",
@@ -3102,17 +2926,6 @@
 			"city": "Sri Jayawardenapura-Kotte"
 		},
 		"id": "Sri Jayawardenapura-Kotte"
-	}, {
-		"geometry": {
-			"type": "Point",
-			"coordinates": [80.267, 13.083]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Chennai",
-			"city": "Chennai"
-		},
-		"id": "Chennai"
 	}, {
 		"geometry": {
 			"type": "Point",
@@ -3454,17 +3267,6 @@
 			"city": "Hat Yai"
 		},
 		"id": "Hat Yai"
-	}, {
-		"geometry": {
-			"type": "Point",
-			"coordinates": [100.483, 13.75]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Bangkok",
-			"city": "Bangkok"
-		},
-		"id": "Bangkok"
 	}, {
 		"geometry": {
 			"type": "Point",
@@ -4147,17 +3949,6 @@
 			"city": "Kaohsiung"
 		},
 		"id": "Kaohsiung"
-	}, {
-		"geometry": {
-			"type": "Point",
-			"coordinates": [120.333, 36.083]
-		},
-		"type": "Feature",
-		"properties": {
-			"wikipedia": "Qingdao",
-			"city": "Qingdao"
-		},
-		"id": "Qingdao"
 	}, {
 		"geometry": {
 			"type": "Point",
@@ -7304,6 +7095,215 @@
 			"city": "Leicester"
 		},
 		"id": "Leicester"
+	}, {
+			"geometry": {
+			"type": "Point",
+			"coordinates": [80.267, 13.083]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Chennai",
+			"city": "Chennai"
+		},
+		"id": "Chennai"
+	}, {
+			"geometry": {
+			"type": "Point",
+			"coordinates": [72.567, 23.017]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Ahmedabad",
+			"city": "Ahmadabad"
+		},
+		"id": "Ahmadabad"
+	}, {
+			"geometry": {
+			"type": "Point",
+			"coordinates": [100.483, 13.75]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Bangkok",
+			"city": "Krung_Thep_Bangkok"
+		},
+		"id": "Krung_Thep_Bangkok"
+	}, {
+			"geometry": {
+			"type": "Point",
+			"coordinates": [31.05, -17.817]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Harare",
+			"city": "Harare"
+		},
+		"id": "Harare"
+	}, {
+			"geometry": {
+			"type": "Point",
+			"coordinates": [120.333, 36.083]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Qingdao",
+			"city": "Qingdao"
+		},
+		"id": "Qingdao"
+	}, {
+			"geometry": {
+			"type": "Point",
+			"coordinates": [30.517, 50.45]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Kiev",
+			"city": "Kiev"
+		},
+		"id": "Kiev"
+	}, {
+			"geometry": {
+			"type": "Point",
+			"coordinates": [28.967, 41]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Istanbul",
+			"city": "Istanbul"
+		},
+		"id": "Istanbul"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [19.933, 50.05]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Cracow",
+			"city": "Cracow"
+		},
+		"id": "Cracow"
+	}, {
+			"geometry": {
+			"type": "Point",
+			"coordinates": [26.1, 44.433]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Bucharest",
+			"city": "Bucharest"
+		},
+		"id": "Bucharest"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [20.45, 44.817]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Belgrade",
+			"city": "Belgrade"
+		},
+		"id": "Belgrade"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [24.75, 59.433]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Tallinn",
+			"city": "Tallinn"
+		},
+		"id": "Tallinn"
+	}, {
+		"geometry": {
+			"type": "Point",
+			"coordinates": [25.283, 54.683]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Vilnius",
+			"city": "Vilnius"
+		},
+		"id": "Vilnius"
+	}, {
+			"geometry": {
+			"type": "Point",
+			"coordinates": [23.333, 42.7]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Sofia",
+			"city": "Sofia"
+		},
+		"id": "Sofia"
+	}, {
+			"geometry": {
+			"type": "Point",
+			"coordinates": [14.417, 50.083]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Prague",
+			"city": "Prague"
+		},
+		"id": "Prague"
+	}, {
+			"geometry": {
+			"type": "Point",
+			"coordinates": [19.05, 47.467]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Budapest",
+			"city": "Budapest"
+		},
+		"id": "Budapest"
+	}, {
+			"geometry": {
+			"type": "Point",
+			"coordinates": [15.983, 45.817]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Zagreb",
+			"city": "Zagreb"
+		},
+		"id": "Zagreb"
+	}, {
+			"geometry": {
+			"type": "Point",
+			"coordinates": [24.133, 56.967]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Riga",
+			"city": "Riga"
+		},
+		"id": "Riga"
+	}, {
+			"geometry": {
+			"type": "Point",
+			"coordinates": [17.1, 48.133]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Bratislava",
+			"city": "Bratislava"
+		},
+		"id": "Bratislava"
+	}, {
+			"geometry": {
+			"type": "Point",
+			"coordinates": [14.5, 46.067]
+		},
+		"type": "Feature",
+		"properties": {
+			"wikipedia": "Ljubljana",
+			"city": "Ljubljana"
+		},
+		"id": "Ljubljana"
 	}, {
 		"geometry": {
 			"type": "Point",
