@@ -540,15 +540,13 @@ function drawMap() {
             })
             .attr("class", "worldcity")
             .style("fill", function (d) {
-              if (data_GHG.find(x => x.city === d.id)) {                
+              if (data_GHG.find(x => x.city === d.id)) {
                 return simregionColourMap[data_GHG.find(x => x.city === d.id).region];
               }
               else {
                 if (data_noGHG.find(x => x.city === d.id)) {
-                  console.log("find: ", data_noGHG.find(x => x.city === d.id).idName)
                   _this = data_noGHG.find(x => x.city === d.id).idName;
                   _thisGroup = d3.select("#vcircle" + _this).attr("class");
-                  console.log("select: ", d3.select("#vcircle" + _this).attr("class"))
                   return simregionColourMap[_thisGroup];
                 }
                 else return "none";
@@ -560,7 +558,6 @@ function drawMap() {
               else return "none";  
             })
             .on("mouseover", function (d) {
-              console.log("d: ", d)
               highlightElements(format_idName(d.properties.city));
             })
             .on('mouseout', function (d) {
@@ -774,16 +771,16 @@ function mapSimilarCities(vdata, ghg){
           .html(regionLabelTooltip_dict[label])
           .style("left", function (d) {
             if (label === "groupAfricaAsia") return (d3.event.pageX - 110) + "px";
-            else if (label === "groupEurope") return (d3.event.pageX + 210) + "px";
+            else if (label === "groupEurope") return (d3.event.pageX + 320) + "px";
             else if (label === "groupEast") return (d3.event.pageX - 200) + "px";
             else return (d3.event.pageX) + "px";
           })
           .style("height", function () {if (label==="groupMix") return "75px";})
           .style("top", function () {
-            if (label === "groupEurope") return (d3.event.pageY - 430) + "px";
-            else if (label === "groupEast") return (d3.event.pageY - 650) + "px";
-            else if (label === "groupNordic") return (d3.event.pageY - 650) + "px";
-            else if (label === "groupUSAAusNZ") return (d3.event.pageY - 460) + "px";
+            if (label === "groupEurope") return (d3.event.pageY - 420) + "px";
+            else if (label === "groupEast") return (d3.event.pageY - 620) + "px";
+            else if (label === "groupNordic") return (d3.event.pageY - 620) + "px";
+            else if (label === "groupUSAAusNZ") return (d3.event.pageY - 420) + "px";
             else if (label === "groupAfricaAsia") return (d3.event.pageY - 510) + "px";
             else return (d3.event.pageY - 530) + "px";
           });
