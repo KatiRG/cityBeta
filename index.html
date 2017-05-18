@@ -123,6 +123,7 @@
       margin-left: 819px;
     }
     
+
     /* similarity map */
     #cb {
       width: 100px; /*100%;*/
@@ -161,6 +162,7 @@
     }
     /* ./similarity map */
 
+    
     #ghgStory {
       margin-top: 20px;
     }
@@ -189,8 +191,9 @@
       <li id="barButton">GHG/GDP</li>
     </ul>
   </div>
+  <div id="displayStats" class="col-xs-3">
 
-  <div id="displayStats" class="col-xs-3"></div>
+  </div>
 
 </div>
 
@@ -540,7 +543,21 @@ function drawMap() {
               if (data_GHG.find(x => x.city === d.id)) {                
                 return simregionColourMap[data_GHG.find(x => x.city === d.id).region];
               }
-              else return "none";
+              else {
+                if (data_noGHG.find(x => x.city === d.id)) {
+                  console.log("find: ", data_noGHG.find(x => x.city === d.id).idName)
+                  _this = data_noGHG.find(x => x.city === d.id).idName;
+                  _thisGroup = d3.select("#vcircle" + _this).attr("class");
+                  console.log("select: ", d3.select("#vcircle" + _this).attr("class"))
+                  return simregionColourMap[_thisGroup];
+                }
+                else return "none";
+              }
+            })
+            .style("stroke", function (d) {
+              if (data_GHG.find(x => x.city === d.id) ||
+                   data_noGHG.find(x => x.city === d.id)) return "#555";
+              else return "none";  
             })
             .on("mouseover", function (d) {
               console.log("d: ", d)
@@ -562,7 +579,6 @@ function highlightElements(idName) {
 
   // if (countryName === "United Kingdom") countryName = "England";
   // countryName = countryName.replace(/\s/g, '_');
-
 
   //Clear Previous
   //--------------

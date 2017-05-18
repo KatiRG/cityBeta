@@ -154,8 +154,7 @@ function resetElements() {
     .style("stroke-opacity", 1);
   d3.selectAll(".countries").selectAll("path").style("opacity", 1) ;
   d3.selectAll(".worldcity")
-    .attr("stroke", "none")
-    .attr("stroke-width", 0);   
+    .attr("stroke-opacity", 1);   
 }
 
 //----------------------------------------------
@@ -338,7 +337,7 @@ function vcircleMouseover(d) {
 
   idName = format_idName(d.city);
 
-  // Highlight current vcircle, polygon and bar
+  // Highlight current vcircle, polygon and bar  
   // highlightElements(idName, d.country);
   highlightElements(idName);
 
