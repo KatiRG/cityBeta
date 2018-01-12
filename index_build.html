@@ -130,8 +130,8 @@ var formatDecimalSci = d3.format(".2n");
 
 // Leaflet map variables
 // ---------------------------------
-var width = 800,
-    height = 350; //400;
+var width = 560,
+    height = 250; //400;
 
 // padding around the chart where axes will go
 var padding = {
@@ -207,7 +207,7 @@ function drawMap() {
     .on("zoom", zoomed);
 
   //https://bl.ocks.org/mbostock/3711652
-  var mapHeight = 410;
+  // var mapHeight = 410;
 
   var options = [
     {name: "Natural Earth", projection: d3.geoNaturalEarth()}
@@ -219,7 +219,7 @@ function drawMap() {
 
   var projection = options[0]
               .projection
-              .scale(143)
+              .scale(100)
               .translate([width/1.65, height/1.7]);
 
   var path = d3.geoPath()
@@ -230,7 +230,7 @@ function drawMap() {
 
   var svg = d3.select("#map").append("svg")
       .attr("width", width)
-      .attr("height", mapHeight);
+      .attr("height", height);
      //  .call(d3.zoom().on("zoom", function () {
      //    svg.attr("transform", d3.event.transform)
      // }));
@@ -250,17 +250,17 @@ function drawMap() {
     .attr("class", "graticule")
     .attr("d", path);
 
-  // //draw bottom line
-  // svg.append("g").selectAll("line")
-  //     .data([0])
-  //     .enter().append("line")
-  //     .attr("class", "line")
-  //     .style("stroke", "#000")
-  //     .style("stroke-width", "2px")
-  //     .attr("x1", 71)
-  //     .attr("y1", 350)
-  //     .attr("x2", 724)
-  //     .attr("y2", 350);  
+  //draw bottom line
+  svg.append("g").selectAll("line")
+      .data([0])
+      .enter().append("line")
+      .attr("class", "line")
+      .style("stroke", "#555")
+      .style("stroke-width", "1px")
+      .attr("x1", 53)
+      .attr("y1", 250)
+      .attr("x2", 504)
+      .attr("y2", 250);  
 
  
 
