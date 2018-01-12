@@ -20,7 +20,7 @@ var regionLabel_dict = {
   "groupNordic": "Nordics", "groupLatinAmer": "Latin America"
 };
 
-var simregionColourMap = { 
+var regionColourMap = { 
   "groupEurope": "#6BACBF", //"#A6D4FF", 
   "groupUSAAusNZ": "#C399D9",
   "groupAfricaAsia": "#BD1550", "groupEast": "#E97F02", 
@@ -74,17 +74,6 @@ var usaAusNZ = ["Phoenix", "Austin", "Houston",
                       "Ottawa", "Fort Collins", "Minneapolis", "Calgary"];
 
 
-// d3.csv("data/df_Z_dims_dfs_truncSVD_gea_uitp_noWaterBd_ncomp5_perplexity40.csv", function(error, vdata) {
-//                 if (error) throw error;
-//   var europe=[], africaAsia = [], east = [];
-//   vdata.forEach(function (d) {
-//     if (d.region === "ASIA" || d.region === "MAF") africaAsia.push(d.city);
-//     else if (d.region === "REF") east.push(d.city);
-//     else if (d.region === "OECD90") europe.push(d.city);
-//   })
-//   console.log("east: ", east)
-//   console.log("africaAsia: ", africaAsia)
-// })
 
  var europe = ["Amsterdam", "Athens", "Barcelona", "Barnsley, Doncaster and Rotherham", 
 "Bath and North East Somerset, North Somerset and South Gloucestershire", "Bedfordshire CC", "Belfast", 
