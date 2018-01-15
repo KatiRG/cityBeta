@@ -176,12 +176,12 @@ d3.select("#barButton")
 
 
 // d3.csv("data/Creutzig2014_dataset_wb.csv", function(ghg) {
-d3.csv("data/match_GEA_UITP_CDP2017_adaptedRegions_selectedColumns.csv", function(ghg) {
+d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
   console.log("ghg read: ", ghg)
 
-  setupData(ghg);
-  drawMap();
-  ghgBarChart();
+  // setupData(ghg);
+  // drawMap();
+  // ghgBarChart();
 
 }); // ./d3.csv for emissions data
 

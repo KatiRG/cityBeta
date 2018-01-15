@@ -16,46 +16,85 @@ function setupData(ghg){
     //each d is a line of the csv file represented as a json object
 
     city = d.city
-    GCA_region = d.GCA_region //Global Carbon Atlas regions
-    cityLocationString = d.City_location
-    cityLocation = [parseFloat(cityLocationString.split("(")[1].split(",")[0]), 
-                    parseFloat(cityLocationString.split("(")[1].split(",")[1])]
+    region = d['Geographic group'] //Global Carbon Atlas regions
+    cityLocation = [+d['lat (external)'], +d['lon (external)']]
     country = d.country
-    GDP_cap = +d["GDP/capita"]//+d.gdp_per_cap
-    popn_cdp = +d.Current_population
-    GHG_total = +d.total_GHG //[tCO2]
-    GHG_cap = +d.total_GHG/popn_cdp
-    GHG_GDP = GHG_cap/GDP_cap * 1000 //[kgCO2/$]
-    urb_ratio = +d["urban ratio"]//+d.urbanization_ratio
-    popn_creutzig = +d["population"]//+d.population
-    pdensity = +d["population density"]//+d.population_density
-    HDD155C = +d["HDD 15.5C"]//+d.HDD_155C
-    CDD23C = +d["CDD 23C"]//+d.CDD_23C
-    diesel_price = d["diesel price"]//+d.diesel_price
-    gas_price = +d["gas price"]//+d.gasoline_price
-    emissions_int2009 = +d["GHGe intensity 2009"] //national value
-    emissions_int2004 = +d["GHGe intensity 2004"]//+d.emission_intensity_2004 //national value
-    HH = +d["household size"]
-    commerce_idx = +d["commerce index"] //+d.center_of_commerce_index
-    delta_GHG = d.delta_GHG //string
-    delta_GHG_reason = d.delta_GHG_reason //string
+    popn = +d['pop to use']
+    area = +d['area [km2] (external)']
+    totalEmissions = +d['Total City-wide Emissions (metric tonnes CO2e) (CDP)'] //[tCO2]
+    scope1 = +d['Total Scope 1 Emissions (metric tonnes CO2e) (CDP)']
+    scope1_cap = d.scope1/popn
+    scope1_GDP = scope1_cap/GDP_cap
+    GDP_cap = +d['GDP-PPP combined/cap']
+    pop_density = popn/area//[pop/km2]
+    HDD155C = +d["HDD_15.5C"]
+    CDD23C = +d["CDD_23C"]
+    diesel_price = d["diesel_price (2014)"]//+d.diesel_price
+    gas_price = +d["gasoline_price (2014)"]//+d.gasoline_price
+    HH = +d["household_size (updated)"]
+    methodology_num = +d['MethodNum']
+    methodology_details = d['Methodology Details (CDP)']
+    delta_emissions = d['Increase/Decrease from last year (CDP)'] //string
+    delta_emissions_reason = d['Reason for increase/decrease in emissions (CDP)']//string
+
+    //Urban Areas
+    UA_cluster = +d['Urban Area Cluster (FC)']
+    low_BUA_1990 = +d['Low BUA - 1990 (FC)']
+    low_BUA_2000 = +d['Low BUA \xe2\x80\x93 2000 (FC)']
+    low_BUA_2014 = +d['Low BUA \xe2\x80\x93 2014 (FC)']
+    high_BUA_1990 = +d['High BUA - 1990 (FC)']
+    high_BUA_2000 = +d['High BUA \xe2\x80\x93 2000 (FC)']
+    high_BUA_2014 = +d['High BUA \xe2\x80\x93 2014 (FC)']
+    low_BUApc_1990 = +d['Low BUA % - 1990 (FC)']
+    low_BUApc_2000 = +d['Low BUA % \xe2\x80\x93 2000 (FC)']
+    low_BUApc_2014 = +d['Low BUA % \xe2\x80\x93 2014 (FC)']
+    high_BUApc_1990 = +d['High BUA % - 1990 (FC)']
+    high_BUApc_2000 = +d['High BUA % \xe2\x80\x93 2000 (FC)']
+    high_BUApc_2014 = +d['High BUA % \xe2\x80\x93 2014 (FC)']
+    low_BUA_pdensity_1990 = +d['Low BUA pop density - 1990 (FC)']
+    high_BUA_pdensity_1990 = +d['High BUA pop density \xe2\x80\x93 1990 (FC)']
+    low_BUA_pdensity_2000 = +d['Low BUA pop density \xe2\x80\x93 2000 (FC)']
+    high_BUA_pdensity_2000 = +d['High BUA pop density - 2000 (FC)']
+    low_BUA_pdensity_2014 = +d['Low BUA pop density \xe2\x80\x93 2014 (FC)']
+    high_BUA_pdensity_2014 = +d['High BUA pop density - 2014 (FC)']
+
+    //traffic and socio-economic indices
+    inrix_congestion = +d['AVERAGE CONGESTION RATE (INRIX)']
+    inrix_idx = +d['INRIX CONGESTION INDEX (INRIX)']
+    inrix_hours = +d['PEAK HOURS SPENT IN CONGESTION (INRIX)']
+    inrix_rank = +d['RANK (INRIX)']
+    tomtom_congestion = +d['Congestion Level (TomTom)']
+    tomtom_rank = +d['World Rank (TomTom)']
+    tomtom_congestion_change = +d['Congestion change (TomTom)']
+    tomtom_am_peak = +d['Morning Peak (TomTom)']
+    tomtom_pm_peak = +d['Evening Peak (TomTom)']
+    iese_human = +d['human capital (IESE)']
+    iese_cohesion = +d['social cohesion (IESE)']
+    iese_economy = +d['economy (IESE)']
+    iese_management = +d['public management (IESE)']
+    iese_gov = +d['governance (IESE)']
+    iese_env = +d['environment (IESE)']
+    iese_transport = +d['mobility and transportation (IESE)']
+    iese_urban = +d['urban planning (IESE)']
+    iese_intl = +d['international impact (IESE)']
+    iese_tech = +d['technology (IESE)']
+    iese_cimi = +d['CIMI (IESE)']
+    iese_cimi_rank = +d['CIMI Ranking (IESE)']
+
 
     idName = format_idName(d.city);
 
     cityName_array.push(city)
-    // lat = parseFloat(cityLocationString.split("(")[1].split(",")[0])
    
     return {      
       "city": city,
       "idName": idName,
       "country": country,
-      "region": GCA_region,
+      "region": region,
       "cityLocation": cityLocation,
       "GHG total": GHG_total,
-      "GHGe intensity 2004": emissions_int2004,
-      "GHGe intensity 2009": emissions_int2009,
-      "population": popn_creutzig,
-      "population density": pdensity,
+      "population": popn,
+      "population density": pop_density,
       "GDP/capita": GDP_cap,
       "GHG/capita": GHG_cap,
       "GHG/GDP": GHG_GDP,
@@ -63,11 +102,9 @@ function setupData(ghg){
       "gas price": gas_price,
       "HDD 15.5C": HDD155C,
       "CDD 23C": CDD23C,
-      "urban ratio": urb_ratio,
-      "commerce index": commerce_idx,
       "household size": HH,
-      "delta_GHG": delta_GHG,
-      "delta_GHG_reason": delta_GHG_reason
+      "delta_emissions": delta_emissions,
+      "delta_emissions_reason": delta_emissions_reason
     };
   })
   // console.log("data_GHG", data_GHG)
