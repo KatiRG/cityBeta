@@ -14,18 +14,18 @@ function format_idName(city) {
 function setupData(ghg){
   data_GHG = ghg.map(function(d) {
     //each d is a line of the csv file represented as a json object
+    //use + only for integers, not floats or strings
 
     city = d.city
     region = d['Geographic group'] //Global Carbon Atlas regions
     cityLocation = [+d['lat (external)'], +d['lon (external)']]
     country = d.country
     popn = +d['pop to use']
-    area = +d['area [km2] (external)']
-    totalEmissions = +d['Total City-wide Emissions (metric tonnes CO2e) (CDP)'] //[tCO2]
-    scope1 = +d['Total Scope 1 Emissions (metric tonnes CO2e) (CDP)']
-    GDP = +d['GDP-PPP combined']
-    scope1_cap = +d.scope1/+d.popn
-    scope1_GDP = +d.scope1/GDP
+    area = d['area [km2] (external)']
+    totalEmissions = d['Total City-wide Emissions (metric tonnes CO2e) (CDP)'] //[tCO2]
+    scope1 = d['s1 to use']
+    GDP = d['GDP-PPP combined']
+    scope1_cap = scope1/popn
     GDP_cap = +d['GDP-PPP combined/cap']
     pop_density = popn/area//[pop/km2]
     HDD155C = +d["HDD_15.5C"]
@@ -96,10 +96,8 @@ function setupData(ghg){
       "total emissions": totalEmissions,
       "population": popn,
       "area": area,
-      "scope1": scope1,
-      "scope1/capita": scope1_cap,
-      "scope1/GDP-PPP": scope1_GDP,
-      "GDP/capita": GDP_cap,
+      "Scope1": scope1,
+      "Scope1/capita": scope1_cap,
       "population density": pop_density,
       "HDD 15.5C": HDD155C,
       "CDD 23C": CDD23C,

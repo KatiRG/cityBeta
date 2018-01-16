@@ -15,49 +15,36 @@ var regionalAvgs_GDP = {
 }
 
 var regionLabel_dict = {
-  "groupEurope": "Europe", "groupUSAAusNZ": "USA/Aus/NZ",
-  "groupAfricaAsia": "Africa/Asia", "groupEast": "Eastern Europe",
-  "groupNordic": "Nordics", "groupLatinAmer": "Latin America"
+  "groupEurope": "Europe", "groupUSAAusNZ": "USA/Can/Aus/NZ",
+  "groupAfricaAsia": "Africa/Asia", "groupNordic": "Nordics", 
+  "groupLatinAmer": "Latin America"
 };
 
 var regionColourMap = { 
   "groupEurope": "#6BACBF", //"#A6D4FF", 
   "groupUSAAusNZ": "#C399D9",
-  "groupAfricaAsia": "#BD1550", "groupEast": "#E97F02", 
+  "groupAfricaAsia": "#BD1550",
   "groupNordic": "#F99DD3", "groupLatinAmer": "#F8CA00"
-};
-
-var regionLabelTooltip_dict = {
-  "groupEurope": "European cities cluster together except for <b>Barcelona</b> and <b>Athens</b>. <i>Outsiders: <b>Tokyo</b>, <b>Hong Kong</b>, and <b>4 Nordic cities</b></i>.",
-  "groupUSAAusNZ": "US, Canada, Australia and New Zealand are all together. <i><b>Outsiders</b>: Hong Kong, Singapore and Graz (Austria).</i> ",
-  "groupAfricaAsia": "African/Asian cities not in this cluster are found in the Europe, USA/Aus/NZ and Eastern Europe clusters. <i>Outsiders: <b>Mexico</b>, <b>Bogotá</b></i>.",
-  "groupEast": "Contains eastern cities except <b>Istanbul</b> which is in the Mix cluster. <i>Outsider: <b>Sapporo</b> (Japan).</i>",
-  "groupNordic": "Sweden, Norway, Finland. Exceptions: <b>Skåne</b>, <b>Gävle</b> and <b>Halmstad</b> (Sweden), and <b>Copenhagen</b> which are  in the Europe cluster.",
-  "groupMix": "Contains a mix of cities from Latin America, Europe, Eastern Europe and Asia."
 };
 
 // For colourbar scale
 var dimUnits =  {
-  "GHG total": "[tCO2]",
-  "GHGe intensity 2004": "[kg/MWh]",
-  "GHGe intensity 2009": "[kg/MWh]",
-  "GHG/capita": "[tCO2]",
-  "GHG/GDP": "[kgCO2/$]",
+  "total emissions": "[tCO2]",
+  "Scope1/capita": "[tCO2/capita]",
+  "Scope1/GDP-PPP": "[kgCO2/USD]",
   "population": "",
   "population density": "",
-  "GDP/capita": "(PPP) [$/yr]",
+  "GDP-PPP/capita": "(PPP) [USD/capita]",
   "diesel price": "USD",
   "gas price": "USD",
-  "HDD 15.5C": "[days]",
-  "CDD 23C": "[days]",
-  "urban ratio": "",
-  "commerce index": "",
+  "HDD 15.5C": "[deg C x days]",
+  "CDD 23C": "[deg C x days]",
   "household size": "",
   "region": "",
   "country": ""
 }
 
-// For similarity map
+// Geographic group
 var nordics = ["Oslo", "Helsinki", "Copenhagen", "Sundsvall", "Stockholm", 
 					"Västra Götaland county", "Uppsala", "Örebro", "Linköping", "Karlstad",
 					"Norrköping", "Jönköping", "Växjö", "Gävle", "Skåne county", "Umeå", "Halmstad"];
@@ -105,11 +92,9 @@ var usaAusNZ = ["Phoenix", "Austin", "Houston",
 "Warwickshire", "West Cumbria", "West Lothian", "West Sussex", "Wiltshire CC", 
 "Wirral", "Worcestershire", "York", "Stadt Zürich", "Berne", "Bologna", "Dusseldorf", 
 "Frankfurt", "Graz", "Marseille", "Munich", "Nantes", "Newcastle", "Ruhr", 
-"Stuttgart"];
-
-var east =  ["Belgrade", "Bratislava", "Bucharest", "Budapest", "Istanbul", 
-            "Kiev", "Ljubljana", "Moscow", "Prague", "Riga", "Sofia", "Tallinn", 
-            "Vilnius", "Zagreb", "Cracow"];
+"Stuttgart","Belgrade", "Bratislava", "Bucharest", "Budapest", "Istanbul", 
+"Kiev", "Ljubljana", "Moscow", "Prague", "Riga", "Sofia", "Tallinn", 
+"Vilnius", "Zagreb", "Cracow"];
 
 var africaAsia = ["Kyoto", "Ahmadabad", "Bangalore", "Beijing", "Buffalo City", "Cape Town", 
     "Changchun", "Changsha, Hunan", "Chengdu", "Chongqing", "Dalian", "Dar es Salaam", 
