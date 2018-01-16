@@ -23,8 +23,9 @@ function setupData(ghg){
     area = +d['area [km2] (external)']
     totalEmissions = +d['Total City-wide Emissions (metric tonnes CO2e) (CDP)'] //[tCO2]
     scope1 = +d['Total Scope 1 Emissions (metric tonnes CO2e) (CDP)']
-    scope1_cap = d.scope1/popn
-    scope1_GDP = scope1_cap/GDP_cap
+    GDP = +d['GDP-PPP combined']
+    scope1_cap = +d.scope1/+d.popn
+    scope1_GDP = +d.scope1/GDP
     GDP_cap = +d['GDP-PPP combined/cap']
     pop_density = popn/area//[pop/km2]
     HDD155C = +d["HDD_15.5C"]
@@ -92,22 +93,53 @@ function setupData(ghg){
       "country": country,
       "region": region,
       "cityLocation": cityLocation,
-      "GHG total": GHG_total,
+      "total emissions": totalEmissions,
       "population": popn,
-      "population density": pop_density,
+      "area": area,
+      "scope1": scope1,
+      "scope1/capita": scope1_cap,
+      "scope1/GDP-PPP": scope1_GDP,
       "GDP/capita": GDP_cap,
-      "GHG/capita": GHG_cap,
-      "GHG/GDP": GHG_GDP,
-      "diesel price": diesel_price,
-      "gas price": gas_price,
+      "population density": pop_density,
       "HDD 15.5C": HDD155C,
       "CDD 23C": CDD23C,
+      "diesel price": diesel_price,
+      "gas price": gas_price,
       "household size": HH,
-      "delta_emissions": delta_emissions,
-      "delta_emissions_reason": delta_emissions_reason
+      "methodology": methodology_num,
+      "methodology details": methodology_details,
+      "change in emissions": delta_emissions,
+      "reason for change": delta_emissions_reason,
+      "low BUA % (1990)": low_BUApc_1990,
+      "low BUA % (2000)": low_BUApc_2000,
+      "low BUA % (2014)": low_BUApc_2014,
+      "high BUA % (1990)": high_BUApc_1990,
+      "high BUA % (2000)": high_BUApc_2000,
+      "high BUA % (2014)": high_BUApc_2014,
+      "Avg congestion rate [%] (INRIX)": inrix_congestion,
+      "Congestion Index (INRIX)": inrix_idx,
+      "Peak hours spent in congestion (INRIX)": inrix_hours,
+      "Congestion rank (INRIX)": inrix_rank,
+      "Congestion level [%] (TomTom)": tomtom_congestion,
+      "Congestion rank (TomTom)": tomtom_rank,
+      "Congestion change [%] (TomTom)": tomtom_congestion_change,
+      "Morning peak increase [%] (TomTom)": tomtom_am_peak,
+      "Evening peak increase [%] (TomTom)": tomtom_pm_peak,
+      "Human Capital index (IESE)": iese_human,
+      "Social Cohesion index (IESE)": iese_cohesion,
+      "Economy index (IESE)": iese_economy,
+      "Public Management index (IESE)": iese_management,
+      "Governance index (IESE)": iese_gov,
+      "Environment index (IESE)": iese_env,
+      "Mobility and Transportation index (IESE)": iese_transport,
+      "Urban Planning index (IESE)": iese_urban,
+      "International Impact index (IESE)": iese_intl,
+      "Technology index (IESE)": iese_tech,
+      "Cities in Motion index (IESE)": iese_cimi,
+      "CIMI ranking (IESE)": iese_cimi_rank 
     };
   })
-  // console.log("data_GHG", data_GHG)
+
 
 } // ./setupData()
 
