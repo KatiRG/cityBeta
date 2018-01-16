@@ -510,19 +510,14 @@ function ghgBarChart() {
        
         if (this_dim === "Scope1/GDP") {
           console.log("this_dim here: ", this_dim)
-        } else { //Scope1/cap
           console.log('d.city: ', d.city)
-          console.log("d[this_dim]: ", d[this_dim])
-          console.log("y(d[this_dim]): ", y(d[this_dim]))
-          return y(d[this_dim]); 
-        }
-        // if ( isNaN(d[this_dim]) ) {
-        //   console.log("isNaN")
-        // }
-
-        // if ( !isNaN(d[this_dim]) ) {
-        //   return y(d[this_dim]);
-        // }
+          if ( isNaN(d[this_dim]) ) console.log('here')
+          else {
+            console.log("isNaN")
+            console.log("***d[this_dim]: ", d[this_dim])
+          }
+        } else return y(d[this_dim]); //Scope1/cap
+       
       })
       .attr("height", function(d) { return height - y(d[this_dim]); })
       .attr("fill", function (d) {
