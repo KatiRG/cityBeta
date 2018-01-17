@@ -79,24 +79,24 @@
             <ul class="nytg-sort" style='position: absolute; left: 463px; top: 6px;'>
               <li id="barButton">Scope1/GDP</li>
             </ul>
-          </div> 
+          </div> <!-- ./div EU chart -->
 
         </div> <!-- ./sub-row EU chart -->
 
         <div class="row">
-           <div id="barChart_USACanAusNZ"> barchart for USACanAusNZ</div>
+           <div id="barChart_USACanAusNZ"></div>
         </div> <!-- ./sub-row USA chart -->
 
         <div class="row">
-           <div id="barChart_AfricaAsia"> barchart for AfricaAsia</div>
+           <div id="barChart_AfricaAsia"></div>
         </div> <!-- ./sub-row AA chart -->
 
         <div class="row">
           <div class="col-lg-8">
-            <div id="barChart_LatinAmer"> barchart for LatinAmer</div>
+            <div id="barChart_LatinAmer"></div>
           </div>
           <div class="col-lg-4">
-            <div id="barChart_Nordics"> barchart for Nordics</div>
+            <div id="barChart_Nordic"></div>
           </div> 
         </div> <!-- ./sub-row LatinAmer and Nordics chart -->
 
@@ -191,16 +191,16 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
 
   setupData(ghg);
   // drawMap();
-  //ghgBarChart_bk();
   emissionsBarChart("groupEurope", "#barChart_EU");
-
+  emissionsBarChart("groupUSAAusNZ", "#barChart_USACanAusNZ");
+  emissionsBarChart("groupAfricaAsia", "#barChart_AfricaAsia");
+  emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
+  emissionsBarChart("groupNordic", "#barChart_Nordic");
 }); // ./d3.csv for emissions data
 
 // ----------------------------------------------------
 // Functions
 // ----------------------------------------------------
-
-
 
 // d3js World Map
 //------------------
@@ -468,7 +468,7 @@ function emissionsBarChart(geogroup_data, geogroup_id) {
         idName = format_idName(d);
         return "tick" + idName;
       })
-      .attr("y", -3)
+      .attr("y", -3) //-3
       .attr("x", 7)
       .attr("dy", "12px")
       .attr("transform", "rotate(45)")
@@ -482,7 +482,7 @@ function emissionsBarChart(geogroup_data, geogroup_id) {
       .call(yAxis)
     .append("text")
       .attr("transform", "rotate(-90)")
-      .attr("y", -33)  //6
+      .attr("y", -33)
       .attr("dy", ".71em")
       .style("text-anchor", "end")      
       .text(this_dim + " " + dimUnits[this_dim])
@@ -498,7 +498,7 @@ function emissionsBarChart(geogroup_data, geogroup_id) {
       })
       .attr("x", function (d) { return x(d.city); })
       .attr("width", x.bandwidth())
-      .attr("y", function (d, i) {
+      .attr("y", function (d, i) {        
        
         if (this_dim === "Scope1/GDP") {
           console.log("this_dim here: ", this_dim)
