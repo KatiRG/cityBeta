@@ -491,8 +491,8 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   y.domain([0, d3.max(emissions_scaled, function(d) { return d[this_dim]; })]);
 
   //https://bl.ocks.org/veltman/5cd1ba0b3c623e7b5146
-  var scale = width / container.node().getBoundingClientRect().width;
-  console.log('scale: ', scale)
+  var myscale = width / container.node().getBoundingClientRect().width;
+  console.log('myscale: ', myscale)
 
   svgBarChart.append("g")
       .attr("class", "x axis")
@@ -517,12 +517,12 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("class", "y axis")
       .call(yAxis)
     .append("text")
-      .attr("transform", "rotate(-90)")
+      //.attr("transform", "rotate(-90)")
       .attr("y", -33)
       .attr("dy", ".71em")
       //.attr("transform","scale(" + 1.4 + " " + 1.4 + ")")
       .style("text-anchor", "end")      
-      .text(function () {
+      .text(function () { //y-axis label
         if (geogroup_name === "groupUSAAusNZ") return this_dim + " " + dimUnits[this_dim]; 
       })
       .attr("transform",function () {
@@ -671,236 +671,6 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   //         .text("avg for countries in region");
 
 } // ./fn emissionsBarChart()
-
-function ghgBarChart_bk() {
-  // Remove any previous bar chart
-  d3.select("#barChart_EU").select("svg").remove();
-  
-  // Colour mapping for dim = GHG_cap  
-  this_dim = (d3.select("#barButton").text() === "Scope1/GDP") ?
-                      "Scope1/capita" : "Scope1/GDP";
-  d3.select("#regionLabel").text(this_dim + " " + dimUnits[this_dim]
-    + " emissions grouped by world region");
-  console.log("this_dim: ", this_dim)
-
-  //https://bl.ocks.org/seemantk/ec245e1f4e824e685982dd5d3fbb2fcc
-  var margin = {top: 20, right: 20, bottom: 70, left: 40},
-      width = 700 - margin.left - margin.right,
-      height = 300 - margin.top - margin.bottom;
-
-  // Extract data by region
-  ghg = sortByRegion("groupEurope");
-  ghg_usaAusNZ = sortByRegion("groupUSAAusNZ");
-  ghg_africaAsia = sortByRegion("groupAfricaAsia");
-  ghg_latinAmer = sortByRegion("groupLatinAmer");
-  ghg_nordic = sortByRegion("groupNordic");
-
-  // Sort columns in each region
-  ghg.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-  ghg_usaAusNZ.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-  ghg_africaAsia.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-  ghg_nordic.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-  ghg_latinAmer.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-   
- 
-  var x = d3.scaleBand()
-            .rangeRound([0, width], .1)
-            .paddingInner(0.1);
-
-  var y = d3.scaleLinear()
-            .range([height, 0]);
-
-  var xAxis = d3.axisBottom()
-    .scale(x);
-
-  var yAxis = d3.axisLeft()
-    .scale(y)
-    // .ticks(10, "%");
-    .ticks(10);
-
-  var svgBarChart = d3.select("#barChart_EU").append("svg").attr("class", "barSVG")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-  var barRegionLabel = svgBarChart.append("g")
-          .append("text")
-          .attr("class", "barChartRegionLabel");
-
-  x.domain(ghg.map(function (d) {
-    return d.city;
-  }));
-  y.domain([0, d3.max(ghg, function(d) { return d[this_dim]; })]);
-
-  svgBarChart.append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
-      .call(xAxis)
-      .selectAll("text")
-      .attr("id", function (d) {
-        idName = format_idName(d);
-        return "tick" + idName;
-      })
-      .attr("y", -3)
-      .attr("x", 7)
-      .attr("dy", "12px")
-      .attr("transform", "rotate(45)")
-      .style("text-anchor", "start")
-      .style("fill", function (d) {
-        return "#636363";
-      });
-
-  svgBarChart.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-    .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", -33)  //6
-      .attr("dy", ".71em")
-      .style("text-anchor", "end")      
-      .text(this_dim + " " + dimUnits[this_dim])
-      .style("fill", "#636363");
-
-  svgBarChart.append("g").selectAll(".bar")
-      .data(ghg)
-      .enter().append("rect")
-      .attr("class", "bar")
-      .attr("id", function (d) {
-        idName = format_idName(d.city);
-        return "bar" + idName;
-      })
-      .attr("x", function (d) { return x(d.city); })
-      .attr("width", x.bandwidth())
-      .attr("y", function (d, i) {
-       
-        if (this_dim === "Scope1/GDP") {
-          console.log("this_dim here: ", this_dim)
-          console.log('d.city: ', d.city)
-          if ( isNaN(d[this_dim]) ) console.log('here')
-          else {
-            console.log("isNaN")
-            console.log("***d[this_dim]: ", d[this_dim])
-          }
-        } else return y(d[this_dim]); //Scope1/cap
-       
-      })
-      .attr("height", function(d) { return height - y(d[this_dim]); })
-      .attr("fill", function (d) {
-        return regionColourMap[d.region];
-      });
-  //     .on("touchmove mousemove", function (d) {
-
-
-
-  //       idName = format_idName(d.city);
-  //       // highlightElements(idName, d.country);
-  //       highlightElements(idName);
-        
-  //       // Enlarge city label of selected bar
-  //       d3.select("#tick" + idName).style("font-size", "16px");
-
-  //       // Dim opacity of all city labels except current city
-  //       d3.select("#barChart_EU").select(".x.axis")
-  //         .selectAll("text:not(#tick" + idName + ")")
-  //         .style("opacity", 0.2);
-
-  //       // Display region in text label
-  //       updateRegionLabel(d.region);
-  //       var region = d.region;
-  //       barRegionLabel.html(regionLabel_dict[d.region])
-  //         .attr("dx", function () {
-  //           if (region === "groupUSAAusNZ") return "85";
-  //           else if (region === "groupEurope") return "318";
-  //           else if (region === "groupAfricaAsia") return "495";
-  //           else if (region === "groupEast") return "194";
-  //           else if (region === "groupNordic") return "441";
-  //           else if (region === "groupLatinAmer") return "554";
-  //         })
-  //         .attr("dy", function () {
-  //           if (region === "groupUSAAusNZ") return "65";
-  //           else if (region === "groupEurope") return "131";
-  //           else if (region === "groupAfricaAsia") return "80";
-  //           else if (region === "groupEast") return "110";
-  //           else if (region === "groupNordic") return "158";
-  //           else if (region === "groupLatinAmer") return "70";
-  //         });
-
-  //     })
-  //     .on("mouseout", function (d) {
-  //       idName = format_idName(d.city);
-  //       d3.select("#tick" + idName).style("font-size", "10px");
-
-  //       d3.select("#barChart_EU").select(".x.axis")
-  //         .selectAll("text")
-  //         .style("opacity", 1);
-
-  //       resetElements();
-  //     });
-
-  //     // Hide x-axis tick mark for gap bar
-  //     d3.selectAll("#barChart_EU").select(".x.axis").selectAll(".tick")
-  //     .style("opacity", function (d) {
-  //       if (d.includes("gap")) return 0;
-  //     });
-
-  //     // Plot regional avg emissions [tCO2/capita] as a line
-  //     // over each bar group
-  //     var regionalVar = this_dim === "GHG/capita" ? regionalAvgs : regionalAvgs_GDP;
-  //     svgBarChart.append("g").selectAll("line")
-  //       .data(Object.values(regionalVar))
-  //       .enter().append("line")
-  //       .attr("class", "line")
-  //       .style("stroke", "#c5e0dc")
-  //       .style("stroke-width", "2px")
-  //       .attr("x1", function (d, i) {
-  //         if (this_dim === "GHG/capita") {
-  //           if (i === 0) return x("Melbourne");
-  //           else if (i === 1) return x("Ljubljana");
-  //           else if (i === 2) return x("Hong Kong");
-  //           else if (i === 3) return x("Cape Town");
-  //           else if (i === 4) return x("Rio de Janeiro");
-  //         } else {
-  //           if (i === 0) return x("Melbourne");
-  //           else if (i === 1) return x("Ljubljana");
-  //           else if (i === 2) return x("Seoul");
-  //           else if (i === 3) return x("Cape Town");
-  //           else if (i === 4) return x("Bogotá");
-  //         }
-  //       })
-  //       .attr("y1", function (d, i) { return y(d); })
-  //       .attr("x2", function (d, i) {
-  //         if (i === 0) return x("gap");
-  //         else if (i === 1) return x("gap6");
-  //         else if (i === 2) return x("Cape Town");
-  //         else if (i === 3) return x("gap4");
-  //         else if (i === 4) return x("Brasília") + 9;
-  //       })
-  //       .attr("y2", function (d, i) { return y(d); });
-        
-  //       // Legend line + text
-  //       regionalLine = svgBarChart.append("g");
-  //       regionalLine.selectAll("line")
-  //           .data([0])
-  //           .enter().append("line")
-  //           .attr("class", "line")
-  //           .style("stroke", "#c5e0dc")
-  //           .style("stroke-width", "2px")
-  //           .attr("x1", 520)
-  //           .attr("y1", 40)
-  //           .attr("x2", 536)
-  //           .attr("y2", 40);
-
-  //       regionalLine.append("text")
-  //         .attr("class", "textLabels")
-  //         .attr("dx", 352)
-  //         .attr("dy", 43)
-  //         .text("avg for countries in region");
-
-} // ./fn ghgBarChart()
-
-
-
 
 
 </script>
