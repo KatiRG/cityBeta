@@ -171,8 +171,13 @@ d3.select("#barButton")
                       "Scope1/cap" : "Scope1/GDP";
 
     d3.select(this).text(buttonText);
-    // ghgBarChart_bk();
+
+    //Plot emissions bar charts for each geo group    
     emissionsBarChart("groupEurope", "#barChart_EU");
+    emissionsBarChart("groupUSAAusNZ", "#barChart_USACanAusNZ");
+    emissionsBarChart("groupAfricaAsia", "#barChart_AfricaAsia");
+    emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
+    emissionsBarChart("groupNordic", "#barChart_Nordic");
 
   });
 
