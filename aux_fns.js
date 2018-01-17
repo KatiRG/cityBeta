@@ -173,7 +173,7 @@ function resetElements() {
 
 
 //----------------------------------------------
-// Functions for ghgBarChart()
+// Functions for emissionsBarChart()
 //----------------------------------------------
 function sortByRegion(region) {
 
