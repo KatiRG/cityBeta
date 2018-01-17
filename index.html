@@ -522,15 +522,13 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("dy", ".71em")
       //.attr("transform","scale(" + 1.4 + " " + 1.4 + ")")
       .style("text-anchor", "end")      
-      .text(this_dim + " " + dimUnits[this_dim])
+      .text(function () {
+        if (geogroup_name === "groupUSAAusNZ") return this_dim + " " + dimUnits[this_dim]; 
+      })
       .attr("transform",function () {
         var myscale = 1.5;
         var xtrans = 0;
-        var ytrans = 0;
-        if (geogroup_name === "groupEurope") myscale = 1.7;
-        else if (geogroup_name === "groupUSAAusNZ") {myscale = 1.5; ytrans = 10;}
-        else if (geogroup_name === "groupAfricaAsia") myscale = 1.8;
-        else if (geogroup_name === "groupNordic") {myscale = 1.9; xtrans = 10;}
+        var ytrans = 10;
 
         return "scale(" + myscale + " " + myscale + ")"  + "rotate(-90)" 
                         + "translate(" + xtrans + "," + ytrans + ")";
