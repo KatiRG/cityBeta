@@ -74,33 +74,43 @@
 
       <div class="col-lg-7">
         <!--barChart sub-rows-->
+
         <div class="row">
+          <div class="col-lg-6">
+            <div id="barChart_EU">
+              <ul class="nytg-sort" style='position: absolute; left: 463px; top: 6px;'>
+                <li id="barButton">Scope1/GDP</li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div id="barChart_LatinAmer"></div>
+          </div> 
+        </div>
+        
+        <!-- <div class="row">
           <div id="barChart_EU">
             <ul class="nytg-sort" style='position: absolute; left: 463px; top: 6px;'>
               <li id="barButton">Scope1/GDP</li>
             </ul>
-          </div> <!-- ./div EU chart -->
-
-        </div> <!-- ./sub-row EU chart -->
+          </div> 
+        </div> -->
 
         <div class="row">
            <div id="barChart_USACanAusNZ"></div>
         </div> <!-- ./sub-row USA chart -->
 
-        <div class="row">
-           <div id="barChart_AfricaAsia"></div>
-        </div> <!-- ./sub-row AA chart -->
 
         <div class="row">
           <div class="col-lg-8">
-            <div id="barChart_LatinAmer"></div>
+            <div id="barChart_AfricaAsia"></div>
           </div>
           <div class="col-lg-4">
             <div id="barChart_Nordic"></div>
           </div> 
-        </div> <!-- ./sub-row LatinAmer and Nordics chart -->
+        </div> 
 
-      </div> <!-- ./col-lg-6 -->
+      </div> <!-- ./col-lg-7 -->
 
       <div class="col-lg-5">scatter plot here</div>
 
@@ -133,7 +143,8 @@
 var formatDecimalS = d3.format(".2s"); //d3.format(".3n");
 var formatDecimalSci = d3.format(".2n");
 
-
+var container = d3.select("body").append("div")
+    .style("width",width);
 
 // Leaflet map variables
 // ---------------------------------
@@ -411,7 +422,7 @@ function updateRegionLabel(region) {
     // .style("margin-left", "60px");
 }
 
-function emissionsBarChart(geogroup_data, geogroup_id) {
+function emissionsBarChart(geogroup_name, geogroup_id) {
 
   // Remove any previous bar chart
   d3.select(geogroup_id).select("svg").remove();
@@ -424,12 +435,12 @@ function emissionsBarChart(geogroup_data, geogroup_id) {
   console.log("this_dim: ", this_dim)
 
   //https://bl.ocks.org/seemantk/ec245e1f4e824e685982dd5d3fbb2fcc
-  var margin = {top: 10, right: 40, bottom: 70, left: 40},
+  var margin = {top: 35, right: 20, bottom: 40, left: 40},
       width = 700 - margin.left - margin.right,
-      height = 250 - margin.top - margin.bottom;
+      height = 290 - margin.top - margin.bottom;
 
   // Extract scaled emissions data for given region
-  emissions_scaled = sortByRegion(geogroup_data);
+  emissions_scaled = sortByRegion(geogroup_name);
   
   // Sort columns
   emissions_scaled.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
@@ -449,13 +460,22 @@ function emissionsBarChart(geogroup_data, geogroup_id) {
     // .ticks(10, "%");
     .ticks(10);
 
+
   //https://mathisonian.com/writing/easy-responsive-svgs-with-viewbox
-  var aspectRatio= '660:241';
+  //https://jsfiddle.net/fh5kxv3k/
+  var aspectRatio = '660:241';
   var viewBox = '0 0 ' + aspectRatio.split(':').join(' ');
+
+  //chart sizes are ok, but text is stretched. This is a limitation of viewBox for charts. See:
+  //https://medium.com/@maheshsenni/responsive-svg-charts-viewbox-may-not-be-the-answer-aaf9c9bc4ca2
+  //http://www.cagrimmett.com/til/2016/04/26/responsive-d3-bar-chart.html
+  //https://bl.ocks.org/veltman/5cd1ba0b3c623e7b5146
   var svgBarChart = d3.select(geogroup_id).append("svg").attr("class", "barSVG")
     .attr('width', '100%')
-    .attr("height", height + margin.top + margin.bottom)
+    .attr('height', height)    
     .attr('viewBox', viewBox)
+    .attr('viewBox', '0 0 ' +  ( width + margin.left + margin.right ) + ' ' + ( height  + margin.top + margin.bottom ) )
+    .attr('preserveAspectRatio', 'none')
     // .attr("width", width + margin.left + margin.right)
     // .attr("height", height + margin.top + margin.bottom)
     .append("g")
@@ -470,6 +490,10 @@ function emissionsBarChart(geogroup_data, geogroup_id) {
   }));
   y.domain([0, d3.max(emissions_scaled, function(d) { return d[this_dim]; })]);
 
+  //https://bl.ocks.org/veltman/5cd1ba0b3c623e7b5146
+  var scale = width / container.node().getBoundingClientRect().width;
+  console.log('scale: ', scale)
+
   svgBarChart.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
@@ -482,8 +506,9 @@ function emissionsBarChart(geogroup_data, geogroup_id) {
       .attr("y", -3) //-3
       .attr("x", 7)
       .attr("dy", "12px")
-      .attr("transform", "rotate(45)")
-      .style("text-anchor", "start")
+      .attr("transform","scale(" + 1.5 + " " + 1.5 + ")" )// + "rotate(15)")
+      //.attr("transform", "rotate(45)")
+      .style("text-anchor", "middle")  //.style("text-anchor", "start")
       .style("fill", function (d) {
         return "#636363";
       });
@@ -495,8 +520,21 @@ function emissionsBarChart(geogroup_data, geogroup_id) {
       .attr("transform", "rotate(-90)")
       .attr("y", -33)
       .attr("dy", ".71em")
+      //.attr("transform","scale(" + 1.4 + " " + 1.4 + ")")
       .style("text-anchor", "end")      
       .text(this_dim + " " + dimUnits[this_dim])
+      .attr("transform",function () {
+        var myscale = 1.5;
+        var xtrans = 0;
+        var ytrans = 0;
+        if (geogroup_name === "groupEurope") myscale = 1.7;
+        else if (geogroup_name === "groupUSAAusNZ") {myscale = 1.5; ytrans = 10;}
+        else if (geogroup_name === "groupAfricaAsia") myscale = 1.8;
+        else if (geogroup_name === "groupNordic") {myscale = 1.9; xtrans = 10;}
+
+        return "scale(" + myscale + " " + myscale + ")"  + "rotate(-90)" 
+                        + "translate(" + xtrans + "," + ytrans + ")";
+      })
       .style("fill", "#636363");
 
   svgBarChart.append("g").selectAll(".bar")
