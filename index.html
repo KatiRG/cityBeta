@@ -424,9 +424,9 @@ function emissionsBarChart(geogroup_data, geogroup_id) {
   console.log("this_dim: ", this_dim)
 
   //https://bl.ocks.org/seemantk/ec245e1f4e824e685982dd5d3fbb2fcc
-  var margin = {top: 20, right: 20, bottom: 70, left: 40},
+  var margin = {top: 10, right: 40, bottom: 70, left: 40},
       width = 700 - margin.left - margin.right,
-      height = 300 - margin.top - margin.bottom;
+      height = 250 - margin.top - margin.bottom;
 
   // Extract scaled emissions data for given region
   emissions_scaled = sortByRegion(geogroup_data);
@@ -449,9 +449,15 @@ function emissionsBarChart(geogroup_data, geogroup_id) {
     // .ticks(10, "%");
     .ticks(10);
 
+  //https://mathisonian.com/writing/easy-responsive-svgs-with-viewbox
+  var aspectRatio= '660:241';
+  var viewBox = '0 0 ' + aspectRatio.split(':').join(' ');
   var svgBarChart = d3.select(geogroup_id).append("svg").attr("class", "barSVG")
-    .attr("width", width + margin.left + margin.right)
+    .attr('width', '100%')
     .attr("height", height + margin.top + margin.bottom)
+    .attr('viewBox', viewBox)
+    // .attr("width", width + margin.left + margin.right)
+    // .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
