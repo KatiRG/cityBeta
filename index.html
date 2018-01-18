@@ -470,6 +470,9 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   //https://medium.com/@maheshsenni/responsive-svg-charts-viewbox-may-not-be-the-answer-aaf9c9bc4ca2
   //http://www.cagrimmett.com/til/2016/04/26/responsive-d3-bar-chart.html
   //https://bl.ocks.org/veltman/5cd1ba0b3c623e7b5146
+
+  //Fit barCharts responsively using viewBox
+  //NB: viewBox stretches text labels as well, so they must be fixed later by adjusting the scale
   var svgBarChart = d3.select(geogroup_id).append("svg").attr("class", "barSVG")
     .attr('width', '100%')
     .attr('height', height)    
@@ -499,20 +502,28 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis)
       .selectAll("text")
+      .text(function (d) {
+        if (d.indexOf(', ') >= 0) abbr = d.substring(0,3);
+        else if (d.indexOf(' ') >= 0) abbr = d.match(/\b\w/g).join(' ');
+        else abbr = d.substring(0,3);
+
+        return abbr;
+      })
       .attr("id", function (d) {
         idName = format_idName(d);
         return "tick" + idName;
       })
-      .attr("y", -3) //-3
+      .attr("y", -3)
       .attr("x", 7)
       .attr("dy", "12px")
-      .attr("transform","scale(" + 1.5 + " " + 1.5 + ")" )// + "rotate(15)")
-      //.attr("transform", "rotate(45)")
-      .style("text-anchor", "middle")  //.style("text-anchor", "start")
+      .attr("transform","scale(" + 0.9 + " " + 1.2 + ")" + "rotate(70)")
+      .style("text-anchor", "start")  //"middle"
       .style("fill", function (d) {
         return "#636363";
       });
+      //
 
+  //Display y-axis label
   svgBarChart.append("g")
       .attr("class", "y axis")
       .call(yAxis)
@@ -521,7 +532,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("y", -33)
       .attr("dy", ".71em")
       .style("text-anchor", "end")      
-      .text(function () { //y-axis label
+      .text(function () { 
         if (geogroup_name === "groupUSAAusNZ") return this_dim + " " + dimUnits[this_dim]; 
       })
       .attr("transform",function () {
@@ -534,72 +545,93 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       })
       .style("fill", "#636363");
 
-  // //scale up y-axis tick labels
-  // svgBarChart.select("g")
-  //   .attr("transform",function () {
-  //       var myscale = 1.5;
-  //       var xtrans = 0;
-  //       var ytrans = 10;
-
-  //       return "scale(" + myscale + " " + myscale + ")"  
-  //                       + "translate(" + xtrans + "," + ytrans + ")";
-  //     });
-
-  // d3.select("#barChart_Nordic").select('.barSVG')
-  //   .select('g .y.axis .tick')  //selects 0
-  //    .attr("transform", "scale(" + 5.5 + " " + 1.5 + ")" + "translate(" + 0 + "," + 143 + ")" );
-
-  // d3.select("#barChart_Nordic").select('.barSVG').select('g .y.axis .tick') //get all the nodes
-  //   .each(function(d) {
-  //     console.log("d in loop: ", d)
-  //     console.log("this: ", this)
-  //     console.log("this.attributes: ", this.attributes)
-  //     console.log("this.attributes.transform.value: ", this.attributes.transform.value)
-  //   });
-
-  //Scale up barChart y-axis so that it is more clearly visible
-  // xfactor_array = [3, 3, x, 2.5, 5.5];
-  // yfactor = 1.5;
+  //-----------------------------------------------------------------------------------------
+  //Visual fixes
+  //1. Enlarge barChart y-axis tick labels then fix position
 
   //https://stackoverflow.com/questions/27405377/iterate-over-already-created-nodes-in-d3js
-  //AfricaAsia
   var yfactor = 1.5;
-  //if (geogroup_id === "#barChart_USACanAusNZ") {
-    d3.select(geogroup_id).select('.barSVG').selectAll('g .y.axis .tick') //get all the nodes
+  d3.select(geogroup_id).select('.barSVG').selectAll('g .y.axis .tick') //get all the nodes
     .each(function(d) {
-      //x and y scale factors
+      //x scale factor
       var xfactor = xScaleFactor[geogroup_id];
      
+      // console.log("start loop")
+      // console.log("d in selectAll loop: ", d)
+      // console.log("this in selectAll loop: ", this)
+      // console.log("this.attributes: ", this.attributes)
+      // console.log("this.attributes.transform.value: ", this.attributes.transform.value)
 
-      console.log("start loop")
-      console.log("xScaleFactor[]: ", xScaleFactor[geogroup_id])
-      console.log("d in selectAll loop: ", d)
-      console.log("this in selectAll loop: ", this)
-      console.log("this.attributes: ", this.attributes)
-      console.log("this.attributes.transform.value: ", this.attributes.transform.value)
+      orig_ypos_str = this.attributes.transform.value.toString();
+      // console.log("orig transform value: ", orig_ypos_str)
 
-      junk = this.attributes.transform.value.toString();
-      console.log("orig transform value: ", junk)
+      orig_ypos = parseFloat(orig_ypos_str.split(",")[1].split(")")[0]);
+      new_ypos = orig_ypos/yfactor;
 
-      ypos = parseFloat(junk.split(",")[1].split(")")[0]);
-      new_ypos = ypos/yfactor;
+      // console.log("orig ypos: ", orig_ypos)
+      // console.log("new_ypos: ", new_ypos)
 
-      console.log("ypos: ", ypos)
-      console.log("new_ypos: ", new_ypos)
-
-      console.log("d3.select(this): ", d3.select(this))
+      // console.log("d3.select(this): ", d3.select(this))
 
       d3.select(this)
         .attr("transform", "scale(" + xfactor + " " + yfactor + ")" 
                           + "translate(" + 0 + "," + new_ypos + ")" );
 
 
-      after = this.attributes.transform.value.toString();
-      console.log("this after: ", this)
-      console.log("after transform value: ", after)  
-   
+      // after = this.attributes.transform.value.toString();
+      // console.log("this after: ", this)
+      // console.log("after transform value: ", after)  
+ 
     });
-  //} //if
+
+  //2. Make barChart x-axis tick labels reradable
+  if (geogroup_id === "#barChart_USACanAusNZ") {
+  d3.select("#barChart_USACanAusNZ").select('.barSVG').selectAll('g .x.axis .tick text') //get all the nodes
+    .each(function(d) {
+      if (d==="Cleveland" || d==="Las Vegas") {
+     
+      //x scale factor
+      var yfactor = 1;
+      var xfactor = 1;
+     
+      console.log("start loop")
+      console.log("d in selectAll loop: ", d)
+      console.log("this in selectAll loop: ", this)
+      console.log("this.attributes: ", this.attributes)
+      // console.log("this.attributes.transform.value: ", this.attributes.transform.value)
+
+      // orig_ypos_str = this.attributes.transform.value.toString();
+      // console.log("orig transform value: ", orig_ypos_str)
+
+      // orig_ypos = parseFloat(orig_ypos_str.split(",")[1].split(")")[0]);
+      // new_ypos = orig_ypos/yfactor;
+
+      // console.log("orig ypos: ", orig_ypos)
+      // console.log("new_ypos: ", new_ypos)
+
+      // console.log("d3.select(this): ", d3.select(this))
+
+      // d3.select(this)
+      //   .attr("transform", "scale(" + xfactor + " " + yfactor + ")" 
+      //                     + "translate(" + 0 + "," + new_ypos + ")" );
+
+      // var transX = { "Cleveland": 64, "Las Vegas": 79  };
+      // var transY = { "Cleveland": 3, "Las Vegas": 3 };
+      // d3.select(this)
+      //   .attr("transform", "scale(" + .55 + " " + 1 + ")"  +
+      //                      "translate(" + transX[d] + "," + 0 + ")" );
+       
+  
+      // after = this.attributes.transform.value.toString();
+      // console.log("this after: ", this)
+      // console.log("after transform value: ", after)  
+    
+    }//if d
+ 
+    });
+    }//if
+
+  // ./Visual Fixes/----------------------------------------------------------------------------------
 
 
   svgBarChart.append("g").selectAll(".bar")
