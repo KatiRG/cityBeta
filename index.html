@@ -459,6 +459,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
     .scale(y)
     // .ticks(10, "%");
     .ticks(5);
+    // .tickPadding(30);
 
 
   //https://mathisonian.com/writing/easy-responsive-svgs-with-viewbox
@@ -520,16 +521,11 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
         xscale=1.9; yscale=1.4; rot=70;
         xtrans=0; ytrans=0;
-
-        console.log("d: ", d)
-        console.log("this: ", this)
-        // if (data_GHG.filter(x => x.city === d).map(x => x.region)[0]) === "groupUSAAusNZ") {x=0.9; y=1.2; r=70;}
-
+       
         curr_region = data_GHG.filter(x => x.city === d).map(x => x.region)[0].toString();
-        console.log("filter: ", curr_region)
+        
         if (curr_region === "groupUSAAusNZ") {xscale=0.9; yscale=1.2; rot=70;}
         else if (curr_region === "groupNordic") {xscale=4; yscale=2; rot=20; xtrans=-14;}
-
         
         return "scale(" + xscale + " " + yscale + ")" + "rotate(" + rot + ")" +
                 "translate(" + xtrans + " " + ytrans + ")" ;
@@ -569,7 +565,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   //https://stackoverflow.com/questions/27405377/iterate-over-already-created-nodes-in-d3js
   var yfactor = 1.5;
   d3.select(geogroup_id).select('.barSVG').selectAll('g .y.axis .tick') //get all the nodes
-    .each(function(d) {
+    .each(function (d) {
       //x scale factor
       var xfactor = xScaleFactor[geogroup_id];
      
@@ -601,52 +597,41 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
  
     });
 
-  //2. Make barChart x-axis tick labels reradable
-  if (geogroup_id === "#barChart_USACanAusNZ") {
-  d3.select("#barChart_USACanAusNZ").select('.barSVG').selectAll('g .x.axis .tick text') //get all the nodes
-    .each(function(d) {
-      if (d==="Cleveland" || d==="Las Vegas") {
-     
-      //x scale factor
-      var yfactor = 1;
-      var xfactor = 1;
-     
-      console.log("start loop")
-      console.log("d in selectAll loop: ", d)
-      console.log("this in selectAll loop: ", this)
-      console.log("this.attributes: ", this.attributes)
-      // console.log("this.attributes.transform.value: ", this.attributes.transform.value)
+    //2. fix y-axis gap in USACanAusNZ barChart
+    var delyax = 11; //amount to shift y-axis H value to align with the other barCharts
 
-      // orig_ypos_str = this.attributes.transform.value.toString();
-      // console.log("orig transform value: ", orig_ypos_str)
+    if (geogroup_id === "#barChart_USACanAusNZ") {
+      d3.select(geogroup_id).select('.barSVG')
+        .select("g .y.axis path")
+        .attr("d", function (d) {
+          console.log("d: ", d)
+          console.log("this: ", this) 
+          console.log("this.attributes.d.value: ", this.attributes.d.value)
+          console.log(d3.select(this))
+          // return line(d.values); 
+        })
+    }
 
-      // orig_ypos = parseFloat(orig_ypos_str.split(",")[1].split(")")[0]);
-      // new_ypos = orig_ypos/yfactor;
+    // if (geogroup_id === "#barChart_USACanAusNZ") {
+    //   d3.select(geogroup_id).select('.barSVG').select('g .y.axis path') //get all the nodes
+    //   .each(function (d) {
+    //     console.log("d: ", d)
+    //     console.log("this: ", this)
+    //     console.log("select this: ", d3.select(this))
+    //     console.log("this.attributes: ", this.attributes)
+    //     console.log("this.attributes.d: ", this.attributes.d)
+    //     console.log("this.attributes.d.value: ", this.attributes.d.value)
+    //     console.log("this.attributes.d.value[10]: ", this.attributes.d.value[0])
 
-      // console.log("orig ypos: ", orig_ypos)
-      // console.log("new_ypos: ", new_ypos)
+    //     pathstr = this.attributes.d.value;
+    //     console.log("pathstr before: ", pathstr)
+    //     pathstr.replace("H0.5", "H11.5");
+    //     console.log("pathstr after: ", pathstr)
 
-      // console.log("d3.select(this): ", d3.select(this))
-
-      // d3.select(this)
-      //   .attr("transform", "scale(" + xfactor + " " + yfactor + ")" 
-      //                     + "translate(" + 0 + "," + new_ypos + ")" );
-
-      // var transX = { "Cleveland": 64, "Las Vegas": 79  };
-      // var transY = { "Cleveland": 3, "Las Vegas": 3 };
-      // d3.select(this)
-      //   .attr("transform", "scale(" + .55 + " " + 1 + ")"  +
-      //                      "translate(" + transX[d] + "," + 0 + ")" );
-       
-  
-      // after = this.attributes.transform.value.toString();
-      // console.log("this after: ", this)
-      // console.log("after transform value: ", after)  
-    
-    }//if d
- 
-    });
-    }//if
+    //     console.log("AFTER this.attributes.d.value: ", this.attributes.d.value)
+        
+    //   });
+    // } //if
 
   // ./Visual Fixes/----------------------------------------------------------------------------------
 
