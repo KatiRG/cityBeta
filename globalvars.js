@@ -60,7 +60,12 @@ var usaAusNZ = ["Phoenix", "Austin", "Houston",
                       "Moscow", "Montreal", "Toronto", "Denver", "Boulder",
                       "Ottawa", "Fort Collins", "Minneapolis", "Calgary"];
 
-
+//x-Scale factors for barChart y-axis tick labels
+var xScaleFactor = {
+  "#barChart_EU": 3, "#barChart_LatinAmer": 3,
+  "#barChart_USACanAusNZ": 1.2, 
+  "#barChart_AfricaAsia": 2.5, "#barChart_Nordic": 5.5  
+}
 
  var europe = ["Amsterdam", "Athens", "Barcelona", "Barnsley, Doncaster and Rotherham", 
 "Bath and North East Somerset, North Somerset and South Gloucestershire", "Bedfordshire CC", "Belfast", 

@@ -490,9 +490,9 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   }));
   y.domain([0, d3.max(emissions_scaled, function(d) { return d[this_dim]; })]);
 
-  //https://bl.ocks.org/veltman/5cd1ba0b3c623e7b5146
-  var myscale = width / container.node().getBoundingClientRect().width;
-  console.log('myscale: ', myscale)
+  // //https://bl.ocks.org/veltman/5cd1ba0b3c623e7b5146
+  // var myscale = width / container.node().getBoundingClientRect().width;
+  // console.log('myscale: ', myscale)
 
   svgBarChart.append("g")
       .attr("class", "x axis")
@@ -557,20 +557,29 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   //     console.log("this.attributes.transform.value: ", this.attributes.transform.value)
   //   });
 
+  //Scale up barChart y-axis so that it is more clearly visible
+  // xfactor_array = [3, 3, x, 2.5, 5.5];
+  // yfactor = 1.5;
+
   //https://stackoverflow.com/questions/27405377/iterate-over-already-created-nodes-in-d3js
-  d3.select("#barChart_Nordic").select('.barSVG').selectAll('g .y.axis .tick') //get all the nodes
+  //AfricaAsia
+  var yfactor = 1.5;
+  //if (geogroup_id === "#barChart_USACanAusNZ") {
+    d3.select(geogroup_id).select('.barSVG').selectAll('g .y.axis .tick') //get all the nodes
     .each(function(d) {
       //x and y scale factors
-      var xfactor = 5.5;
-      var yfactor = 1.5;
+      var xfactor = xScaleFactor[geogroup_id];
+     
 
+      console.log("start loop")
+      console.log("xScaleFactor[]: ", xScaleFactor[geogroup_id])
       console.log("d in selectAll loop: ", d)
       console.log("this in selectAll loop: ", this)
       console.log("this.attributes: ", this.attributes)
       console.log("this.attributes.transform.value: ", this.attributes.transform.value)
 
       junk = this.attributes.transform.value.toString();
-      console.log("junk: ", junk)
+      console.log("orig transform value: ", junk)
 
       ypos = parseFloat(junk.split(",")[1].split(")")[0]);
       new_ypos = ypos/yfactor;
@@ -583,8 +592,14 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       d3.select(this)
         .attr("transform", "scale(" + xfactor + " " + yfactor + ")" 
                           + "translate(" + 0 + "," + new_ypos + ")" );
+
+
+      after = this.attributes.transform.value.toString();
+      console.log("this after: ", this)
+      console.log("after transform value: ", after)  
    
     });
+  //} //if
 
 
   svgBarChart.append("g").selectAll(".bar")
