@@ -516,7 +516,24 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("y", -3)
       .attr("x", 7)
       .attr("dy", "12px")
-      .attr("transform","scale(" + 0.9 + " " + 1.2 + ")" + "rotate(70)")
+      .attr("transform", function (d) {
+
+        xscale=1.9; yscale=1.4; rot=70;
+        xtrans=0; ytrans=0;
+
+        console.log("d: ", d)
+        console.log("this: ", this)
+        // if (data_GHG.filter(x => x.city === d).map(x => x.region)[0]) === "groupUSAAusNZ") {x=0.9; y=1.2; r=70;}
+
+        curr_region = data_GHG.filter(x => x.city === d).map(x => x.region)[0].toString();
+        console.log("filter: ", curr_region)
+        if (curr_region === "groupUSAAusNZ") {xscale=0.9; yscale=1.2; rot=70;}
+        else if (curr_region === "groupNordic") {xscale=4; yscale=2; rot=20; xtrans=-14;}
+
+        
+        return "scale(" + xscale + " " + yscale + ")" + "rotate(" + rot + ")" +
+                "translate(" + xtrans + " " + ytrans + ")" ;
+      })
       .style("text-anchor", "start")  //"middle"
       .style("fill", function (d) {
         return "#636363";
