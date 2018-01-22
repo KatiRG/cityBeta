@@ -66,8 +66,11 @@
     <div class="row">
       <div class="col-lg-7">
         <div id="regionLabel"style='text-align: justify'></div>
-          <ul class="nytg-sort" style='position: absolute; left: 522px; top: 0px;'>
-              <li id="barButton">Scope1/GDP-PPP</li>
+          <ul class="nytg-sort" style='position: absolute; left: 435px; top: 0px;'>
+              <li id="gdpButton">Scope1/GDP-PPP</li>
+          </ul>
+          <ul class="nytg-sort" style='position: absolute; left: 555px; top: 0px;'>
+              <li id="reorderButton" style="display: none;">Re-order</li>
           </ul>
       </div>
 
@@ -161,10 +164,10 @@ d3.select("#infoText")
 
 
 // Select data type for bar chart
-d3.select("#barButton")
+d3.select("#gdpButton")
   .on("click", function() {
     var buttonText = (d3.select(this).text() === "Scope1/GDP-PPP") ?
-                      "Scope1/cap" : "Scope1/GDP-PPP";
+                      "Scope1/capita" : "Scope1/GDP-PPP";
 
     d3.select(this).text(buttonText);
 
@@ -175,6 +178,10 @@ d3.select("#barButton")
     emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
     emissionsBarChart("groupNordic", "#barChart_Nordic");
 
+    //(de-)activate reorder button if ("Scope1/capita")"Scope1/GDP-PPP" is being displayed
+    var reorderState = (buttonText === "Scope1/capita") ? "block" : "none";
+    d3.select("#reorderButton").style("display", reorderState);
+     
   });
 
 // // Map reset button
@@ -413,7 +420,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   d3.select(geogroup_id).select("svg").remove();
   
   // Colour mapping for dim = GHG_cap  
-  this_dim = (d3.select("#barButton").text() === "Scope1/GDP-PPP") ?
+  this_dim = (d3.select("#gdpButton").text() === "Scope1/GDP-PPP") ?
                       "Scope1/capita" : "Scope1/GDP-PPP";
   d3.select("#regionLabel").text(this_dim + " " + dimUnits[this_dim]
     + " emissions grouped by world region");
