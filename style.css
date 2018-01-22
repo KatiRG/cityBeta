@@ -120,8 +120,11 @@ div.rtooltip {
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke: #636363;
   shape-rendering: crispEdges;
+}
+.axis text {
+  fill: #636363;
 }
 .x.axis path {
   display: none;
