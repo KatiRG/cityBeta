@@ -67,7 +67,7 @@
       <div class="col-lg-7">
         <div id="regionLabel"style='text-align: justify'></div>
           <ul class="nytg-sort" style='position: absolute; left: 522px; top: 0px;'>
-              <li id="barButton">Scope1/GDP</li>
+              <li id="barButton">Scope1/GDP-PPP</li>
           </ul>
       </div>
 
@@ -163,8 +163,8 @@ d3.select("#infoText")
 // Select data type for bar chart
 d3.select("#barButton")
   .on("click", function() {
-    var buttonText = (d3.select(this).text() === "Scope1/GDP") ?
-                      "Scope1/cap" : "Scope1/GDP";
+    var buttonText = (d3.select(this).text() === "Scope1/GDP-PPP") ?
+                      "Scope1/cap" : "Scope1/GDP-PPP";
 
     d3.select(this).text(buttonText);
 
@@ -413,8 +413,8 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   d3.select(geogroup_id).select("svg").remove();
   
   // Colour mapping for dim = GHG_cap  
-  this_dim = (d3.select("#barButton").text() === "Scope1/GDP") ?
-                      "Scope1/capita" : "Scope1/GDP";
+  this_dim = (d3.select("#barButton").text() === "Scope1/GDP-PPP") ?
+                      "Scope1/capita" : "Scope1/GDP-PPP";
   d3.select("#regionLabel").text(this_dim + " " + dimUnits[this_dim]
     + " emissions grouped by world region");
   console.log("this_dim: ", this_dim)
@@ -448,7 +448,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
     // .ticks(10, "%");
     .ticks(5)
     .tickFormat(function(d) { 
-      if (this_dim === 'Scope1/GDP') return formatDecimalk(d);
+      if (this_dim === 'Scope1/GDP-PPP') return formatDecimalk(d);
       else return d;
     })
     .tickPadding(2);
@@ -635,7 +635,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("width", x.bandwidth())
       .attr("y", function (d, i) {        
        
-        // if (this_dim === "Scope1/GDP") {
+        // if (this_dim === "Scope1/GDP-PPP") {
         //   console.log("this_dim here: ", this_dim)
         //   console.log('d.city: ', d.city)
         //   if ( !isNaN(d[this_dim]) ) {
