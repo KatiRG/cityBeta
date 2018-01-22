@@ -113,15 +113,6 @@
       
     </div> <!-- ./row 4-->
 
-
-
-
-
-
-
-
-
-
 </div>  <!-- ./container -->
 
 
@@ -181,6 +172,19 @@ d3.select("#gdpButton")
     //(de-)activate reorder button if ("Scope1/capita")"Scope1/GDP-PPP" is being displayed
     var reorderState = (buttonText === "Scope1/capita") ? "block" : "none";
     d3.select("#reorderButton").style("display", reorderState);
+     
+  });
+
+// Re-order barChart of emissions/GDP-PPP according to emissions/capita
+d3.select("#reorderButton")
+  .on("click", function() {
+    // Toggle re-order button text for each click
+    var buttonText = (d3.select(this).text() === "Re-order") ?
+                      "orig order" : "Re-order";
+    d3.select(this).text(buttonText);
+
+    //Re-order Scope1/GDP-PPP according to Scope1/capita    
+    emissionsBarChart("groupEurope", "#barChart_EU");
      
   });
 
@@ -419,7 +423,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   // Remove any previous bar chart
   d3.select(geogroup_id).select("svg").remove();
   
-  // Colour mapping for dim = GHG_cap  
+  // barChart title in #regionLabel div
   this_dim = (d3.select("#gdpButton").text() === "Scope1/GDP-PPP") ?
                       "Scope1/capita" : "Scope1/GDP-PPP";
   d3.select("#regionLabel").text(this_dim + " " + dimUnits[this_dim]
@@ -434,12 +438,33 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   // Extract scaled emissions data for given region
   // Omit cities for which GDP-PPP is missing
   emissions_scaled = sortByRegion(geogroup_name, this_dim);
+
   
   // Sort columns
   emissions_scaled.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-  // console.log("after sort: ", emissions_scaled)
+  console.log("after sort: ", emissions_scaled)
   // console.log("val: ", emissions_scaled.map(x => x[this_dim])  )
-  
+
+  // Get city order of Scope/capita
+  if (d3.select("#reorderButton").text() === "orig order") {
+    var city_order = [];
+    var objArray = {};
+
+    emissions_cap = sortByRegion(geogroup_name, "Scope1/capita");
+    city_order = emissions_cap.map(x => x["city"]); //returns an array
+    console.log("city_order: ", city_order)
+
+    //Re-order emissions_scaled according to city_order
+    for (idx = 0; idx < city_order.length; idx++) {
+      match = emissions_scaled.filter(x => x.city === city_order[idx]);
+      console.log("match: ", match)
+      if (match.length == 0) {
+        objArray.push({match});
+      }
+    } 
+    console.log("objArray: ", objArray)
+  } // end if
+
   var x = d3.scaleBand()
             .rangeRound([0, width], .1)
             .paddingInner(0.1);
