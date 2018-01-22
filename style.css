@@ -51,9 +51,9 @@ ul {
 	color: #999;
 	cursor: pointer;
 	float: left;
-	font-size: 14px;
+	font-size: 12px;
 	margin: 0;
-	padding: 2px 2px;
+	padding: 0px 4px;
 	border-radius: 4px 4px 4px 4px;
 }
 
