@@ -26,7 +26,7 @@ function setupData(ghg){
     scope1 = d['s1 to use']
     GDP = d['GDP-PPP combined']
     scope1_cap = +d['s1 per capita'] //d['s1 per capita']  //scope1/popn
-    scope1_gdp = d['s1 per gdp']
+    scope1_gdp = +d['s1 per gdp']
     GDP_cap = +d['GDP-PPP combined/cap']
     pop_density = popn/area//[pop/km2]
     HDD155C = +d["HDD_15.5C"]

@@ -438,6 +438,8 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   
   // Sort columns
   emissions_scaled.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
+  console.log("after sort: ", emissions_scaled)
+  console.log("val: ", emissions_scaled.map(x => x[this_dim])  )
   
   var x = d3.scaleBand()
             .rangeRound([0, width], .1)
