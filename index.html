@@ -67,10 +67,8 @@
       <div class="col-lg-7">
         <div id="regionLabel"style='text-align: justify'></div>
           <ul class="nytg-sort" style='position: absolute; left: 522px; top: 0px;'>
-                <li id="barButton">Scope1/GDP</li>
-            </ul>
-   
-
+              <li id="barButton">Scope1/GDP</li>
+          </ul>
       </div>
 
       <div class="col-lg-5"id="Fig3Label" >A la Fig. 3</div>
@@ -84,23 +82,12 @@
 
         <div class="row">
           <div class="col-lg-6">
-          
-            <div id="barChart_EU">
-              
-            </div>
+            <div id="barChart_EU"></div>
           </div>
           <div class="col-lg-6">
             <div id="barChart_LatinAmer"></div>
           </div> 
         </div>
-        
-        <!-- <div class="row">
-          <div id="barChart_EU">
-            <ul class="nytg-sort" style='position: absolute; left: 463px; top: 6px;'>
-              <li id="barButton">Scope1/GDP</li>
-            </ul>
-          </div> 
-        </div> -->
 
         <div class="row">
            <div id="barChart_USACanAusNZ"></div>
@@ -446,11 +433,12 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       height = 290 - margin.top - margin.bottom;
 
   // Extract scaled emissions data for given region
-  emissions_scaled = sortByRegion(geogroup_name);
+  // Omit cities for which GDP-PPP is missing
+  emissions_scaled = sortByRegion(geogroup_name, this_dim);
   
   // Sort columns
   emissions_scaled.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
- 
+  
   var x = d3.scaleBand()
             .rangeRound([0, width], .1)
             .paddingInner(0.1);
@@ -657,10 +645,14 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         if (this_dim === "Scope1/GDP") {
           console.log("this_dim here: ", this_dim)
           console.log('d.city: ', d.city)
-          if ( isNaN(d[this_dim]) ) console.log('here')
+          if ( !isNaN(d[this_dim]) ) {
+            console.log('here')
+            console.log("***d[this_dim]: ", d[this_dim])
+          }
           else {
             console.log("isNaN")
-            console.log("***d[this_dim]: ", d[this_dim])
+            console.log("&&&&&&&&d[this_dim]: ", d[this_dim])
+            return y(d[this_dim]);
           }
         } else return y(d[this_dim]); //Scope1/cap
        

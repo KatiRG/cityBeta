@@ -25,7 +25,8 @@ function setupData(ghg){
     totalEmissions = d['Total City-wide Emissions (metric tonnes CO2e) (CDP)'] //[tCO2]
     scope1 = d['s1 to use']
     GDP = d['GDP-PPP combined']
-    scope1_cap = scope1/popn
+    scope1_cap = +d['s1 per capita'] //d['s1 per capita']  //scope1/popn
+    scope1_gdp = d['s1 per gdp']
     GDP_cap = +d['GDP-PPP combined/cap']
     pop_density = popn/area//[pop/km2]
     HDD155C = +d["HDD_15.5C"]
@@ -98,6 +99,7 @@ function setupData(ghg){
       "area": area,
       "Scope1": scope1,
       "Scope1/capita": scope1_cap,
+      "Scope1/GDP": scope1_gdp,
       "population density": pop_density,
       "HDD 15.5C": HDD155C,
       "CDD 23C": CDD23C,
@@ -175,11 +177,11 @@ function resetElements() {
 //----------------------------------------------
 // Functions for emissionsBarChart()
 //----------------------------------------------
-function sortByRegion(region) {
+function sortByRegion(region, this_dim) {
 
   ghg_byRegion = [];
   data_GHG.forEach(function (d) {
-    if (d.region === region) ghg_byRegion.push(d);
+    if (d.region === region && d[this_dim] != "") ghg_byRegion.push(d);
   });
   return ghg_byRegion;
 }
