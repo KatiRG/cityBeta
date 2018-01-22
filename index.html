@@ -454,9 +454,8 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
     .scale(y)
     // .ticks(10, "%");
     .ticks(5)
-    .tickFormat(function(d) { 
-      if (this_dim === 'Scope1/GDP-PPP') return formatDecimalk(d);
-      else return d;
+    .tickFormat(function(d) {
+      return this_dim === 'Scope1/GDP-PPP' ? formatDecimalk(d) : d;
     })
     .tickPadding(2);
 
