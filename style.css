@@ -111,6 +111,9 @@ div.rtooltip {
 }
 
 /* bar chart */
+.bar {
+  stroke: gray;
+}
 .barChartRegionLabel {
   fill: colour_labels;
 }

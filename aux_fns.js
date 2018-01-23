@@ -150,7 +150,8 @@ function setupData(ghg){
 function resetElements() {
   //reset bar opacity
   d3.selectAll(".bar")
-    .style("fill-opacity", 1);
+    .style("fill-opacity", 1)
+    .style("stroke", "gray");
 
   //reset vcircle opacity
   d3.selectAll(".node")

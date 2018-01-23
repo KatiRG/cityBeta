@@ -1,9 +1,29 @@
 var formatDecimalSci = d3.format(".2n");
 var formatDecimalk = d3.format(".1s"); //.2s //d3.format(".3n");
 
+//------------------------------------------------
+//COLOURS
+//barChart labels + highlight colour
 var colour_labels = "#636363";
 var colour_labelsHighlight = "#3d3d3d";
 
+var regionColourMap = { 
+  "groupEurope": "#6BACBF", //"#A6D4FF", 
+  "groupUSAAusNZ": "#C399D9",
+  "groupAfricaAsia": "#BD1550",
+  "groupNordic": "#F99DD3", "groupLatinAmer": "#F8CA00"
+};
+
+//Primary Methodology colours
+var colour_methodNum = {
+  1: "#75766D", //GPC 
+  2: "#9ADCB9", //US ICLEI
+  3: "#DCCDA1", //IPCC
+  4: "#FFC7AF", //ICLEI
+  5: "#F7D76F" //OTHER
+}
+
+//------------------------------------------------
 //TO BE VERIFIED! AVGS TAKEN FROM GCA WEBSITE
 var regionalAvgs = {
   "groupUSAAusNZ": 13.1, //USA, Can, Mexico, Oceania
@@ -26,12 +46,7 @@ var regionLabel_dict = {
   "groupLatinAmer": "Latin America"
 };
 
-var regionColourMap = { 
-  "groupEurope": "#6BACBF", //"#A6D4FF", 
-  "groupUSAAusNZ": "#C399D9",
-  "groupAfricaAsia": "#BD1550",
-  "groupNordic": "#F99DD3", "groupLatinAmer": "#F8CA00"
-};
+
 
 // For colourbar scale
 var dimUnits =  {

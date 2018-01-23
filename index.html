@@ -401,6 +401,9 @@ function highlightElements(idName) {
 
   //Highlight Current
   //-----------------
+  d3.select("#bar" + idName)
+    .style("stroke", "#363636"); 
+
   d3.selectAll(".bar:not(#bar" + idName + ")")
     .style("fill-opacity", 0.3); 
 
@@ -651,8 +654,8 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("y", function (d, i) { return y(d[this_dim]); })
       .attr("height", function(d) { return height - y(d[this_dim]); })
       .attr("fill", function (d) {
-        return regionColourMap[d.region];
-      })
+        return colour_methodNum[d['methodology']];
+      })      
       .on("touchmove mousemove", function (d) {
 
         idName = format_idName(d.city);
