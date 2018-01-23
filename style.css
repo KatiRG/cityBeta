@@ -111,11 +111,15 @@ div.rtooltip {
 }
 
 /* bar chart */
+.barChartTitle {
+  color: #707070;
+  font-size: 14px;
+  font-weight: bold;
+  padding-left: 23px;
+  text-align: left;
+}
 .bar {
   stroke: gray;
-}
-.barChartRegionLabel {
-  fill: colour_labels;
 }
 .axis {
   font: 10px sans-serif;

@@ -65,7 +65,7 @@
     <!-- row 3 -->
     <div class="row">
       <div class="col-lg-7">
-        <div id="regionLabel"style='text-align: justify'></div>
+        <div id="barChart_caption"style='text-align: justify'></div>
           <ul class="nytg-sort" style='position: absolute; left: 435px; top: 0px;'>
               <li id="gdpButton">Scope1/GDP-PPP</li>
           </ul>
@@ -85,23 +85,28 @@
 
         <div class="row">
           <div class="col-lg-6">
+            <div class="barChartTitle">Europe</div>
             <div id="barChart_EU"></div>
           </div>
           <div class="col-lg-6">
+            <div class="barChartTitle">Latin America</div>
             <div id="barChart_LatinAmer"></div>
           </div> 
         </div>
 
         <div class="row">
-           <div id="barChart_USACanAusNZ"></div>
+          <div class="barChartTitle">USA &#183; Canada &#183; Australia &#183; New Zealand</div>
+          <div id="barChart_USACanAusNZ"></div>
         </div> <!-- ./sub-row USA chart -->
 
 
         <div class="row">
           <div class="col-lg-8">
+            <div class="barChartTitle">Africa &#183; Asia</div>
             <div id="barChart_AfricaAsia"></div>
           </div>
           <div class="col-lg-4">
+            <div class="barChartTitle">Nordics</div>
             <div id="barChart_Nordic"></div>
           </div> 
         </div> 
@@ -424,26 +429,26 @@ function highlightElements(idName) {
 } // ./highlightElements()
 
 // Update region text when hovering over worldmap city
-function updateRegionLabel(region) {
-  d3.select("#regionLabel" + region).text(regionLabel_dict[region])
-    // .style("margin-left", "60px");
-}
+// function updateRegionLabel(region) {
+//   d3.select("#regionLabel" + region).text(regionLabel_dict[region])
+//     // .style("margin-left", "60px");
+// }
 
 function emissionsBarChart(geogroup_name, geogroup_id) {
 
   // Remove any previous bar chart
   d3.select(geogroup_id).select("svg").remove();
   
-  // barChart title in #regionLabel div
+  // barChart caption in #barChart_caption div
   this_dim = (d3.select("#gdpButton").text() === "Scope1/GDP-PPP") ?
                       "Scope1/capita" : "Scope1/GDP-PPP";
-  d3.select("#regionLabel").text(this_dim + " " + dimUnits[this_dim]
+  d3.select("#barChart_caption").text(this_dim + " " + dimUnits[this_dim]
     + " emissions grouped by world region");
 
   //https://bl.ocks.org/seemantk/ec245e1f4e824e685982dd5d3fbb2fcc
-  var margin = {top: 35, right: 20, bottom: 40, left: 40},
+  var margin = {top: 5, right: 20, bottom: 40, left: 40},
       width = 700 - margin.left - margin.right,
-      height = 290 - margin.top - margin.bottom;
+      height = 250 - margin.top - margin.bottom;
 
   // Extract scaled emissions data for given region
   // Omit cities for which GDP-PPP is missing
@@ -501,9 +506,11 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  var barRegionLabel = svgBarChart.append("g")
-          .append("text")
-          .attr("class", "barChartRegionLabel");
+  // This label gets stretched differently depending on scaling of viewBox  
+  // var barRegionLabel = svgBarChart.append("g")
+  //         .append("text")
+  //         .attr("class", "barChartRegionLabel")
+  //         .text("For now");
 
   x.domain(emissions_scaled.map(function (d) {
     return d.city;
