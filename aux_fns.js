@@ -183,7 +183,7 @@ function create_colourBar() {
   console.log("create colourBar")
 
   //Make colourbar rects
-  var width_cb = 100, height_cb = 30;
+  var width_cb = 100, height_cb = 100;
 
   //Define the colourbar svg
   var aspectRatio = '160:50';
@@ -196,9 +196,15 @@ function create_colourBar() {
     .attr('width', '30%')
     .attr('height', height_cb)
     .attr('viewBox', viewBox)
+    // .attr('viewBox', '0 0 5 10' );
     .attr('viewBox', '0 0 ' +  ( width + 100 ) + ' ' + ( height - 190 ) );
+    // .append("g")
+    // .attr("transform", "translate(" + 0 + "," + 0 + ")");
     // .attr('viewBox', '0 0 ' +  ( width + margin.left + margin.right ) + ' ' + ( height  + margin.top + margin.bottom ) )
-    // .attr('preserveAspectRatio', 'none');
+    // .attr('preserveAspectRatio', 'none')
+    // .attr('preserveAspectRatio', 'xMidYMin');
+
+
 
   //Object.keys(colour_methodNum).length
   cb_values = ["#75766D", "#9ADCB9", "#DCCDA1", "#FFC7AF", "#F7D76F"];
