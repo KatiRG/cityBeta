@@ -111,8 +111,13 @@ div.rtooltip {
 }
 
 /* bar chart */
+#barChartCaption {
+  color: #565656;
+  font-weight: bold;
+  text-align: left;
+}
 .barChartTitle {
-  color: #707070;
+  color: #565656;
   font-size: 14px;
   font-weight: bold;
   padding-left: 23px;

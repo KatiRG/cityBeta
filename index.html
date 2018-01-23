@@ -65,7 +65,7 @@
     <!-- row 3 -->
     <div class="row">
       <div class="col-lg-7">
-        <div id="barChart_caption"style='text-align: justify'></div>
+        <div id="barChartCaption"></div>
           <ul class="nytg-sort" style='position: absolute; left: 435px; top: 0px;'>
               <li id="gdpButton">Scope1/GDP-PPP</li>
           </ul>
@@ -84,6 +84,7 @@
         <!--barChart sub-rows-->
 
         <div class="row">
+          <div>legend</div>
           <div class="col-lg-6">
             <div class="barChartTitle">Europe</div>
             <div id="barChart_EU"></div>
@@ -439,10 +440,10 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   // Remove any previous bar chart
   d3.select(geogroup_id).select("svg").remove();
   
-  // barChart caption in #barChart_caption div
+  // barChart caption in #barChartCaption div
   this_dim = (d3.select("#gdpButton").text() === "Scope1/GDP-PPP") ?
                       "Scope1/capita" : "Scope1/GDP-PPP";
-  d3.select("#barChart_caption").text(this_dim + " " + dimUnits[this_dim]
+  d3.select("#barChartCaption").text(this_dim + " " + dimUnits[this_dim]
     + " emissions grouped by world region");
 
   //https://bl.ocks.org/seemantk/ec245e1f4e824e685982dd5d3fbb2fcc
