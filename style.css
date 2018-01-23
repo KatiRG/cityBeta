@@ -116,12 +116,13 @@ div.rtooltip {
   font-weight: bold;
   text-align: left;
 }
-#barChartLegend {
+#barChartLegendLabel {
   color: #565656;
   font-weight: bold;
   padding-left: 40px;
   text-align: left;
-
+}
+#barChartLegend {
   stroke: gray;
 }
 
