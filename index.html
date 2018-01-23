@@ -113,6 +113,10 @@
       
     </div> <!-- ./row 4-->
 
+    <footer class="row">
+      Pied de page
+    </footer>
+
 </div>  <!-- ./container -->
 
 
@@ -512,13 +516,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis)
       .selectAll("text")
-      .text(function (d) {
-        if (d.indexOf(', ') >= 0) abbr = d.substring(0,3);
-        else if (d.indexOf(' ') >= 0) abbr = d.match(/\b\w/g).join(' ');
-        else abbr = d.substring(0,3);
-
-        return abbr;
-      })
+      .text(function (d) { return fn_abbr(d); })
       .attr("id", function (d) {
         idName = format_idName(d);
         return "tick" + idName;
@@ -541,7 +539,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       })
       .style("text-anchor", "start")  //"middle"
       .style("fill", function (d) {
-        return "#636363";
+        return colour_labels;
       });
       //
 
@@ -565,7 +563,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         return "scale(" + myscale + " " + myscale + ")"  + "rotate(-90)" 
                         + "translate(" + xtrans + "," + ytrans + ")";
       })
-      .style("fill", "#636363");
+      .style("fill", colour_labels);
 
   //-----------------------------------------------------------------------------------------
   //Visual fixes
@@ -658,10 +656,17 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .on("touchmove mousemove", function (d) {
 
         idName = format_idName(d.city);
+      
         highlightElements(idName);
         
-        // Enlarge city label of selected bar
-        d3.select("#tick" + idName).text(idName).style("font-size", "16px");
+        //Enlarge city label of selected bar
+        //Need different sizes on account of the vieweBox scale stretching
+        if (geogroup_name === "groupEurope" || geogroup_name === "groupLatinAmer" ||
+            geogroup_name === "groupUSAAusNZ") newSize = "16px";
+        else if (geogroup_name === "groupAfricaAsia") newSize = "12px";
+        else if (geogroup_name === "groupNordic") newSize = "11px";
+        d3.select("#tick" + idName).text(d.city).style("font-size", newSize)
+          .attr("fill", colour_labelsHighlight);
 
   //       // Dim opacity of all city labels except current city
   //       d3.select(geogroup_id).select(".x.axis")
@@ -691,21 +696,14 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
       })
       .on("mouseout", function (d) {
+        resetElements();
+
   //       idName = format_idName(d.city);
   //       d3.select("#tick" + idName).style("font-size", "10px");
-        console.log("select: ", d3.select("#tick" + idName).text())
-        d3.select("#tick" + idName).text(function (d) {
-          if (d.indexOf(', ') >= 0) abbr = d.substring(0,3);
-          else if (d.indexOf(' ') >= 0) abbr = d.match(/\b\w/g).join(' ');
-          else abbr = d.substring(0,3);
-
-          return abbr;
-        })
+        
+        d3.select("#tick" + idName).text(function (d) { return fn_abbr(d); })
           .style("font-size", "10px")
-
-
-
-      //d3.select("#barChart_USACanAusNZ").select(".barSVG").select("g .x").select("g .tick").text();
+          .attr("fill", colour_labels);
 
   //       d3.select(geogroup_id).select(".x.axis")
   //         .selectAll("text")

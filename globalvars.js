@@ -1,6 +1,9 @@
 var formatDecimalSci = d3.format(".2n");
 var formatDecimalk = d3.format(".1s"); //.2s //d3.format(".3n");
 
+var colour_labels = "#636363";
+var colour_labelsHighlight = "#3d3d3d";
+
 //TO BE VERIFIED! AVGS TAKEN FROM GCA WEBSITE
 var regionalAvgs = {
   "groupUSAAusNZ": 13.1, //USA, Can, Mexico, Oceania

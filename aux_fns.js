@@ -177,6 +177,15 @@ function resetElements() {
 //----------------------------------------------
 // Functions for emissionsBarChart()
 //----------------------------------------------
+//Abbreviate city name in x-axis
+function fn_abbr(d) {
+  if (d.indexOf(', ') >= 0) abbr = d.substring(0,3);
+  else if (d.indexOf(' ') >= 0) abbr = d.match(/\b\w/g).join(' ');
+  else abbr = d.substring(0,3);
+
+  return abbr;
+}
+
 function sortByRegion(region, this_dim) {
 
   ghg_byRegion = [];

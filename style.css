@@ -112,7 +112,7 @@ div.rtooltip {
 
 /* bar chart */
 .barChartRegionLabel {
-  fill: #636363;
+  fill: colour_labels;
 }
 .axis {
   font: 10px sans-serif;
@@ -120,11 +120,11 @@ div.rtooltip {
 .axis path,
 .axis line {
   fill: none;
-  stroke: #636363;
+  stroke: colour_labels;
   shape-rendering: crispEdges;
 }
 .axis text {
-  fill: #636363;
+  fill: colour_labels;
 }
 .x.axis path {
   display: none;
