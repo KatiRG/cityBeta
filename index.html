@@ -432,7 +432,6 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
                       "Scope1/capita" : "Scope1/GDP-PPP";
   d3.select("#regionLabel").text(this_dim + " " + dimUnits[this_dim]
     + " emissions grouped by world region");
-  console.log("this_dim: ", this_dim)
 
   //https://bl.ocks.org/seemantk/ec245e1f4e824e685982dd5d3fbb2fcc
   var margin = {top: 35, right: 20, bottom: 40, left: 40},
@@ -446,7 +445,6 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   
   // Sort columns
   emissions_scaled.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-  console.log("after sort: ", emissions_scaled)
 
   // Get city order of Scope/capita
   if (d3.select("#reorderButton").text() === "orig order") {
@@ -652,39 +650,18 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       })
       .attr("x", function (d) { return x(d.city); })
       .attr("width", x.bandwidth())
-      .attr("y", function (d, i) {        
-       
-        // if (this_dim === "Scope1/GDP-PPP") {
-        //   console.log("this_dim here: ", this_dim)
-        //   console.log('d.city: ', d.city)
-        //   if ( !isNaN(d[this_dim]) ) {
-        //     console.log('here')
-        //     console.log("***d[this_dim]: ", d[this_dim])
-        //   }
-        //   else {
-        //     console.log("isNaN")
-        //     console.log("&&&&&&&&d[this_dim]: ", d[this_dim])
-        //     return y(d[this_dim]);
-        //   }
-        // } else return y(d[this_dim]); //Scope1/cap
-
-        return y(d[this_dim]);
-       
-      })
+      .attr("y", function (d, i) { return y(d[this_dim]); })
       .attr("height", function(d) { return height - y(d[this_dim]); })
       .attr("fill", function (d) {
         return regionColourMap[d.region];
-      });
-  //     .on("touchmove mousemove", function (d) {
+      })
+      .on("touchmove mousemove", function (d) {
 
-
-
-  //       idName = format_idName(d.city);
-  //       // highlightElements(idName, d.country);
-  //       highlightElements(idName);
+        idName = format_idName(d.city);
+        highlightElements(idName);
         
-  //       // Enlarge city label of selected bar
-  //       d3.select("#tick" + idName).style("font-size", "16px");
+        // Enlarge city label of selected bar
+        d3.select("#tick" + idName).text(idName).style("font-size", "16px");
 
   //       // Dim opacity of all city labels except current city
   //       d3.select(geogroup_id).select(".x.axis")
@@ -712,17 +689,30 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   //           else if (region === "groupLatinAmer") return "70";
   //         });
 
-  //     })
-  //     .on("mouseout", function (d) {
+      })
+      .on("mouseout", function (d) {
   //       idName = format_idName(d.city);
   //       d3.select("#tick" + idName).style("font-size", "10px");
+        console.log("select: ", d3.select("#tick" + idName).text())
+        d3.select("#tick" + idName).text(function (d) {
+          if (d.indexOf(', ') >= 0) abbr = d.substring(0,3);
+          else if (d.indexOf(' ') >= 0) abbr = d.match(/\b\w/g).join(' ');
+          else abbr = d.substring(0,3);
+
+          return abbr;
+        })
+          .style("font-size", "10px")
+
+
+
+      //d3.select("#barChart_USACanAusNZ").select(".barSVG").select("g .x").select("g .tick").text();
 
   //       d3.select(geogroup_id).select(".x.axis")
   //         .selectAll("text")
   //         .style("opacity", 1);
 
   //       resetElements();
-  //     });
+      });
 
   //     // Hide x-axis tick mark for gap bar
   //     d3.selectAll(geogroup_id).select(".x.axis").selectAll(".tick")
