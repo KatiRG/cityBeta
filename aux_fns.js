@@ -191,7 +191,9 @@ function fn_reorderByEmissionsPerCapita(region, emissions_perGDP) {
   var city_order = [];
   var objArray = [];
 
+  //Get city order of emissions per capita
   emissions_perCap = sortByRegion(region, var_emissionsPerCap);
+  emissions_perCap.sort((a, b) => d3.descending(a[var_emissionsPerCap], b[var_emissionsPerCap]));
   city_order = emissions_perCap.map(x => x["city"]); //returns an array
 
   //Re-order emissions_perGDP according to city_order of emissions per capita

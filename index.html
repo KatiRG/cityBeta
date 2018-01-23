@@ -154,7 +154,7 @@ d3.select("#infoText")
   .style("font-size", "14px");
 
 
-// Select data type for bar chart
+// Select emissions to display: scaled by capita or by GDP-PPP
 d3.select("#gdpButton")
   .on("click", function() {
     var buttonText = (d3.select(this).text() === "Scope1/GDP-PPP") ?
@@ -185,6 +185,10 @@ d3.select("#reorderButton")
 
     //Re-order Scope1/GDP-PPP according to Scope1/capita    
     emissionsBarChart("groupEurope", "#barChart_EU");
+    emissionsBarChart("groupUSAAusNZ", "#barChart_USACanAusNZ");
+    emissionsBarChart("groupAfricaAsia", "#barChart_AfricaAsia");
+    emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
+    emissionsBarChart("groupNordic", "#barChart_Nordic");
      
   });
 
@@ -443,26 +447,11 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   // Sort columns
   emissions_scaled.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
   console.log("after sort: ", emissions_scaled)
-  // console.log("val: ", emissions_scaled.map(x => x[this_dim])  )
 
   // Get city order of Scope/capita
   if (d3.select("#reorderButton").text() === "orig order") {
-    tmp = fn_reorderByEmissionsPerCapita(geogroup_name, emissions_scaled);
-
-    // var city_order = [];
-    // var objArray = [];
-
-    // emissions_cap = sortByRegion(geogroup_name, "Scope1/capita");
-    // city_order = emissions_cap.map(x => x["city"]); //returns an array
-    // console.log("city_order: ", city_order)
-
-    // //Re-order emissions_scaled according to city_order
-    // for (idx = 0; idx < city_order.length; idx++) {
-    //   match = emissions_scaled.filter(x => x.city === city_order[idx]); //in array form
-    //   if (match.length != 0) objArray.push(match[0]);
-    // } 
-    console.log("objArray outside: ", tmp)
-  } // end if
+    emissions_scaled = fn_reorderByEmissionsPerCapita(geogroup_name, emissions_scaled);
+  } // end button text check
 
   var x = d3.scaleBand()
             .rangeRound([0, width], .1)
