@@ -81,10 +81,15 @@
     <div class="row">
 
       <div class="col-lg-7">
-        <!--barChart sub-rows-->
-
+        <!--barChart legend-->
         <div class="row">
-          <div>legend</div>
+          <div id="barChartLegend">Protocol
+            <svg></svg>
+          </div>
+        </div>
+
+        <!--barChart sub-rows-->
+        <div class="row">
           <div class="col-lg-6">
             <div class="barChartTitle">Europe</div>
             <div id="barChart_EU"></div>
@@ -163,8 +168,11 @@ d3.select("#infoText")
   .text("Hover over a city the world map to see city emissions data.")
   .style("font-size", "14px");
 
+//barChart legend
+create_colourBar();
 
-// Select emissions to display: scaled by capita or by GDP-PPP
+//barChart buttons
+//select emissions to display: scaled by capita or by GDP-PPP
 d3.select("#gdpButton")
   .on("click", function() {
     var buttonText = (d3.select(this).text() === "Scope1/GDP-PPP") ?
@@ -498,7 +506,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   //NB: viewBox stretches text labels as well, so they must be fixed later by adjusting the scale
   var svgBarChart = d3.select(geogroup_id).append("svg").attr("class", "barSVG")
     .attr('width', '95%')
-    .attr('height', height)    
+    .attr('height', height)
     .attr('viewBox', viewBox)
     .attr('viewBox', '0 0 ' +  ( width + margin.left + margin.right ) + ' ' + ( height  + margin.top + margin.bottom ) )
     .attr('preserveAspectRatio', 'none')

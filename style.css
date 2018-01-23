@@ -116,6 +116,15 @@ div.rtooltip {
   font-weight: bold;
   text-align: left;
 }
+#barChartLegend {
+  color: #565656;
+  font-weight: bold;
+  padding-left: 40px;
+  text-align: left;
+
+  stroke: gray;
+}
+
 .barChartTitle {
   color: #565656;
   font-size: 14px;

@@ -178,6 +178,50 @@ function resetElements() {
 //----------------------------------------------
 // Functions for emissionsBarChart()
 //----------------------------------------------
+//Create colour bar boxes
+function create_colourBar() {
+  console.log("create colourBar")
+
+  //Make colourbar rects
+  var width_cb = 100, height_cb = 30;
+
+  //Define the colourbar svg
+  var aspectRatio = '160:50';
+  var viewBox = '0 0 ' + aspectRatio.split(':').join(' ');
+  console.log("viewBox: ", viewBox)
+
+  var svgCB = d3.select("#barChartLegend").select("svg")
+    // .attr("width", width_cb)
+    // .attr("height", height_cb);
+    .attr('width', '30%')
+    .attr('height', height_cb)
+    .attr('viewBox', viewBox)
+    .attr('viewBox', '0 0 ' +  ( width + 100 ) + ' ' + ( height - 190 ) );
+    // .attr('viewBox', '0 0 ' +  ( width + margin.left + margin.right ) + ' ' + ( height  + margin.top + margin.bottom ) )
+    // .attr('preserveAspectRatio', 'none');
+
+  //Object.keys(colour_methodNum).length
+  cb_values = ["#75766D", "#9ADCB9", "#DCCDA1", "#FFC7AF", "#F7D76F"];
+
+  var rects = svgCB.selectAll('rect')
+      .data(cb_values);
+
+  rects.enter()    
+      .append("rect")
+      .attr("width", 50)
+      .attr("height", 50)
+      .attr("y", 5)
+      .attr("x", function (d, i) {
+        return i * 100;
+      })
+      .attr("fill", function (d, i) {
+        return cb_values[i];
+      })
+      .attr("stroke", "gray")
+      .attr("stroke-width", 2.5);
+
+}
+
 //Abbreviate city name in x-axis
 function fn_abbr(d) {
   if (d.indexOf(', ') >= 0) abbr = d.substring(0,3);
