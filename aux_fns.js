@@ -186,6 +186,23 @@ function sortByRegion(region, this_dim) {
   return ghg_byRegion;
 }
 
+function fn_reorderByEmissionsPerCapita(region, emissions_perGDP) {
+  var var_emissionsPerCap = "Scope1/capita";
+  var city_order = [];
+  var objArray = [];
+
+  emissions_perCap = sortByRegion(region, var_emissionsPerCap);
+  city_order = emissions_perCap.map(x => x["city"]); //returns an array
+
+  //Re-order emissions_perGDP according to city_order of emissions per capita
+  for (idx = 0; idx < city_order.length; idx++) {
+    match = emissions_perGDP.filter(x => x.city === city_order[idx]); //in array form
+    if (match.length != 0) objArray.push(match[0]);
+  }
+
+  return objArray;
+}
+
 function highlightCountry(countryName, idName, dataObj)  {
   var matchColour = regionColourMap[
                         dataObj.find(x => x.idName.includes(idName)).region

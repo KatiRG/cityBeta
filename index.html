@@ -447,22 +447,21 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
   // Get city order of Scope/capita
   if (d3.select("#reorderButton").text() === "orig order") {
-    var city_order = [];
-    var objArray = {};
+    tmp = fn_reorderByEmissionsPerCapita(geogroup_name, emissions_scaled);
 
-    emissions_cap = sortByRegion(geogroup_name, "Scope1/capita");
-    city_order = emissions_cap.map(x => x["city"]); //returns an array
-    console.log("city_order: ", city_order)
+    // var city_order = [];
+    // var objArray = [];
 
-    //Re-order emissions_scaled according to city_order
-    for (idx = 0; idx < city_order.length; idx++) {
-      match = emissions_scaled.filter(x => x.city === city_order[idx]);
-      console.log("match: ", match)
-      if (match.length == 0) {
-        objArray.push({match});
-      }
-    } 
-    console.log("objArray: ", objArray)
+    // emissions_cap = sortByRegion(geogroup_name, "Scope1/capita");
+    // city_order = emissions_cap.map(x => x["city"]); //returns an array
+    // console.log("city_order: ", city_order)
+
+    // //Re-order emissions_scaled according to city_order
+    // for (idx = 0; idx < city_order.length; idx++) {
+    //   match = emissions_scaled.filter(x => x.city === city_order[idx]); //in array form
+    //   if (match.length != 0) objArray.push(match[0]);
+    // } 
+    console.log("objArray outside: ", tmp)
   } // end if
 
   var x = d3.scaleBand()
