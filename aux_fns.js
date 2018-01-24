@@ -173,14 +173,11 @@ function resetElements() {
     .attr("stroke-opacity", 1);   
 }
 
-
-
 //----------------------------------------------
 // Functions for emissionsBarChart()
 //----------------------------------------------
 //Create colour bar boxes
 function create_colourBar() {
-  console.log("create colourBar")
 
   //Make colourbar rects
   var width_cb = 100, height_cb = 24;
@@ -188,7 +185,6 @@ function create_colourBar() {
   //Define the colourbar svg
   var aspectRatio = '160:50';
   var viewBox = '0 0 ' + aspectRatio.split(':').join(' ');
-  console.log("viewBox: ", viewBox)
 
   var svgCB = d3.select("#barChartLegend").select("svg")
     // .attr("width", width_cb)
@@ -207,7 +203,6 @@ function create_colourBar() {
       return "<b>" + Object.keys(protocolDict)[i] + "</b>" + ": "
                    + Object.values(protocolDict)[i];
     });
-
   svgCB.call(tool_tip);
 
  

@@ -23,6 +23,8 @@ var colour_methodNum = {
   5: "#F7D76F" //OTHER
 }
 
+//------------------------------------------------
+//TOOLTIP TEXT
 var protocolDict = {
   "GPC": "Global Protocol for Community-Scale Greenhouse Gas Emissions Inventories (GPC), (WRI, C40 and ICLEI)",
   "US ICLEI": "U.S. Community Protocol for Accounting and Reporting of Greenhouse Gas Emissions (ICLEI)",
@@ -30,6 +32,12 @@ var protocolDict = {
   "ICLEI": "International Emissions Analysis Protocol (ICLEI)",
   "Other": "Combinations or subsets of methodologies, or propitiatory methodologies specific to a region/city"
 }
+
+var emissionsToggleDict = {
+  "Scope1/GDP-PPP": "Display emissions normalized by GDP-PPP, in decreasing order.",
+  "Scope1/capita": "Display emissions normalized by population, in decreasing order."
+}
+
 //------------------------------------------------
 //TO BE VERIFIED! AVGS TAKEN FROM GCA WEBSITE
 var regionalAvgs = {

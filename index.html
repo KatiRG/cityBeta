@@ -66,7 +66,7 @@
     <div class="row">
       <div class="col-lg-7">
         <div id="barChartCaption"></div>
-          <ul class="nytg-sort" style='position: absolute; left: 435px; top: 0px;'>
+          <ul class="nytg-sort" id="emissionsToggleButton">
               <li id="gdpButton">Scope1/GDP-PPP</li>
           </ul>
           <ul class="nytg-sort" style='position: absolute; left: 555px; top: 0px;'>
@@ -161,6 +161,11 @@ var pointRadius = 5;
 
 var cityName_array = [];
 
+// Define the div for the gdpButton tooltip
+var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
 // ----------------------------------------------------
 // Code
 // ----------------------------------------------------
@@ -176,8 +181,10 @@ create_colourBar();
 //select emissions to display: scaled by capita or by GDP-PPP
 d3.select("#gdpButton")
   .on("click", function() {
+    div.style("opacity", 0); //clear tooltip
+    
     var buttonText = (d3.select(this).text() === "Scope1/GDP-PPP") ?
-                      "Scope1/capita" : "Scope1/GDP-PPP";
+                      "Scope1/capita" : "Scope1/GDP-PPP";              
 
     d3.select(this).text(buttonText);
 
@@ -192,7 +199,18 @@ d3.select("#gdpButton")
     var reorderState = (buttonText === "Scope1/capita") ? "block" : "none";
     d3.select("#reorderButton").style("display", reorderState);
      
-  });
+  })
+  .on("mouseover", function () {
+    var dictText = emissionsToggleDict[d3.select(this).text()];
+
+    div.style("opacity", 1); //tooltip
+    div.html(function () { return dictText; })
+       .style("left", 764 + "px")
+       .style("top", 144 + "px");
+       // .style("left", (d3.event.pageX) + 35 + "px")
+       // .style("top", (d3.event.pageY - 55) + "px");
+  })
+  .on("mouseout", function () { div.style("opacity", 0); });
 
 // Re-order barChart of emissions/GDP-PPP according to emissions/capita
 d3.select("#reorderButton")
@@ -210,6 +228,14 @@ d3.select("#reorderButton")
     emissionsBarChart("groupNordic", "#barChart_Nordic");
      
   });
+  // .on("mouseover", function () {
+  //   console.log("mouseover")
+  //   div.style("opacity", .9);    
+  //           div .html("helloooo")  
+  //               .style("left", (d3.event.pageX) + "px")   
+  //               .style("top", (d3.event.pageY - 28) + "px");  
+
+  // });
 
 // // Map reset button
 // d3.select("#resetButton")
@@ -618,42 +644,6 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
                           + "translate(" + 0 + "," + new_ypos + ")" );
  
     });
-
-    //2. fix y-axis gap in USACanAusNZ barChart
-    var delyax = 11; //amount to shift y-axis H value to align with the other barCharts
-
-    if (geogroup_id === "#barChart_USACanAusNZ") {
-      d3.select(geogroup_id).select('.barSVG')
-        .select("g .y.axis path")
-        .attr("d", function (d) {
-          console.log("d: ", d)
-          console.log("this: ", this) 
-          console.log("this.attributes.d.value: ", this.attributes.d.value)
-          console.log(d3.select(this))
-          // return line(d.values); 
-        })
-    }
-
-    // if (geogroup_id === "#barChart_USACanAusNZ") {
-    //   d3.select(geogroup_id).select('.barSVG').select('g .y.axis path') //get all the nodes
-    //   .each(function (d) {
-    //     console.log("d: ", d)
-    //     console.log("this: ", this)
-    //     console.log("select this: ", d3.select(this))
-    //     console.log("this.attributes: ", this.attributes)
-    //     console.log("this.attributes.d: ", this.attributes.d)
-    //     console.log("this.attributes.d.value: ", this.attributes.d.value)
-    //     console.log("this.attributes.d.value[10]: ", this.attributes.d.value[0])
-
-    //     pathstr = this.attributes.d.value;
-    //     console.log("pathstr before: ", pathstr)
-    //     pathstr.replace("H0.5", "H11.5");
-    //     console.log("pathstr after: ", pathstr)
-
-    //     console.log("AFTER this.attributes.d.value: ", this.attributes.d.value)
-        
-    //   });
-    // } //if
 
   // ./Visual Fixes/----------------------------------------------------------------------------------
 

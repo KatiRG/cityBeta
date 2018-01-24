@@ -57,16 +57,33 @@ ul {
 	border-radius: 4px 4px 4px 4px;
 }
 
+/*Used for barChart protocol legend rects */
 .d3-tip {
-    line-height: 1;
+    /*line-height: 1.2; */
     height: 50px;
     width: 350px;
     padding: 6px;
     background: #F7F6E4;
     color: #555;
     border-radius: 4px;
-    font-size: 14px;
-  }
+    font-size: 12px;
+}
+
+/*Used for toggle buttons */
+div.tooltip {
+    position: absolute;
+    text-align: left;
+    width: 150px;
+    height: 60px;
+    padding: 6px;
+    /*font: 12px sans-serif;*/
+    font-size: 12px;
+    background: #F7F6E4;
+    color: #555;
+    border: 0px;
+    border-radius: 4px;
+    pointer-events: none;
+}
 
 /*to allow x-axis labels to overflow past div bd*/
 /*svg:not(:root) {
@@ -122,6 +139,11 @@ div.rtooltip {
 }
 
 /* bar chart */
+#emissionsToggleButton {
+  position: absolute;
+  left: 435px; 
+  top: 0px;
+}
 #barChartCaption {
   color: #565656;
   font-weight: bold;
