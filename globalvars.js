@@ -23,6 +23,8 @@ var colour_methodNum = {
   5: "#F7D76F" //OTHER
 }
 
+var protocol = ["GPC", "US ICLEI", "IPCC", "ICLEI", "Other"];
+
 //------------------------------------------------
 //TO BE VERIFIED! AVGS TAKEN FROM GCA WEBSITE
 var regionalAvgs = {
