@@ -39,31 +39,32 @@ var emissionsToggleDict = {
 }
 
 //------------------------------------------------
+//AVG REGIONAL EMISSIONS PER CAPITA
 //TO BE VERIFIED! AVGS TAKEN FROM GCA WEBSITE
 var regionalAvgs = {
   "groupUSAAusNZ": 13.1, //USA, Can, Mexico, Oceania
   "groupEurope": 7.5,
-  "groupAsia": 4.2, "groupAfrica": 0.1,
-  "groupLatinAmer": 2.4
+  "groupAfricaAsia": 4.2, //***made up for now!!!***
+  "groupLatinAmer": 2.4,
+  "groupNordic": 2.5 //***made up for now!!!***
 }
 
 var regionalAvgs_GDP = {
-  "groupUSAAusNZ": 0.38, //USA, Can, Mexico
-  "groupEurope": 0.3,
-  "groupAsia": 0.5, 
-  "groupAfrica": 0.3,
-  "groupLatinAmer": 0.3 
+  "groupUSAAusNZ": 38000, //USA, Can, Mexico
+  "groupEurope": 30000,
+  "groupAfricaAsia": 40000,
+  "groupLatinAmer": 30000,
+  "groupNordic": 8000 //***made up for now!!!***
 }
 
+//------------------------------------------------
+//FOR DISPLAY TEXTS
 var regionLabel_dict = {
   "groupEurope": "Europe", "groupUSAAusNZ": "USA/Can/Aus/NZ",
   "groupAfricaAsia": "Africa/Asia", "groupNordic": "Nordics", 
   "groupLatinAmer": "Latin America"
 };
 
-
-
-// For colourbar scale
 var dimUnits =  {
   "total emissions": "[tCO2]",
   "Scope1/capita": "[tCO2/capita]",

@@ -721,45 +721,39 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   //       resetElements();
       });
 
-  //     // Hide x-axis tick mark for gap bar
-  //     d3.selectAll(geogroup_id).select(".x.axis").selectAll(".tick")
-  //     .style("opacity", function (d) {
-  //       if (d.includes("gap")) return 0;
-  //     });
+  // Plot regional avg emissions [tCO2/capita] as a line over each barChart
+  var regionalVar = this_dim === "Scope1/capita" ? regionalAvgs : regionalAvgs_GDP;
 
-  //     // Plot regional avg emissions [tCO2/capita] as a line
-  //     // over each bar group
-  //     var regionalVar = this_dim === "GHG/capita" ? regionalAvgs : regionalAvgs_GDP;
-  //     svgBarChart.append("g").selectAll("line")
-  //       .data(Object.values(regionalVar))
-  //       .enter().append("line")
-  //       .attr("class", "line")
-  //       .style("stroke", "#c5e0dc")
-  //       .style("stroke-width", "2px")
-  //       .attr("x1", function (d, i) {
-  //         if (this_dim === "GHG/capita") {
-  //           if (i === 0) return x("Melbourne");
-  //           else if (i === 1) return x("Ljubljana");
-  //           else if (i === 2) return x("Hong Kong");
-  //           else if (i === 3) return x("Cape Town");
-  //           else if (i === 4) return x("Rio de Janeiro");
-  //         } else {
-  //           if (i === 0) return x("Melbourne");
-  //           else if (i === 1) return x("Ljubljana");
-  //           else if (i === 2) return x("Seoul");
-  //           else if (i === 3) return x("Cape Town");
-  //           else if (i === 4) return x("Bogotá");
-  //         }
-  //       })
-  //       .attr("y1", function (d, i) { return y(d); })
-  //       .attr("x2", function (d, i) {
-  //         if (i === 0) return x("gap");
-  //         else if (i === 1) return x("gap6");
-  //         else if (i === 2) return x("Cape Town");
-  //         else if (i === 3) return x("gap4");
-  //         else if (i === 4) return x("Brasília") + 9;
-  //       })
-  //       .attr("y2", function (d, i) { return y(d); });
+  svgBarChart.append("g").selectAll("line")
+    .data(Object.values(regionalVar))
+    .enter().append("line")
+    .attr("class", "line")
+    .style("stroke", "#555")
+    .style("stroke-width", "2px")
+    .attr("x1", function (d, i) {
+      if (this_dim === "Scope1/capita") {
+        if (i === 0) return x("Rotterdam");
+        else if (i === 1) return x("Buenos Aires");
+        else if (i === 2) return x("Cleveland");
+        else if (i === 3) return x("Incheon");
+        else if (i === 4) return x("Lahti");
+      } else {
+        if (i === 0) return x("Manchester");
+        else if (i === 1) return x("Caracas");
+        else if (i === 2) return x("Auckland");
+        else if (i === 3) return x("Lagos");
+        else if (i === 4) return x("Helsinki");
+      }
+    })
+    .attr("y1", function (d, i) { return y(d); })
+    .attr("x2", function (d, i) {
+      if (i === 0) return x("Faro");
+      else if (i === 1) return x("Recife");
+      else if (i === 2) return x("Ajax, ON");
+      else if (i === 3) return x("Okayama");
+      else if (i === 4) return x("Turku");
+    })
+    .attr("y2", function (d, i) { return y(d); });
         
   //       // Legend line + text
   //       regionalLine = svgBarChart.append("g");
