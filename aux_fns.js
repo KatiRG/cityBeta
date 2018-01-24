@@ -199,12 +199,20 @@ function create_colourBar() {
     .attr('viewBox', '0 0 660 94' )
     .style("vertical-align", "middle");
 
-  //Object.keys(colour_methodNum).length
-  var cb_values = ["#75766D", "#9ADCB9", "#DCCDA1", "#FFC7AF", "#F7D76F"];
-  var texts = ['a', 'b', 'c', 'd', 'e'];
+  // Tooltip for rects  
+  var tool_tip = d3.tip()
+    .attr("class", "d3-tip")
+    .offset([-10, 0])
+    .html(function (d, i) {
+      return "<b>" + Object.keys(protocolDict)[i] + "</b>" + ": "
+                   + Object.values(protocolDict)[i];
+    });
 
+  svgCB.call(tool_tip);
+
+ 
   var rects = svgCB.selectAll('rect')
-              .data(cb_values)
+              .data(Object.values(colour_methodNum))
               .enter()
               .append('g');
 
@@ -216,12 +224,14 @@ function create_colourBar() {
                     return -620 + i * 295;
                   })
                   .attr("fill", function (d, i) {
-                    return cb_values[i];
-                  });
+                    return colour_methodNum[i + 1];
+                  })
+                  .on('mouseover', tool_tip.show)
+                  .on('mouseout', tool_tip.hide);
 
   rects.append("text")
-        .text(function (d, i) {          
-          return protocol[i];
+        .text(function (d, i) {
+          return Object.keys(protocolDict)[i];
         })
         .attr("y", 10)
         .attr("x", function (d, i) {
@@ -236,14 +246,9 @@ function create_colourBar() {
         .attr("transform", function (d) {
           var xscale = 2.5;
           var yscale = 2.5;
-
           return "scale(" + xscale + " " + yscale + ")";
-
         });
         
-                    
-                           
-
 }
 
 //Abbreviate city name in x-axis

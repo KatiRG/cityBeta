@@ -23,8 +23,13 @@ var colour_methodNum = {
   5: "#F7D76F" //OTHER
 }
 
-var protocol = ["GPC", "US ICLEI", "IPCC", "ICLEI", "Other"];
-
+var protocolDict = {
+  "GPC": "Global Protocol for Community-Scale Greenhouse Gas Emissions Inventories (GPC), (WRI, C40 and ICLEI)",
+  "US ICLEI": "U.S. Community Protocol for Accounting and Reporting of Greenhouse Gas Emissions (ICLEI)",
+  "IPCC": "2006 IPCC Guidelines for National Greenhouse Gas Inventories",
+  "ICLEI": "International Emissions Analysis Protocol (ICLEI)",
+  "Other": "Combinations or subsets of methodologies, or propitiatory methodologies specific to a region/city"
+}
 //------------------------------------------------
 //TO BE VERIFIED! AVGS TAKEN FROM GCA WEBSITE
 var regionalAvgs = {

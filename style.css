@@ -57,6 +57,17 @@ ul {
 	border-radius: 4px 4px 4px 4px;
 }
 
+.d3-tip {
+    line-height: 1;
+    height: 50px;
+    width: 350px;
+    padding: 6px;
+    background: #F7F6E4;
+    color: #555;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+
 /*to allow x-axis labels to overflow past div bd*/
 /*svg:not(:root) {
     overflow: unset;
