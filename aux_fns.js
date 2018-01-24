@@ -183,7 +183,7 @@ function create_colourBar() {
   console.log("create colourBar")
 
   //Make colourbar rects
-  var width_cb = 100, height_cb = 100;
+  var width_cb = 100, height_cb = 24;
 
   //Define the colourbar svg
   var aspectRatio = '160:50';
@@ -194,10 +194,14 @@ function create_colourBar() {
     // .attr("width", width_cb)
     // .attr("height", height_cb);
     .attr('width', '100%')
-    .attr('height', '100%') //height_cb)
+    .attr('height', height_cb)
     .attr('viewBox', viewBox)
-    // .attr('viewBox', '0 0 5 10' );
-    .attr('viewBox', '0 0 ' +  ( width + 100 ) + ' ' + ( height - 190 ) );
+    .attr('viewBox', '0 0 660 94' )
+    .style("vertical-align", "middle");
+    //.attr("transform", "translate(" + 0 + "," + 0 + ")");
+
+
+    // .attr('viewBox', '0 0 ' +  ( width + 100 ) + ' ' + ( height - 190 ) );
     // .append("g");
     // .attr("transform", "translate(" + 0 + "," + 0 + ")");
     // .attr('viewBox', '0 0 ' +  ( width + margin.left + margin.right ) + ' ' + ( height  + margin.top + margin.bottom ) )
@@ -210,23 +214,6 @@ function create_colourBar() {
   var cb_values = ["#75766D", "#9ADCB9", "#DCCDA1", "#FFC7AF", "#F7D76F"];
   var texts = ['a', 'b', 'c', 'd', 'e'];
 
-  // var rects = svgCB.selectAll('rect')
-  //     .data(cb_values);
-
-  // rects.enter()
-  //     .append("rect")
-  //     .attr("width", 50)
-  //     .attr("height", 50)
-  //     .attr("y", 5)
-  //     .attr("x", function (d, i) {
-  //       return i * 100;
-  //     })
-  //     .attr("fill", function (d, i) {
-  //       return cb_values[i];
-  //     })
-  //     .attr("stroke", "gray")
-  //     .attr("stroke-width", 2.5);
-
   var rects = svgCB.selectAll('rect')
               .data(cb_values)
               .enter()
@@ -234,34 +221,34 @@ function create_colourBar() {
               // .append("rect");
 
   var rectAttributes = rects.append("rect")
-                  .attr("width", 50)
-                  .attr("height", 50)
+                  .attr("width", 80)
+                  .attr("height", 80)
                   .attr("y", 5)
                   .attr("x", function (d, i) {
-                    return i * 100;
+                    return i * 120;
                   })
                   .attr("fill", function (d, i) {
                     return cb_values[i];
                   });
 
-  rects.append("text")
-        .text(function (d, i) {
-          console.log("d in text: ", d)
-          return texts[i];
-        })
-        .attr("y", -3)
-        .attr("x", function (d, i) {
-          return i * 10;
-        })
-        .attr("dy", "12px")
-        .style("stroke","black")
-        .attr("transform", function (d) {
-          var xscale = 5.5;
-          var yscale = 5.5;
+  // rects.append("text")
+  //       .text(function (d, i) {
+  //         console.log("d in text: ", d)
+  //         return texts[i];
+  //       })
+  //       .attr("y", -3)
+  //       .attr("x", function (d, i) {
+  //         return i * 10;
+  //       })
+  //       .attr("dy", "12px")
+  //       .style("stroke","black")
+  //       .attr("transform", function (d) {
+  //         var xscale = 2.5;
+  //         var yscale = 2.5;
 
-          return "scale(" + xscale + " " + yscale + ")";
+  //         return "scale(" + xscale + " " + yscale + ")";
 
-        });
+  //       });
         
                     
                            
