@@ -291,15 +291,13 @@ function fn_appendRegionalMeans(svg, geogroup_name, this_dim, data, x, y) {
   // Tooltip for lines  
   var tool_tip = d3.tip()
     .attr("class", "d3-tip-line")
-    .style("width", 20)
-    //  height: 50px;
-    // width: 350px;
     .offset([-10, 0])
     .html(function (d, i) {
       return regionalVar + " " + dimUnits[this_dim];
     });
   svg.call(tool_tip);
 
+  //append line for regional mean
   svg.append("g").selectAll("line")
     .data(regionalVar)
     .enter().append("line")
@@ -309,9 +307,24 @@ function fn_appendRegionalMeans(svg, geogroup_name, this_dim, data, x, y) {
     .attr("x1", function (d, i) { return x(x1_city); })
     .attr("y1", function (d, i) { return y(d); })
     .attr("x2", function (d, i) { return x(x2_city); })
+    .attr("y2", function (d, i) { return y(d); });
+
+  //make an invisible fat line and use for tooltip so that
+  //user does not have to position mouse over thin regional line
+  //with surgical precision
+  svg.append("g").selectAll("line")
+    .data(regionalVar)
+    .enter().append("line")
+    .attr("class", "line")
+    .style("stroke", "#555")
+    .style("stroke-width", "6px")
+    .style("opacity", 0)
+    .attr("x1", function (d, i) { return x(x1_city); })
+    .attr("y1", function (d, i) { return y(d); })
+    .attr("x2", function (d, i) { return x(x2_city); })
     .attr("y2", function (d, i) { return y(d); })
     .on('mouseover', tool_tip.show)
-    .on('mouseout', tool_tip.hide);
+    .on('mouseout', tool_tip.hide); 
 }
 
 //Abbreviate city name in x-axis
