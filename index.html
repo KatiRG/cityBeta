@@ -258,10 +258,10 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
   setupData(ghg);
   // drawMap();
   emissionsBarChart("groupEurope", "#barChart_EU");
-  // emissionsBarChart("groupUSAAusNZ", "#barChart_USACanAusNZ");
-  // emissionsBarChart("groupAfricaAsia", "#barChart_AfricaAsia");
-  // emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
-  // emissionsBarChart("groupNordic", "#barChart_Nordic");
+  emissionsBarChart("groupUSAAusNZ", "#barChart_USACanAusNZ");
+  emissionsBarChart("groupAfricaAsia", "#barChart_AfricaAsia");
+  emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
+  emissionsBarChart("groupNordic", "#barChart_Nordic");
 });
 
 // ----------------------------------------------------
@@ -728,8 +728,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       });
 
   // Plot regional avg emissions [tCO2/capita] as a line over each barChart
-  var regionalVar = this_dim === "Scope1/capita" ? regionalAvgs : regionalAvgs_GDP;
-  fn_appendRegionalMeans(svgBarChart, geogroup_name, this_dim, x, y);
+  fn_appendRegionalMeans(svgBarChart, geogroup_name, this_dim, emissions_scaled, x, y);
 
   
   //       // Legend line + text
