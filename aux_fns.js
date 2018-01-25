@@ -293,7 +293,8 @@ function fn_appendRegionalMeans(svg, geogroup_name, this_dim, data, x, y) {
     .attr("class", "d3-tip-line")
     .offset([-10, 0])
     .html(function (d, i) {
-      return regionalVar + " " + dimUnits[this_dim];
+      return (this_dim === "Scope1/capita" ? regionalVar : formatDecimalk(regionalVar[0]) )
+             + " " + dimUnits[this_dim];
     });
   svg.call(tool_tip);
 
