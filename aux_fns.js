@@ -246,6 +246,37 @@ function create_colourBar() {
         
 }
 
+//Regional line legend for barCharts
+function create_regionalLine() {
+  var regionalLine = d3.select("#barChartLegend").select("svg")
+                       .append("g");
+
+  regionalLine.selectAll("line")
+      .data([0])
+      .enter().append("line")
+      .attr("class", "line")
+      .style("stroke", "black")
+      .style("opacity", 0.7)
+      .style("stroke-width", "6px")
+      .attr("x1", 1020)
+      .attr("y1", 40)
+      .attr("x2", 1283)
+      .attr("y2", 40);
+
+  regionalLine.append("text")
+    .attr("class", "textLabels")
+    .attr("dx", 223)
+    .attr("dy", 15)
+    .text("regional mean")
+    .attr("transform", function (d) {
+      var xscale = 3.2;
+      var yscale = 3.2;
+      return "scale(" + xscale + " " + yscale + ")";
+    });
+
+
+}
+
 //Append regional means as lines to barCharts
 function fn_appendRegionalMeans(svg, geogroup_name, this_dim, data, x, y) {
   //data to plot

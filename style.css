@@ -5,8 +5,8 @@ body {
 }
 
 [class*="col-"], footer {
-  background-color: lightgreen;
-  border: 2px solid black;
+  /*background-color: lightgreen;
+  border: 2px solid black; */
   border-radius: 6px;
   line-height: 40px;
   text-align: center;
@@ -156,6 +156,9 @@ div.rtooltip {
 }
 #barChartLegend {
   stroke: gray;
+}
+.textLabels {
+  fill: #636363;
 }
 
 .barChartTitle {

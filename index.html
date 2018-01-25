@@ -170,13 +170,6 @@ var div = d3.select("body").append("div")
 // Code
 // ----------------------------------------------------
 
-d3.select("#infoText")
-  .text("Hover over a city the world map to see city emissions data.")
-  .style("font-size", "14px");
-
-//barChart legend
-create_colourBar();
-
 // ----------------------------------------------------
 // Buttons
 // ----------------------------------------------------
@@ -250,6 +243,14 @@ d3.select("#reorderButton")
 // ----------------------------------------------------
 // Main Code
 // ----------------------------------------------------
+
+d3.select("#infoText")
+  .text("Hover over a city the world map to see city emissions data.")
+  .style("font-size", "14px");
+
+//barChart legends
+create_colourBar();
+create_regionalLine();
 
 // d3.csv("data/Creutzig2014_dataset_wb.csv", function(ghg) {
 d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
