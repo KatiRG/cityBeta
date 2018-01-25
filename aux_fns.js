@@ -177,7 +177,7 @@ function resetElements() {
 // Functions for emissionsBarChart()
 //----------------------------------------------
 //Create colour bar boxes
-function create_colourBar() {
+function fn_appendColourBar() {
 
   //Make colourbar rects
   var width_cb = 100, height_cb = 24;
@@ -247,7 +247,7 @@ function create_colourBar() {
 }
 
 //Regional line legend for barCharts
-function create_regionalLine() {
+function fn_appendRegionalLine() {
   var regionalLine = d3.select("#barChartLegend").select("svg")
                        .append("g");
 
@@ -288,6 +288,18 @@ function fn_appendRegionalMeans(svg, geogroup_name, this_dim, data, x, y) {
   var x1_city = data[0].city;
   var x2_city = data[data.length - 1].city;
 
+  // Tooltip for lines  
+  var tool_tip = d3.tip()
+    .attr("class", "d3-tip-line")
+    .style("width", 20)
+    //  height: 50px;
+    // width: 350px;
+    .offset([-10, 0])
+    .html(function (d, i) {
+      return regionalVar + " " + dimUnits[this_dim];
+    });
+  svg.call(tool_tip);
+
   svg.append("g").selectAll("line")
     .data(regionalVar)
     .enter().append("line")
@@ -297,7 +309,9 @@ function fn_appendRegionalMeans(svg, geogroup_name, this_dim, data, x, y) {
     .attr("x1", function (d, i) { return x(x1_city); })
     .attr("y1", function (d, i) { return y(d); })
     .attr("x2", function (d, i) { return x(x2_city); })
-    .attr("y2", function (d, i) { return y(d); });
+    .attr("y2", function (d, i) { return y(d); })
+    .on('mouseover', tool_tip.show)
+    .on('mouseout', tool_tip.hide);
 }
 
 //Abbreviate city name in x-axis

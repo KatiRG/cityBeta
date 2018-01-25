@@ -249,8 +249,8 @@ d3.select("#infoText")
   .style("font-size", "14px");
 
 //barChart legends
-create_colourBar();
-create_regionalLine();
+fn_appendColourBar();
+fn_appendRegionalLine();
 
 // d3.csv("data/Creutzig2014_dataset_wb.csv", function(ghg) {
 d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
