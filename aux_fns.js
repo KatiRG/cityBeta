@@ -247,16 +247,26 @@ function create_colourBar() {
 }
 
 //Append regional means as lines to barCharts
-function fn_appendRegionalMeans(svg, this_dim, x, y) {
-  var regionalVar = this_dim === "Scope1/capita" ? regionalAvgs : regionalAvgs_GDP;
+function fn_appendRegionalMeans(svg, geogroup_name, this_dim, x, y) {
+  var regionalVar = [];
+  regionalVar[0] = this_dim === "Scope1/capita" ? 
+                    regionalAvgs[geogroup_name] : regionalAvgs_GDP[geogroup_name];
+  console.log("var: ", regionalVar)
 
   svg.append("g").selectAll("line")
-    .data(Object.values(regionalVar))
+    // .data(Object.values(regionalVar))
+    .data(regionalVar)
     .enter().append("line")
     .attr("class", "line")
     .style("stroke", "#555")
     .style("stroke-width", "2px")
     .attr("x1", function (d, i) {
+      console.log("d: ", d)
+      console.log("i: ", i)
+      console.log("x(Rotterdam): ", x("Rotterdam"))
+      console.log("x(Manchester): ", x("Manchester"))
+      console.log("x(BA): ", x("Buenos Aires"))
+      console.log("x(Santiago): ", x("Santiago"))
       if (this_dim === "Scope1/capita") {
         if (i === 0) return x("Rotterdam");
         else if (i === 1) return x("Buenos Aires");
@@ -271,7 +281,9 @@ function fn_appendRegionalMeans(svg, this_dim, x, y) {
         else if (i === 4) return x("Helsinki");
       }
     })
-    .attr("y1", function (d, i) { return y(d); })
+    .attr("y1", function (d, i) { 
+      console.log("y(d): ", y(d))
+      return y(d); })
     .attr("x2", function (d, i) {
       if (i === 0) return x("Faro");
       else if (i === 1) return x("Recife");

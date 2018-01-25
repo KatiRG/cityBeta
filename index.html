@@ -177,6 +177,9 @@ d3.select("#infoText")
 //barChart legend
 create_colourBar();
 
+// ----------------------------------------------------
+// Buttons
+// ----------------------------------------------------
 //barChart buttons
 //select emissions to display: scaled by capita or by GDP-PPP
 d3.select("#gdpButton")
@@ -244,6 +247,9 @@ d3.select("#reorderButton")
 //     console.log("resetmap")
 // }
 
+// ----------------------------------------------------
+// Main Code
+// ----------------------------------------------------
 
 // d3.csv("data/Creutzig2014_dataset_wb.csv", function(ghg) {
 d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
@@ -252,14 +258,14 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
   setupData(ghg);
   // drawMap();
   emissionsBarChart("groupEurope", "#barChart_EU");
-  emissionsBarChart("groupUSAAusNZ", "#barChart_USACanAusNZ");
-  emissionsBarChart("groupAfricaAsia", "#barChart_AfricaAsia");
-  emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
-  emissionsBarChart("groupNordic", "#barChart_Nordic");
-}); // ./d3.csv for emissions data
+  // emissionsBarChart("groupUSAAusNZ", "#barChart_USACanAusNZ");
+  // emissionsBarChart("groupAfricaAsia", "#barChart_AfricaAsia");
+  // emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
+  // emissionsBarChart("groupNordic", "#barChart_Nordic");
+});
 
 // ----------------------------------------------------
-// Functions
+// Main Functions
 // ----------------------------------------------------
 
 // d3js World Map
@@ -723,7 +729,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
   // Plot regional avg emissions [tCO2/capita] as a line over each barChart
   var regionalVar = this_dim === "Scope1/capita" ? regionalAvgs : regionalAvgs_GDP;
-  fn_appendRegionalMeans(svgBarChart, this_dim, x, y);
+  fn_appendRegionalMeans(svgBarChart, geogroup_name, this_dim, x, y);
 
   
   //       // Legend line + text
