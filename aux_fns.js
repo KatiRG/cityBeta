@@ -246,6 +246,42 @@ function create_colourBar() {
         
 }
 
+//Append regional means as lines to barCharts
+function fn_appendRegionalMeans(svg, this_dim, x, y) {
+  var regionalVar = this_dim === "Scope1/capita" ? regionalAvgs : regionalAvgs_GDP;
+
+  svg.append("g").selectAll("line")
+    .data(Object.values(regionalVar))
+    .enter().append("line")
+    .attr("class", "line")
+    .style("stroke", "#555")
+    .style("stroke-width", "2px")
+    .attr("x1", function (d, i) {
+      if (this_dim === "Scope1/capita") {
+        if (i === 0) return x("Rotterdam");
+        else if (i === 1) return x("Buenos Aires");
+        else if (i === 2) return x("Cleveland");
+        else if (i === 3) return x("Incheon");
+        else if (i === 4) return x("Lahti");
+      } else {
+        if (i === 0) return x("Manchester");
+        else if (i === 1) return x("Caracas");
+        else if (i === 2) return x("Auckland");
+        else if (i === 3) return x("Lagos");
+        else if (i === 4) return x("Helsinki");
+      }
+    })
+    .attr("y1", function (d, i) { return y(d); })
+    .attr("x2", function (d, i) {
+      if (i === 0) return x("Faro");
+      else if (i === 1) return x("Recife");
+      else if (i === 2) return x("Ajax, ON");
+      else if (i === 3) return x("Okayama");
+      else if (i === 4) return x("Turku");
+    })
+    .attr("y2", function (d, i) { return y(d); });
+}
+
 //Abbreviate city name in x-axis
 function fn_abbr(d) {
   if (d.indexOf(', ') >= 0) abbr = d.substring(0,3);
