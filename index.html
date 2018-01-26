@@ -272,7 +272,7 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
   emissionsBarChart("groupAfricaAsia", "#barChart_AfricaAsia");
   emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
   emissionsBarChart("groupNordic", "#barChart_Nordic");
-  displayCityCard();
+  setupCityCard();
 });
 
 // ----------------------------------------------------
@@ -460,18 +460,47 @@ function highlightElements(idName) {
   d3.select("#ghgStory").text("");
 
   var selectedCity = data_GHG.find(x => x.idName.includes(idName));
-  console.log("idName: ", idName)
-  console.log("tmp: ", selectedCity)
 
-  // d3.select("#cityCardName")
-  //   .text(selectedCity.city)
-  //   .style("font-size", "20px")
-  //   .style("text-align", "left");
+  d3.select("#cityCardSVG").select("svg").remove();
 
-  // d3.select("#cityCardChange")
-  //   .text("Change in emissions from previous year: " + selectedCity['change in emissions'])
-  //   .style("font-size", "16px")
-  //   .style("text-align", "left");
+  var margin = {top: 5, right: 0, bottom: 0, left: 0},
+    width = 455 - margin.left - margin.right,
+    height = 290 - margin.top - margin.bottom;
+
+  var svg = d3.select("#cityCardSVG").append("svg").attr("class", "cityCard")
+    .attr('width', '100%')
+    .attr('height', height)
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  svg.append("text")
+    .attr("class", "textLabels")
+    .attr("dx", 223)
+    .attr("dy", 15)
+    .text(selectedCity.city)
+    .style("font-size", "20px")
+    .attr("transform", "translate(" + -220 + "," + 0 + ")");
+
+  svg.append("text")
+    .attr("class", "textLabels")
+    .attr("dx", 223)
+    .attr("dy", 15)
+    .text("Change in emissions from previous year: " + selectedCity['change in emissions'])
+    .style("font-size", "16px")
+    .attr("transform", "translate(" + -220 + "," + 50 + ")");
+
+  svg.append("text")
+    .attr("class", "textLabels")
+    .attr("dx", 223)
+    .attr("dy", 15)
+    .text("Reason: " + selectedCity['reason for change'])
+    .style("font-size", "16px")
+    //.attr("transform", "translate(" + -220 + "," + 150 + ")")
+    .call(wrap, 500);
+
+
 
   // d3.select("#cityCardChangeReason")
   //   .text("Reason: " + selectedCity['reason for change'])
@@ -511,7 +540,7 @@ function highlightElements(idName) {
 //     // .style("margin-left", "60px");
 // }
 
-function displayCityCard() {
+function setupCityCard() {
   //remove any previous svg
   d3.select("#cityCardSVG").select("svg").remove();
 
@@ -528,6 +557,8 @@ function displayCityCard() {
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
 
 }
 

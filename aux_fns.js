@@ -388,3 +388,34 @@ function highlightCountry(countryName, idName, dataObj)  {
     //   .style("opacity", 0.3);
   }
 }
+
+//https://bl.ocks.org/mbostock/7555321
+function wrap(text, width) {
+ 
+  text.each(function() {
+    console.log("i: ", this)
+    var xpos = -220;
+    var deltay = 8;
+    var text = d3.select(this),
+        words = text.text().split(/\s+/).reverse(),
+        word,
+        line = [],
+        lineNumber = 0,
+        lineHeight = 1,//1.1, // ems
+        y = text.attr("y"),
+        //dy = parseFloat(text.attr("dy")),
+        dy = parseFloat(text.attr("dy") - deltay),
+        tspan = text.text(null).append("tspan").attr("x", xpos).attr("y", y).attr("dy", dy + "em");
+    while (word = words.pop()) {
+      line.push(word);
+      tspan.text(line.join(" "));
+      if (tspan.node().getComputedTextLength() > width) {
+        line.pop();
+        tspan.text(line.join(" "));
+        line = [word];
+        tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + 
+          dy -7 + "em").text(word);
+      }
+    }
+  });
+}
