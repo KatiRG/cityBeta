@@ -28,227 +28,110 @@
   <script src="aux_fns.js"></script>
   <script src="globalvars.js"></script>
 
-  <style>
-   
-    div.vtooltip {
-      position: absolute;
-      text-align: center;
-      width: 60px;
-      height: 30px;
-      padding: 2px;
-      font: 12px sans-serif;
-      background: #C5E0DC;  /*lightsteelblue;*/      
-      border: 0px;
-      border-radius: 8px;
-      pointer-events: none;
-    }
-    div.rtooltip {
-      position: absolute;
-      text-align: left;
-      width: 190px;
-      height: 110px;
-      padding: 2px;
-      font: 8px;
-      background: #EEE4C5;
-      border: 0px;
-      border-radius: 8px;
-      pointer-events: none;
-    }
-    #infoText {
-      margin: 20px;
-    }
-
-    /* map */
-    #sphere {
-      padding-top: 0px;
-    }
-    /* #map {*/
-    /*  width: 800px; /*100%;*/
-    /*  height: 400px; /*100%;*/
-    /*} */
-    .stroke {
-      fill: none;
-      stroke: #000;
-      stroke-width: 1px;
-    }
-    .fill {
-      fill: #fff;
-    }
-    .graticule {
-      fill: none;
-      stroke: #777;
-      stroke-width: .5px;
-      stroke-opacity: .5;
-    }
-    .land {
-      fill: #222;
-    }
-    .boundary {
-      fill: none;
-      stroke: #fff;
-      stroke-width: .5px;
-    }
-
-    /* bar chart */
-    #ghgBarChart {
-      position: absolute;
-      left:820px;
-      top:100px;
-    }
-    .barChartRegionLabel {
-      fill: #636363;
-    }
-    .axis {
-      font: 10px sans-serif;
-    }
-    .axis path,
-    .axis line {
-      /*fill: none;*/
-      stroke: #000;
-      shape-rendering: crispEdges;
-    }
-    .x.axis path {
-      display: none;
-    }
-
-    /*Stats table*/
-    #displayStats {
-      position: absolute;
-      margin-top: -40px;
-      margin-left: 1505px;
-    }
-    #displayGHGstats {
-      position: absolute;
-      margin-top: 4px;
-      margin-left: 819px;
-    }
-    
-
-    /* similarity map */
-    #cb {
-      width: 100px; /*100%;*/
-      height: 100px; /*100%;*/
-    }
-    #cb_label {
-      width: 150px; /*100%;*/
-      margin-left: 110px;
-      /*margin-top: 25px; */
-    }
-    .d3-tip {
-      line-height: 1;
-      padding: 6px;
-      background: rgba(0, 0, 0, 0.8);
-      color: #fff;
-      border-radius: 4px;
-      font-size: 14px;
-    }
-    /*#mapSim {
-      width: 800px;
-      height: 400px;
-    }*/
-    ellipse {
-      fill: none;
-      stroke: #C5E0DC;
-      stroke-width: 2;
-      stroke-linejoin: round;
-    }
-    .textLabels {
-      fill: #636363;
-    }
-    .nodeText, .nodeTextSelected {
-      fill: #636363;
-      font-size: 11px;
-      font-style: italic;
-    }
-    /* ./similarity map */
-
-    
-    #ghgStory {
-      margin-top: 20px;
-    }
-    td, th {
-      padding: 1px 4px;
-      font-size: 14px;
-    }
-
-  </style>
 </head>
 <body>
 
-<div class="row">
-  <div id="infoText"></div>
-</div>
+  <div class="container">
 
-<div class="row">
-  <!--d3js map-->
-  <div class="col-xs-5">    
-    <div id="map"></div>
-    <ul class="nytg-sort" style='position: absolute; left: 0px; top: 6px;'>
-      <li id="resetButton">Reset</li>
-    </ul>
-  </div>
+    <!-- header row -->
+    <div class="row">
+      <div class="col-lg-12">entete</div>
+    </div> <!-- ./header row -->
 
-  <div id="ghgBarChart" class="col-xs-4">
-    <div id="regionLabel"><h4>GHG/capita emissions grouped by world region</h4></div>
-    <ul class="nytg-sort" style='position: absolute; left: 463px; top: 6px;'>
-      <li id="barButton">GHG/GDP</li>
-    </ul>
-  </div>
-  <div id="displayStats" class="col-xs-3">
+    <!-- info text row -->
+    <div class="row">
+      <div class="col-lg-8" id="infoText" style="text-align: left;"></div>
+      <ul class="nytg-sort" style='position: absolute; left: 700px; top: 60px;'>
+        <li id="resetButton">Reset</li>
+      </ul>
 
-  </div>
+      <div class="col-lg-4" >City Card</div>
+    </div> <!-- ./row 1 -->
+  
+    <!-- row for map and city card -->
+    <div class="row">
+      <div class="col-lg-12">
+        <div id="map"></div>
 
-</div>
+      </div>
+
+      <!--<div class="col-lg-4" id="displayGHGstats">
+        <div id="ghgDelta"></div><br>
+        <div id="ghgDeltaReason"></div>
+        <div id="ghgStory"></div>
+      </div> -->
+
+    </div> <!-- ./map and city card row -->
+
+    <!-- row 3 -->
+    <div class="row">
+      <div class="col-lg-7">
+        <div id="barChartCaption"></div>
+          <ul class="nytg-sort" id="emissionsToggleButton">
+              <li id="gdpButton">Scope1/GDP-PPP</li>
+          </ul>
+          <ul class="nytg-sort" style='position: absolute; left: 555px; top: 0px;'>
+              <li id="reorderButton" style="display: none;">Re-order</li>
+          </ul>
+      </div>
+
+      <div class="col-lg-5"id="Fig3Label" >A la Fig. 3</div>
+    </div> <!-- ./row 3 -->
+
+    <!-- row 4 -->
+    <div class="row">
+
+      <div class="col-lg-7">
+        <!--barChart legend-->
+        <div class="row">
+          <div id="barChartLegendLabel" class="col-lg-2">Protocol</div>
+          <div id="barChartLegend"class="col-lg-10">
+            <svg></svg>
+          </div>
+        </div>
+
+        <!--barChart sub-rows-->
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="barChartTitle">Europe</div>
+            <div id="barChart_EU"></div>
+          </div>
+          <div class="col-lg-6">
+            <div class="barChartTitle">Latin America</div>
+            <div id="barChart_LatinAmer"></div>
+          </div> 
+        </div>
+
+        <div class="row">
+          <div class="barChartTitle">USA &#183; Canada &#183; Australia &#183; New Zealand</div>
+          <div id="barChart_USACanAusNZ"></div>
+        </div> <!-- ./sub-row USA chart -->
 
 
-<div class="row">
-  <div style="margin-left:15px;width:550px;padding-top:10px;padding-bottom:5px;">Similarity Map: this diagram groups cities by <a href="help.html" target="_blank">similarity</a> across multiple factors.</div>
-</div>
+        <div class="row">
+          <div class="col-lg-8">
+            <div class="barChartTitle">Africa &#183; Asia</div>
+            <div id="barChart_AfricaAsia"></div>
+          </div>
+          <div class="col-lg-4">
+            <div class="barChartTitle">Nordics</div>
+            <div id="barChart_Nordic"></div>
+          </div> 
+        </div> 
 
-<div class="row">
-  <!--Similarity voronoi map-->
-  <div id="mapSim" class="col-xs-5">    
-    <svg></svg>
-  </div>
+      </div> <!-- ./col-lg-7 -->
 
-  <div id="displayGHGstats" class="col-xs-5">
-    <div id="ghgTable"></div>
-    <div id="ghgDelta"></div><br>
-    <div id="ghgDeltaReason"></div>
-    <div id="ghgStory"></div>
-  </div>
+      <div class="col-lg-5">scatter plot here</div>
 
-</div>
+      
+    </div> <!-- ./row 4-->
 
-<div class="row" style=>
-  <div><h4></h4></div>
-   <!--colourbar-->
-  <div id="cb_label" class="col-xs-1"><h4>GHG/capita</h4></div>
-  <div id="cb" class="col-xs-5">    
-    <svg></svg>
-  </div>
-</div>
+    <footer class="row">
+      Pied de page
+    </footer>
 
-<div class="row">
-  <div id="selectDim">
-    <form>
-      <label>Overlay:  <input type="radio" name="dataset" value="GHG/capita" checked> GHG/capita</label>
-      <label><input type="radio" name="dataset" value="GHGe intensity 2004">GHGe intensity (2004)</label>
-      <label><input type="radio" name="dataset" value="GHGe intensity 2009">GHGe intensity (2009)</label>
-      <label><input type="radio" name="dataset" value="region"> Region</label><br>
-      <label>Classified by: <input type="radio" name="dataset" value="population"> Pop</label>
-      <label><input type="radio" name="dataset" value="population density"> Pop density</label>
-      <label><input type="radio" name="dataset" value="GDP/capita"> GDP/cap</label>
-      <label><input type="radio" name="dataset" value="diesel price"> Diesel price</label>
-      <label><input type="radio" name="dataset" value="gas price"> Gas price</label>
-      <label><input type="radio" name="dataset" value="HDD 15.5C">HDD 15.5C</label>
-      <label><input type="radio" name="dataset" value="CDD 23C">CDD 23C</label>
-      <label><input type="radio" name="dataset" value="urban ratio">Urban ratio</label>
-      <label><input type="radio" name="dataset" value="commerce index">Commerce index</label>
-      <label><input type="radio" name="dataset" value="household size">HH size</label>
-    </form>
-  </div>
-</div>
+</div>  <!-- ./container -->
+
 
 <script>
 
@@ -256,118 +139,89 @@
 // Setup
 // ----------------------------------------------------
 
+var container = d3.select("body").append("div")
+    .style("width",width);
 
-// Global vars
-// -----------
-// var data_noGHG = [];
-
-var voronoiLineColour = d3.rgb(249,236,219); //"#F1D4AF"; //"#E5C688"; //"#CBBCA6"; //"tomato";
-var voronoiCircleColour = "#E2D373";
-var voronoiHighlightLineColour = "#555";//"#AAFF00"; //"#521A24";
-var nodataColour = "#f1f1f1";
-var label_yShift = 55; //y-displacement of voronoi city label
-
-var formatDecimalS = d3.format(".2s"); //d3.format(".3n");
-var formatDecimalSci = d3.format(".2n");
-
-//Related to dimension selected
-var dim, dimUnits; //dimension to colour voronoi map with
-var dimExtentDict = {};
-dim = d3.select("#cb_label").text(); //dimension for polygon overlay
-
-// Find data range for each dim (to be used for voronoi colour overlay)
-d3.csv("data/match_GEA_UITP_CDP2017_adaptedRegions_selectedColumns.csv", function(ghg) {  
-  dimExtentDict = {
-    "GHG/capita": d3.extent(ghg, function (d) {return +d.total_GHG/+d.Current_population;}),
-    "GHGe intensity 2004": d3.extent(ghg, function (d) {return +d["GHGe intensity 2004"];}),
-    "GHGe intensity 2009": d3.extent(ghg, function (d) {return +d["GHGe intensity 2009"];}),
-    "population": d3.extent(ghg, function (d) {return +d.population;}),
-    "population density": d3.extent(ghg, function (d) {return +d["population density"];}),
-    "GDP/capita": d3.extent(ghg, function (d) {return +d["GDP/capita"];}),
-    "diesel price": d3.extent(ghg, function (d) {return +d["diesel price"]}),
-    "gas price": d3.extent(ghg, function (d) {return +d["gas price"]}),
-    "HDD 15.5C": d3.extent(ghg, function (d) {return +d["HDD 15.5C"]}),
-    "CDD 23C": d3.extent(ghg, function (d) {return +d["CDD 23C"]}),
-    "urban ratio": d3.extent(ghg, function (d) {return +d["urban ratio"]}),
-    "household size": d3.extent(ghg, function (d) {return +d["household size"]}),
-    "commerce index": d3.extent(ghg, function (d) {return +d["commerce index"]})
-  }
-}); //end d3.csv for match_GEA_UITP_CDP...
-
-
-
-var xScale, yScale; //for similarity map positions
-
-
-//Related to colourbar
-var cb_values = [];
-var delta, colourmapDim; //colourbar values and colours
-
-
-// Voronoi and leaflet map variables
+// Leaflet map variables
 // ---------------------------------
-var width = 800,
-    height = 350; //400;
-
-// padding around the chart where axes will go
-var padding = {
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0,
-};
-// inner chart dimensions, where the dots are plotted
-var plotAreaWidth = width - padding.left - padding.right;
-var plotAreaHeight = height - padding.top - padding.bottom
+// var width = 700,
+//     height = 350; //400;
 
 var pointRadius = 5;
 
 var cityName_array = [];
 
+// Define the div for the gdpButton tooltip
+var div = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
 // ----------------------------------------------------
 // Code
 // ----------------------------------------------------
 
-d3.select("#infoText")
-  .text("Hover over a city area on the world map or on the similarity map to see city statistics.")
-  .style("font-size", "14px");
-
-// Radio buttons to select overlay for voronoi polygon cities
-d3.select("input[value=\"GHG/capita\"]").property("checked", true); //default
-d3.selectAll("input")
-      .on("change", change);
-
-function change() {
-  d3.select("#cb_label").html("<h4>" + this.value + "</h4>");
-  dim = d3.select("#cb_label").text();
-  dimExtent = dimExtentDict[dim];
-
-  console.log("dim: ", dim)
-
-
-  create_colourBar();
-  
-  // Fill colourbar rects according to new dim
-  d3.select("#cb").selectAll("rect")
-    .attr("fill", function (d, i) {
-      return cb_hex[i];
-    });
-
-  // voronoiOverlay();
-  voronoiCirclesOverlay(); //aux_fns.js
-
-}
-
-// Select data type for bar chart
-d3.select("#barButton")
+// ----------------------------------------------------
+// Buttons
+// ----------------------------------------------------
+//barChart buttons
+//select emissions to display: scaled by capita or by GDP-PPP
+d3.select("#gdpButton")
   .on("click", function() {
-    var buttonText = (d3.select(this).text() === "GHG/GDP") ?
-                      "GHG/capita" : "GHG/GDP";
+    div.style("opacity", 0); //clear tooltip
+    
+    var buttonText = (d3.select(this).text() === "Scope1/GDP-PPP") ?
+                      "Scope1/capita" : "Scope1/GDP-PPP";              
 
     d3.select(this).text(buttonText);
-    ghgBarChart();
 
-  });
+    //Plot emissions bar charts for each geo group    
+    emissionsBarChart("groupEurope", "#barChart_EU");
+    emissionsBarChart("groupUSAAusNZ", "#barChart_USACanAusNZ");
+    emissionsBarChart("groupAfricaAsia", "#barChart_AfricaAsia");
+    emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
+    emissionsBarChart("groupNordic", "#barChart_Nordic");
+
+    //(de-)activate reorder button if ("Scope1/capita")"Scope1/GDP-PPP" is being displayed
+    var reorderState = (buttonText === "Scope1/capita") ? "block" : "none";
+    d3.select("#reorderButton").style("display", reorderState);
+     
+  })
+  .on("mouseover", function () {
+    var dictText = emissionsToggleDict[d3.select(this).text()];
+
+    div.style("opacity", 1); //tooltip
+    div.html(function () { return dictText; })
+       .style("left", 820 + "px")
+       .style("top", -940 + "px");
+  })
+  .on("mouseout", function () { div.style("opacity", 0); });
+
+// Re-order barChart of emissions/GDP-PPP according to emissions/capita
+d3.select("#reorderButton")
+  .on("click", function() {
+    // Toggle re-order button text for each click
+    var buttonText = (d3.select(this).text() === "Re-order") ?
+                      "orig order" : "Re-order";
+    d3.select(this).text(buttonText);
+
+    //Re-order Scope1/GDP-PPP according to Scope1/capita    
+    emissionsBarChart("groupEurope", "#barChart_EU");
+    emissionsBarChart("groupUSAAusNZ", "#barChart_USACanAusNZ");
+    emissionsBarChart("groupAfricaAsia", "#barChart_AfricaAsia");
+    emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
+    emissionsBarChart("groupNordic", "#barChart_Nordic");
+     
+  })
+  .on("mouseover", function () {
+    var tooltip_text = (d3.select(this).text() === "Re-order") ? 
+                    "Re-order cities according to decreasing emissions <b>per capita</b>." :
+                    "Back to original order in decreasing emissions per GDP-PPP."
+    div.style("opacity", 1);
+    div.html(tooltip_text)
+        .style("left", 900 + "px")
+        .style("top", -940 + "px");
+  })
+  .on("mouseout", function () { div.style("opacity", 0); });
 
 // // Map reset button
 // d3.select("#resetButton")
@@ -377,82 +231,40 @@ d3.select("#barButton")
 //     console.log("resetmap")
 // }
 
+// ----------------------------------------------------
+// Main Code
+// ----------------------------------------------------
+
+d3.select("#infoText")
+  .text("Hover over a city the world map to see city emissions data.")
+  .style("font-size", "14px");
+
+//barChart legends
+fn_appendColourBar();
+fn_appendRegionalLine();
 
 // d3.csv("data/Creutzig2014_dataset_wb.csv", function(ghg) {
-d3.csv("data/match_GEA_UITP_CDP2017_adaptedRegions_selectedColumns.csv", function(ghg) {
+d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
   console.log("ghg read: ", ghg)
 
-  // Similar city voronois
-  d3.csv("data/df_Z_dims_country_dfs_truncSVD_gea_uitp_noWaterBd_ncomp5_perplexity40.csv", function(error, vdata) //country column added manually
-  // d3.csv("data/df_Z_dims_dfs_truncSVD_gea_uitp_noWaterBd_ncomp5_perplexity40.csv", function(error, vdata)
-  {
-                if (error) throw error;
-    // console.log("vdata: ", vdata)
-
-    //ghg is an array of json objects containing the data in the csv
-    //Columns in the csv:
-    //['City name',
-    // 'city',
-    // 'country',
-    // 'region',
-    // 'Total city-wide emissions, tonnes CO2 ', -> total_GHG
-    // 'Increase/Decrease from last year', -> delta_GHG
-    // 'Reason for increase/decrease in emissions', -> delta_GHG_reason
-    // 'Current population', -> Current_population
-    // 'City location', -> City_location
-    // 'population',
-    // 'population_density',
-    // 'gdp_per_cap',
-    // 'HDD_15.5C', -> HDD_155C
-    // 'CDD_23C', -> CDD_23C
-    // 'diesel_price',
-    // 'gasoline_price',
-    // 'emission_intensity_2004',
-    // 'emission_intensity_2009',
-    // 'household_size',
-    // 'year_household_size',
-    // 'water_bounded',
-    // 'other_bounded',
-    // 'center_of_commerce_index',
-    // 'urbanization_ratio']
-
-    // Scales for voronoi polygon centre points
-    // use d3.extent to find the min and max values of selected dimension
-    console.log("dim after ghg read: ", dim)
-    dimExtent = d3.extent(ghg, function (d) {
-      if (dim === "GHG/capita") return +d.total_GHG/+d.Current_population;
-      else if (dim === "GHGe intensity 2004") return +d["GHGe intensity 2004"];
-      else if (dim === "GHGe intensity 2009") return +d["GHGe intensity 2009"];
-      else if (dim === "population") return +d.population;
-      else if (dim === "population density") return +d["population density"];//+d.pdensity;
-      else if (dim === "GDP/capita") return +d["GDP/capita"];
-      else if (dim === "diesel price") return +d["diesel price"];//+d.diesel_price;
-      else if (dim === "gas price") return +d["gas price"];//+d.gasoline_price;
-      else if (dim === "HDD 15.5C") return +d["HDD 15.5C"];
-      else if (dim === "CDD 23C") return +d["CDD 23C"];
-      else if (dim === "urban ratio") return +d["urban ratio"];
-      else if (dim === "commerce index") return +d["commerce index"];
-      else if (dim === "household size") return +d["household size"];
-    });
-
-    setupData(ghg);
-    setup_vData(vdata);
-    drawMap();
-    ghgBarChart();
-    mapSimilarCities(vdata, ghg); //draw similar city voronoi polygons     
-
-  }); // ./d3.tsv similarity voronoi polygon file
-
-}); // ./d3.csv for emissions data
+  setupData(ghg);
+  drawMap();
+  emissionsBarChart("groupEurope", "#barChart_EU");
+  emissionsBarChart("groupUSAAusNZ", "#barChart_USACanAusNZ");
+  emissionsBarChart("groupAfricaAsia", "#barChart_AfricaAsia");
+  emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
+  emissionsBarChart("groupNordic", "#barChart_Nordic");
+});
 
 // ----------------------------------------------------
-// Functions
+// Main Functions
 // ----------------------------------------------------
-// function setupData(ghg)
-
 
 // d3js World Map
 //------------------
+var width = 1000,
+    height = 360; //cut off antarctica  //400;
+
 function drawMap() {
   // Map reset button
   d3.select("#resetButton")
@@ -461,11 +273,11 @@ function drawMap() {
   //https://bl.ocks.org/mbostock/db6b4335bf1662b413e7968910104f0f
   var zoom = d3.zoom()
     .scaleExtent([1, 40])
-    .translateExtent([[-100, -100], [width + 90, height + 100]])
+    //.translateExtent([[-100, -100], [width + 90, height + 100]])
     .on("zoom", zoomed);
 
   //https://bl.ocks.org/mbostock/3711652
-  var mapHeight = 410;
+  // var mapHeight = 410;
 
   var options = [
     {name: "Natural Earth", projection: d3.geoNaturalEarth()}
@@ -477,8 +289,8 @@ function drawMap() {
 
   var projection = options[0]
               .projection
-              .scale(143)
-              .translate([width/1.65, height/1.7]);
+              .scale(171) //141
+              .translate([width/1.655, height/1.67  ]);  //1.633, 1.69
 
   var path = d3.geoPath()
       .projection(projection)
@@ -488,10 +300,7 @@ function drawMap() {
 
   var svg = d3.select("#map").append("svg")
       .attr("width", width)
-      .attr("height", mapHeight);
-     //  .call(d3.zoom().on("zoom", function () {
-     //    svg.attr("transform", d3.event.transform)
-     // }));
+      .attr("height", height)
 
   svg.append("defs").append("path")
     .datum({type: "Sphere"})
@@ -500,28 +309,38 @@ function drawMap() {
 
   svg.append("use")
     .attr("class", "stroke")
-    .attr("xlink:href", "#sphere")
-    .style("fill", "#fcfcef"); //#e6f3f7"); // "#add8e6"
-
+    .attr("xlink:href", "#sphere");
+    
   svg.append("path")
     .datum(graticule)
     .attr("class", "graticule")
     .attr("d", path);
 
-  // //draw bottom line
-  // svg.append("g").selectAll("line")
-  //     .data([0])
-  //     .enter().append("line")
-  //     .attr("class", "line")
-  //     .style("stroke", "#000")
-  //     .style("stroke-width", "2px")
-  //     .attr("x1", 71)
-  //     .attr("y1", 350)
-  //     .attr("x2", 724)
-  //     .attr("y2", 350);  
+  //draw bottom line of map
+  svg.append("g").selectAll("line")
+      .data([0])
+      .enter().append("line")
+      .attr("class", "line")
+      .style("stroke", "#555")
+      .style("stroke-width", "1.2px")
+      .attr("x1", 85)
+      .attr("y1", 359)
+      .attr("x2", 915)
+      .attr("y2", 359);
+
+  //draw top line of map
+  svg.append("g").selectAll("line")
+      .data([0])
+      .enter().append("line")
+      .attr("class", "line")
+      .style("stroke", "#555")
+      .style("stroke-width", "1.2px")
+      .attr("x1", 163)
+      .attr("y1", 0)
+      .attr("x2", 839)
+      .attr("y2", 0);      
 
  
-
   d3.json("geojson/world_countries.json", function(error, world) {
     if (error) throw error;
    
@@ -570,21 +389,14 @@ function drawMap() {
           })
           .attr("class", "worldcity")
           .style("fill", function (d) {
-            if (data_GHG.find(x => x.city === d.id)) {
-              return simregionColourMap[data_GHG.find(x => x.city === d.id).region];
+
+            if (data_GHG.find(x => x.city === d.id)) {              
+              return regionColourMap[data_GHG.find(x => x.city === d.id).region];
             }
-            else {
-              if (data_noGHG.find(x => x.city === d.id)) {
-                _this = data_noGHG.find(x => x.city === d.id).idName;
-                _thisGroup = d3.select("#vcircle" + _this).attr("class");
-                return simregionColourMap[_thisGroup];
-              }
-              else return "none";
-            }
+            else return "none";
           })
           .style("stroke", function (d) {
-            if (data_GHG.find(x => x.city === d.id) ||
-                 data_noGHG.find(x => x.city === d.id)) return "#555";
+            if (data_GHG.find(x => x.city === d.id)) return "#555";
             else return "none";  
           })
           .on("mouseover", function (d) {
@@ -637,6 +449,9 @@ function highlightElements(idName) {
 
   //Highlight Current
   //-----------------
+  d3.select("#bar" + idName)
+    .style("stroke", "#363636"); 
+
   d3.selectAll(".bar:not(#bar" + idName + ")")
     .style("fill-opacity", 0.3); 
 
@@ -652,409 +467,44 @@ function highlightElements(idName) {
     .attr("stroke", "black")
     .attr("stroke-width", 2);
 
-  // Display stats
-  // For data_GHG
-  if (data_GHG.find(x => x.idName.includes(idName))) {
-    // Highlight country on world map
-    // highlightCountry(countryName, idName, data_GHG);
-
-    // Display stats table
-    if (data_GHG.find(x => x.idName.includes(idName))) {
-      matchCity = data_GHG.find(x => x.idName.includes(idName)).city;
-      statsTable(matchCity, data_GHG);
-    }
-
-  } //for data_noGHG
-  else if (data_noGHG.find(x => x.idName.includes(idName))) {//use data from df_Z
-    // Highlight country on world map
-    // highlightCountry(countryName, idName, data_noGHG);
-    
-    // Display statsTable
-    matchCity = data_noGHG.find(x => x.idName.includes(idName)).city;
-    statsTable(matchCity, data_noGHG);
-  }
+  
 
 } // ./highlightElements()
 
-// Update region text when hovering over worldmap city or voronoi polygon
-function updateRegionLabel(region) {
-  d3.select("#regionLabel" + region).text(regionLabel_dict[region])
-    // .style("margin-left", "60px");
-}
+// Update region text when hovering over worldmap city
+// function updateRegionLabel(region) {
+//   d3.select("#regionLabel" + region).text(regionLabel_dict[region])
+//     // .style("margin-left", "60px");
+// }
 
-function mapSimilarCities(vdata, ghg){
-  console.log("vdata[0]: ", vdata[0])
-  console.log("ghg[0]: ", ghg[0])
+function emissionsBarChart(geogroup_name, geogroup_id) {
 
-  // Convert string to num
-  vdata.forEach(function(d) {
-    d.x = +d.dim1; //x-coord of point in cluster
-    d.y = +d.dim2; //y-coord of point in cluster
-  });
-  
-  // ----------------------------------------------------
-  // Variables
-  // ----------------------------------------------------
-  var svgSimVoronoi = d3.select("#mapSim").select("svg")
-      .attr("width", width)
-      .attr("height", height);
-
-  // Define the div for the tooltip  
-  // http://bl.ocks.org/d3noob/a22c42db65eb00d4e369
-  var div = d3.select("#mapSim").append("div")
-    .attr("class", "vtooltip")
-    .style("opacity", 0);
-  
-  // tooltip for cluster region label
-  var div = d3.select("#mapSim").append("div")
-    .attr("class", "rtooltip")
-    .style("opacity", 0);
-    
-
-  var borderPath = svgSimVoronoi.append("rect")
-  .attr("x", 0)
-  .attr("y", 0)
-  .attr("height", height)
-  .attr("width", width)
-  .style("stroke", "#555")
-  .style("fill", "none")
-  .style("stroke-width", 1);    
-
-
-  create_colourBar();
-
-  // ----------------------------------------------------
-  // Scales
-  // ----------------------------------------------------
-  
-  // Scales for voronoi polygon centre points
-  // use d3.extent to find the min and max values in the dataset for the domains
-  var xextent = d3.extent(vdata, function(d) { return +d.x;} );
-  var yextent = d3.extent(vdata, function(d) { return +d.y;} );
-
-  // Scales for voronoi polygons
-  xScale = d3.scaleLinear()
-        .domain([xextent[0], xextent[1]])
-        .range([0, width]);
-  yScale = d3.scaleLinear()
-        .domain([yextent[0], yextent[1]])
-        // .range([height-10*pointRadius, 0]);
-        .range([0, height-10*pointRadius]); //reflect along x-axis
-  
-  // ----------------------------------------------------
-  // Voronoi Similarity Polygons
-  // ----------------------------------------------------
-
-  // create a Voronoi diagram based on the polygon centres and the scales
-  var voronoiDiagram = d3.voronoi()
-    .x(d => xScale(d.x))
-    .y(d => yScale(d.y))
-    .size([plotAreaWidth, plotAreaHeight])(vdata);
-
-  // ----------------------------------------------
-  // Draw ellipse around each voronoi cluster 
-  // ----------------------------------------------
-  addEllipseToSVG("groupNordic", [804,97,78,33], [675,91], "Nordics");
-  addEllipseToSVG("groupUSAAusNZ", [685,187,84,45], [518,175], "USA/Aus/NZ");
-  addEllipseToSVG("groupAfricaAsia", [398,70,231,73], [97,33], "Africa/Asia");
-  addEllipseToSVG("groupEast", [287,124,57,42], [129,128], "Eastern Europe");
-  addEllipseToSVG("groupMix", [398,142,50,25], [447,130], "Mix");
-  addEllipseToSVG("groupEurope", [213,232,300,89], [122,169], "Europe");
-
-  function addEllipseToSVG(label, ellipse_pos, text_pos, text) {    
-
-    // Display the ellipse outline
-    var ellipse = svgSimVoronoi
-      .append("g");
-
-    ellipse.append("ellipse")
-      // .attr("class", "ellipses " + label)
-      .attr("class", label)
-      .attr("cx", ellipse_pos[0])
-      .attr("cy", ellipse_pos[1])
-      .attr("rx", ellipse_pos[2])
-      .attr("ry", ellipse_pos[3])
-      .attr("transform", function () {
-        if (label === "groupEU") return "rotate(5)";
-      });
-
-    ellipse.append("text")
-      .attr("class", "textLabels")
-      // .attr("id", label)
-      .attr("dx", text_pos[0])
-      .attr("dy", text_pos[1])
-      .text(text)
-      .on("touchmove mousemove", function () {
-        //Fill in selected cluster
-        d3.select("ellipse." + label).style("fill", "#e2efed");
-
-        //Show outsider cities
-        if (label === "groupNordic" || label === "groupEurope") {
-          d3.select("#nodeTextGävle").style("opacity", 1).classed("nodeTextSelected", true);
-          d3.select("#nodeTextSkåne_county").style("opacity", 1).classed("nodeTextSelected", true);
-          d3.select("#nodeTextHalmstad").style("opacity", 1).classed("nodeTextSelected", true);
-          d3.select("#nodeTextCopenhagen").style("opacity", 1).classed("nodeTextSelected", true);
-        }
-        if (label === "groupEurope") {
-          d3.select("#nodeTextKyoto").style("opacity", 1).classed("nodeTextSelected", true);
-          d3.select("#nodeTextTokyo").style("opacity", 1).classed("nodeTextSelected", true);
-        }
-        if (label === "groupUSAAusNZ") {
-          d3.select("#nodeTextSingapore").style("opacity", 1).classed("nodeTextSelected", true);
-          d3.select("#nodeTextHong_Kong").style("opacity", 1).classed("nodeTextSelected", true);
-          d3.select("#nodeTextGraz").style("opacity", 1).classed("nodeTextSelected", true);
-        }
-        if (label === "groupEast") {
-          d3.select("#nodeTextSapporo").style("opacity", 1).classed("nodeTextSelected", true);
-          d3.select("#nodeTextIstanbul").style("opacity", 1).classed("nodeTextSelected", true);
-        }
-        if (label === "groupAfricaAsia") {
-          d3.select("#nodeTextMexico_City").style("opacity", 1).classed("nodeTextSelected", true);
-          d3.select("#nodeTextBogotá").style("opacity", 1).classed("nodeTextSelected", true);
-          d3.select("#nodeTextKyoto").style("opacity", 1).classed("nodeTextSelected", true);
-          d3.select("#nodeTextTokyo").style("opacity", 1).classed("nodeTextSelected", true);
-          d3.select("#nodeTextSingapore").style("opacity", 1).classed("nodeTextSelected", true);
-          d3.select("#nodeTextHong_Kong").style("opacity", 1).classed("nodeTextSelected", true);
-          d3.select("#nodeTextSapporo").style("opacity", 1).classed("nodeTextSelected", true);
-          d3.select("#nodeTextTel_Aviv").style("opacity", 1).classed("nodeTextSelected", true);
-        }
-
-        //Position rtooltip
-        d3.select("#mapSim").select("div.rtooltip")
-          .style("opacity", 0.8)
-          .html(regionLabelTooltip_dict[label])
-          .style("left", function (d) {
-            if (label === "groupAfricaAsia") return (d3.event.pageX - 110) + "px";
-            else if (label === "groupEurope") return (d3.event.pageX + 320) + "px";
-            else if (label === "groupEast") return (d3.event.pageX - 200) + "px";
-            else return (d3.event.pageX) + "px";
-          })
-          .style("height", function () {if (label==="groupMix") return "75px";})
-          .style("top", function () {
-            if (label === "groupEurope") return (d3.event.pageY - 420) + "px";
-            else if (label === "groupEast") return (d3.event.pageY - 620) + "px";
-            else if (label === "groupNordic") return (d3.event.pageY - 620) + "px";
-            else if (label === "groupUSAAusNZ") return (d3.event.pageY - 420) + "px";
-            else if (label === "groupAfricaAsia") return (d3.event.pageY - 510) + "px";
-            else return (d3.event.pageY - 530) + "px";
-          });
-
-        // Colour vcircles by region
-        dim = "region";
-        fillVoronoiCircles();
-      })
-      .on("mouseout", function () {
-        d3.select("#mapSim").select("div.rtooltip")
-          .style("opacity", 0);
-
-        d3.selectAll("ellipse").style("fill", "none");
-
-        d3.selectAll(".nodeTextSelected")
-          .style("opacity", 0)
-          .classed("nodeTextSelected", false);
-
-        //restore circle colour to original dim
-        dim = d3.select("#cb_label").text();
-        voronoiCirclesOverlay();
-      });
-  }
-
-  // ------------------------------------------------------
-  // Voronoi polygon centres
-  // ------------------------------------------------------
-  var circles = svgSimVoronoi
-      .append('g')
-      .attr('class', 'circles-vcentre');
-
-  var node = circles.selectAll('.data-point')
-      .data(vdata)
-      .enter().append('g')
-      .attr("class", "node")
-      // .attr("class", function (d) {
-      //   if (nordics.indexOf(d.city) != -1) return "node groupNordic";
-      //   else if (latinAmer.indexOf(d.city) != -1) return "node groupLatinAmer";
-      //   else if (usaAusNZ.indexOf(d.city) != -1) return "node groupUSAAusNZ";
-      //   else if (europe.indexOf(d.city) != -1) return "node groupEurope";
-      //   else if (east.indexOf(d.city) != -1) return "node groupEast";
-      //   else if (africaAsia.indexOf(d.city) != -1) return "node groupAfricaAsia";
-      // })
-      .attr("id", function(d) {
-        idName = format_idName(d.city);
-        return "node" + idName;
-      });
-
-  node.append('circle')
-      .attr("id", function(d) {
-        idName = format_idName(d.city);
-        return "vcircle" + idName;
-      })
-      .attr("class", function (d) {
-        if (nordics.indexOf(d.city) != -1) return "groupNordic";
-        else if (latinAmer.indexOf(d.city) != -1) return "groupLatinAmer";
-        else if (usaAusNZ.indexOf(d.city) != -1) return "groupUSAAusNZ";
-        else if (europe.indexOf(d.city) != -1) return "groupEurope";
-        else if (east.indexOf(d.city) != -1) return "groupEast";
-        else if (africaAsia.indexOf(d.city) != -1) return "groupAfricaAsia";
-      })
-      .attr('r', pointRadius)
-      .attr('cx', d => xScale(d.x))
-      .attr('cy', d => yScale(d.y))
-      // .attr('fill', d => colorScale(d.y));
-      // .attr('fill', '#e9967a');
-      .attr('fill', function(d) {
-        // if (cityName_array.indexOf(d.city) != -1) return "#555"
-        // else return voronoiCircleColour;//'#e9967a';
-        matchCity = data_GHG.find(x => x.city === d.city)
-        dim = "GHG/capita";
-        if (matchCity) {
-            return colourmapDim(matchCity[dim]);
-        } else return nodataColour; //No GHG data available
-      })
-      .style("stroke", "#555")
-      .on("touchmove mousemove", vcircleMouseover)
-      .on("mouseout", function (d) {
-        resetElements();
-      });
-
-      // Add city label only for outlier cities in cluster
-      node.append('text')
-        .attr("class", "nodeText")
-        .attr("id", function (d) {
-          idName = format_idName(d.city);
-          return "nodeText" + idName;
-        })
-        .attr('dx', function(d) {
-          //Outsiders in USA/Aus/NZ
-          if (d.city === "Hong Kong") return xScale(d.x) - 25;
-          else if (d.city === "Singapore") return xScale(d.x) - 63;
-          else if (d.city === "Graz") return xScale(d.x) + 9;
-
-          //Outsiders in Europe cluster
-          else if (d.city === "Gävle") return xScale(d.x) + 8;
-          else if (d.city === "Skåne county") return xScale(d.x) + 6;
-          else if (d.city === "Halmstad") return xScale(d.x) + 6;
-          else if (d.city === "Copenhagen") return xScale(d.x) + 6;
-          else if (d.city === "Kyoto") return xScale(d.x) - 4;
-          else if (d.city === "Tokyo") return xScale(d.x) + 6;
-
-          //Outsiders in Eastern Europe cluster
-          else if (d.city === "Sapporo") return xScale(d.x) + 8;
-
-          //Outsiders in Mix cluster
-          else if (d.city === "Tel Aviv") return xScale(d.x) - 14;
-
-          //Outsiders in Africa/Asia cluster
-          else if (d.city === "Mexico City") return xScale(d.x) + 5;
-          else if (d.city === "Bogotá") return xScale(d.x) + 6;
-
-          else if (d.city === "Istanbul") return xScale(d.x) + 6;
-
-          else return xScale(d.x);
-        })
-        .attr('dy', function(d){
-          //Outsiders in USA/Aus/NZ
-          if (d.city === "Hong Kong") return yScale(d.y) + 15;
-          else if (d.city === "Singapore") return yScale(d.y) + 4;
-
-          //Outsiders in Europe cluster
-          else if (d.city === "Gävle" || d.city === "Skåne county") return yScale(d.y) + 4;
-          else if (d.city === "Halmstad") return yScale(d.y) - 6;
-          else if (d.city === "Copenhagen") return yScale(d.y) + 8;
-          else if (d.city === "Tokyo") return yScale(d.y) + 3;
-          else if (d.city === "Kyoto") return yScale(d.y) - 9;
-
-          //Outsiders in Eastern Europe cluster
-          else if (d.city === "Sapporo") return yScale(d.y) + 4;
-
-          //Outsiders in Mix cluster
-          else if (d.city === "Tel Aviv") return yScale(d.y) + 16;
-
-          //Outsiders in Africa/Asia cluster
-          else if (d.city === "Mexico City") return yScale(d.y) + 9;
-          else if (d.city === "Bogotá") return yScale(d.y) + 3;
-
-          else if (d.city === "Istanbul") return yScale(d.y) + 3;
-
-          else return yScale(d.y);
-        })
-        .text(function(d) {
-          if (d.city === "Hong Kong" || d.city === "Singapore" || d.city === "Graz"
-             || d.city === "Gävle" || d.city === "Skåne county" || d.city === "Copenhagen"
-             || d.city === "Tokyo" || d.city === "Kyoto" || d.city === "Sapporo"
-             || d.city === "Tel Aviv" || d.city === "Mexico City" || d.city === "Bogotá"
-             || d.city === "Istanbul" || d.city === "Halmstad") {
-            return d.city;
-          }
-        })
-        .style("opacity", 0); //turn on only when hovering over cluster text label
-
-
-
-} // ./mapSimilarCities
-
-function ghgBarChart() {
   // Remove any previous bar chart
-  d3.select("#ghgBarChart").select("svg").remove();
+  d3.select(geogroup_id).select("svg").remove();
   
-  // Colour mapping for dim = GHG_cap
-  this_dim = (d3.select("#barButton").text() === "GHG/GDP") ?
-                      "GHG/capita" : "GHG/GDP";
-  d3.select("#regionLabel").text(this_dim + " " + dimUnits[this_dim]
+  // barChart caption in #barChartCaption div
+  this_dim = (d3.select("#gdpButton").text() === "Scope1/GDP-PPP") ?
+                      "Scope1/capita" : "Scope1/GDP-PPP";
+  d3.select("#barChartCaption").text(this_dim + " " + dimUnits[this_dim]
     + " emissions grouped by world region");
 
   //https://bl.ocks.org/seemantk/ec245e1f4e824e685982dd5d3fbb2fcc
-  var margin = {top: 20, right: 20, bottom: 70, left: 40},
+  var margin = {top: 5, right: 20, bottom: 40, left: 40},
       width = 700 - margin.left - margin.right,
-      height = 300 - margin.top - margin.bottom;
+      height = 250 - margin.top - margin.bottom;
 
-  // Extract data by region
-  ghg_europe = sortByRegion("groupEurope");
-  ghg_usaAusNZ = sortByRegion("groupUSAAusNZ");
-  // ghg_africaAsia = sortByRegion("groupAfricaAsia");
-  //ghg_africa = sortByRegion("groupAfrica");
-  //ghg_asia = sortByRegion("groupAsia");
-  ghg_east = sortByRegion("groupEast");
-  ghg_latinAmer = sortByRegion("groupLatinAmer");
-  ghg_nordic = sortByRegion("groupNordic");
+  // Extract scaled emissions data for given region
+  // Omit cities for which GDP-PPP is missing
+  emissions_scaled = sortByRegion(geogroup_name, this_dim);
 
-  // Sort columns in each region
-  ghg_europe.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-  ghg_usaAusNZ.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-  // ghg_africaAsia.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-  //ghg_africa.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-  //ghg_asia.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-  ghg_east.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-  ghg_nordic.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-  ghg_latinAmer.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-
-  //Separate Asia and Africa by hand for now
-  var ghg_asia = [], ghg_africa = [];
-  var africaCities = ["Cape Town", "Johannesburg"];
-  var asiaCities = ["Tokyo", "Seoul", "Hong Kong"];
-  data_GHG.forEach(function (d) {
-    if (asiaCities.indexOf(d.city) != -1 ) ghg_asia.push(d);
-    else if (africaCities.indexOf(d.city) != -1 ) ghg_africa.push(d);
-  });
-  ghg_africa.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-  ghg_asia.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
   
-  var ghg_ordered = ghg_usaAusNZ
-      .concat([{ "city":"gap",  "region":"groupUSAAusNZ",
-                 "GHG/capita":0, "GHG/GDP": 0 }])
-      .concat(ghg_east)
-      .concat([{ "city":"gap3", "region":"groupEast", "GHG/capita":0,
-                 "GHG/GDP": 0 }])
-      .concat(ghg_europe)
-      .concat([{ "city":"gap2", "region":"groupEurope", "GHG/capita":0,
-                 "GHG/GDP": 0 }])
-      .concat(ghg_nordic)
-      .concat([{ "city":"gap6", "region":"groupNordic", "GHG/capita":0,
-                 "GHG/GDP": 0 }])      
-      .concat(ghg_asia)
-      .concat(ghg_africa)
-      .concat([{ "city":"gap4", "region":"groupAfricaAsia", "GHG/capita":0,
-                 "GHG/GDP": 0 }])
-      .concat(ghg_latinAmer);  
+  // Sort columns
+  emissions_scaled.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
+
+  // Get city order of Scope/capita
+  if (d3.select("#reorderButton").text() === "orig order") {
+    emissions_scaled = fn_reorderByEmissionsPerCapita(geogroup_name, emissions_scaled);
+  } // end button text check
 
   var x = d3.scaleBand()
             .rangeRound([0, width], .1)
@@ -1069,28 +519,57 @@ function ghgBarChart() {
   var yAxis = d3.axisLeft()
     .scale(y)
     // .ticks(10, "%");
-    .ticks(10);
+    .ticks(5)
+    .tickFormat(function(d) {
+      return this_dim === 'Scope1/GDP-PPP' ? formatDecimalk(d) : d;
+    })
+    .tickPadding(2);
 
-  var svgBarChart = d3.select("#ghgBarChart").append("svg").attr("class", "barSVG")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+
+  //https://mathisonian.com/writing/easy-responsive-svgs-with-viewbox
+  //https://jsfiddle.net/fh5kxv3k/
+  var aspectRatio = '660:241';
+  var viewBox = '0 0 ' + aspectRatio.split(':').join(' ');
+
+  //chart sizes are ok, but text is stretched. This is a limitation of viewBox for charts. See:
+  //https://medium.com/@maheshsenni/responsive-svg-charts-viewbox-may-not-be-the-answer-aaf9c9bc4ca2
+  //http://www.cagrimmett.com/til/2016/04/26/responsive-d3-bar-chart.html
+  //https://bl.ocks.org/veltman/5cd1ba0b3c623e7b5146
+
+  //Fit barCharts responsively using viewBox
+  //NB: viewBox stretches text labels as well, so they must be fixed later by adjusting the scale
+  var svgBarChart = d3.select(geogroup_id).append("svg").attr("class", "barSVG")
+    .attr('width', '95%')
+    .attr('height', height)
+    .attr('viewBox', viewBox)
+    .attr('viewBox', '0 0 ' +  ( width + margin.left + margin.right ) + ' ' + ( height  + margin.top + margin.bottom ) )
+    .attr('preserveAspectRatio', 'none')
+    // .attr("width", width + margin.left + margin.right)
+    // .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-  var barRegionLabel = svgBarChart.append("g")
-          .append("text")
-          .attr("class", "barChartRegionLabel");
+  // This label gets stretched differently depending on scaling of viewBox  
+  // var barRegionLabel = svgBarChart.append("g")
+  //         .append("text")
+  //         .attr("class", "barChartRegionLabel")
+  //         .text("For now");
 
-  x.domain(ghg_ordered.map(function (d) {
+  x.domain(emissions_scaled.map(function (d) {
     return d.city;
   }));
-  y.domain([0, d3.max(ghg_ordered, function(d) { return d[this_dim]; })]);
+  y.domain([0, d3.max(emissions_scaled, function(d) { return d[this_dim]; })]);
+
+  // //https://bl.ocks.org/veltman/5cd1ba0b3c623e7b5146
+  // var myscale = width / container.node().getBoundingClientRect().width;
+  // console.log('myscale: ', myscale)
 
   svgBarChart.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis)
       .selectAll("text")
+      .text(function (d) { return fn_abbr(d); })
       .attr("id", function (d) {
         idName = format_idName(d);
         return "tick" + idName;
@@ -1098,27 +577,90 @@ function ghgBarChart() {
       .attr("y", -3)
       .attr("x", 7)
       .attr("dy", "12px")
-      .attr("transform", "rotate(45)")
-      .style("text-anchor", "start")
-      .style("fill", function (d) {
-        if (d.includes("gap")) return "#fff";
-        else return "#636363";
-      });
+      .attr("transform", function (d) {
 
+        xscale=1.9; yscale=1.4; rot=70;
+        xtrans=0; ytrans=0;
+       
+        curr_region = data_GHG.filter(x => x.city === d).map(x => x.region)[0].toString();
+        
+        if (curr_region === "groupUSAAusNZ") {xscale=0.9; yscale=1.2; rot=70;}
+        else if (curr_region === "groupNordic") {xscale=4; yscale=2; rot=20; xtrans=-14;}
+        
+        return "scale(" + xscale + " " + yscale + ")" + "rotate(" + rot + ")" +
+                "translate(" + xtrans + " " + ytrans + ")" ;
+      })
+      .style("text-anchor", "start")  //"middle"
+      .style("fill", function (d) {
+        return colour_labels;
+      });
+      //
+
+  //Display y-axis label
   svgBarChart.append("g")
       .attr("class", "y axis")
       .call(yAxis)
     .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", -33)  //6
+      //.attr("transform", "rotate(-90)")
+      .attr("y", -33)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      // .text("GHG/capita [tCO2]")
-      .text(this_dim + " " + dimUnits[this_dim])
-      .style("fill", "#636363");
+      .text(function () { 
+        if (geogroup_name === "groupUSAAusNZ") return this_dim + " " + dimUnits[this_dim];
+      })
+      .attr("transform",function () {
+        var myscale = 1.5;
+        var xtrans = 0;
+        var ytrans = -1;
+
+        return "scale(" + myscale + " " + myscale + ")"  + "rotate(-90)" 
+                        + "translate(" + xtrans + "," + ytrans + ")";
+      })
+      .style("fill", colour_labels);
+
+  //-----------------------------------------------------------------------------------------
+  //Visual fixes
+  //1. Enlarge barChart y-axis tick labels then fix position
+
+  //https://stackoverflow.com/questions/27405377/iterate-over-already-created-nodes-in-d3js
+  var yfactor = 1.5;
+  d3.select(geogroup_id).select('.barSVG').selectAll('g .y.axis .tick') //get all the nodes
+    .each(function (d) {
+      //x scale factor
+      var xfactor = xScaleFactor[geogroup_id];
+     
+      // console.log("start loop")
+      // console.log("d in selectAll loop: ", d)
+      // console.log("this in selectAll loop: ", this)
+      // console.log("this.attributes: ", this.attributes)
+      // console.log("this.attributes.transform.value: ", this.attributes.transform.value)
+
+      orig_ypos_str = this.attributes.transform.value.toString();
+      // console.log("orig transform value: ", orig_ypos_str)
+
+      orig_ypos = parseFloat(orig_ypos_str.split(",")[1].split(")")[0]);
+      new_ypos = orig_ypos/yfactor;
+
+      // console.log("orig ypos: ", orig_ypos)
+      // console.log("new_ypos: ", new_ypos)
+
+      // console.log("d3.select(this): ", d3.select(this))
+
+      d3.select(this)
+        .attr("transform", "scale(" + xfactor + " " + yfactor + ")" 
+                          + "translate(" + 0 + "," + new_ypos + ")" );
+ 
+    });
+
+  // ./Visual Fixes/----------------------------------------------------------------------------------
+
+  // Define the div for the barChart rect tooltip
+  var div = d3.select("body").append("div")
+    .attr("class", "tooltip-bar")
+    .style("opacity", 0);
 
   svgBarChart.append("g").selectAll(".bar")
-      .data(ghg_ordered)
+      .data(emissions_scaled)
       .enter().append("rect")
       .attr("class", "bar")
       .attr("id", function (d) {
@@ -1130,222 +672,67 @@ function ghgBarChart() {
       .attr("y", function (d, i) { return y(d[this_dim]); })
       .attr("height", function(d) { return height - y(d[this_dim]); })
       .attr("fill", function (d) {
-        return simregionColourMap[d.region];
-      })
+        return colour_methodNum[d['methodology']];
+      })      
       .on("touchmove mousemove", function (d) {
 
-        // Erase left-over tooltip from voronoi polygon exploration
-        d3.select("#mapSim").select("div.vtooltip").style("opacity", 0);
-
         idName = format_idName(d.city);
-        // highlightElements(idName, d.country);
+      
         highlightElements(idName);
         
-        // Enlarge city label of selected bar
-        d3.select("#tick" + idName).style("font-size", "16px");
+        //Enlarge city label of selected bar
+        //Need different sizes on account of the vieweBox scale stretching
+        if (geogroup_name === "groupEurope" || geogroup_name === "groupLatinAmer" ||
+            geogroup_name === "groupUSAAusNZ") newSize = "16px";
+        else if (geogroup_name === "groupAfricaAsia") newSize = "12px";
+        else if (geogroup_name === "groupNordic") newSize = "11px";
+        d3.select("#tick" + idName).text(d.city).style("font-size", newSize)
+          .attr("fill", colour_labelsHighlight);
 
-        // Dim opacity of all city labels except current city
-        d3.select("#ghgBarChart").select(".x.axis")
-          .selectAll("text:not(#tick" + idName + ")")
-          .style("opacity", 0.2);
+  //       // Dim opacity of all city labels except current city
+  //       d3.select(geogroup_id).select(".x.axis")
+  //         .selectAll("text:not(#tick" + idName + ")")
+  //         .style("opacity", 0.2);
 
-        // Display region in text label
-        updateRegionLabel(d.region);
-        var region = d.region;
-        barRegionLabel.html(regionLabel_dict[d.region])
-          .attr("dx", function () {
-            if (region === "groupUSAAusNZ") return "85";
-            else if (region === "groupEurope") return "318";
-            else if (region === "groupAfricaAsia") return "495";
-            else if (region === "groupEast") return "194";
-            else if (region === "groupNordic") return "441";
-            else if (region === "groupLatinAmer") return "554";
-          })
-          .attr("dy", function () {
-            if (region === "groupUSAAusNZ") return "65";
-            else if (region === "groupEurope") return "131";
-            else if (region === "groupAfricaAsia") return "80";
-            else if (region === "groupEast") return "110";
-            else if (region === "groupNordic") return "158";
-            else if (region === "groupLatinAmer") return "70";
-          });
+        //tooltip x and y posn shifts
+        var tipx = 0;
+        var tipy = -1560; //africa/asia
+        if (geogroup_name === "groupEurope") tipy = -1490;
+        else if (geogroup_name === "groupLatinAmer") tipy = -1600;
+        else if (geogroup_name === "groupUSAAusNZ") tipy = -1540;
+        else if (geogroup_name === "groupNordic") tipy = -1660;
+        div.style("opacity", 1);
+        div.html(formatDecimalSci(d[this_dim]) + " " + dimUnits[this_dim])
+          .style("left", d3.event.pageX + tipx + "px")
+          .style("top", d3.event.pageY + tipy + "px");
 
       })
       .on("mouseout", function (d) {
-        idName = format_idName(d.city);
-        d3.select("#tick" + idName).style("font-size", "10px");
-
-        d3.select("#ghgBarChart").select(".x.axis")
-          .selectAll("text")
-          .style("opacity", 1);
-
         resetElements();
-      });
 
-      // Hide x-axis tick mark for gap bar
-      d3.selectAll("#ghgBarChart").select(".x.axis").selectAll(".tick")
-      .style("opacity", function (d) {
-        if (d.includes("gap")) return 0;
-      });
-
-      // Plot regional avg emissions [tCO2/capita] as a line
-      // over each bar group
-      var regionalVar = this_dim === "GHG/capita" ? regionalAvgs : regionalAvgs_GDP;
-      svgBarChart.append("g").selectAll("line")
-        .data(Object.values(regionalVar))
-        .enter().append("line")
-        .attr("class", "line")
-        .style("stroke", "#c5e0dc")
-        .style("stroke-width", "2px")
-        .attr("x1", function (d, i) {
-          if (this_dim === "GHG/capita") {
-            if (i === 0) return x("Melbourne");
-            else if (i === 1) return x("Ljubljana");
-            else if (i === 2) return x("Hong Kong");
-            else if (i === 3) return x("Cape Town");
-            else if (i === 4) return x("Rio de Janeiro");
-          } else {
-            if (i === 0) return x("Melbourne");
-            else if (i === 1) return x("Ljubljana");
-            else if (i === 2) return x("Seoul");
-            else if (i === 3) return x("Cape Town");
-            else if (i === 4) return x("Bogotá");
-          }
-        })
-        .attr("y1", function (d, i) { return y(d); })
-        .attr("x2", function (d, i) {
-          if (i === 0) return x("gap");
-          else if (i === 1) return x("gap6");
-          else if (i === 2) return x("Cape Town");
-          else if (i === 3) return x("gap4");
-          else if (i === 4) return x("Brasília") + 9;
-        })
-        .attr("y2", function (d, i) { return y(d); });
+  //       idName = format_idName(d.city);
+  //       d3.select("#tick" + idName).style("font-size", "10px");
         
-        // Legend line + text
-        regionalLine = svgBarChart.append("g");
-        regionalLine.selectAll("line")
-            .data([0])
-            .enter().append("line")
-            .attr("class", "line")
-            .style("stroke", "#c5e0dc")
-            .style("stroke-width", "2px")
-            .attr("x1", 520)
-            .attr("y1", 40)
-            .attr("x2", 536)
-            .attr("y2", 40);
+        d3.select("#tick" + idName).text(function (d) { return fn_abbr(d); })
+          .style("font-size", "10px")
+          .attr("fill", colour_labels);
 
-        regionalLine.append("text")
-          .attr("class", "textLabels")
-          .attr("dx", 352)
-          .attr("dy", 43)
-          .text("avg for countries in region");
+  //       d3.select(geogroup_id).select(".x.axis")
+  //         .selectAll("text")
+  //         .style("opacity", 1);
 
-} // ./fn ghgBarChart()
+  //       resetElements();
 
-// //----------------------------------------------
-// // Functions for similar cities voronoi map
-// //----------------------------------------------
+        div.style("opacity", 0);
 
-// function create_colourBar() in aux_fns.js
-// function dim_colourMapping(dim) in aux_fns.js
-
-function statsTable(matchCity, dataObj) {
-  
-  // Table columns
-  var columns = ['Dimension', 'Value'];
-
-  // Table rows minus emission change info
-  cityArray_columns = Object.keys(dataObj[0]);
-  cityArray_columns.splice(cityArray_columns.indexOf("city"), 1);
-  cityArray_columns.splice(cityArray_columns.indexOf("idName"), 1);
-  cityArray_columns.splice(cityArray_columns.indexOf("delta_GHG"), 1);
-  cityArray_columns.splice(cityArray_columns.indexOf("delta_GHG_reason"), 1);
-
-  // Stats for highlighted city
-  cityArray = dataObj.filter(x => x.city === matchCity);
-
-  // Display info on changes in GHG emissions in div below table
-  d3.select("#ghgTable").text(matchCity + " GHG emissions").attr("class", "h3");
-
-  var deltaText = cityArray.length === 0 ? "N/A" : cityArray[0].delta_GHG;
-  var deltaReasonText = cityArray.length === 0 ? "N/A" : cityArray[0].delta_GHG_reason;
-  if (!deltaText) deltaText = "N/A";
-  if (!deltaReasonText) deltaReasonText = "N/A";
-
-  d3.select("#ghgDelta")
-    .text("Change from last year: " + deltaText);
-  d3.select("#ghgDeltaReason")
-    .text("Reason: " + deltaReasonText);
-  
-  if (matchCity === "Hong Kong") {  
-    d3.select("#ghgStory")
-      .html("<b>" + "Story: " + "</b><br>" + "Hong Kong is most similar to cities in the North American/Australian cluster rather than cities in its region." + "<br>" +
-        "Although Hong Kong has a similar GDP/capita as other OECD cities (e.g. the Nordics and Europe), the diesel and gas prices are much lower in this cluster." + "<br>" +
-        "Click on the radio buttons below the Similarity Map to explore and compare city characteristics.");
-  } else if (matchCity === "Melbourne") {
-    d3.select("#ghgStory")
-      .html("<b>" + "Story: " + "</b><br>" + "Melbourne has the highest GHG emissions per capita than any other city in this database. " + "<br>" +
-        "However, the characteristics of Melbourne are quite similar to other cities in its cluster, as you can see by clicking on the radio buttons below the Similarity Map." + "<br>" +
-        "This suggests that there are other important city characteristics beyond the 10 we have used that are necessary to understand the factors driving the GHG emissions of a city.");
-  }
-
-
-  // Create stats table
-  // ------------------
-  d3.select("#displayStats").text(matchCity).style("font-size", "26px");
-  var table = d3.select("#displayStats")//.select('#dimTable')
-                .append('table');
-
-  var thead = table.append('thead')
-  var tbody = table.append('tbody');
-
-  // append the header row
-  thead.append('tr')
-    .selectAll('th')
-    .data(columns).enter()
-    .append('th');
-  
-  // Rearrange object into 2D array  
-  items = cityArray_columns.map(function(_) {
-    if (cityArray.length != 0) return [ _, cityArray[0][_] ];
-    else return [ _, "N/A" ];
-  });
-  
-
-  // create a row for each object in the data
-  var rows = tbody.selectAll('tr')
-    .data(items)
-    .enter()
-    .append('tr');
-
-
-  // create a cell in each row for each column
-  var cells = rows.selectAll('td')
-    .data(function (row) {
-      return columns.map(function (column) {
-        if (cityArray.length != 0) return {column: row[0], value: row[1]};
-        else return {column: row[0], value: 0};
-      });
-    })
-    .enter()
-    .append('td')
-      .text(function (d, i) {
-        // console.log("statsTable d: ", d)
-        return i === 0 ? 
-          //column 1 display for i = 0
-          d.column :
-          ( typeof d.value === "string" ?
-            (d.column === "region" ? regionLabel_dict[d.value] : 
-                                d.value + " " + dimUnits[d.column])
-                : (d.value < 1 ? formatDecimalSci(d.value) + " " + dimUnits[d.column] : formatDecimalS(d.value) + " " + dimUnits[d.column] )
-          );
       });
 
+  // Plot regional avg emissions [tCO2/capita] as a line over each barChart
+  fn_appendRegionalMeans(svgBarChart, geogroup_name, this_dim, emissions_scaled, x, y);
 
-  return table;
 
-}
+} // ./fn emissionsBarChart()
+
 
 </script>
 </body>

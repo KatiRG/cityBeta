@@ -1,9 +1,22 @@
-html, body{
-    height: 100%;
-    padding: 10px;
-    margin: 10px;
-    color: #636363;
-    /*background-color: gray;*/
+/*https://openclassrooms.com/courses/prenez-en-main-bootstrap/une-grille*/
+
+body {
+  padding-top: 10px;
+}
+
+[class*="col-"], footer {
+  /*background-color: lightgreen; 
+  border: 2px solid black; */
+  border-radius: 6px;
+  line-height: 40px;
+  text-align: center;
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 ul {
@@ -20,10 +33,58 @@ ul {
 	color: #999;
 	cursor: pointer;
 	float: left;
-	font-size: 14px;
+	font-size: 12px;
 	margin: 0;
-	padding: 2px 2px;
+	padding: 0px 4px;
 	border-radius: 4px 4px 4px 4px;
+}
+
+/*Used for barChart protocol legend rects */
+.d3-tip {
+    /*line-height: 1.2; */
+    height: 50px;
+    width: 350px;
+    padding: 6px;
+    background: #F7F6E4;
+    color: #555;
+    border-radius: 4px;
+    font-size: 12px;
+}
+.d3-tip-line {
+    height: 35px;
+    width: 111px;
+    padding: 6px;
+    background: #555;
+    color: #F7F6E4;
+    border-radius: 4px;
+    font-size: 12px;
+}
+/*Used for barChart rects */
+div.tooltip-bar {
+  position: relative;
+  height: 35px;
+  width: 111px;
+  padding: 6px;
+  background: #F7F6E4;
+  color: #555;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+/*Used for toggle buttons */
+div.tooltip {
+  position: relative;
+  text-align: left;
+  width: 150px;
+  height: 60px;
+  padding: 6px;
+  /*font: 12px sans-serif;*/
+  font-size: 12px;
+  background: #F7F6E4;
+  color: #555;
+  border: 0px;
+  border-radius: 4px;
+  pointer-events: none;
 }
 
 /*to allow x-axis labels to overflow past div bd*/
@@ -32,4 +93,121 @@ ul {
 }*/
 svg.barSVG {
     overflow: unset;
+}
+
+
+div.rtooltip {
+      position: absolute;
+      text-align: left;
+      width: 190px;
+      height: 110px;
+      padding: 2px;
+      font: 8px;
+      background: #EEE4C5;
+      border: 0px;
+      border-radius: 8px;
+      pointer-events: none;
+}
+
+/* map */
+#sphere {
+  padding-top: 0px;
+  fill: #e6f3f7;   /*//#e6f3f7"); // "#add8e6" //"#fcfcef" */
+}
+/* #map {
+  padding-top: 40px;
+} */
+
+.stroke {
+  fill: none;
+  stroke: #555;
+  stroke-width: 1px;
+}
+.fill {
+  fill: #555;
+}
+.graticule {
+  fill: none;
+  stroke: #555;
+  stroke-width: .5px;
+  stroke-opacity: .5;
+}
+.land {
+  fill: #222;
+}
+.boundary {
+  fill: none;
+  stroke: #555;
+  stroke-width: .5px;
+}
+
+/* bar chart */
+#emissionsToggleButton {
+  position: absolute;
+  left: 435px; 
+  top: 0px;
+}
+#barChartCaption {
+  color: #565656;
+  font-weight: bold;
+  text-align: left;
+}
+#barChartLegendLabel {
+  color: #565656;
+  padding-left: 40px;
+  text-align: left;
+}
+#barChartLegend {
+  stroke: gray;
+}
+.textLabels {
+  fill: #636363;
+}
+
+.barChartTitle {
+  color: #565656;
+  font-size: 14px;
+  font-weight: bold;
+  padding-left: 23px;
+  text-align: left;
+}
+.bar {
+  stroke: gray;
+}
+.axis {
+  font: 10px sans-serif;
+}
+.axis path,
+.axis line {
+  fill: none;
+  stroke: colour_labels;
+  shape-rendering: crispEdges;
+}
+.axis text {
+  fill: colour_labels;
+}
+.x.axis path {
+  display: none;
+}
+
+/*Stats table*/
+#displayStats {
+  position: absolute;
+  margin-top: -40px;
+  margin-left: 1505px;
+}
+#displayGHGstats {
+ /* position: absolute;
+  margin-top: 4px;
+  margin-left: 819px;*/
+}
+
+
+
+#ghgStory {
+  margin-top: 20px;
+}
+td, th {
+  padding: 1px 4px;
+  font-size: 14px;
 }

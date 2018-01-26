@@ -1,63 +1,87 @@
+var formatDecimalSci = d3.format(".2n");
+var formatDecimalk = d3.format(".1s"); //.2s //d3.format(".3n");
+
+//------------------------------------------------
+//COLOURS
+//barChart labels + highlight colour
+var colour_labels = "#636363";
+var colour_labelsHighlight = "#3d3d3d";
+
+var regionColourMap = { 
+  "groupEurope": "#6BACBF", //"#A6D4FF", 
+  "groupUSAAusNZ": "#C399D9",
+  "groupAfricaAsia": "#BD1550",
+  "groupNordic": "#F99DD3", "groupLatinAmer": "#F8CA00"
+};
+
+//Primary Methodology colours
+var colour_methodNum = {
+  1: "#75766D", //GPC 
+  2: "#9ADCB9", //US ICLEI
+  3: "#DCCDA1", //IPCC
+  4: "#FFC7AF", //ICLEI
+  5: "#F7D76F" //OTHER
+}
+
+//------------------------------------------------
+//TOOLTIP TEXT
+var protocolDict = {
+  "GPC": "Global Protocol for Community-Scale Greenhouse Gas Emissions Inventories (GPC), (WRI, C40 and ICLEI)",
+  "US ICLEI": "U.S. Community Protocol for Accounting and Reporting of Greenhouse Gas Emissions (ICLEI)",
+  "IPCC": "2006 IPCC Guidelines for National Greenhouse Gas Inventories",
+  "ICLEI": "International Emissions Analysis Protocol (ICLEI)",
+  "Other": "Combinations or subsets of methodologies, or propitiatory methodologies specific to a region/city"
+}
+
+var emissionsToggleDict = {
+  "Scope1/GDP-PPP": "Display emissions <b>per GDP-PPP</b>, in decreasing order.",
+  "Scope1/capita": "Display emissions <b>per capita</b>, in decreasing order."
+}
+
+//------------------------------------------------
+//AVG REGIONAL EMISSIONS PER CAPITA
 //TO BE VERIFIED! AVGS TAKEN FROM GCA WEBSITE
 var regionalAvgs = {
   "groupUSAAusNZ": 13.1, //USA, Can, Mexico, Oceania
   "groupEurope": 7.5,
-  "groupAsia": 4.2, "groupAfrica": 0.1,
-  "groupLatinAmer": 2.4
+  "groupAfricaAsia": 4.2, //***made up for now!!!***
+  "groupLatinAmer": 2.4,
+  "groupNordic": 2.5 //***made up for now!!!***
 }
 
 var regionalAvgs_GDP = {
-  "groupUSAAusNZ": 0.38, //USA, Can, Mexico
-  "groupEurope": 0.3,
-  "groupAsia": 0.5, 
-  "groupAfrica": 0.3,
-  "groupLatinAmer": 0.3 
+  "groupUSAAusNZ": 38000, //USA, Can, Mexico
+  "groupEurope": 30000,
+  "groupAfricaAsia": 40000,
+  "groupLatinAmer": 30000,
+  "groupNordic": 8000 //***made up for now!!!***
 }
 
+//------------------------------------------------
+//FOR DISPLAY TEXTS
 var regionLabel_dict = {
-  "groupEurope": "Europe", "groupUSAAusNZ": "USA/Aus/NZ",
-  "groupAfricaAsia": "Africa/Asia", "groupEast": "Eastern Europe",
-  "groupNordic": "Nordics", "groupLatinAmer": "Latin America"
+  "groupEurope": "Europe", "groupUSAAusNZ": "USA/Can/Aus/NZ",
+  "groupAfricaAsia": "Africa/Asia", "groupNordic": "Nordics", 
+  "groupLatinAmer": "Latin America"
 };
 
-var simregionColourMap = { 
-  "groupEurope": "#6BACBF", //"#A6D4FF", 
-  "groupUSAAusNZ": "#C399D9",
-  "groupAfricaAsia": "#BD1550", "groupEast": "#E97F02", 
-  "groupNordic": "#F99DD3", "groupLatinAmer": "#F8CA00"
-};
-
-var regionLabelTooltip_dict = {
-  "groupEurope": "European cities cluster together except for <b>Barcelona</b> and <b>Athens</b>. <i>Outsiders: <b>Tokyo</b>, <b>Hong Kong</b>, and <b>4 Nordic cities</b></i>.",
-  "groupUSAAusNZ": "US, Canada, Australia and New Zealand are all together. <i><b>Outsiders</b>: Hong Kong, Singapore and Graz (Austria).</i> ",
-  "groupAfricaAsia": "African/Asian cities not in this cluster are found in the Europe, USA/Aus/NZ and Eastern Europe clusters. <i>Outsiders: <b>Mexico</b>, <b>Bogotá</b></i>.",
-  "groupEast": "Contains eastern cities except <b>Istanbul</b> which is in the Mix cluster. <i>Outsider: <b>Sapporo</b> (Japan).</i>",
-  "groupNordic": "Sweden, Norway, Finland. Exceptions: <b>Skåne</b>, <b>Gävle</b> and <b>Halmstad</b> (Sweden), and <b>Copenhagen</b> which are  in the Europe cluster.",
-  "groupMix": "Contains a mix of cities from Latin America, Europe, Eastern Europe and Asia."
-};
-
-// For colourbar scale
 var dimUnits =  {
-  "GHG total": "[tCO2]",
-  "GHGe intensity 2004": "[kg/MWh]",
-  "GHGe intensity 2009": "[kg/MWh]",
-  "GHG/capita": "[tCO2]",
-  "GHG/GDP": "[kgCO2/$]",
+  "total emissions": "[tCO2]",
+  "Scope1/capita": "[tCO2/capita]",
+  "Scope1/GDP-PPP": "[kgCO2/USD]",
   "population": "",
   "population density": "",
-  "GDP/capita": "(PPP) [$/yr]",
+  "GDP-PPP/capita": "(PPP) [USD/capita]",
   "diesel price": "USD",
   "gas price": "USD",
-  "HDD 15.5C": "[days]",
-  "CDD 23C": "[days]",
-  "urban ratio": "",
-  "commerce index": "",
+  "HDD 15.5C": "[deg C x days]",
+  "CDD 23C": "[deg C x days]",
   "household size": "",
   "region": "",
   "country": ""
 }
 
-// For similarity map
+// Geographic group
 var nordics = ["Oslo", "Helsinki", "Copenhagen", "Sundsvall", "Stockholm", 
 					"Västra Götaland county", "Uppsala", "Örebro", "Linköping", "Karlstad",
 					"Norrköping", "Jönköping", "Växjö", "Gävle", "Skåne county", "Umeå", "Halmstad"];
@@ -73,18 +97,12 @@ var usaAusNZ = ["Phoenix", "Austin", "Houston",
                       "Moscow", "Montreal", "Toronto", "Denver", "Boulder",
                       "Ottawa", "Fort Collins", "Minneapolis", "Calgary"];
 
-
-// d3.csv("data/df_Z_dims_dfs_truncSVD_gea_uitp_noWaterBd_ncomp5_perplexity40.csv", function(error, vdata) {
-//                 if (error) throw error;
-//   var europe=[], africaAsia = [], east = [];
-//   vdata.forEach(function (d) {
-//     if (d.region === "ASIA" || d.region === "MAF") africaAsia.push(d.city);
-//     else if (d.region === "REF") east.push(d.city);
-//     else if (d.region === "OECD90") europe.push(d.city);
-//   })
-//   console.log("east: ", east)
-//   console.log("africaAsia: ", africaAsia)
-// })
+//x-Scale factors for barChart y-axis tick labels
+var xScaleFactor = {
+  "#barChart_EU": 3, "#barChart_LatinAmer": 3,
+  "#barChart_USACanAusNZ": 1.2, 
+  "#barChart_AfricaAsia": 2.5, "#barChart_Nordic": 5.5  
+}
 
  var europe = ["Amsterdam", "Athens", "Barcelona", "Barnsley, Doncaster and Rotherham", 
 "Bath and North East Somerset, North Somerset and South Gloucestershire", "Bedfordshire CC", "Belfast", 
@@ -116,11 +134,9 @@ var usaAusNZ = ["Phoenix", "Austin", "Houston",
 "Warwickshire", "West Cumbria", "West Lothian", "West Sussex", "Wiltshire CC", 
 "Wirral", "Worcestershire", "York", "Stadt Zürich", "Berne", "Bologna", "Dusseldorf", 
 "Frankfurt", "Graz", "Marseille", "Munich", "Nantes", "Newcastle", "Ruhr", 
-"Stuttgart"];
-
-var east =  ["Belgrade", "Bratislava", "Bucharest", "Budapest", "Istanbul", 
-            "Kiev", "Ljubljana", "Moscow", "Prague", "Riga", "Sofia", "Tallinn", 
-            "Vilnius", "Zagreb", "Cracow"];
+"Stuttgart","Belgrade", "Bratislava", "Bucharest", "Budapest", "Istanbul", 
+"Kiev", "Ljubljana", "Moscow", "Prague", "Riga", "Sofia", "Tallinn", 
+"Vilnius", "Zagreb", "Cracow"];
 
 var africaAsia = ["Kyoto", "Ahmadabad", "Bangalore", "Beijing", "Buffalo City", "Cape Town", 
     "Changchun", "Changsha, Hunan", "Chengdu", "Chongqing", "Dalian", "Dar es Salaam", 
