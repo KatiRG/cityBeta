@@ -45,7 +45,7 @@
         <li id="resetButton">Reset</li>
       </ul>
 
-      <div class="col-lg-4" >City Card</div>
+      <div class="col-lg-4" ></div>
     </div> <!-- ./row 1 -->
   
     <!-- row for map and city card -->
@@ -75,7 +75,7 @@
           </ul>
       </div>
 
-      <div class="col-lg-5"id="Fig3Label" >A la Fig. 3</div>
+      <div class="col-lg-5" id="cityCardTitle" style="text-align: left;">City Progress</div>
     </div> <!-- ./row 3 -->
 
     <!-- row 4 -->
@@ -121,7 +121,14 @@
 
       </div> <!-- ./col-lg-7 -->
 
-      <div class="col-lg-5">scatter plot here</div>
+      <div class="col-lg-5">
+        <div id="cityCardName" style="text-align: left;"></div>
+
+        <div id="cityCardChange" style="text-align: left;"></div>
+
+        <div id="cityCardChangeReason" style="text-align: left;"></div>
+
+      </div> <!-- ./col-lg-4 -->
 
       
     </div> <!-- ./row 4-->
@@ -440,6 +447,24 @@ function highlightElements(idName) {
   // clear any previous story first
   d3.select("#ghgStory").text("");
 
+  var selectedCity = data_GHG.find(x => x.idName.includes(idName));
+  console.log("idName: ", idName)
+  console.log("tmp: ", selectedCity)
+
+  d3.select("#cityCardName")
+    .text(selectedCity.city)
+    .style("font-size", "20px")
+    .style("text-align", "left");
+
+  d3.select("#cityCardChange")
+    .text("Change in emissions from previous year: " + selectedCity['change in emissions'])
+    .style("font-size", "16px")
+    .style("text-align", "left");
+
+  d3.select("#cityCardChangeReason")
+    .text("Reason: " + selectedCity['reason for change'])
+    .style("text-align", "left");
+      
   // if (countryName === "United Kingdom") countryName = "England";
   // countryName = countryName.replace(/\s/g, '_');
 
