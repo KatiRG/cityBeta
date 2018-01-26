@@ -191,6 +191,17 @@ div.rtooltip {
 }
 
 /*Stats table*/
+#cityCardTitle {
+  font-size: 26px;
+  /*font-weight: bold; */
+  color: #565656;
+}
+#cityCardChangeReason {
+  font-size: 16px;
+  line-height: 1.2;
+  /*font-weight: bold; */
+  color: #565656;
+}
 #displayStats {
   position: absolute;
   margin-top: -40px;
