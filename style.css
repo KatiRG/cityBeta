@@ -5,7 +5,7 @@ body {
 }
 
 [class*="col-"], footer {
-  background-color: lightgreen;
+  /*background-color: lightgreen;*/
   border: 2px solid black;
   border-radius: 6px;
   line-height: 40px;
@@ -131,9 +131,9 @@ div.rtooltip {
 #sphere {
   padding-top: 0px;
 }
-#map {
+/* #map {
   padding-top: 40px;
-}
+} */
 
 .stroke {
   fill: none;

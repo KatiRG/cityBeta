@@ -38,20 +38,21 @@
       <div class="col-lg-12">entete</div>
     </div> <!-- ./header row -->
 
-    <!-- row 1 -->
+    <!-- info text row -->
     <div class="row">
-      <div class="col-lg-8" id="infoText"></div>
+      <div class="col-lg-8" id="infoText" style="text-align: left;"></div>
+      <ul class="nytg-sort" style='position: absolute; left: 700px; top: 66px;'>
+        <li id="resetButton">Reset</li>
+      </ul>
 
       <div class="col-lg-4" >City Card</div>
     </div> <!-- ./row 1 -->
   
-    <!-- row 2 -->
+    <!-- row for map and city card -->
     <div class="row">
-      <div class="col-lg-8">
+      <div class="col-lg-8" style="padding-left: 0px; padding-right: 0px;">
         <div id="map"></div>
-        <ul class="nytg-sort" style='position: absolute; left: 0px; top: 6px;'>
-          <li id="resetButton">Reset</li>
-        </ul>
+
       </div>
 
       <div class="col-lg-4" id="displayGHGstats">
@@ -60,7 +61,7 @@
         <div id="ghgStory"></div>
       </div>
 
-    </div> <!-- ./row 2 -->
+    </div> <!-- ./map and city card row -->
 
     <!-- row 3 -->
     <div class="row">
@@ -143,19 +144,8 @@ var container = d3.select("body").append("div")
 
 // Leaflet map variables
 // ---------------------------------
-var width = 560,
-    height = 250; //400;
-
-// padding around the chart where axes will go
-var padding = {
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0,
-};
-// inner chart dimensions, where the dots are plotted
-var plotAreaWidth = width - padding.left - padding.right;
-var plotAreaHeight = height - padding.top - padding.bottom
+// var width = 700,
+//     height = 350; //400;
 
 var pointRadius = 5;
 
@@ -255,7 +245,7 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
   console.log("ghg read: ", ghg)
 
   setupData(ghg);
-  // drawMap();
+  drawMap();
   emissionsBarChart("groupEurope", "#barChart_EU");
   emissionsBarChart("groupUSAAusNZ", "#barChart_USACanAusNZ");
   emissionsBarChart("groupAfricaAsia", "#barChart_AfricaAsia");
@@ -269,6 +259,9 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
 
 // d3js World Map
 //------------------
+var width = 775,
+    height = 400; //400;
+
 function drawMap() {
   // Map reset button
   d3.select("#resetButton")
@@ -277,7 +270,7 @@ function drawMap() {
   //https://bl.ocks.org/mbostock/db6b4335bf1662b413e7968910104f0f
   var zoom = d3.zoom()
     .scaleExtent([1, 40])
-    .translateExtent([[-100, -100], [width + 90, height + 100]])
+    //.translateExtent([[-100, -100], [width + 90, height + 100]])
     .on("zoom", zoomed);
 
   //https://bl.ocks.org/mbostock/3711652
@@ -293,8 +286,8 @@ function drawMap() {
 
   var projection = options[0]
               .projection
-              .scale(100)
-              .translate([width/1.65, height/1.7]);
+              .scale(141)
+              .translate([width/1.633, height/1.99]);  //1.7
 
   var path = d3.geoPath()
       .projection(projection)
@@ -304,7 +297,9 @@ function drawMap() {
 
   var svg = d3.select("#map").append("svg")
       .attr("width", width)
-      .attr("height", height);
+      .attr("height", height)
+      //.attr("transform", "translate(" + 0 + "," -100 + ")")
+      //.style("vertical-align", "top");
      //  .call(d3.zoom().on("zoom", function () {
      //    svg.attr("transform", d3.event.transform)
      // }));
