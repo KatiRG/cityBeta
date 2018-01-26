@@ -50,7 +50,7 @@
   
     <!-- row for map and city card -->
     <div class="row">
-      <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
+      <div class="col-lg-12">
         <div id="map"></div>
 
       </div>
@@ -314,17 +314,29 @@ function drawMap() {
     .attr("class", "graticule")
     .attr("d", path);
 
-  // //draw bottom line of map
-  // svg.append("g").selectAll("line")
-  //     .data([0])
-  //     .enter().append("line")
-  //     .attr("class", "line")
-  //     .style("stroke", "#555")
-  //     .style("stroke-width", "2px")
-  //     .attr("x1", 64)
-  //     .attr("y1", 340)
-  //     .attr("x2", 714)
-  //     .attr("y2", 340);  
+  //draw bottom line of map
+  svg.append("g").selectAll("line")
+      .data([0])
+      .enter().append("line")
+      .attr("class", "line")
+      .style("stroke", "#555")
+      .style("stroke-width", "1.2px")
+      .attr("x1", 85)
+      .attr("y1", 359)
+      .attr("x2", 915)
+      .attr("y2", 359);
+
+  //draw top line of map
+  svg.append("g").selectAll("line")
+      .data([0])
+      .enter().append("line")
+      .attr("class", "line")
+      .style("stroke", "#555")
+      .style("stroke-width", "1.2px")
+      .attr("x1", 163)
+      .attr("y1", 0)
+      .attr("x2", 839)
+      .attr("y2", 0);      
 
  
   d3.json("geojson/world_countries.json", function(error, world) {
