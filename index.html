@@ -191,7 +191,7 @@ d3.select("#gdpButton")
 
     div.style("opacity", 1); //tooltip
     div.html(function () { return dictText; })
-       .style("left", 910 + "px")
+       .style("left", 820 + "px")
        .style("top", -940 + "px");
   })
   .on("mouseout", function () { div.style("opacity", 0); });
@@ -213,9 +213,12 @@ d3.select("#reorderButton")
      
   })
   .on("mouseover", function () {
+    var tooltip_text = (d3.select(this).text() === "Re-order") ? 
+                    "Re-order cities according to decreasing emissions <b>per capita</b>." :
+                    "Back to original order in decreasing emissions per GDP-PPP."
     div.style("opacity", 1);
-    div.html("Re-order cities according to decreasing emissions <b>per capita</b>.")
-        .style("left", 980 + "px")
+    div.html(tooltip_text)
+        .style("left", 900 + "px")
         .style("top", -940 + "px");
   })
   .on("mouseout", function () { div.style("opacity", 0); });
