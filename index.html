@@ -306,9 +306,8 @@ function drawMap() {
 
   svg.append("use")
     .attr("class", "stroke")
-    .attr("xlink:href", "#sphere")
-    .style("fill", "#fcfcef"); //#e6f3f7"); // "#add8e6"
-
+    .attr("xlink:href", "#sphere");
+    
   svg.append("path")
     .datum(graticule)
     .attr("class", "graticule")
