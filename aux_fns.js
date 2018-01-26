@@ -288,7 +288,7 @@ function fn_appendRegionalMeans(svg, geogroup_name, this_dim, data, x, y) {
   var x1_city = data[0].city;
   var x2_city = data[data.length - 1].city;
 
-  // Tooltip for lines  
+  //Tooltip for lines  
   var tool_tip = d3.tip()
     .attr("class", "d3-tip-line")
     .offset([-10, 0])

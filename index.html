@@ -653,6 +653,10 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
   // ./Visual Fixes/----------------------------------------------------------------------------------
 
+  // Define the div for the barChart rect tooltip
+  var div = d3.select("body").append("div")
+    .attr("class", "tooltip-bar")
+    .style("opacity", 0);
 
   svgBarChart.append("g").selectAll(".bar")
       .data(emissions_scaled)
@@ -689,26 +693,17 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   //         .selectAll("text:not(#tick" + idName + ")")
   //         .style("opacity", 0.2);
 
-  //       // Display region in text label
-  //       updateRegionLabel(d.region);
-  //       var region = d.region;
-  //       barRegionLabel.html(regionLabel_dict[d.region])
-  //         .attr("dx", function () {
-  //           if (region === "groupUSAAusNZ") return "85";
-  //           else if (region === "groupEurope") return "318";
-  //           else if (region === "groupAfricaAsia") return "495";
-  //           else if (region === "groupEast") return "194";
-  //           else if (region === "groupNordic") return "441";
-  //           else if (region === "groupLatinAmer") return "554";
-  //         })
-  //         .attr("dy", function () {
-  //           if (region === "groupUSAAusNZ") return "65";
-  //           else if (region === "groupEurope") return "131";
-  //           else if (region === "groupAfricaAsia") return "80";
-  //           else if (region === "groupEast") return "110";
-  //           else if (region === "groupNordic") return "158";
-  //           else if (region === "groupLatinAmer") return "70";
-  //         });
+        //tooltip x and y posn shifts
+        var tipx = 0;
+        var tipy = -1230;
+        if (geogroup_name === "groupEurope") tipy = -1154;
+        else if (geogroup_name === "groupLatinAmer") tipy = -1280;
+        else if (geogroup_name === "groupUSAAusNZ") tipy = -1200;
+        else if (geogroup_name === "groupNordic") tipy = -1300;
+        div.style("opacity", 1);
+        div.html(formatDecimalSci(d[this_dim]) + " " + dimUnits[this_dim])
+          .style("left", d3.event.pageX + tipx + "px")
+          .style("top", d3.event.pageY + tipy + "px");
 
       })
       .on("mouseout", function (d) {
@@ -726,30 +721,14 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   //         .style("opacity", 1);
 
   //       resetElements();
+
+        div.style("opacity", 0);
+
       });
 
   // Plot regional avg emissions [tCO2/capita] as a line over each barChart
   fn_appendRegionalMeans(svgBarChart, geogroup_name, this_dim, emissions_scaled, x, y);
 
-  
-  //       // Legend line + text
-  //       regionalLine = svgBarChart.append("g");
-  //       regionalLine.selectAll("line")
-  //           .data([0])
-  //           .enter().append("line")
-  //           .attr("class", "line")
-  //           .style("stroke", "#c5e0dc")
-  //           .style("stroke-width", "2px")
-  //           .attr("x1", 520)
-  //           .attr("y1", 40)
-  //           .attr("x2", 536)
-  //           .attr("y2", 40);
-
-  //       regionalLine.append("text")
-  //         .attr("class", "textLabels")
-  //         .attr("dx", 352)
-  //         .attr("dy", 43)
-  //         .text("avg for countries in region");
 
 } // ./fn emissionsBarChart()
 

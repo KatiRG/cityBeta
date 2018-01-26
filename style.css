@@ -69,29 +69,40 @@ ul {
     font-size: 12px;
 }
 .d3-tip-line {
-    height: 30px;
-    width: 115px;
+    height: 35px;
+    width: 111px;
     padding: 6px;
-    background: #F7F6E4;
-    color: #555;
+    background: #555;
+    color: #F7F6E4;
     border-radius: 4px;
     font-size: 12px;
+}
+/*Used for barChart rects */
+div.tooltip-bar {
+  position: relative;
+  height: 35px;
+  width: 111px;
+  padding: 6px;
+  background: #F7F6E4;
+  color: #555;
+  border-radius: 4px;
+  font-size: 12px;
 }
 
 /*Used for toggle buttons */
 div.tooltip {
-    position: absolute;
-    text-align: left;
-    width: 150px;
-    height: 60px;
-    padding: 6px;
-    /*font: 12px sans-serif;*/
-    font-size: 12px;
-    background: #F7F6E4;
-    color: #555;
-    border: 0px;
-    border-radius: 4px;
-    pointer-events: none;
+  position: absolute;
+  text-align: left;
+  width: 150px;
+  height: 60px;
+  padding: 6px;
+  /*font: 12px sans-serif;*/
+  font-size: 12px;
+  background: #F7F6E4;
+  color: #555;
+  border: 0px;
+  border-radius: 4px;
+  pointer-events: none;
 }
 
 /*to allow x-axis labels to overflow past div bd*/
