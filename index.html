@@ -319,17 +319,17 @@ function drawMap() {
     .attr("class", "graticule")
     .attr("d", path);
 
-  //draw bottom line
+  //draw bottom line of map
   svg.append("g").selectAll("line")
       .data([0])
       .enter().append("line")
       .attr("class", "line")
       .style("stroke", "#555")
-      .style("stroke-width", "1px")
-      .attr("x1", 53)
-      .attr("y1", 250)
-      .attr("x2", 504)
-      .attr("y2", 250);  
+      .style("stroke-width", "2px")
+      .attr("x1", 64)
+      .attr("y1", 340)
+      .attr("x2", 714)
+      .attr("y2", 340);  
 
  
 
