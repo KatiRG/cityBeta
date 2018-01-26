@@ -41,7 +41,7 @@
     <!-- info text row -->
     <div class="row">
       <div class="col-lg-8" id="infoText" style="text-align: left;"></div>
-      <ul class="nytg-sort" style='position: absolute; left: 700px; top: 66px;'>
+      <ul class="nytg-sort" style='position: absolute; left: 700px; top: 60px;'>
         <li id="resetButton">Reset</li>
       </ul>
 
@@ -260,7 +260,7 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
 // d3js World Map
 //------------------
 var width = 775,
-    height = 400; //400;
+    height = 340; //cut off antarctica  //400;
 
 function drawMap() {
   // Map reset button
@@ -287,7 +287,7 @@ function drawMap() {
   var projection = options[0]
               .projection
               .scale(141)
-              .translate([width/1.633, height/1.99]);  //1.7
+              .translate([width/1.633, height/1.69  ]);  //1.7
 
   var path = d3.geoPath()
       .projection(projection)
