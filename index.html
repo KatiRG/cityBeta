@@ -75,7 +75,7 @@
           </ul>
       </div>
 
-      <div class="col-lg-5" id="cityCardTitle" style="text-align: left;">City Progress</div>
+      <div class="col-lg-5" id="cityCardTitle" style="text-align: left;">City Notes</div>
     </div> <!-- ./row 3 -->
 
     <!-- row 4 -->
@@ -109,7 +109,26 @@
 
 
         <div class="row">
-          <div class="col-lg-8">
+          <!--<div class="col-lg-8">
+            <div class="barChartTitle">Africa &#183; Asia</div>
+            <div id="barChart_AfricaAsia"></div>
+          </div>
+          <div class="col-lg-4">
+            <div class="barChartTitle">Nordics</div>
+            <div id="barChart_Nordic"></div>
+          </div> -->
+        </div> 
+
+      </div> <!-- ./col-lg-7 -->
+
+      <div class="col-lg-5">
+        <div class="row" id="cityCardSVG">
+          <svg></svg>
+         
+        </div> 
+
+        <div class="row">
+           <div class="col-lg-8">
             <div class="barChartTitle">Africa &#183; Asia</div>
             <div id="barChart_AfricaAsia"></div>
           </div>
@@ -117,16 +136,8 @@
             <div class="barChartTitle">Nordics</div>
             <div id="barChart_Nordic"></div>
           </div> 
-        </div> 
-
-      </div> <!-- ./col-lg-7 -->
-
-      <div class="col-lg-5">
-        <div id="cityCardName" style="text-align: left;"></div>
-
-        <div id="cityCardChange" style="text-align: left;"></div>
-
-        <div id="cityCardChangeReason" style="text-align: left;"></div>
+          
+        </div>
 
       </div> <!-- ./col-lg-4 -->
 
@@ -261,6 +272,7 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
   emissionsBarChart("groupAfricaAsia", "#barChart_AfricaAsia");
   emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
   emissionsBarChart("groupNordic", "#barChart_Nordic");
+  displayCityCard();
 });
 
 // ----------------------------------------------------
@@ -451,22 +463,19 @@ function highlightElements(idName) {
   console.log("idName: ", idName)
   console.log("tmp: ", selectedCity)
 
-  d3.select("#cityCardName")
-    .text(selectedCity.city)
-    .style("font-size", "20px")
-    .style("text-align", "left");
+  // d3.select("#cityCardName")
+  //   .text(selectedCity.city)
+  //   .style("font-size", "20px")
+  //   .style("text-align", "left");
 
-  d3.select("#cityCardChange")
-    .text("Change in emissions from previous year: " + selectedCity['change in emissions'])
-    .style("font-size", "16px")
-    .style("text-align", "left");
+  // d3.select("#cityCardChange")
+  //   .text("Change in emissions from previous year: " + selectedCity['change in emissions'])
+  //   .style("font-size", "16px")
+  //   .style("text-align", "left");
 
-  d3.select("#cityCardChangeReason")
-    .text("Reason: " + selectedCity['reason for change'])
-    .style("text-align", "left");
-      
-  // if (countryName === "United Kingdom") countryName = "England";
-  // countryName = countryName.replace(/\s/g, '_');
+  // d3.select("#cityCardChangeReason")
+  //   .text("Reason: " + selectedCity['reason for change'])
+  //   .style("text-align", "left");
 
   //Clear Previous
   //--------------
@@ -501,6 +510,26 @@ function highlightElements(idName) {
 //   d3.select("#regionLabel" + region).text(regionLabel_dict[region])
 //     // .style("margin-left", "60px");
 // }
+
+function displayCityCard() {
+  //remove any previous svg
+  d3.select("#cityCardSVG").select("svg").remove();
+
+  //setup SVG
+  //var margin = {top: 5, right: 20, bottom: 40, left: 40},
+  var margin = {top: 5, right: 0, bottom: 0, left: 0},
+    width = 455 - margin.left - margin.right,
+    height = 290 - margin.top - margin.bottom;
+
+  var svg = d3.select("#cityCardSVG").append("svg").attr("class", "cityCard")
+    .attr('width', '100%')
+    .attr('height', height)
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+}
 
 function emissionsBarChart(geogroup_name, geogroup_id) {
 

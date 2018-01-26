@@ -91,7 +91,7 @@ div.tooltip {
 /*svg:not(:root) {
     overflow: unset;
 }*/
-svg.barSVG {
+svg.barSVG, .cityCard {
     overflow: unset;
 }
 
