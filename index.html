@@ -50,16 +50,16 @@
   
     <!-- row for map and city card -->
     <div class="row">
-      <div class="col-lg-8" style="padding-left: 0px; padding-right: 0px;">
+      <div class="col-lg-12" style="padding-left: 0px; padding-right: 0px;">
         <div id="map"></div>
 
       </div>
 
-      <div class="col-lg-4" id="displayGHGstats">
+      <!--<div class="col-lg-4" id="displayGHGstats">
         <div id="ghgDelta"></div><br>
         <div id="ghgDeltaReason"></div>
         <div id="ghgStory"></div>
-      </div>
+      </div> -->
 
     </div> <!-- ./map and city card row -->
 
@@ -81,7 +81,7 @@
     <!-- row 4 -->
     <div class="row">
 
-      <div class="col-lg-7">
+      <div class="col-lg-7" style="border: 2px #555;">
         <!--barChart legend-->
         <div class="row">
           <div id="barChartLegendLabel" class="col-lg-2">Protocol</div>
@@ -259,8 +259,8 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
 
 // d3js World Map
 //------------------
-var width = 775,
-    height = 340; //cut off antarctica  //400;
+var width = 1000,
+    height = 360; //cut off antarctica  //400;
 
 function drawMap() {
   // Map reset button
@@ -286,8 +286,8 @@ function drawMap() {
 
   var projection = options[0]
               .projection
-              .scale(141)
-              .translate([width/1.633, height/1.69  ]);  //1.7
+              .scale(171) //141
+              .translate([width/1.655, height/1.67  ]);  //1.633, 1.69
 
   var path = d3.geoPath()
       .projection(projection)
@@ -298,11 +298,6 @@ function drawMap() {
   var svg = d3.select("#map").append("svg")
       .attr("width", width)
       .attr("height", height)
-      //.attr("transform", "translate(" + 0 + "," -100 + ")")
-      //.style("vertical-align", "top");
-     //  .call(d3.zoom().on("zoom", function () {
-     //    svg.attr("transform", d3.event.transform)
-     // }));
 
   svg.append("defs").append("path")
     .datum({type: "Sphere"})
@@ -319,20 +314,19 @@ function drawMap() {
     .attr("class", "graticule")
     .attr("d", path);
 
-  //draw bottom line of map
-  svg.append("g").selectAll("line")
-      .data([0])
-      .enter().append("line")
-      .attr("class", "line")
-      .style("stroke", "#555")
-      .style("stroke-width", "2px")
-      .attr("x1", 64)
-      .attr("y1", 340)
-      .attr("x2", 714)
-      .attr("y2", 340);  
+  // //draw bottom line of map
+  // svg.append("g").selectAll("line")
+  //     .data([0])
+  //     .enter().append("line")
+  //     .attr("class", "line")
+  //     .style("stroke", "#555")
+  //     .style("stroke-width", "2px")
+  //     .attr("x1", 64)
+  //     .attr("y1", 340)
+  //     .attr("x2", 714)
+  //     .attr("y2", 340);  
 
  
-
   d3.json("geojson/world_countries.json", function(error, world) {
     if (error) throw error;
    
