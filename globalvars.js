@@ -2,6 +2,11 @@ var formatDecimalSci = d3.format(".2n");
 var formatDecimalk = d3.format(".1s"); //.2s //d3.format(".3n");
 
 //------------------------------------------------
+//TECHNICAL LABELS
+label_dataPerCap = "Scope1/capita";
+label_dataPerGDP = "Scope1/GDP-PPP";
+
+//------------------------------------------------
 //COLOURS
 //barChart labels + highlight colour
 var colour_labels = "#636363";
@@ -136,7 +141,9 @@ var xScaleFactor = {
 "Frankfurt", "Graz", "Marseille", "Munich", "Nantes", "Newcastle", "Ruhr", 
 "Stuttgart","Belgrade", "Bratislava", "Bucharest", "Budapest", "Istanbul", 
 "Kiev", "Ljubljana", "Moscow", "Prague", "Riga", "Sofia", "Tallinn", 
-"Vilnius", "Zagreb", "Cracow"];
+"Vilnius", "Zagreb", "Cracow", "Oslo", "Helsinki", "Copenhagen", "Sundsvall", "Stockholm", 
+"Västra Götaland county", "Uppsala", "Örebro", "Linköping", "Karlstad",
+"Norrköping", "Jönköping", "Växjö", "Gävle", "Skåne county", "Umeå", "Halmstad"];
 
 var africaAsia = ["Kyoto", "Ahmadabad", "Bangalore", "Beijing", "Buffalo City", "Cape Town", 
     "Changchun", "Changsha, Hunan", "Chengdu", "Chongqing", "Dalian", "Dar es Salaam", 
