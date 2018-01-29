@@ -448,8 +448,8 @@ function highlightElements(idName) {
   d3.select("#ghgStory").text("");
 
   var selectedCity = data_GHG.find(x => x.idName.includes(idName));
-  console.log("idName: ", idName)
-  console.log("tmp: ", selectedCity)
+  // console.log("idName: ", idName)
+  // console.log("tmp: ", selectedCity)
 
   d3.select("#cityCardName")
     .text(selectedCity.city)

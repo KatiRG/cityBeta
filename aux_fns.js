@@ -281,7 +281,7 @@ function fn_appendRegionalLine() {
 function fn_appendRegionalMeans(svg, geogroup_name, this_dim, data, x, y) {
   //data to plot
   var regionalVar = [];
-  regionalVar[0] = this_dim === "Scope1/capita" ? 
+  regionalVar[0] = this_dim === label_dataPerCap ? 
                     regionalAvgs[geogroup_name] : regionalAvgs_GDP[geogroup_name];
 
   //city at x-axis endpts of horizontal line
@@ -293,7 +293,9 @@ function fn_appendRegionalMeans(svg, geogroup_name, this_dim, data, x, y) {
     .attr("class", "d3-tip-line")
     .offset([-10, 0])
     .html(function (d, i) {
-      return (this_dim === "Scope1/capita" ? regionalVar : formatDecimalk(regionalVar[0]) )
+      console.log("this_dim: ", this_dim)
+      console.log("this_dim u: ", dimUnits[this_dim])
+      return (this_dim === label_dataPerCap ? regionalVar : formatDecimalk(regionalVar[0]) )
              + " " + dimUnits[this_dim];
     });
   svg.call(tool_tip);
@@ -347,7 +349,7 @@ function sortByRegion(region, this_dim) {
 }
 
 function fn_reorderByEmissionsPerCapita(region, emissions_perGDP) {
-  var var_emissionsPerCap = "Scope1/capita";
+  var var_emissionsPerCap = label_dataPerCap;
   var city_order = [];
   var objArray = [];
 

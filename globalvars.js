@@ -44,7 +44,7 @@ var protocolDict = {
 
 var emissionsToggleDict = {
   "Scope1/GDP-PPP": "Display emissions <b>per GDP-PPP</b>, in decreasing order.",
-  "Scope1/capita": "Display emissions <b>per capita</b>, in decreasing order."
+  label_dataPerCap: "Display emissions <b>per capita</b>, in decreasing order."
 }
 
 //------------------------------------------------
