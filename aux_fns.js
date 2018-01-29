@@ -98,7 +98,7 @@ function setupData(ghg){
       "population": popn,
       "area": area,
       "Scope1": scope1,
-      "Scope1/capita": scope1_cap,
+      "per capita": scope1_cap,
       "per GDP": scope1_gdp,
       "population density": pop_density,
       "HDD 15.5C": HDD155C,
@@ -281,7 +281,7 @@ function fn_appendRegionalLine() {
 function fn_appendRegionalMeans(svg, geogroup_name, this_dim, data, x, y) {
   //data to plot
   var regionalVar = [];
-  regionalVar[0] = this_dim === "Scope1/capita" ? 
+  regionalVar[0] = this_dim === "per capita" ? 
                     regionalAvgs[geogroup_name] : regionalAvgs_GDP[geogroup_name];
 
   //city at x-axis endpts of horizontal line
@@ -295,7 +295,7 @@ function fn_appendRegionalMeans(svg, geogroup_name, this_dim, data, x, y) {
     .html(function (d, i) {
       console.log("this_dim: ", this_dim)
       console.log("this_dim u: ", dimUnits[this_dim])
-      return (this_dim === "Scope1/capita" ? regionalVar : formatDecimalk(regionalVar[0]) )
+      return (this_dim === "per capita" ? regionalVar : formatDecimalk(regionalVar[0]) )
              + " " + dimUnits[this_dim];
     });
   svg.call(tool_tip);
