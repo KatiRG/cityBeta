@@ -20,12 +20,16 @@ var regionColourMap = {
 };
 
 //Primary Methodology colours
+//http://www.colourlovers.com/palette/1107950/Indecent_Proposal
+//http://www.colourlovers.com/palette/1217220/Ice_Cream_Party
+//http://www.colourlovers.com/palette/1645043/Vanilla_Blueberry
+//http://www.colourlovers.com/palette/2832327/nostalgia
 var colour_methodNum = {
-  1: "#75766D", //GPC 
-  2: "#9ADCB9", //US ICLEI
-  3: "#DCCDA1", //IPCC
-  4: "#FFC7AF", //ICLEI
-  5: "#F7D76F" //OTHER
+  1: "#FFA446", //GPC 
+  2: "#FFEAB3", //US ICLEI
+  3: "#E35B5D", //IPCC
+  4: "#EB9F9F", //ICLEI
+  5: "#F18052" //OTHER
 }
 
 //------------------------------------------------
