@@ -108,8 +108,8 @@ var usaAusNZ = ["Phoenix", "Austin", "Houston",
 //x-Scale factors for barChart y-axis tick labels
 var xScaleFactor = {
   "#barChart_EU": 3, "#barChart_LatinAmer": 3,
-  "#barChart_USACanAusNZ": 1.2, 
-  "#barChart_AfricaAsia": 2.5, "#barChart_Nordic": 5.5  
+  "#barChart_NAmer": 1.2, "#barChart_Oceania": 4.2, 
+  "#barChart_Africa": 2.5, "#barChart_Asia": 2.5  
 }
 
  var europe = ["Amsterdam", "Athens", "Barcelona", "Barnsley, Doncaster and Rotherham", 
