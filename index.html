@@ -597,7 +597,28 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   x.domain(emissions_scaled.map(function (d) {
     return d.city;
   }));
-  y.domain([0, d3.max(emissions_scaled, function(d) { return d[this_dim]; })]);
+  y.domain([0, d3.max(emissions_scaled, function(d) { 
+    // console.log("this_dim: ", this_dim)
+    // console.log("d[this_dim]: ", d[this_dim])
+    // return d[this_dim];
+
+    // if (geogroup_name === "groupEurope" || geogroup_name === "groupAsia" ||
+    //   geogroup_name === "groupNAmer") same_max = (this_dim == label_dataPerCap ? 30 : 375000);
+    // else same_max = same_max = (this_dim == label_dataPerCap ? 5.5 : 230000);
+    // return same_max;
+
+    if (this_dim === label_dataPerCap) {
+      if (geogroup_name === "groupEurope" || geogroup_name === "groupAsia" ||
+        geogroup_name === "groupNAmer") same_max = 30;
+      else  same_max = 5.5;
+    } else {
+      if (geogroup_name === "groupAfrica") same_max = 750000;
+      else same_max = 370000;
+    }
+
+    return same_max;
+
+  })]);
 
   // //https://bl.ocks.org/veltman/5cd1ba0b3c623e7b5146
   // var myscale = width / container.node().getBoundingClientRect().width;
