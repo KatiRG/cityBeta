@@ -103,19 +103,25 @@
         </div>
 
         <div class="row">
-          <div class="barChartTitle">USA &#183; Canada &#183; Australia &#183; New Zealand</div>
-          <div id="barChart_USACanAusNZ"></div>
+          <div class="col-lg-8">
+            <div class="barChartTitle">North America (USA &#183; Canada)</div>
+            <div id="barChart_NAmer"></div>
+          </div>
+          <div class="col-lg-4">
+            <div class="barChartTitle">Oceania (Aus &#183; NZ)</div>
+            <div id="barChart_Oceania"></div>
+          </div>
         </div> <!-- ./sub-row USA chart -->
 
 
         <div class="row">
-          <div class="col-lg-8">
-            <div class="barChartTitle">Africa &#183; Asia</div>
-            <div id="barChart_AfricaAsia"></div>
+          <div class="col-lg-6">
+            <div class="barChartTitle">Africa</div>
+            <div id="barChart_Africa"></div>
           </div>
-          <div class="col-lg-4">
-            <div class="barChartTitle">Nordics</div>
-            <div id="barChart_Nordic"></div>
+          <div class="col-lg-6">
+            <div class="barChartTitle">Asia</div>
+            <div id="barChart_Asia"></div>
           </div> 
         </div> 
 
@@ -183,10 +189,11 @@ d3.select("#gdpButton")
 
     //Plot emissions bar charts for each geo group    
     emissionsBarChart("groupEurope", "#barChart_EU");
-    emissionsBarChart("groupUSAAusNZ", "#barChart_USACanAusNZ");
-    emissionsBarChart("groupAfricaAsia", "#barChart_AfricaAsia");
+    emissionsBarChart("groupNAmer", "#barChart_NAmer");
+    emissionsBarChart("groupOceania", "#barChart_Oceania");
+    emissionsBarChart("groupAfrica", "#barChart_Africa");
+    emissionsBarChart("groupAsia", "#barChart_Asia");
     emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
-    emissionsBarChart("groupNordic", "#barChart_Nordic");
 
     //(de-)activate reorder button if "Scope1/capita" is being displayed
     var reorderState = (buttonText === label_dataPerCap) ? "block" : "none";
@@ -211,12 +218,13 @@ d3.select("#reorderButton")
                       "orig order" : "Re-order";
     d3.select(this).text(buttonText);
 
-    //Re-order Scope1/GDP according to Scope1/capita    
+    //Re-order Scope1/GDP according to Scope1/capita
     emissionsBarChart("groupEurope", "#barChart_EU");
-    emissionsBarChart("groupUSAAusNZ", "#barChart_USACanAusNZ");
-    emissionsBarChart("groupAfricaAsia", "#barChart_AfricaAsia");
+    emissionsBarChart("groupNAmer", "#barChart_NAmer");
+    emissionsBarChart("groupOceania", "#barChart_Oceania");
+    emissionsBarChart("groupAfrica", "#barChart_Africa");
+    emissionsBarChart("groupAsia", "#barChart_Asia");
     emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
-    emissionsBarChart("groupNordic", "#barChart_Nordic");
      
   })
   .on("mouseover", function () {
@@ -257,10 +265,11 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
   setupData(ghg);
   drawMap();
   emissionsBarChart("groupEurope", "#barChart_EU");
-  emissionsBarChart("groupUSAAusNZ", "#barChart_USACanAusNZ");
-  emissionsBarChart("groupAfricaAsia", "#barChart_AfricaAsia");
+  // emissionsBarChart("groupNAmer", "#barChart_NAmer");
+  emissionsBarChart("groupOceania", "#barChart_Oceania");
+  // emissionsBarChart("groupAfrica", "#barChart_Africa");
+  // emissionsBarChart("groupAsia", "#barChart_Asia");
   emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
-  emissionsBarChart("groupNordic", "#barChart_Nordic");
 });
 
 // ----------------------------------------------------
@@ -527,7 +536,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   // Extract scaled emissions data for given region
   // Omit cities for which GDP-PPP is missing
   emissions_scaled = sortByRegion(geogroup_name, this_dim);
-
+  console.log("this_dim: ", this_dim)
   
   // Sort columns
   emissions_scaled.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
@@ -615,8 +624,8 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
        
         curr_region = data_GHG.filter(x => x.city === d).map(x => x.region)[0].toString();
         
-        if (curr_region === "groupUSAAusNZ") {xscale=0.9; yscale=1.2; rot=70;}
-        else if (curr_region === "groupNordic") {xscale=4; yscale=2; rot=20; xtrans=-14;}
+        if (curr_region === "groupNAmer") {xscale=1; yscale=1; rot=70;}
+        else if (curr_region === "groupOceania") {xscale=4; yscale=2; rot=20; xtrans=-14;}
         
         return "scale(" + xscale + " " + yscale + ")" + "rotate(" + rot + ")" +
                 "translate(" + xtrans + " " + ytrans + ")" ;
@@ -637,7 +646,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("dy", ".71em")
       .style("text-anchor", "end")
       .text(function () { 
-        if (geogroup_name === "groupUSAAusNZ") return this_dim + " " + dimUnits[this_dim];
+        if (geogroup_name === "groupNAmer") return this_dim + " " + dimUnits[this_dim];
       })
       .attr("transform",function () {
         var myscale = 1.5;
@@ -714,9 +723,9 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         //Enlarge city label of selected bar
         //Need different sizes on account of the vieweBox scale stretching
         if (geogroup_name === "groupEurope" || geogroup_name === "groupLatinAmer" ||
-            geogroup_name === "groupUSAAusNZ") newSize = "16px";
-        else if (geogroup_name === "groupAfricaAsia") newSize = "12px";
-        else if (geogroup_name === "groupNordic") newSize = "11px";
+            geogroup_name === "groupNAmer"|| geogroup_name === "groupOceania" ) newSize = "16px";
+        else if (geogroup_name === "groupAfrica") newSize = "12px";
+        else if (geogroup_name === "groupAsia") newSize = "11px";
         d3.select("#tick" + idName).text(d.city).style("font-size", newSize)
           .attr("fill", colour_labelsHighlight);
 
@@ -730,8 +739,8 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         var tipy = -100; //-1490; //africa/asia
         if (geogroup_name === "groupEurope") tipy = 0;
         else if (geogroup_name === "groupLatinAmer") tipy = 0;
-        else if (geogroup_name === "groupUSAAusNZ") tipy = 0;
-        else if (geogroup_name === "groupNordic") tipy = 0;
+        else if (geogroup_name === "groupNAmer") tipy = 0;
+        else if (geogroup_name === "groupOceania") tipy = 0;
         div.style("opacity", 1);
         div.html(formatDecimalSci(d[this_dim]) + " " + dimUnits[this_dim])
           .style("left", d3.event.pageX + tipx + "px")
@@ -759,7 +768,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       });
 
   // Plot regional avg emissions [tCO2/capita] as a line over each barChart
-  fn_appendRegionalMeans(svgBarChart, geogroup_name, this_dim, emissions_scaled, x, y);
+  //fn_appendRegionalMeans(svgBarChart, geogroup_name, this_dim, emissions_scaled, x, y);
 
 
 } // ./fn emissionsBarChart()

@@ -14,9 +14,9 @@ var colour_labelsHighlight = "#3d3d3d";
 
 var regionColourMap = { 
   "groupEurope": "#6BACBF", //"#A6D4FF", 
-  "groupUSAAusNZ": "#C399D9",
-  "groupAfricaAsia": "#BD1550",
-  "groupNordic": "#F99DD3", "groupLatinAmer": "#F8CA00"
+  "groupNAmer": "#C399D9", "groupOceania": "#555",
+  "groupAfrica": "#BD1550", "groupAsia": "red",
+  "groupLatinAmer": "#F8CA00"
 };
 
 //Primary Methodology colours
@@ -51,26 +51,29 @@ var emissionsToggleDict = {
 //AVG REGIONAL EMISSIONS PER CAPITA
 //TO BE VERIFIED! AVGS TAKEN FROM GCA WEBSITE
 var regionalAvgs = {
-  "groupUSAAusNZ": 13.1, //USA, Can, Mexico, Oceania
+  "groupNAmer": 13.1,
+  "groupOceania": 11,
   "groupEurope": 7.5,
-  "groupAfricaAsia": 4.2, //***made up for now!!!***
-  "groupLatinAmer": 2.4,
-  "groupNordic": 2.5 //***made up for now!!!***
+  "groupAfrica": 1.2, //***made up for now!!!***
+  "groupAsia": 4, //***made up for now!!!***
+  "groupLatinAmer": 2.4
 }
 
 var regionalAvgs_GDP = {
-  "groupUSAAusNZ": 38000, //USA, Can, Mexico
+  "groupNAmer": 38000,
+  "groupOceania": 30000,
   "groupEurope": 30000,
-  "groupAfricaAsia": 40000,
-  "groupLatinAmer": 30000,
-  "groupNordic": 8000 //***made up for now!!!***
+  "groupAfrica": 10000,
+  "groupAsia": 40000,
+  "groupLatinAmer": 30000
 }
 
 //------------------------------------------------
 //FOR DISPLAY TEXTS
 var regionLabel_dict = {
-  "groupEurope": "Europe", "groupUSAAusNZ": "USA/Can/Aus/NZ",
-  "groupAfricaAsia": "Africa/Asia", "groupNordic": "Nordics", 
+  "groupEurope": "Europe", "groupNAmer": "USA/Can",
+  "groupOceania": "Aus/NZ",
+  "groupAfrica": "Africa", "groupAsia": "Asia", 
   "groupLatinAmer": "Latin America"
 };
 
@@ -90,11 +93,7 @@ var dimUnits =  {
   "country": ""
 }
 
-// Geographic group
-var nordics = ["Oslo", "Helsinki", "Copenhagen", "Sundsvall", "Stockholm", 
-					"Västra Götaland county", "Uppsala", "Örebro", "Linköping", "Karlstad",
-					"Norrköping", "Jönköping", "Växjö", "Gävle", "Skåne county", "Umeå", "Halmstad"];
-
+// Geographic groups
 var latinAmer = ["Bogotá", "Mexico City", "Rio de Janeiro", "Sao Paulo", "Brasília",
                 "Curitiba"];
 
