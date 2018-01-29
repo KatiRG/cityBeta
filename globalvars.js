@@ -2,6 +2,11 @@ var formatDecimalSci = d3.format(".2n");
 var formatDecimalk = d3.format(".1s"); //.2s //d3.format(".3n");
 
 //------------------------------------------------
+//Technical labels
+label_dataPerCap = "Scope1/capita";
+label_dataPerGDP = "Scope1/GDP-PPP";
+
+//------------------------------------------------
 //COLOURS
 //barChart labels + highlight colour
 var colour_labels = "#636363";
@@ -38,7 +43,7 @@ var protocolDict = {
 }
 
 var emissionsToggleDict = {
-  "Scope1/GDP-PPP": "Display emissions <b>per GDP-PPP</b>, in decreasing order.",
+  "Scope1/GDP-PPP": "Display emissions <b>per unit GDP</b>, in decreasing order.",
   "Scope1/capita": "Display emissions <b>per capita</b>, in decreasing order."
 }
 
