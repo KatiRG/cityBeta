@@ -40,8 +40,14 @@
 
     <!-- info text row -->
     <div class="row">
-      <div class="col-lg-8" id="infoText" style="text-align: left;"></div>
-      <ul class="nytg-sort" style='position: absolute; left: 700px; top: 60px;'>
+      <div class="col-lg-6" id="infoText" style="text-align: left;">
+        Hover over a city on the world map to the corresponding city <a href="http://www.ghgprotocol.org/sites/default/files/ghgp/standards/GHGP_GPC_0.
+pdf" target="_blank"> emissions </a> data, either per capita (default) or per unit of Gross Domestic Product at Purchasing Power Parity rates. Note that the city source dataset does not have the same number of cities in different
+      </div>
+      <div class="col-lg-6" id="infoText" style="text-align: left;">
+       regions of the world. We present here city emissions grouped per continent, although different lifestyles and energy use make city emissions strongly different within a continent.
+      </div>
+      <ul class="nytg-sort" style='position: absolute; left: 1250px; top: 119px;'>
         <li id="resetButton">Reset</li>
       </ul>
 
@@ -249,10 +255,6 @@ d3.select("#reorderButton")
 // ----------------------------------------------------
 // Main Code
 // ----------------------------------------------------
-
-d3.select("#infoText")
-  .text("Hover over a city the world map to see city emissions data.")
-  .style("font-size", "14px");
 
 //barChart legends
 fn_appendColourBar();
@@ -529,7 +531,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   }
 
   //https://bl.ocks.org/seemantk/ec245e1f4e824e685982dd5d3fbb2fcc
-  var margin = {top: 5, right: 20, bottom: 40, left: 40},
+  var margin = {top: 5, right: 0, bottom: 40, left: 30},
       width = 700 - margin.left - margin.right,
       height = 250 - margin.top - margin.bottom;
 
@@ -578,7 +580,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   //Fit barCharts responsively using viewBox
   //NB: viewBox stretches text labels as well, so they must be fixed later by adjusting the scale
   var svgBarChart = d3.select(geogroup_id).append("svg").attr("class", "barSVG")
-    .attr('width', '95%')
+    .attr('width', '100%')
     .attr('height', height)
     .attr('viewBox', viewBox)
     .attr('viewBox', '0 0 ' +  ( width + margin.left + margin.right ) + ' ' + ( height  + margin.top + margin.bottom ) )
@@ -597,15 +599,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   x.domain(emissions_scaled.map(function (d) {
     return d.city;
   }));
-  y.domain([0, d3.max(emissions_scaled, function(d) { 
-    // console.log("this_dim: ", this_dim)
-    // console.log("d[this_dim]: ", d[this_dim])
-    // return d[this_dim];
-
-    // if (geogroup_name === "groupEurope" || geogroup_name === "groupAsia" ||
-    //   geogroup_name === "groupNAmer") same_max = (this_dim == label_dataPerCap ? 30 : 375000);
-    // else same_max = same_max = (this_dim == label_dataPerCap ? 5.5 : 230000);
-    // return same_max;
+  y.domain([0, d3.max(emissions_scaled, function(d) {
 
     if (this_dim === label_dataPerCap) {
       if (geogroup_name === "groupEurope" || geogroup_name === "groupAsia" ||
@@ -665,9 +659,9 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("y", -33)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text(function () { 
-        if (geogroup_name === "groupNAmer") return this_dim + " " + dimUnits[this_dim];
-      })
+      // .text(function () { 
+      //   if (geogroup_name === "groupNAmer") return this_dim + " " + dimUnits[this_dim];
+      // })
       .attr("transform",function () {
         var myscale = 1.5;
         var xtrans = 0;
