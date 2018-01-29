@@ -61,7 +61,7 @@ ul {
 }
 /*Used for barChart rects */
 div.tooltip-bar {
-  position: relative;
+  position: absolute;
   height: 35px;
   width: 111px;
   padding: 6px;

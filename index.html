@@ -727,11 +727,11 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
         //tooltip x and y posn shifts
         var tipx = 0;
-        var tipy = -1560; //africa/asia
-        if (geogroup_name === "groupEurope") tipy = -1490;
-        else if (geogroup_name === "groupLatinAmer") tipy = -1600;
-        else if (geogroup_name === "groupUSAAusNZ") tipy = -1540;
-        else if (geogroup_name === "groupNordic") tipy = -1660;
+        var tipy = -100; //-1490; //africa/asia
+        if (geogroup_name === "groupEurope") tipy = 0;
+        else if (geogroup_name === "groupLatinAmer") tipy = 0;
+        else if (geogroup_name === "groupUSAAusNZ") tipy = 0;
+        else if (geogroup_name === "groupNordic") tipy = 0;
         div.style("opacity", 1);
         div.html(formatDecimalSci(d[this_dim]) + " " + dimUnits[this_dim])
           .style("left", d3.event.pageX + tipx + "px")
