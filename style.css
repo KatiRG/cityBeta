@@ -144,11 +144,11 @@ div.rtooltip {
 /* bar chart */
 #emissionsToggleButton {
   position: absolute;
-  left: 435px; 
+  left: 475px; 
   top: 0px;
 }
 #barChartCaption, #cityCardTitle {
-  font-size: 17px;
+  font-size: 18px;
   color: #565656;
   text-align: left;
 }
