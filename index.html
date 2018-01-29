@@ -75,7 +75,7 @@
           </ul>
       </div>
 
-      <div class="col-lg-5" id="cityCardTitle" style="text-align: left;">Recent emission changes from city reports</div>
+      <div class="col-lg-5" id="cityCardTitle" style="text-align: left;">City Progress</div>
     </div> <!-- ./row 3 -->
 
     <!-- row 4 -->
@@ -92,11 +92,11 @@
 
         <!--barChart sub-rows-->
         <div class="row">
-          <div class="col-lg-7">
+          <div class="col-lg-6">
             <div class="barChartTitle">Europe</div>
             <div id="barChart_EU"></div>
           </div>
-          <div class="col-lg-5">
+          <div class="col-lg-6">
             <div class="barChartTitle">Latin America</div>
             <div id="barChart_LatinAmer"></div>
           </div> 
@@ -110,11 +110,11 @@
 
         <div class="row">
           <div class="col-lg-8">
-            <div class="barChartTitle">Africa</div>
+            <div class="barChartTitle">Africa &#183; Asia</div>
             <div id="barChart_AfricaAsia"></div>
           </div>
           <div class="col-lg-4">
-            <div class="barChartTitle">Asia</div>
+            <div class="barChartTitle">Nordics</div>
             <div id="barChart_Nordic"></div>
           </div> 
         </div> 
@@ -176,8 +176,8 @@ d3.select("#gdpButton")
   .on("click", function() {
     div.style("opacity", 0); //clear tooltip
     
-    var buttonText = (d3.select(this).text() === label_dataPerGDP) ?
-                      label_dataPerCap : label_dataPerGDP;              
+    var buttonText = (d3.select(this).text() === "Scope1/GDP-PPP") ?
+                      "Scope1/capita" : "Scope1/GDP-PPP";              
 
     d3.select(this).text(buttonText);
 
@@ -186,10 +186,10 @@ d3.select("#gdpButton")
     emissionsBarChart("groupUSAAusNZ", "#barChart_USACanAusNZ");
     emissionsBarChart("groupAfricaAsia", "#barChart_AfricaAsia");
     emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
-    //emissionsBarChart("groupNordic", "#barChart_Nordic");
+    emissionsBarChart("groupNordic", "#barChart_Nordic");
 
-    //(de-)activate reorder button if (label_dataPerCap)"Scope1/GDP-PPP" is being displayed
-    var reorderState = (buttonText === label_dataPerCap) ? "block" : "none";
+    //(de-)activate reorder button if ("Scope1/capita")"Scope1/GDP-PPP" is being displayed
+    var reorderState = (buttonText === "Scope1/capita") ? "block" : "none";
     d3.select("#reorderButton").style("display", reorderState);
      
   })
@@ -211,12 +211,12 @@ d3.select("#reorderButton")
                       "orig order" : "Re-order";
     d3.select(this).text(buttonText);
 
-    //Re-order Scope1/GDP-PPP according tolabel_dataPerCap   
+    //Re-order Scope1/GDP-PPP according to Scope1/capita    
     emissionsBarChart("groupEurope", "#barChart_EU");
     emissionsBarChart("groupUSAAusNZ", "#barChart_USACanAusNZ");
     emissionsBarChart("groupAfricaAsia", "#barChart_AfricaAsia");
     emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
-    //emissionsBarChart("groupNordic", "#barChart_Nordic");
+    emissionsBarChart("groupNordic", "#barChart_Nordic");
      
   })
   .on("mouseover", function () {
@@ -260,7 +260,7 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
   emissionsBarChart("groupUSAAusNZ", "#barChart_USACanAusNZ");
   emissionsBarChart("groupAfricaAsia", "#barChart_AfricaAsia");
   emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
-  //emissionsBarChart("groupNordic", "#barChart_Nordic");
+  emissionsBarChart("groupNordic", "#barChart_Nordic");
 });
 
 // ----------------------------------------------------
@@ -508,14 +508,10 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   d3.select(geogroup_id).select("svg").remove();
   
   // barChart caption in #barChartCaption div
-  this_dim = (d3.select("#gdpButton").text() === label_dataPerGDP) ?
-                      label_dataPerCap : label_dataPerGDP;
-  if (this_dim === label_dataPerCap) {
-    d3.select("#barChartCaption").text("Per capita emissions " + dimUnits[this_dim]);
-  } else {
-    d3.select("#barChartCaption").text("Emissions per unit of Gross Domestic Product "
-       + dimUnits[this_dim]);
-  }
+  this_dim = (d3.select("#gdpButton").text() === "Scope1/GDP-PPP") ?
+                      "Scope1/capita" : "Scope1/GDP-PPP";
+  d3.select("#barChartCaption").text(this_dim + " " + dimUnits[this_dim]
+    + " emissions grouped by world region");
 
   //https://bl.ocks.org/seemantk/ec245e1f4e824e685982dd5d3fbb2fcc
   var margin = {top: 5, right: 20, bottom: 40, left: 40},
@@ -550,7 +546,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
     // .ticks(10, "%");
     .ticks(5)
     .tickFormat(function(d) {
-      return this_dim === label_dataPerGDP ? formatDecimalk(d) : d;
+      return this_dim === 'Scope1/GDP-PPP' ? formatDecimalk(d) : d;
     })
     .tickPadding(2);
 
