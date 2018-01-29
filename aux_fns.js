@@ -99,7 +99,7 @@ function setupData(ghg){
       "area": area,
       "Scope1": scope1,
       "Scope1/capita": scope1_cap,
-      "Scope1/GDP-PPP": scope1_gdp,
+      "per GDP": scope1_gdp,
       "population density": pop_density,
       "HDD 15.5C": HDD155C,
       "CDD 23C": CDD23C,

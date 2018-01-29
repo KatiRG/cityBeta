@@ -4,7 +4,7 @@ var formatDecimalk = d3.format(".1s"); //.2s //d3.format(".3n");
 //------------------------------------------------
 //Technical labels
 label_dataPerCap = "Scope1/capita";
-label_dataPerGDP = "Scope1/GDP-PPP";
+label_dataPerGDP = "per GDP";
 
 //------------------------------------------------
 //COLOURS
@@ -43,7 +43,7 @@ var protocolDict = {
 }
 
 var emissionsToggleDict = {
-  "Scope1/GDP-PPP": "Display emissions <b>per unit GDP</b>, in decreasing order.",
+  "per GDP": "Display emissions <b>per unit GDP</b>, in decreasing order.",
   "Scope1/capita": "Display emissions <b>per capita</b>, in decreasing order."
 }
 
@@ -77,7 +77,7 @@ var regionLabel_dict = {
 var dimUnits =  {
   "total emissions": "[tCO2]",
   "Scope1/capita": "[tCO2/capita]",
-  "Scope1/GDP-PPP": "[kgCO2/USD]",
+  "per GDP": "[kgCO2/USD]",
   "population": "",
   "population density": "",
   "GDP-PPP/capita": "(PPP) [USD/capita]",
