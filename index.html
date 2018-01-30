@@ -537,7 +537,8 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
   //https://bl.ocks.org/seemantk/ec245e1f4e824e685982dd5d3fbb2fcc
   var margin = {top: 0, right: 0, bottom: 0, left: 30};
-  if (geogroup_name === "groupOceania") {
+  if (geogroup_name === "groupOceania" || geogroup_name === "groupAfrica"
+    || geogroup_name === "groupLatinAmer") {
     margin = {top: 0, right: 0, bottom: 0, left: 100};
   }
   var width = 700 - margin.left - margin.right,
@@ -729,13 +730,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         xscale=1; yscale=1.4; rot=-90;
         xtrans=0; ytrans=-6;
        
-        curr_region = data_GHG.filter(x => x.city === d).map(x => x.region)[0].toString();
-        
-        // if (curr_region === "groupUSA") {xscale=1; yscale=1; rot=70;}
-        // else if (curr_region === "groupCan") {xscale=5; yscale=1; rot=70; xtrans=-14;}
-        // else if (curr_region === "groupAfrica") {xscale=5; yscale=1; rot=55; xtrans=-14;}
-        // else if (curr_region === "groupOceania") {xscale=4; yscale=2; rot=30; xtrans=-14;}
-        // else if (curr_region === "groupLatinAmer") {xscale=2; yscale=1.4; rot=30; xtrans=-14;}
+        curr_region = data_GHG.filter(x => x.city === d).map(x => x.region)[0].toString();        
 
         if (curr_region === "groupUSA") {xscale=1; yscale=1;}
         else if (curr_region === "groupCan") {xscale=5; yscale=1; }
@@ -767,6 +762,12 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         
         return "scale(" + xscale + " " + yscale + ")";
       })
+      .selectAll(".tick text")
+        .style("fill", function (d) {
+          if (geogroup_name === "groupEurope" || 
+            geogroup_name === "groupUSA" || geogroup_name === "groupOceania") return colour_labels;
+          else return "#fff";
+        });
     // .append("text")
     //   //.attr("transform", "rotate(-90)")
     //   .attr("y", -33)
