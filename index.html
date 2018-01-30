@@ -716,12 +716,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis)
       .selectAll("text")
-      .text(function (d) { 
-        var abbr = d.indexOf(', ') >= 0 ? d.split(",")[0] : d;
-        if (d.contains("Kommune")) abbr = d.split("Kommune")[0];
-        //return abbr;
-        return fn_abbr(d); 
-      })
+      .text(function (d) { return fn_abbr(d); })
       .attr("id", function (d) {
         idName = format_idName(d);
         return "tick" + idName;
