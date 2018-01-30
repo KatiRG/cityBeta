@@ -334,7 +334,7 @@ function fn_appendRegionalMeans(svg, geogroup_name, this_dim, data, x, y) {
 function fn_abbr(d) {
   if (d.indexOf(', ') >= 0) abbr = d.substring(0,3);
   else if (d.indexOf(' ') >= 0) abbr = d.match(/\b\w/g).join(' ');
-  else abbr = d.substring(0,3);
+  else abbr = d.substring(0,4);
 
   return abbr;
 }
