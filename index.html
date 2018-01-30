@@ -109,9 +109,13 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
         </div>
 
         <div class="row">
-          <div class="col-lg-12">
-            <div class="barChartTitle">North America (USA &#183; Canada)</div>
-            <div id="barChart_NAmer"></div>
+          <div class="col-lg-9">
+            <div class="barChartTitle">USA</div>
+            <div id="barChart_USA"></div>
+          </div>
+          <div class="col-lg-3">
+            <div class="barChartTitle">Canada</div>
+            <div id="barChart_Can"></div>
           </div>
         </div> <!-- ./sub-row USA chart -->
 
@@ -195,7 +199,7 @@ d3.select("#gdpButton")
 
     //Plot emissions bar charts for each geo group    
     emissionsBarChart("groupEurope", "#barChart_EU");
-    emissionsBarChart("groupNAmer", "#barChart_NAmer");
+    emissionsBarChart("groupUSA", "#barChart_USA");
     emissionsBarChart("groupOceania", "#barChart_Oceania");
     emissionsBarChart("groupAfrica", "#barChart_Africa");
     emissionsBarChart("groupAsia", "#barChart_Asia");
@@ -226,7 +230,7 @@ d3.select("#reorderButton")
 
     //Re-order Scope1/GDP according to Scope1/capita
     emissionsBarChart("groupEurope", "#barChart_EU");
-    emissionsBarChart("groupNAmer", "#barChart_NAmer");
+    emissionsBarChart("groupUSA", "#barChart_USA");
     emissionsBarChart("groupOceania", "#barChart_Oceania");
     emissionsBarChart("groupAfrica", "#barChart_Africa");
     emissionsBarChart("groupAsia", "#barChart_Asia");
@@ -267,7 +271,8 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
   setupData(ghg);
   drawMap();
   emissionsBarChart("groupEurope", "#barChart_EU");
-  emissionsBarChart("groupNAmer", "#barChart_NAmer");
+  emissionsBarChart("groupUSA", "#barChart_USA");
+  emissionsBarChart("groupCan", "#barChart_Can");
   emissionsBarChart("groupOceania", "#barChart_Oceania");
   emissionsBarChart("groupAfrica", "#barChart_Africa");
   emissionsBarChart("groupAsia", "#barChart_Asia");
@@ -531,7 +536,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   }
 
   //https://bl.ocks.org/seemantk/ec245e1f4e824e685982dd5d3fbb2fcc
-  var margin = {top: 5, right: 0, bottom: 40, left: 30},
+  var margin = {top: 0, right: 0, bottom: 40, left: 30},
       width = 700 - margin.left - margin.right,
       height = 250 - margin.top - margin.bottom;
 
@@ -579,8 +584,12 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
   //Fit barCharts responsively using viewBox
   //NB: viewBox stretches text labels as well, so they must be fixed later by adjusting the scale
+  // if (geogroup_name === "groupUSA") my_width ="75%";
+  // else if (geogroup_name === "groupCan") my_width ="25%";
+  // else my_width = "100%";
+  my_width = "100%";
   var svgBarChart = d3.select(geogroup_id).append("svg").attr("class", "barSVG")
-    .attr('width', '100%')
+    .attr('width', my_width)
     .attr('height', height)
     .attr('viewBox', viewBox)
     .attr('viewBox', '0 0 ' +  ( width + margin.left + margin.right ) + ' ' + ( height  + margin.top + margin.bottom ) )
@@ -603,7 +612,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
     if (this_dim === label_dataPerCap) {
       if (geogroup_name === "groupEurope" || geogroup_name === "groupAsia" ||
-        geogroup_name === "groupNAmer") same_max = 30;
+        geogroup_name === "groupUSA" || geogroup_name === "groupCan") same_max = 30;
       else  same_max = 5.5;
     } else {
       if (geogroup_name === "groupAfrica") same_max = 750000;
@@ -638,7 +647,8 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
        
         curr_region = data_GHG.filter(x => x.city === d).map(x => x.region)[0].toString();
         
-        if (curr_region === "groupNAmer") {xscale=1; yscale=1; rot=70;}
+        if (curr_region === "groupUSA") {xscale=1; yscale=1; rot=70;}
+        else if (curr_region === "groupCan") {xscale=5; yscale=1; rot=70; xtrans=-14;}
         else if (curr_region === "groupOceania") {xscale=4; yscale=2; rot=20; xtrans=-14;}
         
         return "scale(" + xscale + " " + yscale + ")" + "rotate(" + rot + ")" +
@@ -654,23 +664,31 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   svgBarChart.append("g")
       .attr("class", "y axis")
       .call(yAxis)
-    .append("text")
-      //.attr("transform", "rotate(-90)")
-      .attr("y", -33)
-      .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      // .text(function () { 
-      //   if (geogroup_name === "groupNAmer") return this_dim + " " + dimUnits[this_dim];
-      // })
-      .attr("transform",function () {
-        var myscale = 1.5;
-        var xtrans = 0;
-        var ytrans = -1;
-
-        return "scale(" + myscale + " " + myscale + ")"  + "rotate(-90)" 
-                        + "translate(" + xtrans + "," + ytrans + ")";
+      .attr("transform", function (d) {
+        xscale=1; yscale=1;
+        
+        if (geogroup_name === "groupCan") {xscale=5; yscale=1;}
+        else if (geogroup_name === "groupOceania") {xscale=1.5; yscale=1;}
+        
+        return "scale(" + xscale + " " + yscale + ")";
       })
-      .style("fill", colour_labels);
+    // .append("text")
+    //   //.attr("transform", "rotate(-90)")
+    //   .attr("y", -33)
+    //   .attr("dy", ".71em")
+    //   .style("text-anchor", "end")
+    //   // .text(function () { 
+    //   //   if (geogroup_name === "groupNAmer") return this_dim + " " + dimUnits[this_dim];
+    //   // })
+    //   .attr("transform",function () {
+    //     var myscale = 1.0;
+    //     var xtrans = 0;
+    //     var ytrans = -1;
+
+    //     return "scale(" + myscale + " " + myscale + ")"  + "rotate(-90)" 
+    //                     + "translate(" + xtrans + "," + ytrans + ")";
+    //   })
+    //   .style("fill", colour_labels);
 
   //-----------------------------------------------------------------------------------------
   //Visual fixes
@@ -737,7 +755,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         //Enlarge city label of selected bar
         //Need different sizes on account of the vieweBox scale stretching
         if (geogroup_name === "groupEurope" || geogroup_name === "groupLatinAmer" ||
-            geogroup_name === "groupNAmer"|| geogroup_name === "groupOceania" ) newSize = "16px";
+            geogroup_name === "groupUSA"|| geogroup_name === "groupOceania" ) newSize = "16px";
         else if (geogroup_name === "groupAfrica") newSize = "12px";
         else if (geogroup_name === "groupAsia") newSize = "11px";
         d3.select("#tick" + idName).text(d.city).style("font-size", newSize)
@@ -753,7 +771,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         var tipy = -100; //-1490; //africa/asia
         if (geogroup_name === "groupEurope") tipy = 0;
         else if (geogroup_name === "groupLatinAmer") tipy = 0;
-        else if (geogroup_name === "groupNAmer") tipy = 0;
+        else if (geogroup_name === "groupUSA") tipy = 0;
         else if (geogroup_name === "groupOceania") tipy = 0;
         div.style("opacity", 1);
         div.html(formatDecimalSci(d[this_dim]) + " " + dimUnits[this_dim])
