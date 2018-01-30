@@ -675,19 +675,28 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   //         .style("opacity", 0.2);
 
         //tooltip x and y posn shifts
-        if (geogroup_name === "groupEurope") {tipx = 550; tipy = 600;}
-        else if (geogroup_name === "groupAsia") {tipx = 850; tipy = 600;}
-        else if (geogroup_name === "groupUSA") {tipx = 675; tipy = 918;}
-        else if (geogroup_name === "groupCan") {tipx = 878; tipy = 918;}
-        else if (geogroup_name === "groupOceania") {tipx = 393; tipy = 1219;}
-        else if (geogroup_name === "groupAfrica") {tipx = 538; tipy = 1219;}
-        else if (geogroup_name === "groupLatinAmer") {tipx = 861; tipy = 1219;}
+        // if (geogroup_name === "groupEurope") {tipx = 550; tipy = 600;}
+        // else if (geogroup_name === "groupAsia") {tipx = 850; tipy = 600;}
+        // else if (geogroup_name === "groupUSA") {tipx = 675; tipy = 918;}
+        // else if (geogroup_name === "groupCan") {tipx = 878; tipy = 918;}
+        // else if (geogroup_name === "groupOceania") {tipx = 393; tipy = 1219;}
+        // else if (geogroup_name === "groupAfrica") {tipx = 538; tipy = 1219;}
+        // else if (geogroup_name === "groupLatinAmer") {tipx = 861; tipy = 1219;}
+
+
+        var tipx = 20;
+        var tipy = -120; //-1490; //africa/asia
+        // if (geogroup_name === "groupEurope") tipy = -120;
+        // else if (geogroup_name === "groupEurope") tipy = -120;
+        // else if (geogroup_name === "groupLatinAmer") tipy = 0;
+        // else if (geogroup_name === "groupUSA") tipy = -120;
+        // else if (geogroup_name === "groupOceania") tipy = 0;
         div.style("opacity", 1);
         div.html(formatDecimalSci(d[this_dim]) + " " + dimUnits[this_dim])
-          .style("left", tipx + "px")
-          .style("top", tipy + "px");
-          // .style("left", d3.event.pageX + tipx + "px")
-          // .style("top", d3.event.pageY + tipy + "px");
+          // .style("left", tipx + "px")
+          // .style("top", tipy + "px");
+          .style("left", d3.event.pageX + tipx + "px")
+          .style("top", d3.event.pageY + tipy + "px");
 
       })
       .on("mouseout", function (d) {
