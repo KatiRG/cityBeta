@@ -63,13 +63,15 @@ ul {
 /*Used for barChart rects */
 div.tooltip-bar {
   position: absolute;
-  height: 35px;
+  height: 40px;
   width: 111px;
   padding: 6px;
   background: #F7F6E4;
   color: #555;
   border-radius: 4px;
+  border-color: #5E554D;
   font-size: 12px;
+  font-weight: bold;
 }
 
 /*Used for toggle buttons */
