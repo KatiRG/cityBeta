@@ -228,7 +228,7 @@ function fn_appendColourBar() {
                   .attr("height", rect_dim)
                   .attr("y", 5)
                   .attr("x", function (d, i) {
-                    return 28 + i * 80;
+                    return 28 + i * 70;
                   })
                   .attr("fill", function (d, i) {
                     return colour_methodNum[i + 1];
@@ -242,7 +242,7 @@ function fn_appendColourBar() {
         })
         .attr("y", 10)
         .attr("x", function (d, i) {
-          var xpos = [0,62,159,237,313];
+          var xpos = [0,53,140,209,274];
           return xpos[i];
         })
         .attr("dy", "6px")
@@ -264,22 +264,20 @@ function fn_appendRegionalLine() {
       .attr("class", "line")
       .style("stroke", "black")
       .style("opacity", 0.7)
-      .style("stroke-width", "6px")
-      .attr("x1", 1020)
-      .attr("y1", 40)
-      .attr("x2", 1283)
-      .attr("y2", 40);
+      .style("stroke-width", "1.5px")
+      .attr("x1", 417)
+      .attr("y1", 12)
+      .attr("x2", 440)
+      .attr("y2", 12);
 
   regionalLine.append("text")
     .attr("class", "textLabels")
-    .attr("dx", 223)
+    .attr("dx", 340)
     .attr("dy", 15)
     .text("regional mean")
-    .attr("transform", function (d) {
-      var xscale = 3.2;
-      var yscale = 3.2;
-      return "scale(" + xscale + " " + yscale + ")";
-    });
+    .style("font-size", "11px")
+    .style("fill","#565656")
+    .style("stroke", "none");
 
 
 }
