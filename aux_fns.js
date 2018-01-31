@@ -143,9 +143,6 @@ function setupData(ghg){
 
 } // ./setupData()
 
-
-
-
 // Reset elements to original style before selection
 function resetElements() {
   //reset bar opacity
@@ -191,23 +188,57 @@ function fn_enlargeName(geogroup_name, cityName) {
   d3.select("#tick" + idName).text(cityName).style("font-size", newSize)
     .attr("fill", colour_labelsHighlight);
 }
+//Discretize selected attribute value
+function fn_discretize (attrFlag, dimExtent, d) {
+  //do the discretization into 5 levels
+
+  //difference between max and min values of selected attribute
+  delta = ( dimExtent[1] - dimExtent[0] )/num_levels;  
+  
+  cb_values=[]; //clear
+  for (idx=0; idx < num_levels; idx++) {
+    cb_values.push(dimExtent[0] + idx*delta);
+  }
+  //console.log("cb_values: ", cb_values)
+
+  //colour map to take data value and map it to the colour of the level bin it belongs to
+  colourmapDim = d3.scaleQuantize()  //d3.scale.linear() [old d3js notation]
+            .domain([dimExtent[0], dimExtent[1]])
+            .range(choose_colourArray[attrFlag]);
+
+  //label the legend colourbar boxes
+  d3.select("#barChartLegend").selectAll("text")
+    .text(function (d,  i) {
+      if (i < 5) { //hack for now
+        //console.log("cb_values here: ", Math.round(cb_values[i]))
+        return Math.round(cb_values[i]);
+      }
+    });          
+
+  
+  return colourmapDim(d[attrFlag]);
+  
+}
 //Create colour bar boxes
 function fn_appendColourBar() {
+  
+  //setup params
   var margin = {top: 7, right: 0, bottom: 0, left: 0};
   var svg_width = 450 - margin.left - margin.right,
       svg_height = 35 - margin.top - margin.bottom;
 
-  // var svg_width = 450, svg_height = 35;
-
-  //Make colourbar rects
   var rect_dim = 15;
 
-    var svgCB = d3.select("#barChartLegend").select("svg")
+  //colour array
+  rect_colourArray = choose_colourArray[attrFlag];
+
+  //make svg
+  var svgCB = d3.select("#barChartLegend").select("svg")
     .attr("width", svg_width)
     .attr("height", svg_height)
     .style("vertical-align", "middle");
 
-  // Tooltip for rects  
+  //tooltip for rects  
   var tool_tip = d3.tip()
     .attr("class", "d3-tip")
     .offset([-10, 0])
@@ -217,9 +248,9 @@ function fn_appendColourBar() {
     });
   svgCB.call(tool_tip);
 
- 
+ //make colourbar rects
   var rects = svgCB.selectAll('rect')
-              .data(Object.values(colour_methodNum))
+              .data(rect_colourArray)
               .enter()
               .append('g');
 
@@ -231,7 +262,8 @@ function fn_appendColourBar() {
                     return 28 + i * 70;
                   })
                   .attr("fill", function (d, i) {
-                    return colour_methodNum[i + 1];
+                    //return colour_methodNum[i + 1];                    
+                    return rect_colourArray[i];
                   })
                   .on('mouseover', tool_tip.show)
                   .on('mouseout', tool_tip.hide);
@@ -242,7 +274,7 @@ function fn_appendColourBar() {
         })
         .attr("y", 10)
         .attr("x", function (d, i) {
-          var xpos = [0,53,140,209,274];
+          var xpos = [0,53,140,205,274];
           return xpos[i];
         })
         .attr("dy", "6px")

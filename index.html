@@ -23,6 +23,8 @@
   <script src="lib/bootstrap.min.js"></script>
   <link href="lib/bootstrap.min.css" rel="stylesheet">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
   <!-- custom -->
   <link href="style.css" rel="stylesheet">
   <script src="aux_fns.js"></script>
@@ -72,13 +74,24 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
     <!-- row 3 -->
     <div class="row">
       <div class="col-lg-6">
-        <div id="barChartCaption"></div>
-          <ul class="nytg-sort" id="emissionsToggleButton">
-              <li id="gdpButton">per GDP</li>
-          </ul>
-          <ul class="nytg-sort" style='position: absolute; left: 473px; top: 0px;'>
-              <li id="reorderButton" style="display: none;">Re-order</li>
-          </ul>
+          <div id="barChartLegendLabel">Colour bars by: 
+            <select id="d3-dropdown">
+              <option value="methodology">Protocol</option>
+              <option value="population density">population density</option>
+              <!--<option value="gas price">gas price</option>
+              <option value="diesel price">diesel price</option>
+              <option value="HDD 15.5C">HDD 15.5C</option>
+              <option value="CDD 23C">CDD 23C</option>
+              <option value="change in emissions">change in emissions</option>
+              <option value="low BUA %">low BUA % (2014)</option>
+              <option value="high BUA %">high BUA % (2014)</option>
+              <option value="Congestion rank (INRIX)">Congestion rank (INRIX)</option>
+              <option value="Congestion rank (TomTom)">Congestion rank (TomTom)</option>
+              <option value="CIMI ranking (IESE)">CIMI ranking (IESE)</option> -->
+            </select>          
+          </div>
+
+        
       </div>
 
       <div class="col-lg-6" id="cityCardTitle" style="text-align: left;">Recent emission changes from city reports </div>
@@ -90,8 +103,16 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
       <div class="col-lg-6">
         <!--barChart legend-->
         <div class="row">
-          <div id="barChartLegendLabel" class="col-lg-2">Protocol</div>
-          <div id="barChartLegend"class="col-lg-10">
+          <div id="barChartCaption"></div>
+          <ul class="nytg-sort" id="emissionsToggleButton">
+              <li id="gdpButton">per GDP</li>
+          </ul>
+          <ul class="nytg-sort" style='position: absolute; left: 473px; top: 0px;'>
+              <li id="reorderButton" style="display: none;">Re-order</li>
+          </ul>
+
+
+          <div id="barChartLegend"class="col-lg-12">
             <svg></svg>
           </div>
         </div>
@@ -187,6 +208,29 @@ var div = d3.select("body").append("div")
 // ----------------------------------------------------
 // Buttons
 // ----------------------------------------------------
+//Attribute dropdown button
+d3.select("select")
+  .on("change",function(d){
+    attrFlag = d3.select("#d3-dropdown").node().value;
+    // console.log("attrFlag: ",attrFlag);
+
+    rect_colourArray = choose_colourArray[attrFlag];
+
+    d3.select("#barChartLegend").selectAll("rect")
+    .attr("fill", function (d, i) {
+      return rect_colourArray[i];
+    });
+
+    emissionsBarChart("groupEurope", "#barChart_EU");
+    emissionsBarChart("groupUSA", "#barChart_USA");
+    emissionsBarChart("groupCan", "#barChart_Can");
+    emissionsBarChart("groupOceania", "#barChart_Oceania");
+    emissionsBarChart("groupAfrica", "#barChart_Africa");
+    emissionsBarChart("groupAsia", "#barChart_Asia");
+    emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
+    
+})
+
 //barChart buttons
 //select emissions to display: scaled by capita or by GDP-PPP
 d3.select("#gdpButton")
@@ -261,13 +305,22 @@ d3.select("#reorderButton")
 // Main Code
 // ----------------------------------------------------
 
+//Find data range extent for each dim (to be used to discretize into colour values)
+d3.tsv("data/cityApp_attributes.tsv", function(ghg) {  
+  dimExtentDict = {
+    "methodology": d3.extent(ghg, function (d) {return d['MethodNum'];}),
+    "population density": d3.extent(ghg, function (d) {return +d["pop to use"]/d["area [km2] (external)"];})
+  }
+}) //end read tsv
+//console.log("dimExtentDict: ", dimExtentDict["methodology"])
+
 //barChart legends
 fn_appendColourBar();
 fn_appendRegionalLine();
 
 // d3.csv("data/Creutzig2014_dataset_wb.csv", function(ghg) {
 d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
-  console.log("ghg read: ", ghg)
+  //console.log("ghg read: ", ghg)
 
   setupData(ghg);
   drawMap();
@@ -520,6 +573,7 @@ function highlightElements(idName) {
 // }
 
 function emissionsBarChart(geogroup_name, geogroup_id) {
+  dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]]
 
   // Remove any previous bar chart
   d3.select(geogroup_id).select("svg").remove();
@@ -537,7 +591,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   }
 
   //https://bl.ocks.org/seemantk/ec245e1f4e824e685982dd5d3fbb2fcc
-  var margin = {top: 0, right: 0, bottom: 0, left: 30};
+  var margin = {top: 0, right: 0, bottom: 0, left: 40};
   if (geogroup_name === "groupOceania" || geogroup_name === "groupAfrica"
     || geogroup_name === "groupLatinAmer") {
     margin = {top: 0, right: 0, bottom: 0, left: 100};
@@ -654,7 +708,11 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("y", function (d, i) { return y(d[this_dim]); })
       .attr("height", function(d) { return height - y(d[this_dim]); })
       .attr("fill", function (d) {
-        return colour_methodNum[d['methodology']];
+        //output the discretized colour according to selected attribute
+
+        //integers from 1-5, no mapping needed
+        if (attrFlag === "methodology") return colour_methodNum[d['methodology']];
+        else return fn_discretize(attrFlag, dimExtent, d);
       })    
       .on("touchmove mousemove", function (d) {
         fn_enlargeName(geogroup_name, d.city);
@@ -703,7 +761,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         curr_region = data_GHG.filter(x => x.city === d).map(x => x.region)[0].toString();        
 
         if (curr_region === "groupUSA") {xscale=1; yscale=1;}
-        if (curr_region === "groupEurope") {xscale=1.3; yscale=1;}
+        if (curr_region === "groupEurope") {xscale=2.3; yscale=1.4;}
         else if (curr_region === "groupCan") {xscale=5; yscale=2; }
         else if (curr_region === "groupAfrica") {xscale=6; yscale=1.5; }
         else if (curr_region === "groupOceania") {xscale=6; yscale=1.5; }
