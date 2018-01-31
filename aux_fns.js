@@ -184,9 +184,9 @@ function fn_enlargeName(geogroup_name, cityName) {
   newSize="16px";
   //Need different sizes on account of the vieweBox scale stretching
   if (geogroup_name === "groupEurope" || geogroup_name === "groupLatinAmer" ||
-      geogroup_name === "groupUSA"|| geogroup_name === "groupOceania" ) newSize = "16px";
-  else if (geogroup_name === "groupAfrica") newSize = "12px";
-  else if (geogroup_name === "groupAsia") newSize = "14px";
+      geogroup_name === "groupUSA"|| geogroup_name === "groupOceania" ) newSize = "22px";
+  else if (geogroup_name === "groupAfrica") newSize = "18px";
+  else if (geogroup_name === "groupAsia") newSize = "18px";
   
   d3.select("#tick" + idName).text(cityName).style("font-size", newSize)
     .attr("fill", colour_labelsHighlight);
