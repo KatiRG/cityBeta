@@ -176,23 +176,35 @@ function resetElements() {
 //----------------------------------------------
 // Functions for emissionsBarChart()
 //----------------------------------------------
+//Enlarge x-axis labels and reset
+function fn_enlargeName(geogroup_name, cityName) {
+  idName = format_idName(cityName);
+
+  //Enlarge city label of selected bar
+  newSize="16px";
+  //Need different sizes on account of the vieweBox scale stretching
+  if (geogroup_name === "groupEurope" || geogroup_name === "groupLatinAmer" ||
+      geogroup_name === "groupUSA"|| geogroup_name === "groupOceania" ) newSize = "22px";
+  else if (geogroup_name === "groupAfrica") newSize = "18px";
+  else if (geogroup_name === "groupAsia") newSize = "18px";
+  
+  d3.select("#tick" + idName).text(cityName).style("font-size", newSize)
+    .attr("fill", colour_labelsHighlight);
+}
 //Create colour bar boxes
 function fn_appendColourBar() {
+  var margin = {top: 7, right: 0, bottom: 0, left: 0};
+  var svg_width = 450 - margin.left - margin.right,
+      svg_height = 35 - margin.top - margin.bottom;
+
+  // var svg_width = 450, svg_height = 35;
 
   //Make colourbar rects
-  var width_cb = 100, height_cb = 24;
+  var rect_dim = 15;
 
-  //Define the colourbar svg
-  var aspectRatio = '160:50';
-  var viewBox = '0 0 ' + aspectRatio.split(':').join(' ');
-
-  var svgCB = d3.select("#barChartLegend").select("svg")
-    // .attr("width", width_cb)
-    // .attr("height", height_cb);
-    .attr('width', '100%')
-    .attr('height', height_cb)
-    .attr('viewBox', viewBox)
-    .attr('viewBox', '0 0 660 94' )
+    var svgCB = d3.select("#barChartLegend").select("svg")
+    .attr("width", svg_width)
+    .attr("height", svg_height)
     .style("vertical-align", "middle");
 
   // Tooltip for rects  
@@ -212,11 +224,11 @@ function fn_appendColourBar() {
               .append('g');
 
   var rectAttributes = rects.append("rect")
-                  .attr("width", 80)
-                  .attr("height", 80)
+                  .attr("width", rect_dim)
+                  .attr("height", rect_dim)
                   .attr("y", 5)
                   .attr("x", function (d, i) {
-                    return -620 + i * 295;
+                    return 28 + i * 70;
                   })
                   .attr("fill", function (d, i) {
                     return colour_methodNum[i + 1];
@@ -230,19 +242,14 @@ function fn_appendColourBar() {
         })
         .attr("y", 10)
         .attr("x", function (d, i) {
-          //customize x-posn depending on label
-          if (i === 2) return -51;
-          else if (i === 3) return 65;
-          else if (i === 4) return 184;
-          else return -283 + i * 90;
+          var xpos = [0,53,140,209,274];
+          return xpos[i];
         })
-        .attr("dy", "12px")
-        .style("stroke","#9a9a9a")
-        .attr("transform", function (d) {
-          var xscale = 2.5;
-          var yscale = 2.5;
-          return "scale(" + xscale + " " + yscale + ")";
-        });
+        .attr("dy", "6px")
+        .style("fill","#565656")
+        .style("stroke", "none")
+       .style("font-size", "11px");
+       
         
 }
 
@@ -257,22 +264,20 @@ function fn_appendRegionalLine() {
       .attr("class", "line")
       .style("stroke", "black")
       .style("opacity", 0.7)
-      .style("stroke-width", "6px")
-      .attr("x1", 1020)
-      .attr("y1", 40)
-      .attr("x2", 1283)
-      .attr("y2", 40);
+      .style("stroke-width", "1.5px")
+      .attr("x1", 417)
+      .attr("y1", 12)
+      .attr("x2", 440)
+      .attr("y2", 12);
 
   regionalLine.append("text")
     .attr("class", "textLabels")
-    .attr("dx", 223)
+    .attr("dx", 340)
     .attr("dy", 15)
     .text("regional mean")
-    .attr("transform", function (d) {
-      var xscale = 3.2;
-      var yscale = 3.2;
-      return "scale(" + xscale + " " + yscale + ")";
-    });
+    .style("font-size", "11px")
+    .style("fill","#565656")
+    .style("stroke", "none");
 
 
 }

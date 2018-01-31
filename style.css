@@ -2,6 +2,7 @@
 
 body {
   padding-top: 10px;
+  font-family: "Ubuntu";
 }
 
 [class*="col-"], footer {
@@ -154,11 +155,11 @@ div.rtooltip {
 /* bar chart */
 #emissionsToggleButton {
   position: absolute;
-  left: 475px; 
+  left: 390px; 
   top: 0px;
 }
 #barChartCaption, #cityCardTitle {
-  font-size: 18px;
+  font-size: 15px;
   color: #565656;
   text-align: left;
 }
