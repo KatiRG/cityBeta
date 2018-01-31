@@ -39,6 +39,7 @@ var colour_methodNum = {
 
 var dimExtentDict = {}; //for discretizing attribute value according to range extent
 var num_levels = 5; //number of discrete levels
+var cb_values = [];
 
 var choose_colourArray = {
   "methodology": ["#FFA446","#FFEAB3","#E35B5D","#EB9F9F","#F18052"],

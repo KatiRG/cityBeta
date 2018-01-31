@@ -212,21 +212,14 @@ var div = d3.select("body").append("div")
 d3.select("select")
   .on("change",function(d){
     attrFlag = d3.select("#d3-dropdown").node().value;
-    console.log("attrFlag: ",attrFlag);
+    // console.log("attrFlag: ",attrFlag);
 
     rect_colourArray = choose_colourArray[attrFlag];
-    rect_textArray = choose_textArray[attrFlag];
 
     d3.select("#barChartLegend").selectAll("rect")
     .attr("fill", function (d, i) {
       return rect_colourArray[i];
     });
-
-    test_array = [10,20,30,40,50]
-    d3.select("#barChartLegend").selectAll("text")
-      .text(function (d,  i) {
-        return rect_textArray[i];
-      });
 
     emissionsBarChart("groupEurope", "#barChart_EU");
     emissionsBarChart("groupUSA", "#barChart_USA");
@@ -581,7 +574,6 @@ function highlightElements(idName) {
 
 function emissionsBarChart(geogroup_name, geogroup_id) {
   dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]]
-  console.log("dimExtent here: ", dimExtent)
 
   // Remove any previous bar chart
   d3.select(geogroup_id).select("svg").remove();
@@ -717,12 +709,10 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("height", function(d) { return height - y(d[this_dim]); })
       .attr("fill", function (d) {
         //output the discretized colour according to selected attribute
-        //return colour_methodNum[d['methodology']];        
 
-        //for now fix to methodology
-        // return fn_discretize("methodology", dimExtent, d);
-
-        return fn_discretize(attrFlag, dimExtent, d);
+        //integers from 1-5, no mapping needed
+        if (attrFlag === "methodology") return colour_methodNum[d['methodology']];
+        else return fn_discretize(attrFlag, dimExtent, d);
       })    
       .on("touchmove mousemove", function (d) {
         fn_enlargeName(geogroup_name, d.city);

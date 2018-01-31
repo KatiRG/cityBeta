@@ -190,10 +190,7 @@ function fn_enlargeName(geogroup_name, cityName) {
 }
 //Discretize selected attribute value
 function fn_discretize (attrFlag, dimExtent, d) {
-  // console.log("fn_discretize attrFlag: ", attrFlag)
-  // console.log("fn_discretize d attrFlag: ", d[attrFlag])
   //do the discretization into 5 levels
-  //TODO
 
   //difference between max and min values of selected attribute
   delta = ( dimExtent[1] - dimExtent[0] )/num_levels;  
@@ -202,23 +199,25 @@ function fn_discretize (attrFlag, dimExtent, d) {
   for (idx=0; idx < num_levels; idx++) {
     cb_values.push(dimExtent[0] + idx*delta);
   }
-  console.log("cb_values: ", cb_values)
+  //console.log("cb_values: ", cb_values)
 
+  //colour map to take data value and map it to the colour of the level bin it belongs to
   colourmapDim = d3.scaleQuantize()  //d3.scale.linear() [old d3js notation]
             .domain([dimExtent[0], dimExtent[1]])
             .range(choose_colourArray[attrFlag]);
 
-  if (attrFlag === "methodology") {
-    console.log("integer!!!")
-    if (d[attrFlag] === 1) return choose_colourArray[attrFlag][0];
-    else if (d[attrFlag] === 2) return choose_colourArray[attrFlag][1];
-    else if (d[attrFlag] === 3) return choose_colourArray[attrFlag][2];
-    else if (d[attrFlag] === 4) return choose_colourArray[attrFlag][3];
-    else if (d[attrFlag] === 5) return choose_colourArray[attrFlag][4];
-  } else {
-    console.log("colourmapDim: ", colourmapDim(d[attrFlag]))
-    return colourmapDim(d[attrFlag]);
-  }
+  //label the legend colourbar boxes
+  d3.select("#barChartLegend").selectAll("text")
+    .text(function (d,  i) {
+      if (i < 5) { //hack for now
+        //console.log("cb_values here: ", Math.round(cb_values[i]))
+        return Math.round(cb_values[i]);
+      }
+    });          
+
+  
+  return colourmapDim(d[attrFlag]);
+  
 }
 //Create colour bar boxes
 function fn_appendColourBar() {
@@ -279,7 +278,7 @@ function fn_appendColourBar() {
         })
         .attr("y", 10)
         .attr("x", function (d, i) {
-          var xpos = [0,53,140,209,274];
+          var xpos = [0,53,140,205,274];
           return xpos[i];
         })
         .attr("dy", "6px")
