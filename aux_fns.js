@@ -143,9 +143,6 @@ function setupData(ghg){
 
 } // ./setupData()
 
-
-
-
 // Reset elements to original style before selection
 function resetElements() {
   //reset bar opacity

@@ -217,13 +217,14 @@ div.rtooltip {
   top: 0px;
 }
 #barChartCaption, #cityCardTitle {
-  font-size: 15px;
+  font-size: 14.3px;
+  font-weight: bold;
+  padding-left: 15px;
   color: #565656;
   text-align: left;
 }
 #barChartLegendLabel {
   color: #565656;
-  padding-left: 40px;
   text-align: left;
 }
 #barChartLegend {
