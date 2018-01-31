@@ -176,6 +176,21 @@ function resetElements() {
 //----------------------------------------------
 // Functions for emissionsBarChart()
 //----------------------------------------------
+//Enlarge x-axis labels and reset
+function fn_enlargeName(geogroup_name, cityName) {
+  idName = format_idName(cityName);
+
+  //Enlarge city label of selected bar
+  newSize="16px";
+  //Need different sizes on account of the vieweBox scale stretching
+  if (geogroup_name === "groupEurope" || geogroup_name === "groupLatinAmer" ||
+      geogroup_name === "groupUSA"|| geogroup_name === "groupOceania" ) newSize = "16px";
+  else if (geogroup_name === "groupAfrica") newSize = "12px";
+  else if (geogroup_name === "groupAsia") newSize = "14px";
+  
+  d3.select("#tick" + idName).text(cityName).style("font-size", newSize)
+    .attr("fill", colour_labelsHighlight);
+}
 //Create colour bar boxes
 function fn_appendColourBar() {
 

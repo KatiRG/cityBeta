@@ -657,69 +657,28 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         return colour_methodNum[d['methodology']];
       })    
       .on("touchmove mousemove", function (d) {
+        fn_enlargeName(geogroup_name, d.city);
 
         idName = format_idName(d.city);
       
         highlightElements(idName);
-        
-        //Enlarge city label of selected bar
-        newSize="16px";
-        //Need different sizes on account of the vieweBox scale stretching
-        if (geogroup_name === "groupEurope" || geogroup_name === "groupLatinAmer" ||
-            geogroup_name === "groupUSA"|| geogroup_name === "groupOceania" ) newSize = "16px";
-        else if (geogroup_name === "groupAfrica") newSize = "12px";
-        else if (geogroup_name === "groupAsia") newSize = "11px";
-        d3.select("#tick" + idName).text(d.city).style("font-size", newSize)
-          .attr("fill", colour_labelsHighlight);
-
-  //       // Dim opacity of all city labels except current city
-  //       d3.select(geogroup_id).select(".x.axis")
-  //         .selectAll("text:not(#tick" + idName + ")")
-  //         .style("opacity", 0.2);
-
-        //tooltip x and y posn shifts
-        // if (geogroup_name === "groupEurope") {tipx = 550; tipy = 600;}
-        // else if (geogroup_name === "groupAsia") {tipx = 850; tipy = 600;}
-        // else if (geogroup_name === "groupUSA") {tipx = 675; tipy = 918;}
-        // else if (geogroup_name === "groupCan") {tipx = 878; tipy = 918;}
-        // else if (geogroup_name === "groupOceania") {tipx = 393; tipy = 1219;}
-        // else if (geogroup_name === "groupAfrica") {tipx = 538; tipy = 1219;}
-        // else if (geogroup_name === "groupLatinAmer") {tipx = 861; tipy = 1219;}
-
 
         var tipx = 20;
-        var tipy = -120; //-1490; //africa/asia
-        // if (geogroup_name === "groupEurope") tipy = -120;
-        // else if (geogroup_name === "groupEurope") tipy = -120;
-        // else if (geogroup_name === "groupLatinAmer") tipy = 0;
-        // else if (geogroup_name === "groupUSA") tipy = -120;
-        // else if (geogroup_name === "groupOceania") tipy = 0;
+        var tipy = -120;
         div.style("opacity", 1);
         div.html(formatDecimalSci(d[this_dim]) + " " + dimUnits[this_dim])
-          // .style("left", tipx + "px")
-          // .style("top", tipy + "px");
           .style("left", d3.event.pageX + tipx + "px")
           .style("top", d3.event.pageY + tipy + "px");
 
       })
       .on("mouseout", function (d) {
         resetElements();
-
-  //       idName = format_idName(d.city);
-  //       d3.select("#tick" + idName).style("font-size", "10px");
         
         d3.select("#tick" + idName).text(function (d) { return fn_abbr(d); })
           .style("font-size", "10px")
           .attr("fill", colour_labels);
 
-  //       d3.select(geogroup_id).select(".x.axis")
-  //         .selectAll("text")
-  //         .style("opacity", 1);
-
-  //       resetElements();
-
         div.style("opacity", 0);
-
       });
 
   //x-axis
@@ -759,6 +718,13 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .style("fill", function (d) {
         console.log("colour_labels: ", colour_labels)
         return "#000000";//colour_labels;
+      })
+      .on("touchmove mousemove", function (d) {
+        fn_enlargeName(geogroup_name, d);
+      })
+      .on("mouseout", function (d) {
+        d3.select("#tick" + idName).text(function (d) { return fn_abbr(d); })
+          .style("font-size", "10px");
       });
       //
 
