@@ -2,6 +2,7 @@
 
 body {
   padding-top: 10px;
+  font-family: "Ubuntu";
 }
 
 [class*="col-"], footer {
