@@ -221,7 +221,6 @@ function fn_discretize (attrFlag, dimExtent, d) {
 }
 //Create colour bar boxes
 function fn_appendColourBar() {
-  console.log("attrFlag  in here: ", attrFlag)
   
   //setup params
   var margin = {top: 7, right: 0, bottom: 0, left: 0};
@@ -232,7 +231,6 @@ function fn_appendColourBar() {
 
   //colour array
   rect_colourArray = choose_colourArray[attrFlag];
-  console.log("carray: ", rect_colourArray)
 
   //make svg
   var svgCB = d3.select("#barChartLegend").select("svg")
@@ -256,7 +254,6 @@ function fn_appendColourBar() {
               .enter()
               .append('g');
 
-  console.log("rect append!!")
   var rectAttributes = rects.append("rect")
                   .attr("width", rect_dim)
                   .attr("height", rect_dim)
@@ -265,8 +262,7 @@ function fn_appendColourBar() {
                     return 28 + i * 70;
                   })
                   .attr("fill", function (d, i) {
-                    //return colour_methodNum[i + 1];
-                    console.log("rect_colourArray[i]: ", rect_colourArray[i])
+                    //return colour_methodNum[i + 1];                    
                     return rect_colourArray[i];
                   })
                   .on('mouseover', tool_tip.show)
