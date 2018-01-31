@@ -188,6 +188,38 @@ function fn_enlargeName(geogroup_name, cityName) {
   d3.select("#tick" + idName).text(cityName).style("font-size", newSize)
     .attr("fill", colour_labelsHighlight);
 }
+//Discretize selected attribute value
+function fn_discretize (attrFlag, dimExtent, d) {
+  // console.log("fn_discretize attrFlag: ", attrFlag)
+  // console.log("fn_discretize d attrFlag: ", d[attrFlag])
+  //do the discretization into 5 levels
+  //TODO
+
+  //difference between max and min values of selected attribute
+  delta = ( dimExtent[1] - dimExtent[0] )/num_levels;  
+  
+  cb_values=[]; //clear
+  for (idx=0; idx < num_levels; idx++) {
+    cb_values.push(dimExtent[0] + idx*delta);
+  }
+  console.log("cb_values: ", cb_values)
+
+  colourmapDim = d3.scaleQuantize()  //d3.scale.linear() [old d3js notation]
+            .domain([dimExtent[0], dimExtent[1]])
+            .range(choose_colourArray[attrFlag]);
+
+  if (attrFlag === "methodology") {
+    console.log("integer!!!")
+    if (d[attrFlag] === 1) return choose_colourArray[attrFlag][0];
+    else if (d[attrFlag] === 2) return choose_colourArray[attrFlag][1];
+    else if (d[attrFlag] === 3) return choose_colourArray[attrFlag][2];
+    else if (d[attrFlag] === 4) return choose_colourArray[attrFlag][3];
+    else if (d[attrFlag] === 5) return choose_colourArray[attrFlag][4];
+  } else {
+    console.log("colourmapDim: ", colourmapDim(d[attrFlag]))
+    return colourmapDim(d[attrFlag]);
+  }
+}
 //Create colour bar boxes
 function fn_appendColourBar() {
   console.log("attrFlag  in here: ", attrFlag)

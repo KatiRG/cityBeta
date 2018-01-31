@@ -8,7 +8,7 @@ label_dataPerGDP = "per GDP";
 
 //------------------------------------------------
 //Variables to pass
-var attrFlag = "Protocol"; //attribute to be used to fill barChart bars. Default "Protocol"
+var attrFlag = "methodology"; //attribute to be used to fill barChart bars. Default "Protocol"
 
 //------------------------------------------------
 //COLOURS
@@ -37,14 +37,16 @@ var colour_methodNum = {
   5: "#F18052" //OTHER
 }
 
+var dimExtentDict = {}; //for discretizing attribute value according to range extent
+var num_levels = 5; //number of discrete levels
 
 var choose_colourArray = {
-  "Protocol": ["#FFA446","#FFEAB3","#E35B5D","#EB9F9F","#F18052"],
+  "methodology": ["#FFA446","#FFEAB3","#E35B5D","#EB9F9F","#F18052"],
   "population density": ["#DED8B6","#F9C869","#5D5061","#2F274C","#6A3058"]
 }
 
 var choose_textArray = {
-  "Protocol": ["GPC","US ICLEI","IPCC","ICLEI","Other"],
+  "methodology": ["GPC","US ICLEI","IPCC","ICLEI","Other"],
   "population density": [10,22,33,44,55]
 }
 

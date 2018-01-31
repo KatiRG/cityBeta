@@ -76,9 +76,9 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
       <div class="col-lg-6">
           <div id="barChartLegendLabel">Colour bars by: 
             <select id="d3-dropdown">
-              <option value="Protocol">Protocol</option>
+              <option value="methodology">Protocol</option>
               <option value="population density">population density</option>
-              <option value="gas price">gas price</option>
+              <!--<option value="gas price">gas price</option>
               <option value="diesel price">diesel price</option>
               <option value="HDD 15.5C">HDD 15.5C</option>
               <option value="CDD 23C">CDD 23C</option>
@@ -87,7 +87,7 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
               <option value="high BUA %">high BUA % (2014)</option>
               <option value="Congestion rank (INRIX)">Congestion rank (INRIX)</option>
               <option value="Congestion rank (TomTom)">Congestion rank (TomTom)</option>
-              <option value="CIMI ranking (IESE)">CIMI ranking (IESE)</option>
+              <option value="CIMI ranking (IESE)">CIMI ranking (IESE)</option> -->
             </select>          
           </div>
 
@@ -216,7 +216,6 @@ d3.select("select")
 
     rect_colourArray = choose_colourArray[attrFlag];
     rect_textArray = choose_textArray[attrFlag];
-    console.log("change carray: ", rect_colourArray)
 
     d3.select("#barChartLegend").selectAll("rect")
     .attr("fill", function (d, i) {
@@ -229,6 +228,13 @@ d3.select("select")
         return rect_textArray[i];
       });
 
+    emissionsBarChart("groupEurope", "#barChart_EU");
+    emissionsBarChart("groupUSA", "#barChart_USA");
+    emissionsBarChart("groupCan", "#barChart_Can");
+    emissionsBarChart("groupOceania", "#barChart_Oceania");
+    emissionsBarChart("groupAfrica", "#barChart_Africa");
+    emissionsBarChart("groupAsia", "#barChart_Asia");
+    emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
     
 })
 
@@ -305,6 +311,15 @@ d3.select("#reorderButton")
 // ----------------------------------------------------
 // Main Code
 // ----------------------------------------------------
+
+//Find data range extent for each dim (to be used to discretize into colour values)
+d3.tsv("data/cityApp_attributes.tsv", function(ghg) {  
+  dimExtentDict = {
+    "methodology": d3.extent(ghg, function (d) {return d['MethodNum'];}),
+    "population density": d3.extent(ghg, function (d) {return +d["pop to use"]/d["area [km2] (external)"];})
+  }
+}) //end read tsv
+//console.log("dimExtentDict: ", dimExtentDict["methodology"])
 
 //barChart legends
 fn_appendColourBar();
@@ -565,6 +580,8 @@ function highlightElements(idName) {
 // }
 
 function emissionsBarChart(geogroup_name, geogroup_id) {
+  dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]]
+  console.log("dimExtent here: ", dimExtent)
 
   // Remove any previous bar chart
   d3.select(geogroup_id).select("svg").remove();
@@ -699,7 +716,13 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("y", function (d, i) { return y(d[this_dim]); })
       .attr("height", function(d) { return height - y(d[this_dim]); })
       .attr("fill", function (d) {
-        return colour_methodNum[d['methodology']];
+        //output the discretized colour according to selected attribute
+        //return colour_methodNum[d['methodology']];        
+
+        //for now fix to methodology
+        // return fn_discretize("methodology", dimExtent, d);
+
+        return fn_discretize(attrFlag, dimExtent, d);
       })    
       .on("touchmove mousemove", function (d) {
         fn_enlargeName(geogroup_name, d.city);
