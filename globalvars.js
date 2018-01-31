@@ -7,6 +7,10 @@ label_dataPerCap = "per capita";
 label_dataPerGDP = "per GDP";
 
 //------------------------------------------------
+//Variables to pass
+var attrFlag = "Protocol"; //attribute to be used to fill barChart bars. Default "Protocol"
+
+//------------------------------------------------
 //COLOURS
 //barChart labels + highlight colour
 var colour_labels = "#636363";
@@ -31,6 +35,17 @@ var colour_methodNum = {
   3: "#E35B5D", //IPCC
   4: "#EB9F9F", //ICLEI
   5: "#F18052" //OTHER
+}
+
+
+var choose_colourArray = {
+  "Protocol": ["#FFA446","#FFEAB3","#E35B5D","#EB9F9F","#F18052"],
+  "population density": ["#DED8B6","#F9C869","#5D5061","#2F274C","#6A3058"]
+}
+
+var choose_textArray = {
+  "Protocol": ["GPC","US ICLEI","IPCC","ICLEI","Other"],
+  "population density": [10,22,33,44,55]
 }
 
 //------------------------------------------------

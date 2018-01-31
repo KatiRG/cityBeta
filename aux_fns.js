@@ -190,21 +190,26 @@ function fn_enlargeName(geogroup_name, cityName) {
 }
 //Create colour bar boxes
 function fn_appendColourBar() {
+  console.log("attrFlag  in here: ", attrFlag)
+  
+  //setup params
   var margin = {top: 7, right: 0, bottom: 0, left: 0};
   var svg_width = 450 - margin.left - margin.right,
       svg_height = 35 - margin.top - margin.bottom;
 
-  // var svg_width = 450, svg_height = 35;
-
-  //Make colourbar rects
   var rect_dim = 15;
 
-    var svgCB = d3.select("#barChartLegend").select("svg")
+  //colour array
+  rect_colourArray = choose_colourArray[attrFlag];
+  console.log("carray: ", rect_colourArray)
+
+  //make svg
+  var svgCB = d3.select("#barChartLegend").select("svg")
     .attr("width", svg_width)
     .attr("height", svg_height)
     .style("vertical-align", "middle");
 
-  // Tooltip for rects  
+  //tooltip for rects  
   var tool_tip = d3.tip()
     .attr("class", "d3-tip")
     .offset([-10, 0])
@@ -214,12 +219,13 @@ function fn_appendColourBar() {
     });
   svgCB.call(tool_tip);
 
- 
+ //make colourbar rects
   var rects = svgCB.selectAll('rect')
-              .data(Object.values(colour_methodNum))
+              .data(rect_colourArray)
               .enter()
               .append('g');
 
+  console.log("rect append!!")
   var rectAttributes = rects.append("rect")
                   .attr("width", rect_dim)
                   .attr("height", rect_dim)
@@ -228,7 +234,9 @@ function fn_appendColourBar() {
                     return 28 + i * 70;
                   })
                   .attr("fill", function (d, i) {
-                    return colour_methodNum[i + 1];
+                    //return colour_methodNum[i + 1];
+                    console.log("rect_colourArray[i]: ", rect_colourArray[i])
+                    return rect_colourArray[i];
                   })
                   .on('mouseover', tool_tip.show)
                   .on('mouseout', tool_tip.hide);

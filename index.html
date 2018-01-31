@@ -211,9 +211,25 @@ var div = d3.select("body").append("div")
 //Attribute dropdown button
 d3.select("select")
   .on("change",function(d){
-    var selected = d3.select("#d3-dropdown").node().value;
-    console.log( selected );
-    d3.select("#selected-dropdown").text(selected);
+    attrFlag = d3.select("#d3-dropdown").node().value;
+    console.log("attrFlag: ",attrFlag);
+
+    rect_colourArray = choose_colourArray[attrFlag];
+    rect_textArray = choose_textArray[attrFlag];
+    console.log("change carray: ", rect_colourArray)
+
+    d3.select("#barChartLegend").selectAll("rect")
+    .attr("fill", function (d, i) {
+      return rect_colourArray[i];
+    });
+
+    test_array = [10,20,30,40,50]
+    d3.select("#barChartLegend").selectAll("text")
+      .text(function (d,  i) {
+        return rect_textArray[i];
+      });
+
+    
 })
 
 //barChart buttons
