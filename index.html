@@ -23,6 +23,8 @@
   <script src="lib/bootstrap.min.js"></script>
   <link href="lib/bootstrap.min.css" rel="stylesheet">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
   <!-- custom -->
   <link href="style.css" rel="stylesheet">
   <script src="aux_fns.js"></script>
@@ -90,7 +92,16 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
       <div class="col-lg-6">
         <!--barChart legend-->
         <div class="row">
-          <div id="barChartLegendLabel" class="col-lg-2">Protocol</div>
+          <div id="barChartLegendLabel" class="col-lg-2 dropdown">
+            <button class="dropbtn">
+              <i class="fa fa-caret-down"> Protocol</i>
+            </button>
+             <div class="dropdown-content">
+              <a href="#">Link 1</a>
+              <a href="#">Link 2</a>
+              <a href="#">Link 3</a>
+            </div>
+          </div>
           <div id="barChartLegend"class="col-lg-10">
             <svg></svg>
           </div>
