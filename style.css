@@ -245,16 +245,16 @@ div.rtooltip {
   stroke: gray;
 }
 .axis {
-  font: 18px sans-serif;
+  font: 14px sans-serif;
 }
 .axis path,
 .axis line {
   fill: none;
-  stroke: colour_labels;
+  stroke: #555;
   shape-rendering: geometricPrecision; /*crispEdges;*/
 }
 .axis text {
-  fill: colour_labels;
+  fill: #555;
 }
 .x.axis path {
   display: none;

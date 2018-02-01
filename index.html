@@ -63,17 +63,12 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
 
       </div>
 
-      <!--<div class="col-lg-4" id="displayGHGstats">
-        <div id="ghgDelta"></div><br>
-        <div id="ghgDeltaReason"></div>
-        <div id="ghgStory"></div>
-      </div> -->
-
     </div> <!-- ./map and city card row -->
 
     <!-- row 3 -->
     <div class="row">
-      <div class="col-lg-6">
+
+      <div class="col-lg-3">
           <div id="barChartLegendLabel">Colour bars by: 
             <select id="d3-dropdown">
               <option value="methodology">Protocol</option>
@@ -90,17 +85,20 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
               <option value="CIMI ranking (IESE)">CIMI ranking (IESE)</option> -->
             </select>          
           </div>
-
-        
       </div>
 
-      <div class="col-lg-6" id="cityCardTitle" style="text-align: left;">Recent emission changes from city reports </div>
+      <div class="col-lg-9">
+        <div id="barChartLegend">
+           <svg></svg>
+        </div>
+      </div>
+
     </div> <!-- ./row 3 -->
 
     <!-- row 4 -->
     <div class="row">
 
-      <div class="col-lg-6">
+      <div class="col-lg-12">
         <!--barChart legend-->
         <div class="row">
           <div id="barChartCaption"></div>
@@ -111,18 +109,15 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
               <li id="reorderButton" style="display: none;">Re-order</li>
           </ul>
 
-
-          <div id="barChartLegend"class="col-lg-12">
-            <svg></svg>
           </div>
-        </div>
+        
 
         <!--barChart sub-rows-->
         <div class="row">
-          <div class="col-lg-12">
+          
             <div class="barChartTitle">USA &#183; Asia</div>
             <div id="barChart_USAAsia"></div>
-          </div>
+         
         </div>
 
         <div class="row">
@@ -153,16 +148,9 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
         </div> 
         <div class="row">city</div>
 
-      </div> <!-- ./col-lg-7 -->
+      </div> <!-- ./col-lg-12 -->
 
-      <div class="col-lg-6">
-        <div id="cityCardName" style="text-align: left;"></div>
-
-        <div id="cityCardChange" style="text-align: left;"></div>
-
-        <div id="cityCardChangeReason" style="text-align: left;"></div>
-
-      </div> <!-- ./col-lg-4 -->
+     
 
       
     </div> <!-- ./row 4-->
@@ -313,7 +301,7 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
 
 //barChart legends
 fn_appendColourBar();
-fn_appendRegionalLine();
+//fn_appendRegionalLine();
 
 // d3.csv("data/Creutzig2014_dataset_wb.csv", function(ghg) {
 d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
@@ -322,12 +310,10 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
   setupData(ghg);
   drawMap();
   emissionsBarChart("groupUSAAsia", "#barChart_USAAsia");
-  // emissionsBarChart("groupUSA", "#barChart_USA");
   emissionsBarChart("groupEurope", "#barChart_EU");
   emissionsBarChart("groupCan", "#barChart_Can");
   emissionsBarChart("groupOceania", "#barChart_Oceania");
   emissionsBarChart("groupAfrica", "#barChart_Africa");
-  // emissionsBarChart("groupAsia", "#barChart_Asia");
   emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
 });
 
@@ -516,26 +502,7 @@ function highlightElements(idName) {
   d3.select("#ghgStory").text("");
 
   var selectedCity = data_GHG.find(x => x.idName.includes(idName));
-  // console.log("idName: ", idName)
-  // console.log("tmp: ", selectedCity)
-
-  d3.select("#cityCardName")
-    .text(selectedCity.city)
-    .style("font-size", "20px")
-    .style("text-align", "left");
-
-  d3.select("#cityCardChange")
-    .text("Change in emissions from previous year: " + selectedCity['change in emissions'])
-    .style("font-size", "16px")
-    .style("text-align", "left");
-
-  d3.select("#cityCardChangeReason")
-    .text("Reason: " + selectedCity['reason for change'])
-    .style("text-align", "left");
-      
-  // if (countryName === "United Kingdom") countryName = "England";
-  // countryName = countryName.replace(/\s/g, '_');
-
+  
   //Clear Previous
   //--------------
   resetElements();
@@ -594,7 +561,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
     || geogroup_name === "groupLatinAmer") {
     margin = {top: 0, right: 0, bottom: 0, left: 100};
   } else if (geogroup_name === "groupUSAAsia") {
-    margin = {top: 0, right: 0, bottom: 0, left: 2};
+    margin = {top: 0, right: 0, bottom: 0, left: 20};
   }
   var width = 700 - margin.left - margin.right,
       height = 250 - margin.top - margin.bottom;
@@ -689,9 +656,9 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
     // console.log("d[this_dim]: ", d[this_dim])
 
     if (this_dim === label_dataPerCap) {
-      if (geogroup_name === "groupEurope" || geogroup_name === "groupUSAAsia" ||
-        geogroup_name === "groupUSA" || geogroup_name === "groupCan") same_max = 20;
-      else  same_max = 6;      
+      if (geogroup_name === "groupUSAAsia" ||
+        geogroup_name === "groupUSA") same_max = 20;
+      else  same_max = 11;      
     } else {
       same_max = d[this_dim];
     //   if (geogroup_name === "groupAfrica") same_max = 750000;
