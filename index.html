@@ -617,7 +617,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   }
   else {
     emissions_scaled = sortByRegion(geogroup_name, this_dim);
-    // Sort columns
+    //Sort columns
     emissions_scaled.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
   }
 
@@ -773,10 +773,17 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("y", -3)
       .attr("x", 7)
       .attr("dy", "12px")
-      // .attr("transform", function (d) {
+      .attr("transform", function (d) {
+        if (d != "gap") {
+          xscale=1.4; yscale=1.4; rot=-90;
+          xtrans=0; ytrans=-6;
 
-      //   xscale=1; yscale=1.4; rot=-90;
-      //   xtrans=0; ytrans=-6;
+          return "scale(" + xscale + " " + yscale + ")" + "rotate(" + rot + ")" +
+                  "translate(" + xtrans + " " + ytrans + ")" ;
+        }
+
+        xscale=1.4; yscale=1.4; rot=-90;
+        xtrans=0; ytrans=-6;
 
       //   //console.log("data_GHG: ", data_GHG)
         
@@ -795,10 +802,10 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       //     else if (curr_region === "groupAsia") {xscale=2.4; yscale=1.4;}
           
        
-      //     return "scale(" + xscale + " " + yscale + ")" + "rotate(" + rot + ")" +
-      //             "translate(" + xtrans + " " + ytrans + ")" ;
+          // return "scale(" + xscale + " " + yscale + ")" + "rotate(" + rot + ")" +
+          //         "translate(" + xtrans + " " + ytrans + ")" ;
       //   }
-      // })
+      })
       .style("text-anchor", "start")  //"middle"
       .style("fill", function (d) {
         return "#000000";//colour_labels;
@@ -810,7 +817,8 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         d3.select("#tick" + idName).text(function (d) { return fn_abbr(d); })
           .style("font-size", "10px");
       });
-      //
+    
+    d3.selectAll("g #tickgap").style("opacity", 0);
 
   // //y-axis
   // svgBarChart.append("g")
