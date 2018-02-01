@@ -709,10 +709,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("height", function(d) { return height - y(d[this_dim]); })
       .attr("fill", function (d) {
         //output the discretized colour according to selected attribute
-
-        //integers from 1-5, no mapping needed
-        if (attrFlag === "methodology") return colour_methodNum[d['methodology']];
-        else return fn_discretize(attrFlag, dimExtent, d);
+        return fn_discretize(attrFlag, dimExtent, d);
       })    
       .on("touchmove mousemove", function (d) {
         fn_enlargeName(geogroup_name, d.city);
