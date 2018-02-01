@@ -690,17 +690,18 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
     // console.log("d[this_dim]: ", d[this_dim])
 
-    // if (this_dim === label_dataPerCap) {
-    //   if (geogroup_name === "groupEurope" || geogroup_name === "groupEurasia" ||
-    //     geogroup_name === "groupUSA" || geogroup_name === "groupCan") same_max = 30;
-    //   else  same_max = 6;
-    // } else {
+    if (this_dim === label_dataPerCap) {
+      if (geogroup_name === "groupEurope" || geogroup_name === "groupEurasia" ||
+        geogroup_name === "groupUSA" || geogroup_name === "groupCan") same_max = 20;
+      else  same_max = 6;      
+    } else {
+      same_max = d[this_dim];
     //   if (geogroup_name === "groupAfrica") same_max = 750000;
     //   else same_max = 370000;
-    // }
+    }
 
-    // return same_max;
-    return d[this_dim];
+    return same_max;
+    // return d[this_dim];
 
   })]);
 
@@ -779,36 +780,22 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("dy", "12px")
       .attr("transform", function (d) {
         if (d != "gap") {
-          xscale=1.4; yscale=1.4; rot=-90;
-          xtrans=0; ytrans=-6;
+          if (geogroup_name === "groupEurasia") {
+            //xscale=1; yscale=1; 
+            rot=-45;
+            xtrans=165; ytrans = -155;
+           } else {
+            rot = -90;
+            xtrans = 0; ytrans = 0;
+           }
 
-          return "scale(" + xscale + " " + yscale + ")" + "rotate(" + rot + ")" +
-                  "translate(" + xtrans + " " + ytrans + ")" ;
-        }
-
-        // xscale=1.4; yscale=1.4; rot=-90;
-        // xtrans=0; ytrans=-6;
-
-      //   //console.log("data_GHG: ", data_GHG)
-        
-       
-      //   if (d != "gap") {
-      //     console.log("d in here: ", d)
-      //     curr_region = data_GHG.filter(x => x.city === d).map(x => x.region)[0].toString(); 
-      //     console.log("curr_region: ", curr_region)       
-
-      //     if (curr_region === "groupUSA") {xscale=1; yscale=1;}
-      //     else if (curr_region === "groupEurope") {xscale=2.3; yscale=1.4;}
-      //     else if (curr_region === "groupCan") {xscale=5; yscale=2; }
-      //     else if (curr_region === "groupAfrica") {xscale=6; yscale=1.5; }
-      //     else if (curr_region === "groupOceania") {xscale=6; yscale=1.5; }
-      //     else if (curr_region === "groupLatinAmer") {xscale=2; yscale=1.4;}
-      //     else if (curr_region === "groupAsia") {xscale=2.4; yscale=1.4;}
-          
-       
+          return "rotate(" + rot + ")" +
+                   "translate(" + xtrans + " " + ytrans + ")" ;
+         
           // return "scale(" + xscale + " " + yscale + ")" + "rotate(" + rot + ")" +
           //         "translate(" + xtrans + " " + ytrans + ")" ;
-      //   }
+        }
+
       })
       .style("text-anchor", "start")  //"middle"
       .style("fill", function (d) {
