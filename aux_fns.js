@@ -190,33 +190,47 @@ function fn_enlargeName(geogroup_name, cityName) {
 }
 //Discretize selected attribute value
 function fn_discretize (attrFlag, dimExtent, d) {
-  //do the discretization into 5 levels
+   if (attrFlag === "methodology") {//integers from 1-5, no mapping needed
+    //change legend text
+    d3.select("#barChartLegend").selectAll("text")
+      .text(function (d,  i) {
+        if (i < 5) { //hack for now
+          return choose_textArray[attrFlag][i];
+        }
+      });
 
-  //difference between max and min values of selected attribute
-  delta = ( dimExtent[1] - dimExtent[0] )/num_levels;  
+    //change legend colour
+    return colour_methodNum[d['methodology']];
   
-  cb_values=[]; //clear
-  for (idx=0; idx < num_levels; idx++) {
-    cb_values.push(dimExtent[0] + idx*delta);
-  }
-  //console.log("cb_values: ", cb_values)
+  } else {
+    //do the discretization into 5 levels
 
-  //colour map to take data value and map it to the colour of the level bin it belongs to
-  colourmapDim = d3.scaleQuantize()  //d3.scale.linear() [old d3js notation]
-            .domain([dimExtent[0], dimExtent[1]])
-            .range(choose_colourArray[attrFlag]);
+    //difference between max and min values of selected attribute
+    delta = ( dimExtent[1] - dimExtent[0] )/num_levels;  
+    
+    cb_values=[]; //clear
+    for (idx=0; idx < num_levels; idx++) {
+      cb_values.push(dimExtent[0] + idx*delta);
+    }
+    //console.log("cb_values: ", cb_values)
 
-  //label the legend colourbar boxes
-  d3.select("#barChartLegend").selectAll("text")
-    .text(function (d,  i) {
-      if (i < 5) { //hack for now
-        //console.log("cb_values here: ", Math.round(cb_values[i]))
-        return Math.round(cb_values[i]);
-      }
-    });          
+    //colour map to take data value and map it to the colour of the level bin it belongs to
+    colourmapDim = d3.scaleQuantize()  //d3.scale.linear() [old d3js notation]
+              .domain([dimExtent[0], dimExtent[1]])
+              .range(choose_colourArray[attrFlag]);
 
-  
-  return colourmapDim(d[attrFlag]);
+    //label the legend colourbar boxes
+    d3.select("#barChartLegend").selectAll("text")
+      .text(function (d,  i) {
+        if (i < 5) { //hack for now
+          //console.log("cb_values here: ", Math.round(cb_values[i]))
+          return Math.round(cb_values[i]);
+        }
+      });
+
+    
+    return colourmapDim(d[attrFlag]);
+  }  
   
 }
 //Create colour bar boxes

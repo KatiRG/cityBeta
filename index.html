@@ -707,13 +707,10 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("width", x.bandwidth())
       .attr("y", function (d, i) { return y(d[this_dim]); })
       .attr("height", function(d) { return height - y(d[this_dim]); })
-      .attr("fill", function (d) {
-        //output the discretized colour according to selected attribute
-
-        //integers from 1-5, no mapping needed
-        if (attrFlag === "methodology") return colour_methodNum[d['methodology']];
-        else return fn_discretize(attrFlag, dimExtent, d);
-      })    
+      // .attr("fill", function (d) {
+      //   //output the discretized colour according to selected attribute
+      //   return fn_discretize(attrFlag, dimExtent, d);
+      // })
       .on("touchmove mousemove", function (d) {
         fn_enlargeName(geogroup_name, d.city);
 
@@ -737,6 +734,14 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
           .attr("fill", colour_labels);
 
         div.style("opacity", 0);
+      });
+
+  //colour the bars and legend rects according to attrFlag selected
+  //also dislay correct legend text for each rect
+  //svgBarChart = d3.select("#barChart_EU .barSVG")
+  svgBarChart.selectAll("rect").attr("fill", function (d) {
+        //output the discretized colour according to selected attribute
+        return fn_discretize(attrFlag, dimExtent, d);
       });
 
   //x-axis
