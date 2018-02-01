@@ -121,22 +121,16 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
         </div>
 
         <div class="row">
-          <div class="col-lg-9">
-            <div class="barChartTitle">Europe</div>
-            <div id="barChart_EU"></div>
+          <div class="col-lg-12">
+            <div class="barChartTitle">Europe &#183; Canada &#183; Aus &#183; NZ</div>
+            <div id="barChart_EUCW"></div>
           </div>
-          <div class="col-lg-3">
-            <div class="barChartTitle">Canada</div>
-            <div id="barChart_Can"></div>
-          </div>
+   
         </div> <!-- ./sub-row USA chart -->
 
 
         <div class="row">
-          <div class="col-lg-3">
-            <div class="barChartTitle">Aus &#183; NZ</div>
-            <div id="barChart_Oceania"></div>
-          </div>
+      
           <div class="col-lg-3">
             <div class="barChartTitle">Africa</div>
             <div id="barChart_Africa"></div>
@@ -258,13 +252,11 @@ d3.select("#reorderButton")
     d3.select(this).text(buttonText);
 
     //Re-order Scope1/GDP according to Scope1/capita
-    emissionsBarChart("groupUSAAsia", "#barChart_USAAsia");
-    emissionsBarChart("groupEurope", "#barChart_EU");
-    // emissionsBarChart("groupUSA", "#barChart_USA");
-    emissionsBarChart("groupOceania", "#barChart_Oceania");
-    emissionsBarChart("groupAfrica", "#barChart_Africa");
-    // emissionsBarChart("groupAsia", "#barChart_Asia");
-    emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
+    // emissionsBarChart("groupUSAAsia", "#barChart_USAAsia");
+    // emissionsBarChart("groupEuropeCan", "#barChart_EUCan");
+    // emissionsBarChart("groupOceania", "#barChart_Oceania");
+    // emissionsBarChart("groupAfrica", "#barChart_Africa");
+    // emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
      
   })
   .on("mouseover", function () {
@@ -310,8 +302,7 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
   setupData(ghg);
   drawMap();
   emissionsBarChart("groupUSAAsia", "#barChart_USAAsia");
-  emissionsBarChart("groupEurope", "#barChart_EU");
-  emissionsBarChart("groupCan", "#barChart_Can");
+  emissionsBarChart("groupEUCW", "#barChart_EUCW");  
   emissionsBarChart("groupOceania", "#barChart_Oceania");
   emissionsBarChart("groupAfrica", "#barChart_Africa");
   emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
@@ -556,7 +547,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   }
 
   //https://bl.ocks.org/seemantk/ec245e1f4e824e685982dd5d3fbb2fcc
-  var margin = {top: 0, right: 0, bottom: 0, left: 40};
+  var margin = {top: 0, right: 0, bottom: 0, left: 0};
   if (geogroup_name === "groupOceania" || geogroup_name === "groupAfrica"
     || geogroup_name === "groupLatinAmer") {
     margin = {top: 0, right: 0, bottom: 0, left: 100};
@@ -582,6 +573,27 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .concat([{ "city":"gap",  "region":"groupUSAAsia",
                  "per capita":0, "per GDP": 0 }])
       .concat(ghg_asia);
+
+  }
+  else if (geogroup_name === "groupEUCW") {
+    //Extract data by region
+    ghg_europe = sortByRegion("groupEurope");
+    ghg_canada = sortByRegion("groupCan");
+    ghg_oceania = sortByRegion("groupOceania");
+
+    //Sort columns in each region
+    ghg_europe.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
+    ghg_canada.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
+    ghg_oceania.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
+
+    //Concatenate Europe and Asia with a gap in between
+    var emissions_scaled = ghg_europe
+      .concat([{ "city":"gap",  "region":"groupEUCW",
+                 "per capita":0, "per GDP": 0 }])
+      .concat(ghg_canada)
+      .concat([{ "city":"gap",  "region":"groupEUCW",
+                 "per capita":0, "per GDP": 0 }])
+      .concat(ghg_oceania);
 
   }
   else {
@@ -792,32 +804,6 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         .style("text-anchor", "end")
         .attr("dx", "-.8em")
         .attr("dy", ".15em");
-
-  //-----------------------------------------------------------------------------------------
-  //Visual fixes
-  //1. Enlarge barChart y-axis tick labels then fix position
-
-  //https://stackoverflow.com/questions/27405377/iterate-over-already-created-nodes-in-d3js
-  // var yfactor = 1.5;
-  // d3.select(geogroup_id).select('.barSVG').selectAll('g .y.axis .tick') //get all the nodes
-  //   .each(function (d) {
-  //     //x scale factor
-  //     var xfactor = xScaleFactor[geogroup_id];
-
-  //     orig_ypos_str = this.attributes.transform.value.toString();
-
-  //     orig_ypos = parseFloat(orig_ypos_str.split(",")[1].split(")")[0]);
-  //     new_ypos = orig_ypos/yfactor;
-
-  //     d3.select(this)
-  //       .attr("transform", "scale(" + xfactor + " " + yfactor + ")" 
-  //                         + "translate(" + 0 + "," + new_ypos + ")" );
- 
-  //   });
-
-  // ./Visual Fixes/----------------------------------------------------------------------------------
-
-  
 
   // Plot regional avg emissions [tCO2/capita] as a line over each barChart
   //fn_appendRegionalMeans(svgBarChart, geogroup_name, this_dim, emissions_scaled, x, y);
