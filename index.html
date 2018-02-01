@@ -653,7 +653,6 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
 
   x.domain(emissions_scaled.map(function (d) {
-    console.log("d.city: ", d.city)
     return d.city;
   }));
   y.domain([0, d3.max(emissions_scaled, function(d) {
@@ -769,7 +768,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       //     })
       .style("text-anchor", "start")  //"middle"
       .style("fill", function (d) {
-        if (d === "gap") return "#fff";
+        if (d.includes("gap")) return "#fff";
         else return "#000";
       })
       .on("touchmove mousemove", function (d) {
@@ -783,7 +782,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   //hide x tick mark for "gap" bar  
   svgBarChart.selectAll("line")
     .style("opacity", function (d) {
-      return d === "gap" ? 0 : 1;
+      return d.includes("gap") ? 0 : 1;
     });
 
 
