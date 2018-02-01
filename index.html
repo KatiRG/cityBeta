@@ -120,15 +120,15 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
         <!--barChart sub-rows-->
         <div class="row">
           <div class="col-lg-12">
-            <div class="barChartTitle">Europe &#183; Asia</div>
-            <div id="barChart_Eurasia"></div>
+            <div class="barChartTitle">USA &#183; Asia</div>
+            <div id="barChart_USAAsia"></div>
           </div>
         </div>
 
         <div class="row">
           <div class="col-lg-9">
-            <div class="barChartTitle">USA</div>
-            <div id="barChart_USA"></div>
+            <div class="barChartTitle">Europe</div>
+            <div id="barChart_EU"></div>
           </div>
           <div class="col-lg-3">
             <div class="barChartTitle">Canada</div>
@@ -217,13 +217,13 @@ d3.select("select")
       return rect_colourArray[i];
     });
 
-    emissionsBarChart("groupEurope", "#barChart_EU");
-    emissionsBarChart("groupUSA", "#barChart_USA");
-    emissionsBarChart("groupCan", "#barChart_Can");
-    emissionsBarChart("groupOceania", "#barChart_Oceania");
-    emissionsBarChart("groupAfrica", "#barChart_Africa");
-    emissionsBarChart("groupAsia", "#barChart_Asia");
-    emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
+    // emissionsBarChart("groupEurope", "#barChart_EU");
+    // emissionsBarChart("groupUSA", "#barChart_USA");
+    // emissionsBarChart("groupCan", "#barChart_Can");
+    // emissionsBarChart("groupOceania", "#barChart_Oceania");
+    // emissionsBarChart("groupAfrica", "#barChart_Africa");
+    // emissionsBarChart("groupAsia", "#barChart_Asia");
+    // emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
     
 })
 
@@ -239,12 +239,12 @@ d3.select("#gdpButton")
     d3.select(this).text(buttonText);
 
     //Plot emissions bar charts for each geo group    
-    emissionsBarChart("groupEurope", "#barChart_EU");
-    emissionsBarChart("groupUSA", "#barChart_USA");
-    emissionsBarChart("groupOceania", "#barChart_Oceania");
-    emissionsBarChart("groupAfrica", "#barChart_Africa");
-    emissionsBarChart("groupAsia", "#barChart_Asia");
-    emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
+    // emissionsBarChart("groupEurope", "#barChart_EU");
+    // emissionsBarChart("groupUSA", "#barChart_USA");
+    // emissionsBarChart("groupOceania", "#barChart_Oceania");
+    // emissionsBarChart("groupAfrica", "#barChart_Africa");
+    // emissionsBarChart("groupAsia", "#barChart_Asia");
+    // emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
 
     //(de-)activate reorder button if "Scope1/capita" is being displayed
     var reorderState = (buttonText === label_dataPerCap) ? "block" : "none";
@@ -270,8 +270,9 @@ d3.select("#reorderButton")
     d3.select(this).text(buttonText);
 
     //Re-order Scope1/GDP according to Scope1/capita
-    emissionsBarChart("groupEurasia", "#barChart_Eurasia");
-    emissionsBarChart("groupUSA", "#barChart_USA");
+    emissionsBarChart("groupUSAAsia", "#barChart_USAAsia");
+    emissionsBarChart("groupEurope", "#barChart_EU");
+    // emissionsBarChart("groupUSA", "#barChart_USA");
     emissionsBarChart("groupOceania", "#barChart_Oceania");
     emissionsBarChart("groupAfrica", "#barChart_Africa");
     // emissionsBarChart("groupAsia", "#barChart_Asia");
@@ -320,8 +321,9 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
 
   setupData(ghg);
   drawMap();
-  emissionsBarChart("groupEurasia", "#barChart_Eurasia");
-  emissionsBarChart("groupUSA", "#barChart_USA");
+  emissionsBarChart("groupUSAAsia", "#barChart_USAAsia");
+  // emissionsBarChart("groupUSA", "#barChart_USA");
+  emissionsBarChart("groupEurope", "#barChart_EU");
   emissionsBarChart("groupCan", "#barChart_Can");
   emissionsBarChart("groupOceania", "#barChart_Oceania");
   emissionsBarChart("groupAfrica", "#barChart_Africa");
@@ -591,7 +593,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   if (geogroup_name === "groupOceania" || geogroup_name === "groupAfrica"
     || geogroup_name === "groupLatinAmer") {
     margin = {top: 0, right: 0, bottom: 0, left: 100};
-  } else if (geogroup_name === "groupEurasia") {
+  } else if (geogroup_name === "groupUSAAsia") {
     margin = {top: 0, right: 0, bottom: 0, left: 2};
   }
   var width = 700 - margin.left - margin.right,
@@ -599,18 +601,18 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
   //Extract scaled emissions data for given region
   //Omit cities for which GDP-PPP is missing
-  if (geogroup_name === "groupEurasia") {
+  if (geogroup_name === "groupUSAAsia") {
     //Extract data by region
-    ghg_europe = sortByRegion("groupEurope");
+    ghg_usa = sortByRegion("groupUSA");
     ghg_asia = sortByRegion("groupAsia");
 
     //Sort columns in each region
-    ghg_europe.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
+    ghg_usa.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
     ghg_asia.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
 
     //Concatenate Europe and Asia with a gap in between
-    var emissions_scaled = ghg_europe
-      .concat([{ "city":"gap",  "region":"groupEurasia",
+    var emissions_scaled = ghg_usa
+      .concat([{ "city":"gap",  "region":"groupUSAAsia",
                  "per capita":0, "per GDP": 0 }])
       .concat(ghg_asia);
 
@@ -638,10 +640,6 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
   var yAxis = d3.axisLeft()
     .scale(y)
-    //.orient("right") //d3v3
-    // .ticks(5, "%")
-    // .ticks(5)
-    // .tickPadding(2)
     .tickFormat(function(d) {
       return this_dim === label_dataPerGDP ? formatDecimalk(d) : d;
     });
@@ -691,7 +689,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
     // console.log("d[this_dim]: ", d[this_dim])
 
     if (this_dim === label_dataPerCap) {
-      if (geogroup_name === "groupEurope" || geogroup_name === "groupEurasia" ||
+      if (geogroup_name === "groupEurope" || geogroup_name === "groupUSAAsia" ||
         geogroup_name === "groupUSA" || geogroup_name === "groupCan") same_max = 20;
       else  same_max = 6;      
     } else {
@@ -780,7 +778,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("dy", "12px")
       .attr("transform", function (d) {
         if (d != "gap") {
-          if (geogroup_name === "groupEurasia") {
+          if (geogroup_name === "groupUSAAsia") {
             //xscale=1; yscale=1; 
             rot=-45;
             xtrans=165; ytrans = -155;
@@ -799,8 +797,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       })
       .style("text-anchor", "start")  //"middle"
       .style("fill", function (d) {
-        // return "#000000";//colour_labels;
-        if (d.includes("gap")) return "#fff";
+        if (d === "gap") return "#fff";
         else return "#000";
       })
       .on("touchmove mousemove", function (d) {
@@ -810,6 +807,12 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         d3.select("#tick" + idName).text(function (d) { return fn_abbr(d); })
           .style("font-size", "10px");
       });
+
+  //hide x tick mark for "gap" bar  
+  svgBarChart.selectAll("line")
+    .style("opacity", function (d) {
+      return d === "gap" ? 0 : 1;
+    });
 
 
   //y-axis
