@@ -119,14 +119,10 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
 
         <!--barChart sub-rows-->
         <div class="row">
-          <div class="col-lg-7">
-            <div class="barChartTitle">Europe</div>
-            <div id="barChart_EU"></div>
+          <div class="col-lg-12">
+            <div class="barChartTitle">Europe &#183; Asia</div>
+            <div id="barChart_Eurasia"></div>
           </div>
-          <div class="col-lg-5">
-            <div class="barChartTitle">Asia</div>
-            <div id="barChart_Asia"></div>
-          </div> 
         </div>
 
         <div class="row">
@@ -274,11 +270,11 @@ d3.select("#reorderButton")
     d3.select(this).text(buttonText);
 
     //Re-order Scope1/GDP according to Scope1/capita
-    emissionsBarChart("groupEurope", "#barChart_EU");
+    emissionsBarChart("groupEurasia", "#barChart_Eurasia");
     emissionsBarChart("groupUSA", "#barChart_USA");
     emissionsBarChart("groupOceania", "#barChart_Oceania");
     emissionsBarChart("groupAfrica", "#barChart_Africa");
-    emissionsBarChart("groupAsia", "#barChart_Asia");
+    // emissionsBarChart("groupAsia", "#barChart_Asia");
     emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
      
   })
@@ -324,12 +320,12 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
 
   setupData(ghg);
   drawMap();
-  emissionsBarChart("groupEurope", "#barChart_EU");
+  emissionsBarChart("groupEurasia", "#barChart_Eurasia");
   emissionsBarChart("groupUSA", "#barChart_USA");
   emissionsBarChart("groupCan", "#barChart_Can");
   emissionsBarChart("groupOceania", "#barChart_Oceania");
   emissionsBarChart("groupAfrica", "#barChart_Africa");
-  emissionsBarChart("groupAsia", "#barChart_Asia");
+  // emissionsBarChart("groupAsia", "#barChart_Asia");
   emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
 });
 
@@ -595,21 +591,40 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   if (geogroup_name === "groupOceania" || geogroup_name === "groupAfrica"
     || geogroup_name === "groupLatinAmer") {
     margin = {top: 0, right: 0, bottom: 0, left: 100};
+  } else if (geogroup_name === "groupEurasia") {
+    margin = {top: 0, right: 0, bottom: 0, left: 0};
   }
   var width = 700 - margin.left - margin.right,
       height = 250 - margin.top - margin.bottom;
 
-  // Extract scaled emissions data for given region
-  // Omit cities for which GDP-PPP is missing
-  emissions_scaled = sortByRegion(geogroup_name, this_dim);
-  
-  // Sort columns
-  emissions_scaled.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
+  //Extract scaled emissions data for given region
+  //Omit cities for which GDP-PPP is missing
+  if (geogroup_name === "groupEurasia") {
+    //Extract data by region
+    ghg_europe = sortByRegion("groupEurope");
+    ghg_asia = sortByRegion("groupAsia");
 
-  // Get city order of Scope/capita
-  if (d3.select("#reorderButton").text() === "orig order") {
-    emissions_scaled = fn_reorderByEmissionsPerCapita(geogroup_name, emissions_scaled);
-  } // end button text check
+    //Sort columns in each region
+    ghg_europe.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
+    ghg_asia.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
+
+    //Concatenate Europe and Asia with a gap in between
+    var emissions_scaled = ghg_europe
+      .concat([{ "city":"gap",  "region":"groupEurasia",
+                 "per capita":0, "per GDP": 0 }])
+      .concat(ghg_asia);
+
+  }
+  else {
+    emissions_scaled = sortByRegion(geogroup_name, this_dim);
+    // Sort columns
+    emissions_scaled.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
+  }
+
+  // // Get city order of Scope/capita
+  // if (d3.select("#reorderButton").text() === "orig order") {
+  //   emissions_scaled = fn_reorderByEmissionsPerCapita(geogroup_name, emissions_scaled);
+  // } // end button text check
 
   var x = d3.scaleBand()
             .rangeRound([0, width], .1)
@@ -673,7 +688,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   y.domain([0, d3.max(emissions_scaled, function(d) {
 
     if (this_dim === label_dataPerCap) {
-      if (geogroup_name === "groupEurope" || geogroup_name === "groupAsia" ||
+      if (geogroup_name === "groupEurope" || geogroup_name === "groupEurasia" ||
         geogroup_name === "groupUSA" || geogroup_name === "groupCan") same_max = 30;
       else  same_max = 6;
     } else {
@@ -758,25 +773,32 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("y", -3)
       .attr("x", 7)
       .attr("dy", "12px")
-      .attr("transform", function (d) {
+      // .attr("transform", function (d) {
 
-        xscale=1; yscale=1.4; rot=-90;
-        xtrans=0; ytrans=-6;
-       
-        curr_region = data_GHG.filter(x => x.city === d).map(x => x.region)[0].toString();        
+      //   xscale=1; yscale=1.4; rot=-90;
+      //   xtrans=0; ytrans=-6;
 
-        if (curr_region === "groupUSA") {xscale=1; yscale=1;}
-        if (curr_region === "groupEurope") {xscale=2.3; yscale=1.4;}
-        else if (curr_region === "groupCan") {xscale=5; yscale=2; }
-        else if (curr_region === "groupAfrica") {xscale=6; yscale=1.5; }
-        else if (curr_region === "groupOceania") {xscale=6; yscale=1.5; }
-        else if (curr_region === "groupLatinAmer") {xscale=2; yscale=1.4;}
-        else if (curr_region === "groupAsia") {xscale=2.4; yscale=1.4;}
+      //   //console.log("data_GHG: ", data_GHG)
         
-     
-        return "scale(" + xscale + " " + yscale + ")" + "rotate(" + rot + ")" +
-                "translate(" + xtrans + " " + ytrans + ")" ;
-      })
+       
+      //   if (d != "gap") {
+      //     console.log("d in here: ", d)
+      //     curr_region = data_GHG.filter(x => x.city === d).map(x => x.region)[0].toString(); 
+      //     console.log("curr_region: ", curr_region)       
+
+      //     if (curr_region === "groupUSA") {xscale=1; yscale=1;}
+      //     else if (curr_region === "groupEurope") {xscale=2.3; yscale=1.4;}
+      //     else if (curr_region === "groupCan") {xscale=5; yscale=2; }
+      //     else if (curr_region === "groupAfrica") {xscale=6; yscale=1.5; }
+      //     else if (curr_region === "groupOceania") {xscale=6; yscale=1.5; }
+      //     else if (curr_region === "groupLatinAmer") {xscale=2; yscale=1.4;}
+      //     else if (curr_region === "groupAsia") {xscale=2.4; yscale=1.4;}
+          
+       
+      //     return "scale(" + xscale + " " + yscale + ")" + "rotate(" + rot + ")" +
+      //             "translate(" + xtrans + " " + ytrans + ")" ;
+      //   }
+      // })
       .style("text-anchor", "start")  //"middle"
       .style("fill", function (d) {
         return "#000000";//colour_labels;
@@ -790,41 +812,24 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       });
       //
 
-  //y-axis
-  svgBarChart.append("g")
-      .attr("class", "y axis")
-      .call(yAxis)
-      .attr("transform", function (d) {
-        xscale=1; yscale=1;
+  // //y-axis
+  // svgBarChart.append("g")
+  //     .attr("class", "y axis")
+  //     .call(yAxis)
+  //     .attr("transform", function (d) {
+  //       xscale=1; yscale=1;
         
-        if (geogroup_name === "groupCan") {xscale=5; yscale=1;}
-        else if (geogroup_name === "groupOceania") {xscale=1.5; yscale=1;}
+  //       if (geogroup_name === "groupCan") {xscale=5; yscale=1;}
+  //       else if (geogroup_name === "groupOceania") {xscale=1.5; yscale=1;}
         
-        return "scale(" + xscale + " " + yscale + ")";
-      })
-      .selectAll(".tick text")
-        .style("fill", function (d) {
-          if (geogroup_name === "groupEurope" || 
-            geogroup_name === "groupUSA" || geogroup_name === "groupOceania") return colour_labels;
-          else return "#fff";
-        });
-    // .append("text")
-    //   //.attr("transform", "rotate(-90)")
-    //   .attr("y", -33)
-    //   .attr("dy", ".71em")
-    //   .style("text-anchor", "end")
-    //   // .text(function () { 
-    //   //   if (geogroup_name === "groupNAmer") return this_dim + " " + dimUnits[this_dim];
-    //   // })
-    //   .attr("transform",function () {
-    //     var myscale = 1.0;
-    //     var xtrans = 0;
-    //     var ytrans = -1;
-
-    //     return "scale(" + myscale + " " + myscale + ")"  + "rotate(-90)" 
-    //                     + "translate(" + xtrans + "," + ytrans + ")";
-    //   })
-    //   .style("fill", colour_labels);
+  //       return "scale(" + xscale + " " + yscale + ")";
+  //     })
+  //     .selectAll(".tick text")
+  //       .style("fill", function (d) {
+  //         if (geogroup_name === "groupEurope" || 
+  //           geogroup_name === "groupUSA" || geogroup_name === "groupOceania") return colour_labels;
+  //         else return "#fff";
+  //       });
 
   //-----------------------------------------------------------------------------------------
   //Visual fixes
