@@ -597,7 +597,8 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
   var x = d3.scaleBand()
             .rangeRound([0, width], .1)
-            .paddingInner(0.1);
+            .paddingOuter(0.1)
+            .paddingInner(0.27);
 
   var y = d3.scaleLinear()
             .range([height, 0]);
@@ -732,7 +733,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   //x-axis
   svgBarChart.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
+      .attr("transform", "translate(-1," + height + ")")
       .call(d3.axisTop(x))
       .selectAll("text")
       .text(function (d) { return fn_abbr(d); })
