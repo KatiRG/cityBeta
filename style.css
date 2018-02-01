@@ -6,8 +6,8 @@ body {
 }
 
 [class*="col-"], footer {
-  /*background-color: lightgreen; 
-  border: 2px solid black; */
+  /*background-color: lightgreen; */
+  border: 2px solid white; 
   border-radius: 6px;
   line-height: 40px;
   text-align: center;
@@ -245,13 +245,13 @@ div.rtooltip {
   stroke: gray;
 }
 .axis {
-  font: 10px sans-serif;
+  font: 18px sans-serif;
 }
 .axis path,
 .axis line {
   fill: none;
   stroke: colour_labels;
-  shape-rendering: crispEdges;
+  shape-rendering: geometricPrecision; /*crispEdges;*/
 }
 .axis text {
   fill: colour_labels;
