@@ -7,7 +7,7 @@ body {
 
 [class*="col-"], footer {
   /*background-color: lightgreen; */
-  border: 2px solid gray; 
+  border: 2px solid white; 
   border-radius: 6px;
   line-height: 40px;
   text-align: center;
@@ -229,6 +229,12 @@ div.rtooltip {
 }
 #barChartLegend {
   stroke: gray;
+}
+#barChartLegendUnits {
+  text-align: left;
+  font-size: 11px;
+  padding-left: 0px;
+  color: #636363;
 }
 .textLabels {
   fill: #636363;

@@ -306,6 +306,10 @@ function fn_updateLegend (attrFlag) {
       else xpos = [0,70,135,205,275];
       return xpos[i];
     });
+
+    //update the units displayed in the legend
+    d3.select("#barChartLegendUnits")
+      .text(function () {return dimUnits[attrFlag]});
 }
 //Create colour bar boxes
 function fn_appendColourBar() {

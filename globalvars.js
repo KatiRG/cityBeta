@@ -99,11 +99,12 @@ var regionLabel_dict = {
 };
 
 var dimUnits =  {
+  "methodology": "",
   "total emissions": "[tCO2]",
   "per capita": "[tCO2/capita]",
   "per GDP": "[kgCO2/USD]",
-  "population": "",
-  "population density": "",
+  "population": "capita",
+  "population density": "per km2",
   "GDP-PPP/capita": "(PPP) [USD/capita]",
   "diesel price": "USD",
   "gas price": "USD",
