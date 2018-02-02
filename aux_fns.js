@@ -249,36 +249,42 @@ function fn_colourmapDim (attrFlag) {
   return colourmapDim;
 }
 function fn_updateLegend (attrFlag) {
-  dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]];
-  //difference between max and min values of selected attribute
-  delta = ( dimExtent[1] - dimExtent[0] )/num_levels;
-  //console.log("dimExtent: ", dimExtent)
+  if (attrFlag != "methodology") {  
+    dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]];
+    //difference between max and min values of selected attribute
+    delta = ( dimExtent[1] - dimExtent[0] )/num_levels;
 
-  cb_values=[]; //clear
-  for (idx=0; idx < num_levels; idx++) {
-    cb_values.push(dimExtent[0] + idx*delta);
+    cb_values=[]; //clear
+    for (idx=0; idx < num_levels; idx++) {
+      cb_values.push(dimExtent[0] + idx*delta);
+    }
+    console.log("cb_values: ", cb_values)
+
+    //colour map to take data value and map it to the colour of the level bin it belongs to
+    colourmapDim = d3.scaleQuantize()  //d3.scale.linear() [old d3js notation]
+              .domain([dimExtent[0], dimExtent[1]])
+              .range(choose_colourArray[attrFlag]);
+
+    console.log("cb_values mapped: ", colourmapDim(cb_values) )
   }
-  console.log("cb_values: ", cb_values)
-
-  //colour map to take data value and map it to the colour of the level bin it belongs to
-  colourmapDim = d3.scaleQuantize()  //d3.scale.linear() [old d3js notation]
-            .domain([dimExtent[0], dimExtent[1]])
-            .range(choose_colourArray[attrFlag]);
-
-  console.log("cb_values mapped: ", colourmapDim(cb_values) )
 
   //Colour legend squares
   d3.select("#barChartLegend").select("svg")
     .selectAll('rect')
     .attr("fill", function (i, j) {
-      return colourmapDim(cb_values[j]);
+      var updateColour = attrFlag === "methodology" ?
+                choose_colourArray[attrFlag][j]: colourmapDim(cb_values[j])
+      console.log("updateColour: ", updateColour);
+      return updateColour;
     });
 
   //label the legend squares
   d3.select("#barChartLegend")
     .selectAll("text")
-    .text(function (i, j) {      
-      return Math.round(cb_values[j]);
+    .text(function (i, j) {
+      var updateText = attrFlag === "methodology" ?
+                choose_textArray[attrFlag][j] : Math.round(cb_values[j]);
+      return updateText;
     });
 }
 //Create colour bar boxes
