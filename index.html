@@ -179,22 +179,23 @@ var div = d3.select("body").append("div")
 d3.select("select")
   .on("change",function(d){
     attrFlag = d3.select("#d3-dropdown").node().value;
-    // console.log("attrFlag: ",attrFlag);
 
-    rect_colourArray = choose_colourArray[attrFlag];
+    var geogroupArray = ["barChart_USAAsia", "barChart_EUCWLatAmerAfrica"];
 
-    d3.select("#barChartLegend").selectAll("rect")
-    .attr("fill", function (d, i) {
-      return rect_colourArray[i];
+    svgBarChart = d3.select("#" + geogroupArray[0] + " .barSVG")
+    svgBarChart.selectAll("rect").attr("fill", function (d) {
+      //output the discretized colour according to selected attribute
+      return fn_colour_barChart(attrFlag, d[attrFlag]);
     });
 
-    // emissionsBarChart("groupEurope", "#barChart_EU");
-    // emissionsBarChart("groupUSA", "#barChart_USA");
-    // emissionsBarChart("groupCan", "#barChart_Can");
-    // emissionsBarChart("groupOceania", "#barChart_Oceania");
-    // emissionsBarChart("groupAfrica", "#barChart_Africa");
-    // emissionsBarChart("groupAsia", "#barChart_Asia");
-    // emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
+    svgBarChart = d3.select("#" + geogroupArray[1] + " .barSVG")
+    svgBarChart.selectAll("rect").attr("fill", function (d) {
+      //output the discretized colour according to selected attribute
+      return fn_colour_barChart(attrFlag, d[attrFlag]);
+    });
+
+    //colour the legend squares
+    fn_updateLegend(attrFlag);
     
 })
 
@@ -517,7 +518,7 @@ function highlightElements(idName) {
 // }
 
 function emissionsBarChart(geogroup_name, geogroup_id) {
-  dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]]
+  //dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]]
 
   // Remove any previous bar chart
   d3.select(geogroup_id).select("svg").remove();
@@ -617,7 +618,6 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
     }
 
     return same_max;
-    // return d[this_dim];
 
   })]);
 
@@ -628,7 +628,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
     .style("opacity", 0);
 
   //bars
-  svgBarChart.append("g").selectAll(".bar")
+  var bars = svgBarChart.append("g").selectAll(".bar")
       .data(emissions_scaled)
       .enter().append("rect")
       .attr("class", "bar")
@@ -639,12 +639,14 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("x", function (d) { return x(d.city); }) //***HERE!!!!
       .attr("width", x.bandwidth())
       .attr("y", function (d, i) { return y(d[this_dim]); })
-      .attr("height", function(d) { return height - y(d[this_dim]); })
-      // .attr("fill", function (d) {
-      //   //output the discretized colour according to selected attribute
-      //   return fn_discretize(attrFlag, dimExtent, d);
-      // })
-      .on("touchmove mousemove", function (d) {
+      .attr("height", function(d) { return height - y(d[this_dim]); });
+
+  bars.attr("fill", function (d) {
+  //output the discretized colour according to selected attribute
+    return fn_colour_barChart(attrFlag, d[attrFlag]);
+  });
+
+  bars.on("touchmove mousemove", function (d) {
         fn_enlargeName(geogroup_name, d.city);
 
         idName = format_idName(d.city);
@@ -669,13 +671,6 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         div.style("opacity", 0);
       });
 
-  //colour the bars and legend rects according to attrFlag selected
-  //also dislay correct legend text for each rect
-  //svgBarChart = d3.select("#barChart_EU .barSVG")
-  svgBarChart.selectAll("rect").attr("fill", function (d) {
-        //output the discretized colour according to selected attribute
-        return fn_discretize(attrFlag, dimExtent, d);
-      });
 
   //x-axis
   svgBarChart.append("g")
@@ -684,7 +679,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .call(d3.axisTop(x))
       .selectAll("text")
         .text(function (d) { return ""; })
-        // .text(function (d) { return fn_abbr(d); })
+        //.text(function (d) { return fn_abbr(d); })
       //     .attr("id", function (d) {
       //       idName = format_idName(d);
       //       return "tick" + idName;

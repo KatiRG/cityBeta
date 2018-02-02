@@ -175,7 +175,7 @@ function resetElements() {
 //----------------------------------------------
 
 //...............................
-// Prepare barChart data
+// barChart data fns
 
 //concatenate geogroups together, separated by a gap
 function fn_concat (barChartGroup, geogroupArray, this_dim) {
@@ -204,7 +204,6 @@ function fn_concat (barChartGroup, geogroupArray, this_dim) {
   } //.for
 
   return objArray;
-
 }
 
 
@@ -227,49 +226,60 @@ function fn_enlargeName(geogroup_name, cityName) {
     .attr("fill", colour_labelsHighlight);
 }
 //Discretize selected attribute value
-function fn_discretize (attrFlag, dimExtent, d) {
-   if (attrFlag === "methodology") {//integers from 1-5, no mapping needed
-    //change legend text
-    d3.select("#barChartLegend").selectAll("text")
-      .text(function (d,  i) {
-        if (i < 5) { //hack for now
-          return choose_textArray[attrFlag][i];
-        }
-      });
-
-    //change legend colour
-    return colour_methodNum[d['methodology']];
+function fn_colour_barChart (attrFlag, attrValue) {
+  
+  if (attrFlag === "methodology") {//integers from 1-5, no mapping needed
+    return colour_methodNum[attrValue];
   
   } else {
-    //do the discretization into 5 levels
+     
+    colourmapDim = fn_colourmapDim(attrFlag);
 
-    //difference between max and min values of selected attribute
-    delta = ( dimExtent[1] - dimExtent[0] )/num_levels;  
-    
-    cb_values=[]; //clear
-    for (idx=0; idx < num_levels; idx++) {
-      cb_values.push(dimExtent[0] + idx*delta);
-    }
-    //console.log("cb_values: ", cb_values)
+    return colourmapDim(attrValue);
+  } 
+}
+function fn_colourmapDim (attrFlag) {
+  dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]];
 
-    //colour map to take data value and map it to the colour of the level bin it belongs to
-    colourmapDim = d3.scaleQuantize()  //d3.scale.linear() [old d3js notation]
-              .domain([dimExtent[0], dimExtent[1]])
-              .range(choose_colourArray[attrFlag]);
+  //colour map to take data value and map it to the colour of the level bin it belongs to
+  colourmapDim = d3.scaleQuantize()  //d3.scale.linear() [old d3js notation]
+            .domain([dimExtent[0], dimExtent[1]])
+            .range(choose_colourArray[attrFlag]);
 
-    //label the legend colourbar boxes
-    d3.select("#barChartLegend").selectAll("text")
-      .text(function (d,  i) {
-        if (i < 5) { //hack for now
-          //console.log("cb_values here: ", Math.round(cb_values[i]))
-          return Math.round(cb_values[i]);
-        }
-      });
+  return colourmapDim;
+}
+function fn_updateLegend (attrFlag) {
+  dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]];
+  //difference between max and min values of selected attribute
+  delta = ( dimExtent[1] - dimExtent[0] )/num_levels;
+  console.log("dimExtent: ", dimExtent)
 
-    
-    return colourmapDim(d[attrFlag]);
-  }  
-  
+  cb_values=[]; //clear
+  for (idx=0; idx < num_levels; idx++) {
+    cb_values.push(dimExtent[0] + idx*delta);
+  }
+  console.log("cb_values: ", cb_values)
+
+  //colour map to take data value and map it to the colour of the level bin it belongs to
+  colourmapDim = d3.scaleQuantize()  //d3.scale.linear() [old d3js notation]
+            .domain([dimExtent[0], dimExtent[1]])
+            .range(choose_colourArray[attrFlag]);
+
+  console.log("cb_values mapped: ", colourmapDim(cb_values) )
+
+  //Colour legend squares
+  d3.select("#barChartLegend").select("svg")
+    .selectAll('rect')
+    .attr("fill", function (i, j) {
+      return colourmapDim(cb_values[j]);
+    });
+
+  //label the legend squares
+  d3.select("#barChartLegend")
+    .selectAll("text")
+    .text(function (i, j) {      
+      return Math.round(cb_values[j]);
+    });
 }
 //Create colour bar boxes
 function fn_appendColourBar() {
