@@ -252,7 +252,7 @@ function fn_updateLegend (attrFlag) {
   dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]];
   //difference between max and min values of selected attribute
   delta = ( dimExtent[1] - dimExtent[0] )/num_levels;
-  console.log("dimExtent: ", dimExtent)
+  //console.log("dimExtent: ", dimExtent)
 
   cb_values=[]; //clear
   for (idx=0; idx < num_levels; idx++) {
