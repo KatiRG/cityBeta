@@ -171,6 +171,33 @@ function resetElements() {
 }
 
 //----------------------------------------------
+// Functions for map
+//----------------------------------------------
+function highlightCountry(countryName, idName, dataObj)  {
+  var matchColour = regionColourMap[
+                        dataObj.find(x => x.idName.includes(idName)).region
+                      ];
+
+  if (countryName === "South Africa") {
+      d3.select("#mapSouth Africa")
+        .style("stroke-width", 4)
+        // .style("stroke", matchColour === "#A6D4FF" ? "blue" : matchColour);
+        .style("stroke", "#555");
+  }
+  else {
+    d3.select("#map" + countryName)
+      .style("stroke-width", 4)
+      .style("stroke", "#555")
+      .style("stroke-opacity", 1);
+      // .style("stroke", matchColour === "#A6D4FF" ? "blue" : matchColour);
+
+    // d3.selectAll(".countries")
+    //   .selectAll("path:not(#map" + countryName + ")")
+    //   .style("opacity", 0.3);
+  }
+}
+
+//----------------------------------------------
 // Functions for emissionsBarChart()
 //----------------------------------------------
 
@@ -206,26 +233,46 @@ function fn_concat (barChartGroup, geogroupArray, this_dim) {
   return objArray;
 }
 
+//Abbreviate city name in x-axis
+function fn_abbr(d) {
+  if (d.indexOf(', ') >= 0) abbr = d.substring(0,3);
+  else if (d.indexOf(' ') >= 0) abbr = d.match(/\b\w/g).join(' ');
+  else abbr = d.substring(0,4);
+
+  return abbr;
+}
+
+function sortByRegion(region, this_dim) {
+
+  ghg_byRegion = [];
+  data_GHG.forEach(function (d) {
+    if (d.region === region && d[this_dim] != "") ghg_byRegion.push(d);
+  });
+  return ghg_byRegion;
+}
+
+function fn_reorderByEmissionsPerCapita(region, emissions_perGDP) {
+  var var_emissionsPerCap = label_dataPerCap;
+  var city_order = [];
+  var objArray = [];
+
+  //Get city order of emissions per capita
+  emissions_perCap = sortByRegion(region, var_emissionsPerCap);
+  emissions_perCap.sort((a, b) => d3.descending(a[var_emissionsPerCap], b[var_emissionsPerCap]));
+  city_order = emissions_perCap.map(x => x["city"]); //returns an array
+
+  //Re-order emissions_perGDP according to city_order of emissions per capita
+  for (idx = 0; idx < city_order.length; idx++) {
+    match = emissions_perGDP.filter(x => x.city === city_order[idx]); //in array form
+    if (match.length != 0) objArray.push(match[0]);
+  }
+
+  return objArray;
+}
 
 //...............................
-// barChart visual interactivity
+// barChart colour mapping
 
-//Enlarge x-axis labels and reset
-function fn_enlargeName(geogroup_name, cityName) {
-  idName = format_idName(cityName);
-
-  //Enlarge city label of selected bar
-  newSize="16px";
-  //Need different sizes on account of the vieweBox scale stretching
-  if (geogroup_name === "groupEurope" || geogroup_name === "groupLatinAmer" ||
-      geogroup_name === "groupUSA"|| geogroup_name === "groupOceania" ) newSize = "22px";
-  else if (geogroup_name === "groupAfrica") newSize = "18px";
-  else if (geogroup_name === "groupAsia") newSize = "18px";
-  
-  d3.select("#tick" + idName).text(cityName).style("font-size", newSize)
-    .attr("fill", colour_labelsHighlight);
-}
-//Discretize selected attribute value
 function fn_colour_barChart (attrFlag, attrValue) {
   
   if (attrFlag === "methodology") {//integers from 1-5, no mapping needed
@@ -311,6 +358,29 @@ function fn_updateLegend (attrFlag) {
     d3.select("#barChartLegendUnits")
       .text(function () {return dimUnits[attrFlag]});
 }
+
+//...............................
+// barChart visual interactivity
+
+//Enlarge x-axis labels and reset
+function fn_enlargeName(geogroup_name, cityName) {
+  idName = format_idName(cityName);
+
+  //Enlarge city label of selected bar
+  newSize="16px";
+  //Need different sizes on account of the vieweBox scale stretching
+  if (geogroup_name === "groupEurope" || geogroup_name === "groupLatinAmer" ||
+      geogroup_name === "groupUSA"|| geogroup_name === "groupOceania" ) newSize = "22px";
+  else if (geogroup_name === "groupAfrica") newSize = "18px";
+  else if (geogroup_name === "groupAsia") newSize = "18px";
+  
+  d3.select("#tick" + idName).text(cityName).style("font-size", newSize)
+    .attr("fill", colour_labelsHighlight);
+}
+
+//...............................
+// create barChart SVGs
+
 //Create colour bar boxes
 function fn_appendColourBar() {
   
@@ -459,63 +529,56 @@ function fn_appendRegionalMeans(svg, geogroup_name, this_dim, data, x, y) {
     .on('mouseout', tool_tip.hide); 
 }
 
-//Abbreviate city name in x-axis
-function fn_abbr(d) {
-  if (d.indexOf(', ') >= 0) abbr = d.substring(0,3);
-  else if (d.indexOf(' ') >= 0) abbr = d.match(/\b\w/g).join(' ');
-  else abbr = d.substring(0,4);
+function fn_arrow() {
+  console.log("for rotterdam")
 
-  return abbr;
-}
+  //http://bl.ocks.org/hlucasfranca/edbcedfcea544fbe28a9
+  var data = [    
+  //{ id: 2, name: 'arrow', path: 'M 0,0 m -5,-5 L 5,0 L -5,5 Z', viewbox: '-1 -5 10 10' }
+  { id: 2, name: 'arrow', path: 'M2,2 L2,11 L10,6 L2,2' }
+  ];
 
-function sortByRegion(region, this_dim) {
+  margin = {top: 0, right: 0, bottom: 0, left: 0},
+      width = 50 - margin.left - margin.right,
+      height = 80 - margin.top - margin.bottom;
 
-  ghg_byRegion = [];
-  data_GHG.forEach(function (d) {
-    if (d.region === region && d[this_dim] != "") ghg_byRegion.push(d);
-  });
-  return ghg_byRegion;
-}
 
-function fn_reorderByEmissionsPerCapita(region, emissions_perGDP) {
-  var var_emissionsPerCap = label_dataPerCap;
-  var city_order = [];
-  var objArray = [];
+  svg = d3.select("#barChart_EUCWLatAmerAfrica").append("svg")
+          .attr('width', width + margin.left + margin.right)
+          .attr('height', height + margin.top + margin.bottom);
 
-  //Get city order of emissions per capita
-  emissions_perCap = sortByRegion(region, var_emissionsPerCap);
-  emissions_perCap.sort((a, b) => d3.descending(a[var_emissionsPerCap], b[var_emissionsPerCap]));
-  city_order = emissions_perCap.map(x => x["city"]); //returns an array
+  var defs = svg.append('svg:defs')
 
-  //Re-order emissions_perGDP according to city_order of emissions per capita
-  for (idx = 0; idx < city_order.length; idx++) {
-    match = emissions_perGDP.filter(x => x.city === city_order[idx]); //in array form
-    if (match.length != 0) objArray.push(match[0]);
-  }
+  var paths = svg.append('svg:g')
+    .attr('id', 'markers')
+    .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-  return objArray;
-}
+  //http://tutorials.jenkov.com/svg/marker-element.html
+  var marker = defs.selectAll('marker')
+    .data(data)
+    .enter()
+    .append('svg:marker')
+      .attr('id', function(d){ return 'marker_' + d.name})
+      .attr('markerHeight', 13)
+      .attr('markerWidth', 2)
+      .attr('markerUnits', 'strokeWidth')
+      .attr('orient', 'auto')
+      .attr('refX', 0)
+      .attr('refY', 0)
+      //.attr('viewBox', function(d){ return d.viewbox })
+      .append('svg:path')
+        .attr('d', function(d){ return d.path })
+        .attr('fill', function(d,i) { return "red"; });
 
-function highlightCountry(countryName, idName, dataObj)  {
-  var matchColour = regionColourMap[
-                        dataObj.find(x => x.idName.includes(idName)).region
-                      ];
+  var path = paths.selectAll('path')
+    .data(data)
+    .enter()
+    .append('svg:path')
+      .attr('d', function(d,i){ return 'M 0,' + (i * 100) + ' V ' + (width - margin.right) + ',' + (i * 100) + '' })
+      .attr('stroke', function(d,i) { return "red"; })
+      .attr('stroke-width', 5)
+      .attr('stroke-linecap', 'round')
+      .attr('marker-start', function(d,i){ return 'url(#marker_' + d.name + ')' })
+      .attr('marker-end', function(d,i){ return 'url(#marker_' + d.name  + ')' });
 
-  if (countryName === "South Africa") {
-      d3.select("#mapSouth Africa")
-        .style("stroke-width", 4)
-        // .style("stroke", matchColour === "#A6D4FF" ? "blue" : matchColour);
-        .style("stroke", "#555");
-  }
-  else {
-    d3.select("#map" + countryName)
-      .style("stroke-width", 4)
-      .style("stroke", "#555")
-      .style("stroke-opacity", 1);
-      // .style("stroke", matchColour === "#A6D4FF" ? "blue" : matchColour);
-
-    // d3.selectAll(".countries")
-    //   .selectAll("path:not(#map" + countryName + ")")
-    //   .style("opacity", 0.3);
-  }
 }

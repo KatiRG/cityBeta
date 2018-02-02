@@ -295,9 +295,7 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
   setupData(ghg);
   drawMap();
   emissionsBarChart("groupUSAAsia", "#barChart_USAAsia");
-  emissionsBarChart("groupEUCWLatAmerAfrica", "#barChart_EUCWLatAmerAfrica");  
-  // emissionsBarChart("groupAfrica", "#barChart_Africa");
-  // emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
+  emissionsBarChart("groupEUCWLatAmerAfrica", "#barChart_EUCWLatAmerAfrica");
 });
 
 // ----------------------------------------------------
@@ -740,6 +738,12 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
   // Plot regional avg emissions [tCO2/capita] as a line over each barChart
   //fn_appendRegionalMeans(svgBarChart, geogroup_name, this_dim, emissions_scaled, x, y);
+
+  //svg arrow for Rotterdam bar
+  if (geogroup_name === "groupEUCWLatAmerAfrica" && 
+    d3.select("#gdpButton").text() === "per GDP") {
+    fn_arrow();
+  }
 
 
 } // ./fn emissionsBarChart()
