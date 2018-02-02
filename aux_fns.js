@@ -253,11 +253,14 @@ function fn_updateLegend (attrFlag) {
     dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]];
     //difference between max and min values of selected attribute
     delta = ( dimExtent[1] - dimExtent[0] )/num_levels;
+    delta = Math.round(delta/1000)*1000
     console.log("delta: ", delta)
+    console.log("dimExtent: ", dimExtent)
 
     cb_values=[]; //clear
     for (idx=0; idx < num_levels; idx++) {
-      cb_values.push(Math.round(dimExtent[0] + idx*delta));
+      cb_values.push(Math.round((dimExtent[0] + idx*delta)/1000)*1000);
+      //Math.round(value/1000)*1000
     }
     console.log("cb_values: ", cb_values)
 
@@ -265,8 +268,6 @@ function fn_updateLegend (attrFlag) {
     var colourmapDim = d3.scaleQuantize()  //d3.scale.linear() [old d3js notation]
               .domain([dimExtent[0], dimExtent[1]])
               .range(choose_colourArray[attrFlag]);
-
-    //console.log("cb_values mapped: ", colourmapDim(cb_values) )
   }
 
   //Colour legend squares
@@ -274,16 +275,16 @@ function fn_updateLegend (attrFlag) {
     .selectAll('rect')
     .attr("fill", function (i, j) {
       var updateColour = attrFlag === "methodology" ?
-                choose_colourArray[attrFlag][j]: colourmapDim(cb_values[j] + 1)
+                choose_colourArray[attrFlag][j]: colourmapDim(cb_values[j])
       // if (attrFlag != "methodology") {
       //   console.log("cb_values: ", cb_values[j]);
       //   console.log("updateColour: ", colourmapDim(cb_values[j])) ;
-      //   console.log("map 70: ", colourmapDim(70) );
-      //   console.log("map 71: ", colourmapDim(71) );
-      //   console.log("map 4925: ", colourmapDim(4925) );
-      //   console.log("map 4926: ", colourmapDim(4926) );
-      //   console.log("map 9781: ", colourmapDim(9781) );
-      //   console.log("map 9782: ", colourmapDim(9782) );
+        // console.log("map 0: ", colourmapDim(0) );
+        // console.log("map 5000: ", colourmapDim(5000) );
+        // console.log("map 10000: ", colourmapDim(10000) );
+        // console.log("map 14000: ", colourmapDim(14000) );
+        // console.log("map 15000: ", colourmapDim(15000) );
+        // console.log("map 19000: ", colourmapDim(19000) );
       // }
       return updateColour;
     });
@@ -292,17 +293,26 @@ function fn_updateLegend (attrFlag) {
   d3.select("#barChartLegend")
     .selectAll("text")
     .text(function (i, j) {
-      var updateText = attrFlag === "methodology" ?
-                choose_textArray[attrFlag][j] : Math.round(cb_values[j]);
+      if (attrFlag === "methodology") {
+        updateText = choose_textArray[attrFlag][j]
+    } else {
+      if (j === 0) updateText = "< " + cb_values[j + 1];
+      else updateText = "> " + cb_values[j];      
+    }
       return updateText;
+    })
+    .attr("x", function (d, i) {
+      if (attrFlag === "methodology") xpos = [10,63,150,215,284];
+      else xpos = [0,70,135,205,275];
+      return xpos[i];
     });
 }
 //Create colour bar boxes
 function fn_appendColourBar() {
   
   //setup params
-  var margin = {top: 7, right: 0, bottom: 0, left: 0};
-  var svg_width = 450 - margin.left - margin.right,
+  var margin = {top: 7, right: 0, bottom: 0, left: 10};
+  var svg_width = 750 - margin.left - margin.right,
       svg_height = 35 - margin.top - margin.bottom;
 
   var rect_dim = 15;
@@ -337,7 +347,7 @@ function fn_appendColourBar() {
                   .attr("height", rect_dim)
                   .attr("y", 5)
                   .attr("x", function (d, i) {
-                    return 28 + i * 70;
+                    return 38 + i * 70;
                   })
                   .attr("fill", function (d, i) {
                     //return colour_methodNum[i + 1];                    
@@ -352,7 +362,7 @@ function fn_appendColourBar() {
         })
         .attr("y", 10)
         .attr("x", function (d, i) {
-          var xpos = [0,53,140,205,274];
+          var xpos = [10,63,150,215,284];
           return xpos[i];
         })
         .attr("dy", "6px")
