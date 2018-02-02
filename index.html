@@ -541,66 +541,12 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
   //Extract scaled emissions data for given region
   //Omit cities for which GDP-PPP is missing
-
-  junk = fn_concat("groupUSAAsia", ["groupUSA", "groupAsia"], this_dim);
-
-  if (geogroup_name === "groupUSAAsia") {
-    //Extract data by region
-    ghg_usa = sortByRegion("groupUSA");
-    ghg_asia = sortByRegion("groupAsia");
-
-    //Sort columns in each region
-    ghg_usa.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-    ghg_asia.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-
-    //Concatenate Europe and Asia with a gap in between
-    var emissions_scaled = ghg_usa
-      .concat([{ "city":"gap1",  "region":"groupUSAAsia",
-                 "per capita":0, "per GDP": 0 }])
-      .concat(ghg_asia);
-
-  }
-  else if (geogroup_name === "groupEUCWLatAmerAfrica") {
-    //Extract data by region
-    ghg_europe = sortByRegion("groupEurope");
-    ghg_canada = sortByRegion("groupCan");
-    ghg_oceania = sortByRegion("groupOceania");
-    ghg_latAmer = sortByRegion("groupLatinAmer");
-    ghg_africa = sortByRegion("groupAfrica");
-
-    //Sort columns in each region
-    ghg_europe.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-    ghg_canada.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-    ghg_oceania.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-    ghg_latAmer.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-    ghg_africa.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-
-    //Concatenate Europe and Asia with a gap in between
-    var emissions_scaled = 
-      ghg_europe
-      .concat([{ "city":"gap2",  "region":"groupEUCWLatAmerAfrica",
-                 "per capita":0, "per GDP": 0 }])
-      .concat(ghg_canada)
-      .concat([{ "city":"gap3",  "region":"groupEUCWLatAmerAfrica",
-                 "per capita":0, "per GDP": 0 }])
-      .concat(ghg_oceania)
-      .concat([{ "city":"gap4",  "region":"groupEUCWLatAmerAfrica",
-                 "per capita":0, "per GDP": 0 }])
-      .concat(ghg_latAmer)
-      .concat([{ "city":"gap5",  "region":"groupEUCWLatAmerAfrica",
-                 "per capita":0, "per GDP": 0 }])
-      .concat(ghg_africa);
-
-  }
-  else {
-    emissions_scaled = sortByRegion(geogroup_name, this_dim);
-    //Sort columns
-    emissions_scaled.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
-  }
-  console.log("junk: ", junk)
-  console.log("--------------------------------------------------------")
-  console.log("scaled: ", emissions_scaled)
-
+  var geogroupArray = geogroup_name === "groupUSAAsia" ? 
+                      ["groupUSA","gap","groupAsia"] :
+                      ["groupEurope", "gap", "groupCan", "gap",
+                      "groupOceania", "gap","groupLatinAmer", "gap", 
+                      "groupAfrica"];
+  emissions_scaled = fn_concat(geogroup_name, geogroupArray, this_dim);
 
   // // Get city order of Scope/capita
   // if (d3.select("#reorderButton").text() === "orig order") {

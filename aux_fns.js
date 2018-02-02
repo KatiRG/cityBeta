@@ -175,42 +175,41 @@ function resetElements() {
 //----------------------------------------------
 
 //...............................
-// Prepare data
+// Prepare barChart data
 
 //concatenate geogroups together, separated by a gap
-function fn_concat (barChartGroup, geogroup_array, this_dim) {
+function fn_concat (barChartGroup, geogroupArray, this_dim) {
+  objArray = [];
+  count = 0; //for gap id labels
   
-
-  for (idx=0; idx < geogroup_array.length; idx++) {
+  for (idx=0; idx < geogroupArray.length; idx++) {   
     //Extract data by region
-    ghg_extract = sortByRegion(geogroup_array[idx]);
+    ghg_extract = sortByRegion(geogroupArray[idx]);
 
     //Sort by this_dim in descending order
     ghg_extract.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
 
     //Concatenate with a gap obj in between
-    if (idx > 0) {
-      if (idx%2 == 0) {
-        ghg_extract.concat(ghg_extract);
-      } else {
-        ghg_extract.concat(
-          [{ "city":"gap" + barChartGroup + idx,  
-             "region": barChartGroup,
-             "per capita":0, 
-             "per GDP": 0 }]
-        );
-      }
+    if (idx % 2 == 0) {
+      objArray = objArray.concat(ghg_extract);
+    } else {
+      objArray = objArray.concat(
+        [{ "city":"gap" + barChartGroup + count,  
+           "region": barChartGroup,
+           "per capita":0, 
+           "per GDP": 0 }]
+      );
+      count++;
     }
+  } //.for
 
-  }
-
-  return ghg_extract;
+  return objArray;
 
 }
 
 
 //...............................
-// VIsual interactivity
+// barChart visual interactivity
 
 //Enlarge x-axis labels and reset
 function fn_enlargeName(geogroup_name, cityName) {
