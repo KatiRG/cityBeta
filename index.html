@@ -541,6 +541,9 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
   //Extract scaled emissions data for given region
   //Omit cities for which GDP-PPP is missing
+
+  junk = fn_concat("groupUSAAsia", ["groupUSA", "groupAsia"], this_dim);
+
   if (geogroup_name === "groupUSAAsia") {
     //Extract data by region
     ghg_usa = sortByRegion("groupUSA");
@@ -594,6 +597,9 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
     //Sort columns
     emissions_scaled.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
   }
+  console.log("junk: ", junk)
+  console.log("--------------------------------------------------------")
+  console.log("scaled: ", emissions_scaled)
 
 
   // // Get city order of Scope/capita
@@ -632,11 +638,6 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   var aspectRatio = '660:241';
   var viewBox = '0 0 ' + aspectRatio.split(':').join(' ');
 
-  //chart sizes are ok, but text is stretched. This is a limitation of viewBox for charts. See:
-  //https://medium.com/@maheshsenni/responsive-svg-charts-viewbox-may-not-be-the-answer-aaf9c9bc4ca2
-  //http://www.cagrimmett.com/til/2016/04/26/responsive-d3-bar-chart.html
-  //https://bl.ocks.org/veltman/5cd1ba0b3c623e7b5146
-
   //Fit barCharts responsively using viewBox
   //NB: viewBox stretches text labels as well, so they must be fixed later by adjusting the scale
   my_width = "100%";
@@ -674,9 +675,6 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
   })]);
 
-  // //https://bl.ocks.org/veltman/5cd1ba0b3c623e7b5146
-  // var myscale = width / container.node().getBoundingClientRect().width;
-  // console.log('myscale: ', myscale)
 
   // Define the div for the barChart rect tooltip
   var div = d3.select("body").append("div")

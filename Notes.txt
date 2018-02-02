@@ -1,0 +1,14 @@
+viewBox
+-------
+
+//chart sizes are ok, but text is stretched. This is a limitation of viewBox for charts. See:
+//https://medium.com/@maheshsenni/responsive-svg-charts-viewbox-may-not-be-the-answer-aaf9c9bc4ca2
+//http://www.cagrimmett.com/til/2016/04/26/responsive-d3-bar-chart.html
+//https://bl.ocks.org/veltman/5cd1ba0b3c623e7b5146
+
+//https://mathisonian.com/writing/easy-responsive-svgs-with-viewbox
+//https://jsfiddle.net/fh5kxv3k/	
+
+// //https://bl.ocks.org/veltman/5cd1ba0b3c623e7b5146
+// var myscale = width / container.node().getBoundingClientRect().width;
+// console.log('myscale: ', myscale)

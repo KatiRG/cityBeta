@@ -173,6 +173,45 @@ function resetElements() {
 //----------------------------------------------
 // Functions for emissionsBarChart()
 //----------------------------------------------
+
+//...............................
+// Prepare data
+
+//concatenate geogroups together, separated by a gap
+function fn_concat (barChartGroup, geogroup_array, this_dim) {
+  
+
+  for (idx=0; idx < geogroup_array.length; idx++) {
+    //Extract data by region
+    ghg_extract = sortByRegion(geogroup_array[idx]);
+
+    //Sort by this_dim in descending order
+    ghg_extract.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
+
+    //Concatenate with a gap obj in between
+    if (idx > 0) {
+      if (idx%2 == 0) {
+        ghg_extract.concat(ghg_extract);
+      } else {
+        ghg_extract.concat(
+          [{ "city":"gap" + barChartGroup + idx,  
+             "region": barChartGroup,
+             "per capita":0, 
+             "per GDP": 0 }]
+        );
+      }
+    }
+
+  }
+
+  return ghg_extract;
+
+}
+
+
+//...............................
+// VIsual interactivity
+
 //Enlarge x-axis labels and reset
 function fn_enlargeName(geogroup_name, cityName) {
   idName = format_idName(cityName);
