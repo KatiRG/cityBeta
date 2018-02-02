@@ -253,19 +253,20 @@ function fn_updateLegend (attrFlag) {
     dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]];
     //difference between max and min values of selected attribute
     delta = ( dimExtent[1] - dimExtent[0] )/num_levels;
+    console.log("delta: ", delta)
 
     cb_values=[]; //clear
     for (idx=0; idx < num_levels; idx++) {
-      cb_values.push(dimExtent[0] + idx*delta);
+      cb_values.push(Math.round(dimExtent[0] + idx*delta));
     }
     console.log("cb_values: ", cb_values)
 
     //colour map to take data value and map it to the colour of the level bin it belongs to
-    colourmapDim = d3.scaleQuantize()  //d3.scale.linear() [old d3js notation]
+    var colourmapDim = d3.scaleQuantize()  //d3.scale.linear() [old d3js notation]
               .domain([dimExtent[0], dimExtent[1]])
               .range(choose_colourArray[attrFlag]);
 
-    console.log("cb_values mapped: ", colourmapDim(cb_values) )
+    //console.log("cb_values mapped: ", colourmapDim(cb_values) )
   }
 
   //Colour legend squares
@@ -273,8 +274,17 @@ function fn_updateLegend (attrFlag) {
     .selectAll('rect')
     .attr("fill", function (i, j) {
       var updateColour = attrFlag === "methodology" ?
-                choose_colourArray[attrFlag][j]: colourmapDim(cb_values[j])
-      console.log("updateColour: ", updateColour);
+                choose_colourArray[attrFlag][j]: colourmapDim(cb_values[j] + 1)
+      // if (attrFlag != "methodology") {
+      //   console.log("cb_values: ", cb_values[j]);
+      //   console.log("updateColour: ", colourmapDim(cb_values[j])) ;
+      //   console.log("map 70: ", colourmapDim(70) );
+      //   console.log("map 71: ", colourmapDim(71) );
+      //   console.log("map 4925: ", colourmapDim(4925) );
+      //   console.log("map 4926: ", colourmapDim(4926) );
+      //   console.log("map 9781: ", colourmapDim(9781) );
+      //   console.log("map 9782: ", colourmapDim(9782) );
+      // }
       return updateColour;
     });
 
