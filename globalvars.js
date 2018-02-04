@@ -19,8 +19,8 @@ var colour_labelsHighlight = "#3d3d3d";
 var regionColourMap = { 
   "groupEurope": "#6BACBF", //"#A6D4FF", 
   "groupUSA": "#C399D9", "groupCan": "green", 
-  "groupOceania": "#555",
-  "groupAfrica": "#BD1550", "groupAsia": "red",
+  "groupOceania": "#EB9F9F",
+  "groupAfrica": "#FFD880", "groupAsia": "#BD1550",
   "groupLatinAmer": "#F8CA00"
 };
 
