@@ -539,8 +539,8 @@ function fn_arrow() {
   ];
 
   margin = {top: 0, right: 0, bottom: 0, left: 0},
-      width = 50 - margin.left - margin.right,
-      height = 80 - margin.top - margin.bottom;
+      width = 200 - margin.left - margin.right,
+      height = 200 - margin.top - margin.bottom;
 
 
   svg = d3.select("#barChart_EUCWLatAmerAfrica").append("svg")
@@ -574,9 +574,15 @@ function fn_arrow() {
     .data(data)
     .enter()
     .append('svg:path')
-      .attr('d', function(d,i){ return 'M 0,' + (i * 100) + ' V ' + (width - margin.right) + ',' + (i * 100) + '' })
+      // .attr('d', function(d,i){ return 'M 0,' + (i * 100) + ' V ' + (width - margin.right) + ',' + (i * 100) + '' })
+      .attr('d', function(d,i){ 
+        console.log("i: ", i)
+        console.log("d: ", d)
+        console.log("V: ", width - margin.right)
+        return 'M 100,' + (i * 100) + ' V ' + (width - margin.right) + ',' + (i * 100) + '' 
+      })
       .attr('stroke', function(d,i) { return "red"; })
-      .attr('stroke-width', 5)
+      .attr('stroke-width', 2)
       .attr('stroke-linecap', 'round')
       .attr('marker-start', function(d,i){ return 'url(#marker_' + d.name + ')' })
       .attr('marker-end', function(d,i){ return 'url(#marker_' + d.name  + ')' });
