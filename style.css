@@ -50,13 +50,9 @@ ul {
   }
   #headingOceania { 
     color:cyan;
-    position: relative;
-    left: 563px;
-  }
-  #headingOceania { 
-    color:cyan;
     padding-left: 0px;
   }
+
 }
 
 @media screen and (max-width: 1000px)
