@@ -602,6 +602,7 @@ function fn_arrow() {
   d3.select("#markers").append("text");
   d3.select("#markers").select("text")
     .text(rotterdamEmissionsPerCap + " " + "tCO2/cap")
+    .style("fill", "#565656")
     .attr("transform", function (d) { //adjust arrow proportions
         var xscale = 0.5, yscale = 1.9;         
         
