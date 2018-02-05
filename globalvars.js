@@ -67,6 +67,9 @@ var emissionsToggleDict = {
 }
 
 //------------------------------------------------
+//Variables to store data
+var rotterdamEmissionsPerCap; //acutal Scope1 Emissions/cap for Rotterdam
+
 //AVG REGIONAL EMISSIONS PER CAPITA
 //TO BE VERIFIED! AVGS TAKEN FROM GCA WEBSITE
 var regionalAvgs = {

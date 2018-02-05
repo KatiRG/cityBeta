@@ -220,6 +220,9 @@ function fn_concat (barChartGroup, geogroupArray, this_dim) {
     //Reduce bar height and indicate true value graphically on the chart
     if (geogroupArray[idx] === "groupEurope") {
       var selectedCity = data_GHG.find(x => x.city === "Rotterdam");
+      //Store actual value for later display
+      rotterdamEmissionsPerCap = formatDecimalSci(selectedCity[label_dataPerCap]);
+      //Assign a smaller value FOR SCALE PURPOSES ONLY
       selectedCity[label_dataPerCap] = 11;
     }
 
@@ -558,7 +561,7 @@ function fn_arrow() {
 
   var paths = svg.append('svg:g')
     .attr('id', 'markers')
-    .attr('transform', 'translate(' + 50 + ',' + 75 + ')');
+    .attr('transform', 'translate(' + 42 + ',' + 63 + ')');
 
   //http://tutorials.jenkov.com/svg/marker-element.html
   var marker = defs.selectAll('marker')
@@ -595,4 +598,14 @@ function fn_arrow() {
       .append('svg:path')
         .attr('d', function(d){ return d.path; });
 
+  // var rotterdamText = d3.select("#markers").append("text");
+  d3.select("#markers").append("text");
+  d3.select("#markers").select("text")
+    .text(rotterdamEmissionsPerCap + " " + "tCO2/cap")
+    .attr("transform", function (d) { //adjust arrow proportions
+        var xscale = 0.5, yscale = 1.9;         
+        
+        return "scale(" + xscale + " " + yscale + ")" + 
+              "translate(" + 109 + " " + 2 + ")" ;       
+      });
 }

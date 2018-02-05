@@ -742,7 +742,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   // Plot regional avg emissions [tCO2/capita] as a line over each barChart
   //fn_appendRegionalMeans(svgBarChart, geogroup_name, this_dim, emissions_scaled, x, y);
 
-  //svg arrow for Rotterdam bar
+  //svg arrow for Rotterdam bar only if on emissions/capita view
   if (geogroup_name === "groupEUCWLatAmerAfrica" && 
     d3.select("#gdpButton").text() === "per GDP") {
     fn_arrow();
