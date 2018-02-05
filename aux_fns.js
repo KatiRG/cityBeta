@@ -216,6 +216,13 @@ function fn_concat (barChartGroup, geogroupArray, this_dim) {
     //Sort by this_dim in descending order
     ghg_extract.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
 
+    //Rotterdam -- special case
+    //Reduce bar height and indicate true value graphically on the chart
+    if (geogroupArray[idx] === "groupEurope") {
+      var selectedCity = data_GHG.find(x => x.city === "Rotterdam");
+      selectedCity[label_dataPerCap] = 11;
+    }
+
     //Concatenate with a gap obj in between
     if (idx % 2 == 0) {
       objArray = objArray.concat(ghg_extract);
@@ -532,14 +539,10 @@ function fn_appendRegionalMeans(svg, geogroup_name, this_dim, data, x, y) {
 function fn_arrow() {
   console.log("for rotterdam")
 
+  //define arrow name and path
   //http://bl.ocks.org/hlucasfranca/edbcedfcea544fbe28a9
-  var data = [    
-  //{ id: 2, name: 'arrow', path: 'M 0,0 m -5,-5 L 5,0 L -5,5 Z', viewbox: '-1 -5 10 10' }
-  // { id: 2, name: 'arrow', path: 'M2,2 L2,11 L10,6 L2,2' }
-  //{ id: 2, name: 'arrow', path: "M 100,0 V 43,0" }
-  // { id: 0, name: 'stub', path: "M 0,0 L2,11 L10,6 L2,2" },
+  var data = [
   { id: 1, name: 'arrow', path: "M 2,2 L2,11 L10,6 L2,2" }
-  
   ];
 
 
