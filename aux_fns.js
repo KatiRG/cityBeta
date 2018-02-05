@@ -581,7 +581,10 @@ function fn_arrow() {
       .style("fill", "#000000")
       //.attr('viewBox', function(d){ return d.viewbox })
       .append('svg:path')
-        .attr('d', function(d){ return d.path })
+        .attr('d', function(d){ 
+          console.log("d in path: ", d)
+          if (d.name === "arrow") return d.path;
+        })
         .attr('fill', function(d,i) { return "red"; });
 
   var path = paths.selectAll('path')
