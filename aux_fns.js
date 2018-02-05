@@ -537,30 +537,28 @@ function fn_appendRegionalMeans(svg, geogroup_name, this_dim, data, x, y) {
 }
 
 function fn_arrow() {
-  console.log("for rotterdam")
 
   //define arrow name and path
-  //http://bl.ocks.org/hlucasfranca/edbcedfcea544fbe28a9
   var data = [
   { id: 1, name: 'arrow', path: "M 2,2 L2,11 L10,6 L2,2" }
   ];
 
-
   margin = {top: 0, right: 0, bottom: 0, left: 0},
-      width = 200 - margin.left - margin.right,
+      width = 150 - margin.left - margin.right,
       height = 200 - margin.top - margin.bottom;
 
 
-  svg = d3.select("#barChart_EUCWLatAmerAfrica").append("svg")
+  svg = d3.select("#barChart_EUCWLatAmerAfrica").select(".barSVG")
+          .append("svg")
           .attr('width', width + margin.left + margin.right)
-          .attr('height', height + margin.top + margin.bottom);
+          .attr('height', height + margin.top + margin.bottom)
+          .attr("transform", "translate(" + -56 + "," + -70 + ")");
 
   var defs = svg.append('svg:defs')
 
   var paths = svg.append('svg:g')
     .attr('id', 'markers')
-    //.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-    .attr('transform', 'translate(' + margin.left + ',' + 75 + ')');
+    .attr('transform', 'translate(' + 50 + ',' + 75 + ')');
 
   //http://tutorials.jenkov.com/svg/marker-element.html
   var marker = defs.selectAll('marker')
@@ -574,27 +572,27 @@ function fn_arrow() {
       .attr('orient', 'auto')
       .attr('refX', 2)
       .attr('refY', 6)
-      // .style("stroke", "none")
-      // .style("fill", "#000000");
       .append('svg:path')
-        .attr('d', function(d){ 
-          console.log("d in path: ", d)
-          return d.path;
-        })
+        .attr('d', function(d){ return d.path; })
         .attr('fill', function(d,i) { return "#565656"; });
 
   var path = paths.selectAll('path')
     .data(data)
     .enter()
     .append('svg:path')
-      // .attr('d', function(d,i){ return 'M 0,' + (i * 100) + ' V ' + (width - margin.right) + ',' + (i * 100) + '' })
       .attr('d', function(d,i){
-        return 'M 100,' + 0 + ' V ' + 50 + ',' + 0 + '' 
+        return 'M 100,' + 0 + ' V ' + 50 + ',' + 0 + ''
       })
       .attr('stroke', function(d,i) { return "#565656"; })
-      .attr('stroke-width', 2)
+      .attr('stroke-width', 1)
       .attr('stroke-linecap', 'round')
       .attr('marker-start', function(d,i){ return 'url(#marker_stub' + ')'; })
-      .attr('marker-end', function(d,i){ return 'url(#marker_arrow'   + ')'; });
+      .attr('marker-end', function(d,i){ return 'url(#marker_arrow'   + ')'; })
+      .attr("transform", function (d) { //adjust arrow proportions
+        var xscale = 0.5, yscale = 0.8;         
+        return "scale(" + xscale + " " + yscale + ")";          
+      })
+      .append('svg:path')
+        .attr('d', function(d){ return d.path; });
 
 }
