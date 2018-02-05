@@ -1,5 +1,7 @@
 /*https://openclassrooms.com/courses/prenez-en-main-bootstrap/une-grille*/
 
+/*--------------------------*/
+/*base elements*/
 body {
   padding-top: 10px;
   font-family: "Ubuntu", sans-serif;
@@ -24,6 +26,45 @@ body {
 ul {
     list-style: outside none none;
 /*    margin-top: 80px;*/
+}
+
+
+/*--------------------------*/
+/*responsive divs*/
+@media screen and (max-width: 2048px)
+{
+    #headingCan { 
+      color:red;
+      padding-left: 200px;
+    }
+}
+
+@media screen and (max-width: 1200px)
+{
+    #headingCan { 
+      color:cyan;
+      padding-left: 220px;
+    }
+}
+
+@media screen and (max-width: 1000px)
+{
+    #headingCan { 
+      color:green;
+      padding-left: 243px;
+    }
+
+}
+
+
+/*mobile phone*/
+@media screen and (max-width: 420px)
+{
+    #headingCan { 
+      color:blue; 
+      padding-left: 276px;
+    }
+
 }
 
 /*--------------------------*/
