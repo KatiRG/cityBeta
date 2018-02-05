@@ -537,16 +537,10 @@ function fn_arrow() {
   //{ id: 2, name: 'arrow', path: 'M 0,0 m -5,-5 L 5,0 L -5,5 Z', viewbox: '-1 -5 10 10' }
   // { id: 2, name: 'arrow', path: 'M2,2 L2,11 L10,6 L2,2' }
   //{ id: 2, name: 'arrow', path: "M 100,0 V 43,0" }
-  { id: 0, name: 'stub', path: "M 0,0 L2,11 L10,6 L2,2" },
+  // { id: 0, name: 'stub', path: "M 0,0 L2,11 L10,6 L2,2" },
   { id: 1, name: 'arrow', path: "M 2,2 L2,11 L10,6 L2,2" }
   
   ];
-
-
-  // <marker id="markerArrow" markerWidth="13" markerHeight="13" refX="2" refY="6"
-  //          orient="auto">
-  //       <path d="M2,2 L2,11 L10,6 L2,2" style="fill: #000000;" />
-  //   </marker>
 
 
   margin = {top: 0, right: 0, bottom: 0, left: 0},
@@ -577,36 +571,27 @@ function fn_arrow() {
       .attr('orient', 'auto')
       .attr('refX', 2)
       .attr('refY', 6)
-      .style("stroke", "none")
-      .style("fill", "#000000")
-      //.attr('viewBox', function(d){ return d.viewbox })
+      // .style("stroke", "none")
+      // .style("fill", "#000000");
       .append('svg:path')
         .attr('d', function(d){ 
           console.log("d in path: ", d)
-          if (d.name === "arrow") return d.path;
+          return d.path;
         })
-        .attr('fill', function(d,i) { return "red"; });
+        .attr('fill', function(d,i) { return "#565656"; });
 
   var path = paths.selectAll('path')
     .data(data)
     .enter()
     .append('svg:path')
       // .attr('d', function(d,i){ return 'M 0,' + (i * 100) + ' V ' + (width - margin.right) + ',' + (i * 100) + '' })
-      .attr('d', function(d,i){ 
-        console.log("i: ", i)
-        console.log("d: ", d)
-        console.log("V: ", width - margin.right)
-        //return 'M 100,' + (i * 100) + ' V ' + (width - margin.right) + ',' + (i * 100) + '' 
+      .attr('d', function(d,i){
         return 'M 100,' + 0 + ' V ' + 50 + ',' + 0 + '' 
       })
-      .attr('stroke', function(d,i) { return "blue"; })
+      .attr('stroke', function(d,i) { return "#565656"; })
       .attr('stroke-width', 2)
       .attr('stroke-linecap', 'round')
-      // .attr('marker-start', function(d,i){ return 'url(#marker_' + d.name + ')' })
-      // .attr('marker-end', function(d,i){ return 'url(#marker_' + d.name  + ')' });
-       .attr('marker-start', function(d,i){ 
-        if (i===0) return 'url(#marker_stub' + ')'; 
-      })
-      .attr('marker-end', function(d,i){ if (i===0) return 'url(#marker_arrow'   + ')'; });
+      .attr('marker-start', function(d,i){ return 'url(#marker_stub' + ')'; })
+      .attr('marker-end', function(d,i){ return 'url(#marker_arrow'   + ')'; });
 
 }

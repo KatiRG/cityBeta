@@ -16,3 +16,10 @@ viewBox
 dropdown menu
 -------------
 https://codepen.io/tarsusi/pen/reovOV
+
+SVG markers
+-----------
+//http://bl.ocks.org/hlucasfranca/edbcedfcea544fbe28a9
+//http://tutorials.jenkov.com/svg/marker-element.html
+
+SVG paths: https://www.dashingd3js.com/svg-paths-and-d3js
