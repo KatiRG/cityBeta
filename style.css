@@ -33,26 +33,42 @@ ul {
 /*responsive divs*/
 @media screen and (max-width: 2048px)
 {
-    #headingCan { 
-      color:red;
-      padding-left: 200px;
-    }
+  #headingCan {
+    padding-left: 200px;
+  }
 }
 
 @media screen and (max-width: 1200px)
 {
-    #headingCan { 
-      color:cyan;
-      padding-left: 220px;
-    }
+  #headingEU  { 
+    color:cyan;
+    padding-left: 0px;
+  } 
+  #headingCan { 
+    color:cyan;
+    padding-left: 109px;
+  }
+  #headingOceania { 
+    color:cyan;
+    position: relative;
+    left: 563px;
+  }
+  #headingOceania { 
+    color:cyan;
+    padding-left: 0px;
+  }
 }
 
 @media screen and (max-width: 1000px)
 {
-    #headingCan { 
-      color:green;
-      padding-left: 243px;
-    }
+  #headingCan { 
+    color:green;
+    padding-left: 243px;
+  }
+  #headingEU { 
+    color:green;
+    padding-left: 398px;
+  }
 
 }
 
@@ -252,6 +268,11 @@ div.rtooltip {
 
 /*--------------------------*/
 /* bar chart */
+.headingClass {
+  font-weight: bold;
+  color: #565656;
+  text-align: left;
+}
 #emissionsToggleButton {
   position: absolute;
   left: 390px; 
