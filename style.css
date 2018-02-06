@@ -33,20 +33,22 @@ ul {
 /*responsive divs*/
 @media screen and (max-width: 2048px)
 {
-  #headingCan {
+  #headingEU {
     padding-left: 15px;
   }
-  #headingOceania {
-    padding-left: 75px;
+  #headingCan {
+    padding-left: 113px;
   }
+  #headingOceania {
+    padding-left: 77px;
+  }
+ #headingLatinAmer {
+    padding-left: 0px;
+  } 
 }
 
 @media screen and (max-width: 1200px)
 {
-  #headingEU  { 
-    color:cyan;
-    padding-left: 0px;
-  } 
   #headingCan { 
     color:cyan;
     padding-left: 409px;
@@ -55,6 +57,16 @@ ul {
     color:cyan;
     padding-left: 543px;
   }
+  #headingLatinAmer { 
+    color:cyan;
+    padding-left: 645px;
+  }
+  #headingAfrica { 
+    color:cyan;
+    padding-left: 885px;
+  }
+  
+
 
 }
 
@@ -62,15 +74,22 @@ ul {
 {
   #headingCan { 
     color:green;
-    padding-left: 243px;
+    padding-left: 300px;
   }
-  #headingEU { 
+  #headingOceania { 
     color:green;
-    padding-left: 398px;
+    padding-left: 420px;
+  }
+  #headingLatinAmer { 
+    color:green;
+    padding-left: 475px;
+  }
+  #headingAfrica { 
+    color:green;
+    padding-left: 650px;
   }
 
 }
-
 
 /*mobile phone*/
 @media screen and (max-width: 420px)
