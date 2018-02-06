@@ -34,7 +34,10 @@ ul {
 @media screen and (max-width: 2048px)
 {
   #headingCan {
-    padding-left: 200px;
+    padding-left: 15px;
+  }
+  #headingOceania {
+    padding-left: 75px;
   }
 }
 
@@ -46,11 +49,11 @@ ul {
   } 
   #headingCan { 
     color:cyan;
-    padding-left: 109px;
+    padding-left: 409px;
   }
   #headingOceania { 
     color:cyan;
-    padding-left: 0px;
+    padding-left: 543px;
   }
 
 }
