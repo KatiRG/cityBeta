@@ -610,3 +610,26 @@ function fn_arrow() {
               "translate(" + 109 + " " + 2 + ")" ;       
       });
 }
+
+function fn_svgHeadings (geogroup_id) {
+  console.log(geogroup_id);
+
+  // if (geogroup_id = "barChart_EUCWLatAmerAfrica") {
+  //   var numHeadings = ["Europe", "Canada", "Australia NZ", "Latin Amer", "Africa"];
+  // }
+
+  var svgTitle = d3.select(geogroup_id).select(".barSVG")
+          .append("g").append("svg")
+          .attr('width', 200)
+          .attr('height', 200)
+          .attr("transform", "translate(" + 258 + "," + -60 + ")")
+          .append("text").attr("class", "headingClass");
+
+  svgTitle.text("Canada")
+    .attr("transform", function (d) { //adjust arrow proportions
+        var xscale = 0.5, yscale = 1.9;         
+        
+        return "scale(" + xscale + " " + yscale + ")" + 
+              "translate(" + 109 + " " + 18 + ")" ;       
+      });
+}
