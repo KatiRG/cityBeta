@@ -139,49 +139,13 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
                         font-weight:bold; color: #565656;'>
               Europe
             </div> -->
-            <div class="col-lg-4">
-              <div id="headingEU" class="headingClass" >
-                Europe
-              </div>
-            </div>
-            <div class="col-lg-2">
-              <div id="headingCan" class="headingClass">
-                Canada
-              </div>
-            </div>
-            <div class="col-lg-2">
-              <div id="headingOceania" class="headingClass">
-                Aus &#183; N.Z.
-              </div>
-            </div>
-            <div class="col-lg-3">
-              <div id="headingLatinAmer" class="headingClass" style="position: relative; left: -25px;">
-                Latin America
-              </div>
-            </div>
-            <div class="col-lg-1">
-              <div id="headingAfrica" class="headingClass" style="position: relative; left: -37px;">
-                Africa
-              </div>
-            </div>
-           <!--  <div class="col-lg-2 .barChartTitle" 
-                 style='position: relative; left: 275px; top: 71px; text-align: left; border:none; 
-                        font-weight:bold; color: #565656;'>
-              Aus &#183; N.Z.
-            </div>
-             <div class="col-lg-2 .barChartTitle" 
-                 style='position: relative; left: 174px; top: 71px; text-align: left; border:none; 
-                        font-weight:bold; color: #565656;'>
-              Latin America
-            </div>
-            <div class="col-lg-2 .barChartTitle" 
-                 style='position: relative; left: 259px; top: 71px; text-align: left; border:none; 
-                        font-weight:bold; color: #565656;'>
-              Africa
-            </div> -->
+            
+          <div id="headingEU" class="headingClass" style="position: relative; left:30px;">
+            Europe
+          </div>
 
-            <!-- barChart svg -->
-            <div id="barChart_EUCWLatAmerAfrica"></div>
+          <!-- barChart svg -->
+          <div id="barChart_EUCWLatAmerAfrica"></div>
    
         </div> <!-- ./sub-row USA chart -->
 
@@ -189,8 +153,6 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
         <div class="row">city</div>
 
       </div> <!-- ./col-lg-12 -->
-
-     
 
       
     </div> <!-- ./row 4-->
@@ -229,7 +191,12 @@ var div = d3.select("body").append("div")
 // ----------------------------------------------------
 // Code
 // ----------------------------------------------------
-
+window.onresize = function() {
+  $(window).height();   // returns height of browser viewport
+  $(document).height(); // returns height of HTML document (same as pageHeight in screenshot)
+  $(window).width();   // returns width of browser viewport
+  $(document).width(); // returns width of HTML document (same as pageWidth in screenshot)
+}
 // ----------------------------------------------------
 // Buttons
 // ----------------------------------------------------
@@ -802,6 +769,33 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
     fn_arrow();
   }
 
+  //svg chart titles
+  //if (geogroup_name === "groupEUCWLatAmerAfrica") fn_labelbarCharts();
+  var svgTitle = d3.select("#barChart_EUCWLatAmerAfrica").select(".barSVG")
+          .append("g").append("svg")
+          .attr('width', 200)
+          .attr('height', 200)
+          .attr("transform", "translate(" + 258 + "," + -60 + ")")
+          .append("text").attr("class", "headingClass");
+
+  // svgTitle.text("Canada")
+  //   .style("fill", "#565656")
+  //   .attr("transform", function (d) { //adjust arrow proportions
+  //       var xscale = 0.5, yscale = 1.9;         
+        
+  //       return "scale(" + xscale + " " + yscale + ")" + 
+  //             "translate(" + 109 + " " + 18 + ")" ;       
+  //     })
+  //   .style("font-size", "17px")
+  //   .style("font-weight", "bold");
+
+  svgTitle.text("Canada")
+    .attr("transform", function (d) { //adjust arrow proportions
+        var xscale = 0.5, yscale = 1.9;         
+        
+        return "scale(" + xscale + " " + yscale + ")" + 
+              "translate(" + 109 + " " + 18 + ")" ;       
+      });
 
 } // ./fn emissionsBarChart()
 

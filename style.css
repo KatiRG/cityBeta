@@ -9,7 +9,7 @@ body {
 
 [class*="col-"], footer {
   /*background-color: lightgreen; */
-  border: 2px solid gray; 
+  border: 2px solid white; 
   border-radius: 6px;
   line-height: 40px;
   text-align: center;
@@ -30,76 +30,46 @@ ul {
 
 
 /*--------------------------*/
-/*responsive divs*/
-@media screen and (max-width: 2048px)
+/*$(window).width();*/
+/*@media screen and (max-width: 2048px)
 {
-  #headingEU {
-    padding-left: 15px;
+  div #headingCan { 
+    padding-left: 101px;
   }
-  #headingCan {
-    padding-left: 113px;
-  }
-  #headingOceania {
-    padding-left: 77px;
-  }
- #headingLatinAmer {
-    padding-left: 0px;
-  } 
 }
 
 @media screen and (max-width: 1200px)
 {
-  #headingCan { 
+  div #headingCan { 
     color:cyan;
-    padding-left: 409px;
+    padding-left: 9px;
   }
-  #headingOceania { 
-    color:cyan;
-    padding-left: 543px;
-  }
-  #headingLatinAmer { 
-    color:cyan;
-    padding-left: 645px;
-  }
-  #headingAfrica { 
-    color:cyan;
-    padding-left: 885px;
-  }
-  
+}
 
-
+@media screen and (max-width: 850px)
+{
+  div #headingCan { 
+    color:green;
+    padding-left: -400px;
+  }
 }
 
 @media screen and (max-width: 1000px)
 {
-  #headingCan { 
-    color:green;
-    padding-left: 300px;
+  div #headingCan { 
+    color:blue;
+    padding-left: -400px;
   }
-  #headingOceania { 
-    color:green;
-    padding-left: 420px;
-  }
-  #headingLatinAmer { 
-    color:green;
-    padding-left: 475px;
-  }
-  #headingAfrica { 
-    color:green;
-    padding-left: 650px;
-  }
-
-}
+}*/
 
 /*mobile phone*/
-@media screen and (max-width: 420px)
+/*@media screen and (max-width: 420px)
 {
     #headingCan { 
       color:blue; 
       padding-left: 276px;
     }
-
-}
+}*/
 
 /*--------------------------*/
 /*buttons*/
@@ -286,10 +256,11 @@ div.rtooltip {
 
 /*--------------------------*/
 /* bar chart */
-.headingClass {
+.headingClass { /* svg stylings */
   font-weight: bold;
-  color: #565656;
-  text-align: left;
+  /*color: #565656;*/
+  font-size: 17px;
+  fill: #565656;
 }
 #emissionsToggleButton {
   position: absolute;
