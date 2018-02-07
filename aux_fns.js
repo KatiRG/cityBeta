@@ -623,30 +623,33 @@ function fn_svgHeadings (geogroup_id) {
 
   if (geogroup_id === "#barChart_EUCWLatAmerAfrica") {
     numHeadings = ["Europe","Canada", "Australia - NZ", "Latin Amer", "Africa"];
-    svgTrans = [ [-33, 0], [256, 0], [340, 0], [407, 0], [575, 0] ];
+    svgTrans = [ [64, 18], [623, 18], [791, 18], [925, 18], [1259, 18] ];
   } else {
     numHeadings = ["USA", "Asia"];
-    svgTrans = [ [-33, -55], [481, -55] ];
+    svgTrans = [ [64, 15], [1069, 15] ]; //y=22?
   }
 
-  for (idx = 0; idx < numHeadings.length; idx++) {
-    var svgTitle = d3.select(geogroup_id).select(".barSVG")
-            .append("g").append("svg")
-            .attr('width', 120)
-            .attr('height', 50)
-            .attr("transform", function () {
-              transx = svgTrans[idx][0];
-              transy = svgTrans[idx][1];
-              return "translate(" + transx + "," + transy + ")";
-            })
-            .append("text").attr("class", "headingClass");
 
-    svgTitle.text(numHeadings[idx])
+  var svgTitle = d3.select(geogroup_id).select(".barSVG")
+          .append("g").append("svg")
+          .attr('width', 700)
+          .attr('height', 100) 
+          .attr("transform", function () {
+            transx = 0;
+            transy = (geogroup_id === "#barChart_EUCWLatAmerAfrica") ? 0 : -30;
+            return "translate(" + transx + "," + transy + ")";
+          });
+
+  for (idx = 0; idx < numHeadings.length; idx++) {
+    console.log("numHeading: ", numHeadings [idx])
+    svgTitle.append("g")
+      .append("text").attr("class", "headingClass")
+      .text(numHeadings[idx])
       .attr("transform", function (d) { //adjust arrow proportions
           var xscale = 0.5, yscale = 1.9;
           
           return "scale(" + xscale + " " + yscale + ")" + 
-                "translate(" + 109 + " " + 18 + ")" ;
+                "translate(" + svgTrans[idx][0] + " " + svgTrans[idx][1] + ")" ;
         });
   }
 }
