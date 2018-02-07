@@ -218,8 +218,6 @@ d3.select("#gdpButton")
     var buttonText = (d3.select(this).text() === label_dataPerGDP) ?
                       label_dataPerCap : label_dataPerGDP;
 
-    console.log("buttonText: ", buttonText)
-
     if (buttonText === label_dataPerGDP) {
       d3.select("#barChartCaption").text("Per capita emissions " + dimUnits[this_dim])
         .style("padding-left", "335px");
@@ -231,13 +229,9 @@ d3.select("#gdpButton")
 
     d3.select(this).text(buttonText);
 
-    //Plot emissions bar charts for each geo group    
-    // emissionsBarChart("groupEurope", "#barChart_EU");
-    // emissionsBarChart("groupUSA", "#barChart_USA");
-    // emissionsBarChart("groupOceania", "#barChart_Oceania");
-    // emissionsBarChart("groupAfrica", "#barChart_Africa");
-    // emissionsBarChart("groupAsia", "#barChart_Asia");
-    // emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
+    //Plot emissions bar charts for each geo group
+    emissionsBarChart("groupUSAAsia", "#barChart_USAAsia");
+    emissionsBarChart("groupEUCWLatAmerAfrica", "#barChart_EUCWLatAmerAfrica");
 
     //(de-)activate reorder button if "Scope1/capita" is being displayed
     var reorderState = (buttonText === label_dataPerCap) ? "block" : "none";
@@ -547,10 +541,6 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   // barChart caption in #barChartCaption div
   this_dim = (d3.select("#gdpButton").text() === label_dataPerGDP) ?
                       label_dataPerCap : label_dataPerGDP;
-  // d3.select("#barChartCaption").text(this_dim + " " + dimUnits[this_dim]
-  //   + " emissions grouped by world region");
-  console.log("this_dim: ", this_dim)
-
 
   //https://bl.ocks.org/seemantk/ec245e1f4e824e685982dd5d3fbb2fcc
   var margin = {top: 0, right: 0, bottom: 0, left: 20};
@@ -590,12 +580,12 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   var xAxis = d3.axisBottom()
     .scale(x);
 
-  var yAxis = d3.axisLeft()
+  var yAxis = d3.axisRight()
     .scale(y)
+    .ticks(5)
     .tickFormat(function(d) {
       return this_dim === label_dataPerGDP ? formatDecimalk(d) : d;
-    });
-
+    }); 
 
   //https://mathisonian.com/writing/easy-responsive-svgs-with-viewbox
   //https://jsfiddle.net/fh5kxv3k/
@@ -628,13 +618,11 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
     // console.log("d[this_dim]: ", d[this_dim])
 
     if (this_dim === label_dataPerCap) {
-      if (geogroup_name === "groupUSAAsia" ||
-        geogroup_name === "groupUSA") same_max = 20;
+      if (geogroup_name === "groupUSAAsia") same_max = 20;
       else  same_max = 11;      
     } else {
-      same_max = d[this_dim];
-    //   if (geogroup_name === "groupAfrica") same_max = 750000;
-    //   else same_max = 370000;
+      if (geogroup_name === "groupUSAAsia") same_max = 250000;
+      else same_max = 300000; //same_max = d[this_dim];
     }
 
     return same_max;
@@ -748,12 +736,14 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   //y-axis
   svgBarChart.append("g")
       .attr("class", "y axis")
-      //.call(yAxis)
-      .call(d3.axisRight(y).ticks(5))
+      .call(yAxis)
+      //.call(d3.axisRight(y).ticks(5))     
       .selectAll("text")  
         .style("text-anchor", "end")
         .attr("dx", "-.8em")
-        .attr("dy", ".15em");
+        .attr("dy", ".15em")
+        .attr("transform", "scale(" + .6 + " " + 1 + ")" 
+                          );
 
   // Plot regional avg emissions [tCO2/capita] as a line over each barChart
   //fn_appendRegionalMeans(svgBarChart, geogroup_name, this_dim, emissions_scaled, x, y);
