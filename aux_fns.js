@@ -555,7 +555,7 @@ function fn_arrow() {
           .append("svg")
           .attr('width', width + margin.left + margin.right)
           .attr('height', height + margin.top + margin.bottom)
-          .attr("transform", "translate(" + -56 + "," + -70 + ")");
+          .attr("transform", "translate(" + -56 + "," + -10 + ")"); //posn of arrow and text
 
   var defs = svg.append('svg:defs')
 
@@ -612,24 +612,36 @@ function fn_arrow() {
 }
 
 function fn_svgHeadings (geogroup_id) {
-  console.log(geogroup_id);
+  console.log("geogroup_id: ", geogroup_id);
 
-  // if (geogroup_id = "barChart_EUCWLatAmerAfrica") {
-  //   var numHeadings = ["Europe", "Canada", "Australia NZ", "Latin Amer", "Africa"];
-  // }
+  if (geogroup_id === "#barChart_EUCWLatAmerAfrica") {
+    numHeadings = ["Europe","Canada", "Australia - NZ", "Latin Amer", "Africa"];
+    svgTrans = [ [-33, -12], [256, -12], [340, -12], [407, -12], [575, -12] ];
+  } else {
+    numHeadings = ["USA", "Asia"];
+    svgTrans = [ [-33, 0], [256, 0] ];
+  }
+  console.log("numHeadings: ", numHeadings)
 
-  var svgTitle = d3.select(geogroup_id).select(".barSVG")
-          .append("g").append("svg")
-          .attr('width', 200)
-          .attr('height', 200)
-          .attr("transform", "translate(" + 258 + "," + -60 + ")")
-          .append("text").attr("class", "headingClass");
+  for (idx = 0; idx < numHeadings.length; idx++) {
+    console.log(numHeadings[idx])
+    var svgTitle = d3.select(geogroup_id).select(".barSVG")
+            .append("g").append("svg")
+            .attr('width', 120)
+            .attr('height', 50)
+            .attr("transform", function () {
+              transx = svgTrans[idx][0];
+              transy = svgTrans[idx][1];
+              return "translate(" + transx + "," + transy + ")";
+            })
+            .append("text").attr("class", "headingClass");
 
-  svgTitle.text("Canada")
-    .attr("transform", function (d) { //adjust arrow proportions
-        var xscale = 0.5, yscale = 1.9;         
-        
-        return "scale(" + xscale + " " + yscale + ")" + 
-              "translate(" + 109 + " " + 18 + ")" ;       
-      });
+    svgTitle.text(numHeadings[idx])
+      .attr("transform", function (d) { //adjust arrow proportions
+          var xscale = 0.5, yscale = 1.9;
+          
+          return "scale(" + xscale + " " + yscale + ")" + 
+                "translate(" + 109 + " " + 18 + ")" ;
+        });
+  }
 }

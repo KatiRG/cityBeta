@@ -134,23 +134,14 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
         </div>
 
         <div class="row">
-         <!--    <div class="col-lg-2 .barChartTitle" 
-                 style='position: relative; left: 17px; top: 0px; text-align: left; border:none; 
-                        font-weight:bold; color: #565656;'>
-              Europe
-            </div> -->
-            
-          <div id="headingEU" class="headingClass" style="position: relative; left:30px;">
-            Europe
-          </div>
-
+        
           <!-- barChart svg -->
           <div id="barChart_EUCWLatAmerAfrica"></div>
    
-        </div> <!-- ./sub-row USA chart -->
+        </div>
 
 
-        <div class="row">city</div>
+        <div class="row" style="position:relative; top:10px;">city</div>
 
       </div> <!-- ./col-lg-12 -->
 
@@ -622,7 +613,10 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
     // .attr("width", width + margin.left + margin.right)
     // .attr("height", height + margin.top + margin.bottom)
     .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    .attr("transform", function () {
+      var transx = (geogroup_id === "#barChart_EUCWLatAmerAfrica") ? 60 : margin.top;
+      return "translate(" + margin.left + "," + transx + ")";
+    });
 
 
   x.domain(emissions_scaled.map(function (d) {
@@ -785,7 +779,8 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   //       return "scale(" + xscale + " " + yscale + ")" + 
   //             "translate(" + 109 + " " + 18 + ")" ;       
   //     });
-  if (geogroup_name === "groupEUCWLatAmerAfrica") fn_svgHeadings(geogroup_id);
+  console.log("geogroup_id in index: ", geogroup_id);
+  fn_svgHeadings(geogroup_id);
 
 } // ./fn emissionsBarChart()
 
