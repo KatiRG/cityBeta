@@ -257,11 +257,11 @@ d3.select("#reorderButton")
     d3.select(this).text(buttonText);
 
     //Re-order Scope1/GDP according to Scope1/capita
+    console.log("call fn")
+    emissionsBarChart("groupUSAAsia", "#barChart_USAAsia");
+    emissionsBarChart("groupEUCWLatAmerAfrica", "#barChart_EUCWLatAmerAfrica");
     // emissionsBarChart("groupUSAAsia", "#barChart_USAAsia");
-    // emissionsBarChart("groupEuropeCan", "#barChart_EUCan");
-    // emissionsBarChart("groupOceania", "#barChart_Oceania");
-    // emissionsBarChart("groupAfrica", "#barChart_Africa");
-    // emissionsBarChart("groupLatinAmer", "#barChart_LatinAmer");
+
      
   })
   .on("mouseover", function () {
@@ -556,10 +556,10 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
                       "groupAfrica"];
   emissions_scaled = fn_concat(geogroup_name, geogroupArray, this_dim);
 
-  // // Get city order of Scope/capita
-  // if (d3.select("#reorderButton").text() === "orig order") {
-  //   emissions_scaled = fn_reorderByEmissionsPerCapita(geogroup_name, emissions_scaled);
-  // } // end button text check
+  // Get city order of Scope/capita
+  if (d3.select("#reorderButton").text() === "orig order") {
+    emissions_scaled = fn_reorderByEmissionsPerCapita(geogroup_name, emissions_scaled);
+  } // end button text check
 
   if (geogroup_name === "groupUSAAsia") {
     pOuter = 0.1;
