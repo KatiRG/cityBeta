@@ -607,7 +607,7 @@ function fn_arrow() {
         var xscale = 0.5, yscale = 1.9;         
         
         return "scale(" + xscale + " " + yscale + ")" + 
-              "translate(" + 109 + " " + 2 + ")" ;       
+              "translate(" + 109 + " " + 10 + ")" ;       
       });
 }
 
@@ -616,10 +616,10 @@ function fn_svgHeadings (geogroup_id) {
 
   if (geogroup_id === "#barChart_EUCWLatAmerAfrica") {
     numHeadings = ["Europe","Canada", "Australia - NZ", "Latin Amer", "Africa"];
-    svgTrans = [ [-33, -12], [256, -12], [340, -12], [407, -12], [575, -12] ];
+    svgTrans = [ [-33, 0], [256, 0], [340, 0], [407, 0], [575, 0] ];
   } else {
     numHeadings = ["USA", "Asia"];
-    svgTrans = [ [-33, 0], [256, 0] ];
+    svgTrans = [ [-33, -55], [481, -55] ];
   }
   console.log("numHeadings: ", numHeadings)
 
