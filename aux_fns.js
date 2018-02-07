@@ -629,24 +629,56 @@ function fn_svgHeadings (geogroup_id) {
     svgTrans = [ [-33, -55], [481, -55] ];
   }
 
-  for (idx = 0; idx < numHeadings.length; idx++) {
+
     var svgTitle = d3.select(geogroup_id).select(".barSVG")
             .append("g").append("svg")
-            .attr('width', 120)
+            .attr('width', 700)
             .attr('height', 50)
             .attr("transform", function () {
-              transx = svgTrans[idx][0];
-              transy = svgTrans[idx][1];
+              transx = 0; //svgTrans[0][0];
+              transy = 0; //svgTrans[0][1];
               return "translate(" + transx + "," + transy + ")";
-            })
-            .append("text").attr("class", "headingClass");
+            });
 
-    svgTitle.text(numHeadings[idx])
+    svgTitle.append("g")
+      .append("text").attr("class", "headingClass")
+      .text(numHeadings[0])
       .attr("transform", function (d) { //adjust arrow proportions
           var xscale = 0.5, yscale = 1.9;
           
           return "scale(" + xscale + " " + yscale + ")" + 
-                "translate(" + 109 + " " + 18 + ")" ;
+                "translate(" + 64 + " " + 18 + ")" ;
         });
-  }
+
+    svgTitle.append("g")
+      .append("text").attr("class", "headingClass")
+      .text(numHeadings[2])
+      .attr("transform", function (d) { //adjust arrow proportions
+          var xscale = 0.5, yscale = 1.9;
+          
+          return "scale(" + xscale + " " + yscale + ")" + 
+                "translate(" + 623 + " " + 18 + ")" ;
+        });  
+  
+
+  // for (idx = 0; idx < numHeadings.length; idx++) {
+  //   var svgTitle = d3.select(geogroup_id).select(".barSVG")
+  //           .append("g").append("svg")
+  //           .attr('width', 120)
+  //           .attr('height', 50)
+  //           .attr("transform", function () {
+  //             transx = svgTrans[idx][0];
+  //             transy = svgTrans[idx][1];
+  //             return "translate(" + transx + "," + transy + ")";
+  //           })
+  //           .append("text").attr("class", "headingClass");
+
+  //   svgTitle.text(numHeadings[idx])
+  //     .attr("transform", function (d) { //adjust arrow proportions
+  //         var xscale = 0.5, yscale = 1.9;
+          
+  //         return "scale(" + xscale + " " + yscale + ")" + 
+  //               "translate(" + 109 + " " + 18 + ")" ;
+  //       });
+  // }
 }
