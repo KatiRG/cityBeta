@@ -626,21 +626,22 @@ function fn_svgHeadings (geogroup_id) {
     svgTrans = [ [64, 18], [623, 18], [791, 18], [925, 18], [1259, 18] ];
   } else {
     numHeadings = ["USA", "Asia"];
-    svgTrans = [ [-33, -55], [481, -55] ];
+    svgTrans = [ [64, 15], [1069, 15] ]; //y=22?
   }
 
 
   var svgTitle = d3.select(geogroup_id).select(".barSVG")
           .append("g").append("svg")
           .attr('width', 700)
-          .attr('height', 50)
+          .attr('height', 100) 
           .attr("transform", function () {
-            transx = 0; //svgTrans[0][0];
-            transy = 0; //svgTrans[0][1];
+            transx = 0;
+            transy = (geogroup_id === "#barChart_EUCWLatAmerAfrica") ? 0 : -30;
             return "translate(" + transx + "," + transy + ")";
           });
 
   for (idx = 0; idx < numHeadings.length; idx++) {
+    console.log("numHeading: ", numHeadings [idx])
     svgTitle.append("g")
       .append("text").attr("class", "headingClass")
       .text(numHeadings[idx])
@@ -650,36 +651,5 @@ function fn_svgHeadings (geogroup_id) {
           return "scale(" + xscale + " " + yscale + ")" + 
                 "translate(" + svgTrans[idx][0] + " " + svgTrans[idx][1] + ")" ;
         });
-
-    // svgTitle.append("g")
-    //   .append("text").attr("class", "headingClass")
-    //   .text(numHeadings[2])
-    //   .attr("transform", function (d) { //adjust arrow proportions
-    //       var xscale = 0.5, yscale = 1.9;
-          
-    //       return "scale(" + xscale + " " + yscale + ")" + 
-    //             "translate(" + 623 + " " + 18 + ")" ;
-    //     });
   }
-
-  // for (idx = 0; idx < numHeadings.length; idx++) {
-  //   var svgTitle = d3.select(geogroup_id).select(".barSVG")
-  //           .append("g").append("svg")
-  //           .attr('width', 120)
-  //           .attr('height', 50)
-  //           .attr("transform", function () {
-  //             transx = svgTrans[idx][0];
-  //             transy = svgTrans[idx][1];
-  //             return "translate(" + transx + "," + transy + ")";
-  //           })
-  //           .append("text").attr("class", "headingClass");
-
-  //   svgTitle.text(numHeadings[idx])
-  //     .attr("transform", function (d) { //adjust arrow proportions
-  //         var xscale = 0.5, yscale = 1.9;
-          
-  //         return "scale(" + xscale + " " + yscale + ")" + 
-  //               "translate(" + 109 + " " + 18 + ")" ;
-  //       });
-  // }
 }

@@ -119,11 +119,11 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
         <!--barChart sub-rows-->
         <div class="row">
           
-            <div class="col-lg-2 .barChartTitle" 
+      <!--       <div class="col-lg-2 .barChartTitle" 
                  style='position: relative; left: 67px; text-align: left; border:none; 
                         font-weight:bold; color: white;'>
                  USA
-            </div>
+            </div> -->
             
             <!-- barChart svg -->
             <div id="barChart_USAAsia"></div>
@@ -754,7 +754,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   }
 
   //svg chart titles
-  if (geogroup_name === "groupEUCWLatAmerAfrica") fn_svgHeadings(geogroup_id);
+  fn_svgHeadings(geogroup_id);
 
 } // ./fn emissionsBarChart()
 
