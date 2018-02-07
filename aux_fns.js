@@ -240,6 +240,13 @@ function fn_concat (barChartGroup, geogroupArray, this_dim) {
     }
   } //.for
 
+  //save cityOrder
+  if (this_dim === "per capita") {
+    if (barChartGroup === "groupUSAAsia") cityOrder_row1 = objArray.map(x => x["city"]);
+    else cityOrder_row2 = objArray.map(x => x["city"]);
+  }
+
+
   return objArray;
 }
 
@@ -253,7 +260,7 @@ function fn_abbr(d) {
 }
 
 function sortByRegion(region, this_dim) {
-  console.log("region in sortByRegion: ", region)
+  //console.log("region in sortByRegion: ", region)
 
   ghg_byRegion = [];
   data_GHG.forEach(function (d) {
@@ -263,31 +270,14 @@ function sortByRegion(region, this_dim) {
 }
 
 function fn_reorderByEmissionsPerCapita(region, emissions_perGDP) {
-  var var_emissionsPerCap = label_dataPerCap;
   var city_order = [];
   var objArray = [];
 
-  if (region === "groupUSAAsia") {
-    // regionArray = ["groupUSA", "groupAsia"];
-    regionArray = ["groupUSA","gap","groupAsia"];
+  // if (region === "groupUSAAsia") {
+  //   city_order = cityOrder_row1;
+  // } else city_order = cityOrder_row2;
 
-  } else if (region === "groupEUCWLatAmerAfrica") {
-    //regionArray = ["groupEurope", "groupCan", "groupOceania", "groupLatinAmer", "groupAfrica"];
-    regionArray =  ["groupEurope", "gap", "groupCan", "gap",
-                      "groupOceania", "gap","groupLatinAmer", "gap", 
-                      "groupAfrica"];
-  }
-
-  console.log("region in fn: ", regionArray)
-
-  //Get city order of emissions per capita
-  // for (idx = 0; idx < regionArray.length; idx++) {
-  //   emissions_perCap = sortByRegion(regionArray[idx], var_emissionsPerCap);
-  //   emissions_perCap.sort((a, b) => d3.descending(a[var_emissionsPerCap], b[var_emissionsPerCap]));
-  //   city_order = emissions_perCap.map(x => x["city"]); //returns an array
-  // }
-
-  console.log("city_order: ", city_order)
+  city_order = (region === "groupUSAAsia" ? cityOrder_row1 : cityOrder_row2);
 
   //Re-order emissions_perGDP according to city_order of emissions per capita
   for (idx = 0; idx < city_order.length; idx++) {

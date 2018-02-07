@@ -219,11 +219,11 @@ d3.select("#gdpButton")
                       label_dataPerCap : label_dataPerGDP;
 
     if (buttonText === label_dataPerGDP) {
-      d3.select("#barChartCaption").text("Per capita emissions " + dimUnits[this_dim])
+      d3.select("#barChartCaption").text("Per capita emissions " + dimUnits[label_dataPerCap])
         .style("padding-left", "335px");
     } else {
       d3.select("#barChartCaption").text("Emissions per unit of Gross Domestic Product " 
-        + dimUnits[this_dim])
+        + dimUnits[label_dataPerGDP])
         .style("padding-left", "123px");
     }
 
@@ -257,7 +257,6 @@ d3.select("#reorderButton")
     d3.select(this).text(buttonText);
 
     //Re-order Scope1/GDP according to Scope1/capita
-    console.log("call fn")
     emissionsBarChart("groupUSAAsia", "#barChart_USAAsia");
     emissionsBarChart("groupEUCWLatAmerAfrica", "#barChart_EUCWLatAmerAfrica");
     // emissionsBarChart("groupUSAAsia", "#barChart_USAAsia");

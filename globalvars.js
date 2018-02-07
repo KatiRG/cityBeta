@@ -9,7 +9,7 @@ label_dataPerGDP = "per GDP";
 //------------------------------------------------
 //Variables to pass
 var attrFlag = "methodology"; //attribute to be used to fill barChart bars. Default "Protocol"
-
+var cityOrder_row1, cityOrder_row2; //save orignal city order
 //------------------------------------------------
 //COLOURS
 //barChart labels + highlight colour
