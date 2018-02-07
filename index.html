@@ -754,7 +754,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   }
 
   //svg chart titles
-  fn_svgHeadings(geogroup_id);
+  if (geogroup_name === "groupEUCWLatAmerAfrica") fn_svgHeadings(geogroup_id);
 
 } // ./fn emissionsBarChart()
 

@@ -623,43 +623,44 @@ function fn_svgHeadings (geogroup_id) {
 
   if (geogroup_id === "#barChart_EUCWLatAmerAfrica") {
     numHeadings = ["Europe","Canada", "Australia - NZ", "Latin Amer", "Africa"];
-    svgTrans = [ [-33, 0], [256, 0], [340, 0], [407, 0], [575, 0] ];
+    svgTrans = [ [64, 18], [623, 18], [791, 18], [925, 18], [1259, 18] ];
   } else {
     numHeadings = ["USA", "Asia"];
     svgTrans = [ [-33, -55], [481, -55] ];
   }
 
 
-    var svgTitle = d3.select(geogroup_id).select(".barSVG")
-            .append("g").append("svg")
-            .attr('width', 700)
-            .attr('height', 50)
-            .attr("transform", function () {
-              transx = 0; //svgTrans[0][0];
-              transy = 0; //svgTrans[0][1];
-              return "translate(" + transx + "," + transy + ")";
-            });
+  var svgTitle = d3.select(geogroup_id).select(".barSVG")
+          .append("g").append("svg")
+          .attr('width', 700)
+          .attr('height', 50)
+          .attr("transform", function () {
+            transx = 0; //svgTrans[0][0];
+            transy = 0; //svgTrans[0][1];
+            return "translate(" + transx + "," + transy + ")";
+          });
 
+  for (idx = 0; idx < numHeadings.length; idx++) {
     svgTitle.append("g")
       .append("text").attr("class", "headingClass")
-      .text(numHeadings[0])
+      .text(numHeadings[idx])
       .attr("transform", function (d) { //adjust arrow proportions
           var xscale = 0.5, yscale = 1.9;
           
           return "scale(" + xscale + " " + yscale + ")" + 
-                "translate(" + 64 + " " + 18 + ")" ;
+                "translate(" + svgTrans[idx][0] + " " + svgTrans[idx][1] + ")" ;
         });
 
-    svgTitle.append("g")
-      .append("text").attr("class", "headingClass")
-      .text(numHeadings[2])
-      .attr("transform", function (d) { //adjust arrow proportions
-          var xscale = 0.5, yscale = 1.9;
+    // svgTitle.append("g")
+    //   .append("text").attr("class", "headingClass")
+    //   .text(numHeadings[2])
+    //   .attr("transform", function (d) { //adjust arrow proportions
+    //       var xscale = 0.5, yscale = 1.9;
           
-          return "scale(" + xscale + " " + yscale + ")" + 
-                "translate(" + 623 + " " + 18 + ")" ;
-        });  
-  
+    //       return "scale(" + xscale + " " + yscale + ")" + 
+    //             "translate(" + 623 + " " + 18 + ")" ;
+    //     });
+  }
 
   // for (idx = 0; idx < numHeadings.length; idx++) {
   //   var svgTitle = d3.select(geogroup_id).select(".barSVG")
