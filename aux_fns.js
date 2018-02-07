@@ -631,21 +631,23 @@ function fn_svgHeadings (geogroup_id) {
 
 
   var svgTitle = d3.select(geogroup_id).select(".barSVG")
-          .append("g").append("svg")
-          .attr('width', 700)
-          .attr('height', 100) 
+          .append("g")
           .attr("transform", function () {
             transx = 0;
             transy = (geogroup_id === "#barChart_EUCWLatAmerAfrica") ? 0 : -30;
             return "translate(" + transx + "," + transy + ")";
           });
 
+  svgTitle.append("svg")
+          .attr('width', 700)
+          .attr('height', 100);
+
   for (idx = 0; idx < numHeadings.length; idx++) {
     console.log("numHeading: ", numHeadings [idx])
     svgTitle.append("g")
       .append("text").attr("class", "headingClass")
       .text(numHeadings[idx])
-      .attr("transform", function (d) { //adjust arrow proportions
+      .attr("transform", function (d) {
           var xscale = 0.5, yscale = 1.9;
           
           return "scale(" + xscale + " " + yscale + ")" + 
