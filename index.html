@@ -105,11 +105,11 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
       <div class="col-lg-12">
         <!--barChart legend-->
         <div class="row">
-          <div id="barChartCaption"></div>
+          <div id="barChartCaption">Per capita emissions [tCO2/capita]</div>
           <ul class="nytg-sort" id="emissionsToggleButton">
               <li id="gdpButton">per GDP</li>
           </ul>
-          <ul class="nytg-sort" style='position: absolute; left: 473px; top: 0px;'>
+          <ul class="nytg-sort" style='position: absolute; left: 773px; top: 0px;'>
               <li id="reorderButton" style="display: none;">Re-order</li>
           </ul>
 
@@ -125,17 +125,15 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
                  USA
             </div>
             
+            <!-- barChart svg -->
             <div id="barChart_USAAsia"></div>
          
-        </div>
+        </div> <!-- ./sub-row 1 -->
 
-        <div class="row">
-        
+        <div class="row">        
           <!-- barChart svg -->
-          <div id="barChart_EUCWLatAmerAfrica"></div>
-   
-        </div>
-
+          <div id="barChart_EUCWLatAmerAfrica"></div>   
+        </div> <!-- ./sub-row 2 -->
 
         <div class="row" style="position:relative; top:10px;">city</div>
 
@@ -219,6 +217,17 @@ d3.select("#gdpButton")
     
     var buttonText = (d3.select(this).text() === label_dataPerGDP) ?
                       label_dataPerCap : label_dataPerGDP;
+
+    console.log("buttonText: ", buttonText)
+
+    if (buttonText === label_dataPerGDP) {
+      d3.select("#barChartCaption").text("Per capita emissions " + dimUnits[this_dim])
+        .style("padding-left", "335px");
+    } else {
+      d3.select("#barChartCaption").text("Emissions per unit of Gross Domestic Product " 
+        + dimUnits[this_dim])
+        .style("padding-left", "123px");
+    }
 
     d3.select(this).text(buttonText);
 
@@ -540,12 +549,8 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
                       label_dataPerCap : label_dataPerGDP;
   // d3.select("#barChartCaption").text(this_dim + " " + dimUnits[this_dim]
   //   + " emissions grouped by world region");
-  if (this_dim === label_dataPerCap) {
-    d3.select("#barChartCaption").text("Per capita emissions " + dimUnits[this_dim]);
-  } else {
-    d3.select("#barChartCaption").text("Emissions per unit of Gross Domestic Product " 
-      + dimUnits[this_dim]);
-  }
+  console.log("this_dim: ", this_dim)
+
 
   //https://bl.ocks.org/seemantk/ec245e1f4e824e685982dd5d3fbb2fcc
   var margin = {top: 0, right: 0, bottom: 0, left: 20};
@@ -760,22 +765,6 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   }
 
   //svg chart titles
-  // //if (geogroup_name === "groupEUCWLatAmerAfrica") fn_labelbarCharts();
-  // var svgTitle = d3.select("#barChart_EUCWLatAmerAfrica").select(".barSVG")
-  //         .append("g").append("svg")
-  //         .attr('width', 200)
-  //         .attr('height', 200)
-  //         .attr("transform", "translate(" + 258 + "," + -60 + ")")
-  //         .append("text").attr("class", "headingClass");
-
-  // svgTitle.text("Canada")
-  //   .attr("transform", function (d) { //adjust arrow proportions
-  //       var xscale = 0.5, yscale = 1.9;         
-        
-  //       return "scale(" + xscale + " " + yscale + ")" + 
-  //             "translate(" + 109 + " " + 18 + ")" ;       
-  //     });
-  console.log("geogroup_id in index: ", geogroup_id);
   fn_svgHeadings(geogroup_id);
 
 } // ./fn emissionsBarChart()

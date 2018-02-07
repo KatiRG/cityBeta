@@ -612,7 +612,6 @@ function fn_arrow() {
 }
 
 function fn_svgHeadings (geogroup_id) {
-  console.log("geogroup_id: ", geogroup_id);
 
   if (geogroup_id === "#barChart_EUCWLatAmerAfrica") {
     numHeadings = ["Europe","Canada", "Australia - NZ", "Latin Amer", "Africa"];
@@ -621,10 +620,8 @@ function fn_svgHeadings (geogroup_id) {
     numHeadings = ["USA", "Asia"];
     svgTrans = [ [-33, -55], [481, -55] ];
   }
-  console.log("numHeadings: ", numHeadings)
 
   for (idx = 0; idx < numHeadings.length; idx++) {
-    console.log(numHeadings[idx])
     var svgTitle = d3.select(geogroup_id).select(".barSVG")
             .append("g").append("svg")
             .attr('width', 120)
