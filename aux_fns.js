@@ -148,12 +148,8 @@ function resetElements() {
   //reset bar opacity
   d3.selectAll(".bar")
     .style("fill-opacity", 1)
-    .style("stroke", "gray");
+    .style("stroke", "none");
 
-  //reset vcircle opacity
-  d3.selectAll(".node")
-    .style("fill-opacity", 1)
-    .style("stroke-opacity", 1);
 
   //clear previously highlighted country
   d3.selectAll(".countries").selectAll("path")

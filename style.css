@@ -298,7 +298,7 @@ div.rtooltip {
   text-align: left;
 }
 .bar {
-  stroke: gray;
+  /*stroke: gray;*/
 }
 .axis {
   font: 14px sans-serif;
