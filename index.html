@@ -672,7 +672,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         resetElements();
         
         d3.select("#tick" + idName).text(function (d) { return fn_abbr(d); })
-          .style("font-size", "10px")
+          .style("font-size", "16px")
           .attr("fill", colour_labels);
 
         div.style("opacity", 0);
@@ -685,33 +685,39 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("transform", "translate(-1," + height + ")")  //***HERE!!!!
       .call(d3.axisTop(x))
       .selectAll("text")
-        .text(function (d) { return ""; })
-        //.text(function (d) { return fn_abbr(d); })
-      //     .attr("id", function (d) {
-      //       idName = format_idName(d);
-      //       return "tick" + idName;
-      //     })
-      //     .attr("y", -3)
-      //     .attr("x", 7)
-      //     .attr("dy", "12px")
-      //     .attr("transform", function (d) {
-      //       if (d != "gap") {
-      //         if (geogroup_name === "groupUSAAsia") {
-      //           //xscale=1; yscale=1; 
-      //           rot=-45;
-      //           xtrans=165; ytrans = -155;
-      //          } else {
-      //           rot = -90;
-      //           xtrans = 0; ytrans = 0;
-      //          }
+       // .text(function (d) { return ""; })
+        .text(function (d) { return fn_abbr(d); })
+          .attr("id", function (d) {
+            idName = format_idName(d);
+            return "tick" + idName;
+          })
+          .attr("y", -61)
+          .attr("x", 25)
+          .attr("dy", 7)
+          .attr("transform", function (d, i) {
+            if (d != "gap") {
+              if (geogroup_name === "groupUSAAsia") {
+                console.log("d in tick: ", d)
+                xscale=.6; yscale=1.8; rot=-65;
+                xtrans=44;
 
-      //         return "rotate(" + rot + ")" +
-      //                  "translate(" + xtrans + " " + ytrans + ")" ;
+                if (d === "Cleveland" | d === "Las Vegas") ytrans = -95;
+                else if (d === "Savannah") ytrans = -75;
+                else ytrans = -45 + (i*1.3);
+                
+                
+               } else {
+                rot = -90;
+                xtrans = 0; ytrans = 0;
+               }
+
+              // return "rotate(" + rot + ")" +
+              //          "translate(" + xtrans + " " + ytrans + ")" ;
              
-      //         // return "scale(" + xscale + " " + yscale + ")" + "rotate(" + rot + ")" +
-      //         //         "translate(" + xtrans + " " + ytrans + ")" ;
-      //       }
-      //     })
+              return "scale(" + xscale + " " + yscale + ")" + 
+                      "translate(" + xtrans + " " + ytrans + ")" + "rotate(" + rot + ")" ;
+            }
+          })
       .style("text-anchor", "start")  //"middle"
       .style("fill", function (d) {
         if (d.includes("gap")) return "#fff";
@@ -722,7 +728,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       })
       .on("mouseout", function (d) {
         d3.select("#tick" + idName).text(function (d) { return fn_abbr(d); })
-          .style("font-size", "10px");
+          .style("font-size", "16px");
       });
 
   //hide x tick mark for "gap" bar  
