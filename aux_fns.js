@@ -560,10 +560,12 @@ function fn_arrow() {
 
 
   svg = d3.select("#barChart_EUCWLatAmerAfrica").select(".barSVG")
-          .append("svg")
-          .attr('width', width + margin.left + margin.right)
-          .attr('height', height + margin.top + margin.bottom)
-          .attr("transform", "translate(" + -56 + "," + -10 + ")"); //posn of arrow and text
+           .append("g")
+           .attr('height', height + margin.top + margin.bottom)
+          .attr("transform", "translate(" + -56 + "," + -10 + ")") //posn of arrow and text
+           .append("svg")
+          .attr('width', width + margin.left + margin.right);
+          
 
   var defs = svg.append('svg:defs')
 

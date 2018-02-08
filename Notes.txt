@@ -23,3 +23,15 @@ SVG markers
 //http://tutorials.jenkov.com/svg/marker-element.html
 
 SVG paths: https://www.dashingd3js.com/svg-paths-and-d3js
+
+SVG transformation: put tranformation on the <g> !!!!
+-----------------------------------------------------
+https://stackoverflow.com/questions/31524618/svg-translate-seems-to-behave-different-in-chrome-chromium
+
+In SVG 1.1 <svg> elements do not accept transform attributes. In SVG 2 it is proposed that they should.
+
+Chrome and Firefox are experimenting with implementing proposed parts of the SVG 2 specification. Some things are implemented only by Firefox, and others only by Chrome. The majority are not implemented at all and a few features are implemented by both. The SVG 2 specification itself is unfinished.
+
+In this particular case Firefox has implemented the SVG 2 feature but Chrome has not.
+
+You can achieve the same result in browsers that do not support this SVG 2 feature either by replacing the <svg> element by a <g> element or by creating an <svg> child element on the <g> element and putting the transform on the <g> element.
