@@ -30,8 +30,8 @@ var regionColourMap = {
 //http://www.colourlovers.com/palette/1645043/Vanilla_Blueberry
 //http://www.colourlovers.com/palette/2832327/nostalgia
 var colour_methodNum = {
-  1: "#FFA446", //GPC 
-  2: "#BB78A1", //US ICLEI
+  1: "#9DD3DF", //GPC 
+  2: "#C3BBE2", //US ICLEI
   3: "#E35B5D", //IPCC
   4: "#EB9F9F", //ICLEI
   5: "#F18052" //OTHER
@@ -42,7 +42,7 @@ var num_levels = 5; //number of discrete levels
 var cb_values = [];
 
 var choose_colourArray = {
-  "methodology": ["#FFA446","#BB78A1","#E35B5D","#EB9F9F","#F18052"],
+  "methodology": ["#9DD3DF","#C3BBE2","#E35B5D","#EB9F9F","#F18052"],
   "population density": ["#DED8B6","#F9C869","#5D5061","#2F274C","#6A3058"]
 }
 
