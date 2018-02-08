@@ -393,6 +393,58 @@ function fn_enlargeName(geogroup_name, cityName) {
     .attr("fill", colour_labelsHighlight);
 }
 
+function fn_cityLabels_perCapita (d, i, thisCityGroup) {
+
+  if (thisCityGroup === "bar class_groupUSA") {
+    
+    if (d === "Cleveland" || d === "Las Vegas") {
+      xtrans = 60; ytrans = -5; rot = -90;
+    }
+    else if (d === "Savannah") ytrans = -75;
+    else if (d === "Emeryville, CA" || d === "Knoxville") ytrans = -45 + (i*1.3);
+    else ytrans = -35 + (i*1.1);
+  } else if (thisCityGroup === "bar class_groupAsia") {    
+
+    if (d === "Incheon") {
+      // ytrans = -110;
+      xtrans = 60; ytrans = -5; rot = -90;
+    }
+    else if (d === "Kaohsiung") ytrans = -70;
+    else if (d === "Yilan") ytrans = -65;
+    else if (d === "Taoyuan") ytrans = -25;
+    else if (d === "Hong Kong") ytrans = 0;
+    else ytrans = -49 + (i*1.1);
+
+  } else if (thisCityGroup === "bar class_groupEurope") {
+                       
+    if (d === "Rotterdam" || d === "Ljubljana") {
+      xtrans = 60; ytrans = 20; rot = -90;
+    }
+    else ytrans = -30 + (i*1.9);
+
+  } else if (thisCityGroup === "bar class_groupCan") {
+    if (d === "Hamilton, ON" || d === "Windsor, ON" || d === "Edmonton") {
+      xtrans = 60; ytrans = 0; rot = -90;
+    }
+    else if (d === "Vancouver") ytrans = -10;
+    else if (d === "North Vancouver") ytrans = 5;
+    else ytrans = -120 + (i*1.9);
+
+  } else if (thisCityGroup === "bar class_groupOceania") {
+    if (d === "Auckland") ytrans = -29;
+    else ytrans = -130 + (i*2.3);
+    
+  } else if (thisCityGroup === "bar class_groupLatinAmer") {
+    if (d === "Buenos Aires") ytrans = -15;
+    else ytrans = -110 + (i*1.9);
+    
+  } else if (thisCityGroup === "bar class_groupAfrica") ytrans = -160 + (i*2.2);
+
+
+
+
+}
+
 //...............................
 // create barChart SVGs
 
