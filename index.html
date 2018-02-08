@@ -704,14 +704,17 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
           .attr("class", "xAxisCityName")
           .attr("transform", function (d, i) {
             // console.log("this_dim: ", this_dim)
+            thisCity = d3.select(this).attr("id").split("tick").pop();
+            thisCityGroup = d3.select("#bar" + thisCity).attr("class");
+
             if (this_dim === "per capita") {
+              
               if (d.indexOf("gap") != 0) {
 
                 xscale=.6; yscale=1.8; rot=-65;
                 xtrans=44; ytrans=-55;
                
-                thisCity = d3.select(this).attr("id").split("tick").pop();
-                thisCityGroup = d3.select("#bar" + thisCity).attr("class");
+                
 
                 if (geogroup_name === "groupUSAAsia") {
                   fn_cityLabels_perCapita (d, i, "bar class_groupUSA");
@@ -727,7 +730,20 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
                } //.d.indexOf("gap") != 0
 
             } else if (this_dim === "per GDP") {
-              xscale=.6; yscale=1.8; rot=-65; xtrans=44;
+              console.log("this_dim: ", this_dim)
+              console.log("d: ", d)
+              console.log("geogroup_name: ", geogroup_name)
+              //xscale=.6; yscale=1.8; rot=-65; xtrans=44;
+              xscale=.6; yscale=1.8; rot=-65; xtrans=44; ytrans=-55;
+
+             if (geogroup_name === "groupUSAAsia") {
+              console.log("thisCityGroup: ", thisCityGroup)
+                if (thisCityGroup === "bar class_groupUSA") fn_cityLabels_perGDP (d, i, thisCityGroup);
+                if (thisCityGroup === "bar class_groupAsia") fn_cityLabels_perGDP (d, i, thisCityGroup);
+                if (thisCityGroup === "bar class_groupEurope") fn_cityLabels_perCapita (d, i, thisCityGroup);
+              }
+
+
             } //this_dim
 
             return d.includes("gap") ? "" : "scale(" + xscale + " " + yscale + ")" + 
