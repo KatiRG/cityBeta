@@ -689,7 +689,9 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .call(d3.axisTop(x))
       .selectAll("text")
        // .text(function (d) { return ""; })
-        .text(function (d) { return fn_abbr(d); })
+        .text(function (d) { 
+          if (d.indexOf("gap") != 0) return fn_abbr(d); 
+        })
           .attr("id", function (d) {
             idName = format_idName(d);
             return "tick" + idName;
@@ -699,16 +701,16 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
           .attr("dy", 7)
           .attr("class", "xAxisCityName")
           .attr("transform", function (d, i) {
-            if (d != "gap") {
+            if (d.indexOf("gap") != 0) {
+             
+            // if (d != "gap") {
               if (geogroup_name === "groupUSAAsia") {
-                console.log("d in tick: ", d)
-
+                
                 thisCity = d3.select(this).attr("id").split("tick").pop();
                 thisCityGroup = d3.select("#bar" + thisCity).attr("class")
-      
-                console.log("group: ", thisCityGroup)
-              
-               
+
+                // console.log("thisCityGroup: ", thisCityGroup)
+
                 xscale=.6; yscale=1.8; rot=-65;
                 xtrans=44;
 
@@ -719,23 +721,27 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
                   else if (d === "Emeryville, CA" || d === "Knoxville") ytrans = -45 + (i*1.3);
                   else ytrans = -35 + (i*1.1);
                 } else {
+                  // console.log("d in tick: ", d)
+
 
                   if (d === "Incheon") ytrans = -110;
                   else if (d === "Kaohsiung") ytrans = -70;
                   else if (d === "Yilan") ytrans = -65;
-             
-                  else ytrans = -35 + (i*1.1);
+                  else if (d === "Taoyuan") ytrans = -25;
+                  else if (d === "Hong Kong") ytrans = 0;
+                  else ytrans = -49 + (i*1.1);
 
                 }
                 
-               } else {
+               } else { //groupEUCWLatAmerAfrica
                 rot = -90;
                 xtrans = 0; ytrans = 0;
                }
 
               // return "rotate(" + rot + ")" +
               //          "translate(" + xtrans + " " + ytrans + ")" ;
-             
+              // console.log("d at the end: ", d)
+
               return d.includes("gap") ? "" : "scale(" + xscale + " " + yscale + ")" + 
                       "translate(" + xtrans + " " + ytrans + ")" + "rotate(" + rot + ")" ;
             }
@@ -743,7 +749,6 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .style("text-anchor", "start")  //"middle"
       // .style("fill", function (d) {
       //   if (d.includes("gap")) return "#565656";
-      //   else return "#000";
       // })
       .on("touchmove mousemove", function (d) {
         fn_enlargeName(geogroup_name, d);
