@@ -315,6 +315,11 @@ div.rtooltip {
 .x.axis path {
   display: none;
 }
+.xAxisCityName {
+  font-size: 16px;
+  color: #565656;
+  opacity: 0.3;
+}
 
 /*--------------------------*/
 /*Stats table*/
