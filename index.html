@@ -702,17 +702,15 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
           .attr("class", "xAxisCityName")
           .attr("transform", function (d, i) {
             if (d.indexOf("gap") != 0) {
+              xscale=.6; yscale=1.8; rot=-65;
+              xtrans=44;
              
-            // if (d != "gap") {
+              thisCity = d3.select(this).attr("id").split("tick").pop();
+              thisCityGroup = d3.select("#bar" + thisCity).attr("class");
+
               if (geogroup_name === "groupUSAAsia") {
+
                 
-                thisCity = d3.select(this).attr("id").split("tick").pop();
-                thisCityGroup = d3.select("#bar" + thisCity).attr("class")
-
-                // console.log("thisCityGroup: ", thisCityGroup)
-
-                xscale=.6; yscale=1.8; rot=-65;
-                xtrans=44;
 
                 if (thisCityGroup === "bar class_groupUSA") {
 
@@ -734,8 +732,31 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
                 }
                 
                } else { //groupEUCWLatAmerAfrica
-                rot = -90;
-                xtrans = 0; ytrans = 0;
+                
+                if (thisCityGroup === "bar class_groupEurope") {
+         
+                  if (d === "Rotterdam") ytrans = -110;
+                  else if (d === "Ljubljana") ytrans = -40;
+                  else ytrans = -30 + (i*1.9);
+
+                  } else if (thisCityGroup === "bar class_groupCan") {
+                    if (d === "Hamilton, ON") ytrans = -110;
+                    else ytrans = -120 + (i*1.9);
+
+                  } else if (thisCityGroup === "bar class_groupOceania") {
+                    if (d === "Auckland") ytrans = -110;
+                    else ytrans = -120 + (i*1.9);
+                    
+                  } else if (thisCityGroup === "bar class_groupLatinAmer") {
+                    if (d === "Buenos Aires") ytrans = -110;
+                    else ytrans = -130 + (i*1.9);
+                    
+                  } else if (thisCityGroup === "bar class_groupAfrica") {
+                    if (d === "Durban") ytrans = -110;
+                    else ytrans = -150 + (i*1.9);
+                    
+                  }
+
                }
 
               // return "rotate(" + rot + ")" +
