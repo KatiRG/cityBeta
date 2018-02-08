@@ -741,26 +741,33 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
                } else { //groupEUCWLatAmerAfrica
                 
                 if (thisCityGroup === "bar class_groupEurope") {
-         
-                  if (d === "Rotterdam") ytrans = -110;
-                  else if (d === "Ljubljana") ytrans = -40;
+                       
+                  if (d === "Rotterdam" || d === "Ljubljana") {
+                    xtrans = 60; ytrans = 20; rot = -90;
+                  }
+                  // else if (d === "Ljubljana") ytrans = -40;
                   else ytrans = -30 + (i*1.9);
 
                   } else if (thisCityGroup === "bar class_groupCan") {
-                    if (d === "Hamilton, ON") ytrans = -110;
+                    if (d === "Hamilton, ON" || d === "Windsor, ON" || d === "Edmonton") {
+                      xtrans = 60; ytrans = 0; rot = -90;
+                    }
+                    else if (d === "Vancouver") ytrans = -10;
+                    else if (d === "North Vancouver") ytrans = 5;
                     else ytrans = -120 + (i*1.9);
 
                   } else if (thisCityGroup === "bar class_groupOceania") {
-                    if (d === "Auckland") ytrans = -110;
-                    else ytrans = -120 + (i*1.9);
+                    if (d === "Auckland") ytrans = -29;
+                    else ytrans = -130 + (i*2.3);
                     
                   } else if (thisCityGroup === "bar class_groupLatinAmer") {
-                    if (d === "Buenos Aires") ytrans = -110;
-                    else ytrans = -130 + (i*1.9);
+                    if (d === "Buenos Aires") ytrans = -15;
+                    else ytrans = -110 + (i*1.9);
                     
                   } else if (thisCityGroup === "bar class_groupAfrica") {
-                    if (d === "Durban") ytrans = -110;
-                    else ytrans = -150 + (i*1.9);
+                    // if (d === "Durban") ytrans = -110;
+                    // else ytrans = -150 + (i*2.2);
+                    ytrans = -160 + (i*2.2);
                     
                   }
 
