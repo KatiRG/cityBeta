@@ -641,7 +641,6 @@ function fn_svgHeadings (geogroup_id) {
           .attr('height', 100);
 
   for (idx = 0; idx < numHeadings.length; idx++) {
-    console.log("numHeading: ", numHeadings [idx])
     svgTitle.append("g")
       .append("text").attr("class", "headingClass")
       .text(numHeadings[idx])
