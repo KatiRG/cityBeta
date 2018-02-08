@@ -388,7 +388,8 @@ function fn_enlargeName(geogroup_name, cityName) {
   else if (geogroup_name === "groupAfrica") newSize = "18px";
   else if (geogroup_name === "groupAsia") newSize = "18px";
   
-  d3.select("#tick" + idName).text(cityName).style("font-size", newSize).style("opacity", 1)
+  d3.select("#tick" + idName).text(cityName)
+    .style("font-size", newSize).style("opacity", 1)
     .attr("fill", colour_labelsHighlight);
 }
 

@@ -516,7 +516,9 @@ function highlightElements(idName) {
   d3.selectAll(".worldcity:not(#city" + idName + ")")
     .style("fill-opacity", 0.1)
     .style("stroke-opacity", 0.1);
+  
   d3.selectAll(".countries").selectAll("path").style("opacity", 0.1);
+  
   d3.select("#city" + idName)
     .attr("stroke", "black")
     .attr("stroke-width", 2);
@@ -714,7 +716,9 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
                 if (thisCityGroup === "bar class_groupUSA") {
 
-                  if (d === "Cleveland" || d === "Las Vegas") ytrans = -95;
+                  if (d === "Cleveland" || d === "Las Vegas") {
+                    xtrans = 60; ytrans = -5; rot = -90;
+                  }
                   else if (d === "Savannah") ytrans = -75;
                   else if (d === "Emeryville, CA" || d === "Knoxville") ytrans = -45 + (i*1.3);
                   else ytrans = -35 + (i*1.1);
@@ -722,7 +726,10 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
                   // console.log("d in tick: ", d)
 
 
-                  if (d === "Incheon") ytrans = -110;
+                  if (d === "Incheon") {
+                    // ytrans = -110;
+                    xtrans = 60; ytrans = -5; rot = -90;
+                  }
                   else if (d === "Kaohsiung") ytrans = -70;
                   else if (d === "Yilan") ytrans = -65;
                   else if (d === "Taoyuan") ytrans = -25;
