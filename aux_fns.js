@@ -141,7 +141,6 @@ function setupData(ghg){
     };
   })
 
-
 } // ./setupData()
 
 // Reset elements to original style before selection
@@ -428,6 +427,7 @@ function fn_cityLabels_perCapita (d, i, thisCityGroup) {
     }
     else if (d === "Vancouver") ytrans = -10;
     else if (d === "North Vancouver") ytrans = 5;
+    else if (d === "Ajax, ON") ytrans = 30;
     else ytrans = -120 + (i*1.9);
 
   } else if (thisCityGroup === "bar class_groupOceania") {
@@ -443,15 +443,16 @@ function fn_cityLabels_perCapita (d, i, thisCityGroup) {
 
 function fn_cityLabels_perGDP (d, i, thisCityGroup) {
   if (thisCityGroup === "bar class_groupUSA") {
-    if (d === "Las Vegas") ytrans = -28;
-    else ytrans = -5 + (i*0.9);
+    if (d === "Las Vegas") {rot = -90; xtrans = 60; ytrans = -15;}
+    else if (d === "D C" || d === "Nashville & Davidson" || d === "Cleveland") ytrans = -40 + (i*1.6);
+    else ytrans = -29 + (i*1.2);
   } else if (thisCityGroup === "bar class_groupAsia") {
     if (d === "Kaohsiung" || d === "Taoyuan") {
       xtrans = 60; ytrans = -5; rot = -90;
     }  else if (d === "Taoyuan") {rot = -65; ytrans = -25;}
-    else if (d === "Hong Kong") ytrans = -20;
+    else if (d === "Hong Kong") ytrans = -40;
     else if (d === "Incheon") ytrans = 0;
-    else ytrans = -50 + (i*1.1);
+    else ytrans = -130 + (i*1.1);
 
   } else if (thisCityGroup === "bar class_groupEurope") {
                        
