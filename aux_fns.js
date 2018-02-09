@@ -444,18 +444,9 @@ function fn_cityLabels_perGDP (d, i, thisCityGroup) {
   // thisRegion = data_GHG.find(x => x.city.includes(d)).region;
 
   if (thisCityGroup === "bar class_groupUSA") {
-    //Omit city labels for cities that do not have a GDP value
-    thisRegion = data_GHG.find(x => x.city.includes(d)).region;
-    
-    if (thisCityGroup.indexOf(thisRegion)) {
-      gdpValue = data_GHG.find(x => x.city.includes(d))['per GDP'];
-      if (gdpValue) {
-        // console.log("gdpValue: ", gdpValue)
-        if (d === "Las Vegas") {rot = -90; xtrans = 60; ytrans = -15;}
-        else if (d === "D C" || d === "Nashville & Davidson" || d === "Cleveland") ytrans = -40 + (i*1.6);
-        else ytrans = -29 + (i*1.2);
-      }
-    }
+    if (d === "Las Vegas") {rot = -90; xtrans = 60; ytrans = -15;}
+    else if (d === "D C" || d === "Nashville & Davidson" || d === "Cleveland") ytrans = -40 + (i*1.6);
+    else ytrans = -29 + (i*1.2);
   } else if (thisCityGroup === "bar class_groupAsia") {
     if (d === "Kaohsiung" || d === "Taoyuan") {
       xtrans = 60; ytrans = -5; rot = -90;
@@ -487,6 +478,10 @@ function fn_cityLabels_perGDP (d, i, thisCityGroup) {
       // xtrans = 60; ytrans = 15; rot = -90;
       ytrans = -340 + (i*4.2);
     }
+}
+
+function fn_cityLabels_perGDP_reordered(d, i, thisCityGroup) {
+  
 }
 
 //...............................

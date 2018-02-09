@@ -536,6 +536,8 @@ function highlightElements(idName) {
 
 function emissionsBarChart(geogroup_name, geogroup_id) {
   //dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]]
+  var reorderButton = d3.select("#reorderButton").text();
+  console.log("reorderButton: ", reorderButton)
 
   // Remove any previous bar chart
   d3.select(geogroup_id).select("svg").remove();
@@ -722,11 +724,12 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
             if (this_dim === "per capita") {              
                 
              
-              fn_cityLabels_perCapita (d, i, thisCityGroup);
+              fn_cityLabels_perCapita(d, i, thisCityGroup);
 
             } else if (this_dim === "per GDP") {
 
-              fn_cityLabels_perGDP (d, i, thisCityGroup);
+              if (d3.select("#reorderButton").text() === "Re-order") fn_cityLabels_perGDP(d, i, thisCityGroup);
+              else fn_cityLabels_perGDP_reordered(d, i, thisCityGroup);
 
             } //this_dim
            
