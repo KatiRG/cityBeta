@@ -471,17 +471,20 @@ function fn_cityLabels_perGDP (d, i, thisCityGroup) {
 
   } else if (thisCityGroup === "bar class_groupCan") {
       if (d === "Winnipeg") ytrans = -175 + (i*3.7);
-      else ytrans = -175 + (i*3.9);
+      else if (d === "Edmonton" || d === "Calgary") ytrans = -185 + (i*4.3);
+      else ytrans = -170 + (i*4.3);
 
   } else if (thisCityGroup === "bar class_groupOceania") {
-      xtrans = 60; ytrans = -5; rot = -90; 
+      if (d === "Auckland") ytrans = -50;
+      else ytrans = -175 + (i*3.9);
   } else if (thisCityGroup === "bar class_groupLatinAmer") {
       if (d === "Caracas") {xtrans = 60; ytrans = -5; rot = -90;}
       else if (d === "Santiago") ytrans = -36;
       else ytrans = -135 + (i*2.2);
     
   } else if (thisCityGroup === "bar class_groupAfrica") {//ytrans = -160 + (i*2.2);
-      xtrans = 60; ytrans = 15; rot = -90;
+      // xtrans = 60; ytrans = 15; rot = -90;
+      ytrans = -340 + (i*4.2);
     }
 }
 
