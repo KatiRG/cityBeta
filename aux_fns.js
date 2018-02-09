@@ -450,15 +450,15 @@ function fn_cityLabels_perGDP (d, i, thisCityGroup) {
     if (d === "Kaohsiung" || d === "Taoyuan") {
       xtrans = 60; ytrans = -5; rot = -90;
     }  else if (d === "Taoyuan") {rot = -65; ytrans = -25;}
-    else if (d === "Hong Kong") ytrans = -40;
-    else if (d === "Incheon") ytrans = 0;
-    else ytrans = -130 + (i*1.1);
+    else if (d === "Hong Kong") ytrans = -75;
+    else if (d === "Incheon") ytrans = -35;
+    else ytrans = -75 + (i*1.5);
 
   } else if (thisCityGroup === "bar class_groupEurope") {
-                       
-    // if (d === "Manchester") ytrans = -20;
-    // else 
-    ytrans = 0 + (i*1.4);
+          console.log(d)             
+    if (d === "Manchester") ytrans = -20;
+    else if (d === "Warsaw" || d === "Rotterdam") ytrans = 0;
+    else ytrans = 20 + (i*0.7);
 
   } else if (thisCityGroup === "bar class_groupCan") {
     ytrans = -120 + (i*3.0);
