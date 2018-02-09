@@ -445,35 +445,30 @@ function fn_cityLabels_perGDP (d, i, thisCityGroup) {
     if (d === "Las Vegas") ytrans = -28;
     else ytrans = -5 + (i*0.9);
   } else if (thisCityGroup === "bar class_groupAsia") {
-    console.log("thisCityGroup in fn : ", thisCityGroup)
-    console.log("d in fn: ", d)
-
     if (d === "Kaohsiung" || d === "Taoyuan") {
       xtrans = 60; ytrans = -5; rot = -90;
     }  else if (d === "Taoyuan") {rot = -65; ytrans = -25;}
     else if (d === "Hong Kong") ytrans = -20;
-    else ytrans = -65 + (i*1.1);
+    else if (d === "Incheon") ytrans = 0;
+    else ytrans = -50 + (i*1.1);
 
-  }
-
-  if (thisCityGroup === "bar class_groupEurope") {
+  } else if (thisCityGroup === "bar class_groupEurope") {
                        
-    if (d === "Manchester") ytrans = -20;
-    else ytrans = -30 + (i*1.9);
+    // if (d === "Manchester") ytrans = -20;
+    // else 
+    ytrans = 0 + (i*1.4);
 
-  } //else if (thisCityGroup === "bar class_groupCan") {
-  //   if (d === "Hamilton, ON" || d === "Windsor, ON" || d === "Edmonton") {
-  //     xtrans = 60; ytrans = 0; rot = -90;
-  //   }
-  //   else if (d === "Vancouver") ytrans = -10;
-  //   else if (d === "North Vancouver") ytrans = 5;
-  //   else ytrans = -120 + (i*1.9);
+  } else if (thisCityGroup === "bar class_groupCan") {
+    ytrans = -120 + (i*3.0);
 
-  // } else if (thisCityGroup === "bar class_groupOceania") {
-  //   if (d === "Auckland") ytrans = -29;
-  //   else ytrans = -130 + (i*2.3);
+  } else if (thisCityGroup === "bar class_groupOceania") {
+    if (d === "Auckland") ytrans = -39;
+    else {
+      //ytrans = -130 + (i*2.3);
+      xtrans = 60; ytrans = -5; rot = -90;
+    }
     
-  // } else if (thisCityGroup === "bar class_groupLatinAmer") {
+  } //else if (thisCityGroup === "bar class_groupLatinAmer") {
   //   if (d === "Buenos Aires") ytrans = -15;
   //   else ytrans = -110 + (i*1.9);
     

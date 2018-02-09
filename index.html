@@ -714,35 +714,24 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
                 xscale=.6; yscale=1.8; rot=-65;
                 xtrans=44; ytrans=-55;
                
-                
-
-                if (geogroup_name === "groupUSAAsia") {
-                  fn_cityLabels_perCapita (d, i, "bar class_groupUSA");
-                  fn_cityLabels_perCapita (d, i, "bar class_groupAsia");
-                } else if (geogroup_name === "groupEUCWLatAmerAfrica") {
-                  if (thisCityGroup === "bar class_groupEurope") fn_cityLabels_perCapita (d, i, thisCityGroup);
-                  if (thisCityGroup === "bar class_groupCan") fn_cityLabels_perCapita (d, i, thisCityGroup);
-                  if (thisCityGroup === "bar class_groupOceania") fn_cityLabels_perCapita (d, i, thisCityGroup);
-                  if (thisCityGroup === "bar class_groupLatinAmer") fn_cityLabels_perCapita (d, i, thisCityGroup);
-                  if (thisCityGroup === "bar class_groupAfrica") fn_cityLabels_perCapita (d, i, thisCityGroup);
-                }
+                fn_cityLabels_perCapita (d, i, "bar class_groupUSA");
+                fn_cityLabels_perCapita (d, i, "bar class_groupAsia");             
+                if (thisCityGroup === "bar class_groupEurope") fn_cityLabels_perCapita (d, i, thisCityGroup);
+                if (thisCityGroup === "bar class_groupCan") fn_cityLabels_perCapita (d, i, thisCityGroup);
+                if (thisCityGroup === "bar class_groupOceania") fn_cityLabels_perCapita (d, i, thisCityGroup);
+                if (thisCityGroup === "bar class_groupLatinAmer") fn_cityLabels_perCapita (d, i, thisCityGroup);
+                if (thisCityGroup === "bar class_groupAfrica") fn_cityLabels_perCapita (d, i, thisCityGroup);
 
                } //.d.indexOf("gap") != 0
 
             } else if (this_dim === "per GDP") {
-              console.log("this_dim: ", this_dim)
-              console.log("d: ", d)
-              console.log("geogroup_name: ", geogroup_name)
-              //xscale=.6; yscale=1.8; rot=-65; xtrans=44;
               xscale=.6; yscale=1.8; rot=-65; xtrans=44; ytrans=-55;
 
-             if (geogroup_name === "groupUSAAsia") {
-              console.log("thisCityGroup: ", thisCityGroup)
-                if (thisCityGroup === "bar class_groupUSA") fn_cityLabels_perGDP (d, i, thisCityGroup);
-                if (thisCityGroup === "bar class_groupAsia") fn_cityLabels_perGDP (d, i, thisCityGroup);
-                if (thisCityGroup === "bar class_groupEurope") fn_cityLabels_perCapita (d, i, thisCityGroup);
-              }
-
+              if (thisCityGroup === "bar class_groupUSA") fn_cityLabels_perGDP (d, i, thisCityGroup);
+              if (thisCityGroup === "bar class_groupAsia") fn_cityLabels_perGDP (d, i, thisCityGroup);
+              if (thisCityGroup === "bar class_groupEurope") fn_cityLabels_perGDP (d, i, thisCityGroup);
+              if (thisCityGroup === "bar class_groupCan") fn_cityLabels_perGDP (d, i, thisCityGroup);
+              if (thisCityGroup === "bar class_groupOceania") fn_cityLabels_perGDP (d, i, thisCityGroup);
 
             } //this_dim
 
