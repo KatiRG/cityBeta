@@ -693,54 +693,48 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       .attr("transform", "translate(-1," + height + ")")  //***HERE!!!!
       .call(d3.axisTop(x))
       .selectAll("text")
-       // .text(function (d) { return ""; })
         .text(function (d) { 
-          if (d.indexOf("gap") != 0) return fn_abbr(d); 
+          if (d.includes("gap")) return "";
+          else if (this_dim === "per GDP" 
+                   && ! data_GHG.find(x => x.city.includes(d))['per GDP']) {
+                  return ""; }
+          else return fn_abbr(d); 
         })
-          .attr("id", function (d) {
-            idName = format_idName(d);
-            return "tick" + idName;
-          })
-          .attr("y", -61)
-          .attr("x", 25)
-          .attr("dy", 7)
-          .attr("class", "xAxisCityName")
-          .attr("transform", function (d, i) {
-            // console.log("this_dim: ", this_dim)
-            if (this_dim === "per GDP") {
-              junk = data_GHG.find(x => x.city.includes(d))['per GDP'];
-              if (! junk) console.log("d with no GDP: ", d)
-            }
+        .attr("id", function (d) {
+          idName = format_idName(d);
+          return "tick" + idName;
+        })
+        .attr("y", -61)
+        .attr("x", 25)
+        .attr("dy", 7)
+        .attr("class", "xAxisCityName")
+        .attr("transform", function (d, i) {         
 
-            if (d.includes("gap")) return "";
-            // else if ()
-            else {
+          if (d.includes("gap")) return "";
+        
+          else {
 
-              thisCity = d3.select(this).attr("id").split("tick").pop();
-              thisCityGroup = d3.select("#bar" + thisCity).attr("class");
+            thisCity = d3.select(this).attr("id").split("tick").pop();
+            thisCityGroup = d3.select("#bar" + thisCity).attr("class");
 
-              if (this_dim === "per capita") {              
-                xscale=.6; yscale=1.8; rot=-65;
-                xtrans=44; ytrans=-55;
-               
-                fn_cityLabels_perCapita (d, i, thisCityGroup);
+            if (this_dim === "per capita") {              
+              xscale=.6; yscale=1.8; rot=-65;
+              xtrans=44; ytrans=-55;
+             
+              fn_cityLabels_perCapita (d, i, thisCityGroup);
 
-              } else if (this_dim === "per GDP") {
+            } else if (this_dim === "per GDP") {
 
-                xscale=.6; yscale=1.8; rot=-65; xtrans=44; ytrans=-55;
-                fn_cityLabels_perGDP (d, i, thisCityGroup);
+              xscale=.6; yscale=1.8; rot=-65; xtrans=44; ytrans=-55;
+              fn_cityLabels_perGDP (d, i, thisCityGroup);
 
-              } //this_dim
+            } //this_dim
+           
+            return  "scale(" + xscale + " " + yscale + ")" + 
+                    "translate(" + xtrans + " " + ytrans + ")" + "rotate(" + rot + ")" ;
+          }
 
-              // return d.includes("gap") ? "" : "scale(" + xscale + " " + yscale + ")" + 
-              //           "translate(" + xtrans + " " + ytrans + ")" + "rotate(" + rot + ")" ;
-
-
-               return  "scale(" + xscale + " " + yscale + ")" + 
-                        "translate(" + xtrans + " " + ytrans + ")" + "rotate(" + rot + ")" ;
-            }
-
-          })
+        })
       .style("text-anchor", "start")  //"middle"
       // .style("fill", function (d) {
       //   if (d.includes("gap")) return "#565656";
