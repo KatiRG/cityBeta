@@ -480,10 +480,6 @@ function fn_cityLabels_perGDP (d, i, thisCityGroup) {
     }
 }
 
-function fn_cityLabels_perGDP_reordered(d, i, thisCityGroup) {
-  
-}
-
 //...............................
 // create barChart SVGs
 
