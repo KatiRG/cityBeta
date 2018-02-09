@@ -714,18 +714,18 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         
           else {
 
+            xscale=.6; yscale=1.8; rot=-65; xtrans=44; ytrans=-55;
+
             thisCity = d3.select(this).attr("id").split("tick").pop();
             thisCityGroup = d3.select("#bar" + thisCity).attr("class");
 
             if (this_dim === "per capita") {              
-              xscale=.6; yscale=1.8; rot=-65;
-              xtrans=44; ytrans=-55;
+                
              
               fn_cityLabels_perCapita (d, i, thisCityGroup);
 
             } else if (this_dim === "per GDP") {
 
-              xscale=.6; yscale=1.8; rot=-65; xtrans=44; ytrans=-55;
               fn_cityLabels_perGDP (d, i, thisCityGroup);
 
             } //this_dim
