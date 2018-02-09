@@ -454,26 +454,21 @@ function fn_cityLabels_perGDP (d, i, thisCityGroup) {
     else if (d === "Incheon") ytrans = -35;
     else ytrans = -75 + (i*1.5);
 
-  } else if (thisCityGroup === "bar class_groupEurope") {
-          console.log(d)             
-    if (d === "Manchester") ytrans = -20;
-    else if (d === "Warsaw" || d === "Rotterdam") ytrans = 0;
-    else ytrans = 20 + (i*0.7);
+  } else if (thisCityGroup === "bar class_groupEurope") {          
+      if (d === "Manchester") ytrans = -20;
+      else if (d === "Warsaw" || d === "Rotterdam") ytrans = 0;
+      else ytrans = 20 + (i*0.7);
 
   } else if (thisCityGroup === "bar class_groupCan") {
-    ytrans = -120 + (i*3.0);
+      if (d === "Winnipeg") ytrans = -175 + (i*3.7);
+      else ytrans = -175 + (i*3.9);
 
   } else if (thisCityGroup === "bar class_groupOceania") {
-    if (d === "Auckland") ytrans = -39;
-    else {
-      //ytrans = -130 + (i*2.3);
-      xtrans = 60; ytrans = -5; rot = -90;
-    }
-    
+      xtrans = 60; ytrans = -5; rot = -90; 
   } else if (thisCityGroup === "bar class_groupLatinAmer") {
       if (d === "Caracas") {xtrans = 60; ytrans = -5; rot = -90;}
-      else if (d === "Santiago") ytrans = -15;
-      else ytrans = -105 + (i*1.9);
+      else if (d === "Santiago") ytrans = -36;
+      else ytrans = -135 + (i*2.2);
     
   } else if (thisCityGroup === "bar class_groupAfrica") {//ytrans = -160 + (i*2.2);
       xtrans = 60; ytrans = 15; rot = -90;
