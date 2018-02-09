@@ -25,8 +25,9 @@ function setupData(ghg){
     totalEmissions = d['Total City-wide Emissions (metric tonnes CO2e) (CDP)'] //[tCO2]
     scope1 = d['s1 to use']
     GDP = d['GDP-PPP combined']
+    // GDP = d['GDP-PPP combined [USD]']
     scope1_cap = +d['s1 per capita'] //d['s1 per capita']  //scope1/popn
-    scope1_gdp = +d['s1 per gdp']
+    scope1_gdp = +d['s1 per gdp [kgCO2/USD]']
     GDP_cap = +d['GDP-PPP combined/cap']
     pop_density = popn/area//[pop/km2]
     HDD155C = +d["HDD_15.5C"]
@@ -707,7 +708,7 @@ function fn_svgHeadings (geogroup_id) {
 
   if (geogroup_id === "#barChart_EUCWLatAmerAfrica") {
     numHeadings = ["Europe","Canada", "Australia - NZ", "Latin Amer", "Africa"];
-    svgTrans = [ [64, 18], [623, 18], [791, 18], [925, 18], [1259, 18] ];
+    svgTrans = [ [64, 10], [623, 10], [791, 10], [925, 10], [1259, 10] ];
   } else {
     numHeadings = ["USA", "Asia"];
     svgTrans = [ [64, 15], [1069, 15] ]; //y=22?
