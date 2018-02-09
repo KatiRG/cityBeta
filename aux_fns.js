@@ -468,11 +468,14 @@ function fn_cityLabels_perGDP (d, i, thisCityGroup) {
       xtrans = 60; ytrans = -5; rot = -90;
     }
     
-  } //else if (thisCityGroup === "bar class_groupLatinAmer") {
-  //   if (d === "Buenos Aires") ytrans = -15;
-  //   else ytrans = -110 + (i*1.9);
+  } else if (thisCityGroup === "bar class_groupLatinAmer") {
+      if (d === "Caracas") {xtrans = 60; ytrans = -5; rot = -90;}
+      else if (d === "Santiago") ytrans = -15;
+      else ytrans = -105 + (i*1.9);
     
-  // } else if (thisCityGroup === "bar class_groupAfrica") ytrans = -160 + (i*2.2);
+  } else if (thisCityGroup === "bar class_groupAfrica") {//ytrans = -160 + (i*2.2);
+      xtrans = 60; ytrans = 15; rot = -90;
+    }
 }
 
 //...............................
