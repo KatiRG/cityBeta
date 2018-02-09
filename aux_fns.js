@@ -25,8 +25,9 @@ function setupData(ghg){
     totalEmissions = d['Total City-wide Emissions (metric tonnes CO2e) (CDP)'] //[tCO2]
     scope1 = d['s1 to use']
     GDP = d['GDP-PPP combined']
+    // GDP = d['GDP-PPP combined [USD]']
     scope1_cap = +d['s1 per capita'] //d['s1 per capita']  //scope1/popn
-    scope1_gdp = +d['s1 per gdp']
+    scope1_gdp = +d['s1 per gdp [kgCO2/USD]']
     GDP_cap = +d['GDP-PPP combined/cap']
     pop_density = popn/area//[pop/km2]
     HDD155C = +d["HDD_15.5C"]
@@ -140,7 +141,6 @@ function setupData(ghg){
     };
   })
 
-
 } // ./setupData()
 
 // Reset elements to original style before selection
@@ -148,12 +148,8 @@ function resetElements() {
   //reset bar opacity
   d3.selectAll(".bar")
     .style("fill-opacity", 1)
-    .style("stroke", "gray");
+    .style("stroke", "none");
 
-  //reset vcircle opacity
-  d3.selectAll(".node")
-    .style("fill-opacity", 1)
-    .style("stroke-opacity", 1);
 
   //clear previously highlighted country
   d3.selectAll(".countries").selectAll("path")
@@ -392,8 +388,96 @@ function fn_enlargeName(geogroup_name, cityName) {
   else if (geogroup_name === "groupAfrica") newSize = "18px";
   else if (geogroup_name === "groupAsia") newSize = "18px";
   
-  d3.select("#tick" + idName).text(cityName).style("font-size", newSize)
+  d3.select("#tick" + idName).text(cityName)
+    .style("font-size", newSize).style("opacity", 1)
     .attr("fill", colour_labelsHighlight);
+}
+
+function fn_cityLabels_perCapita (d, i, thisCityGroup) {
+  if (thisCityGroup === "bar class_groupUSA") {    
+    if (d === "Cleveland" || d === "Las Vegas") {
+      xtrans = 60; ytrans = -5; rot = -90;
+    }
+    else if (d === "Savannah") ytrans = -75;
+    else if (d === "Emeryville, CA" || d === "Knoxville") ytrans = -45 + (i*1.3);
+    else ytrans = -35 + (i*1.1);
+  } else if (thisCityGroup === "bar class_groupAsia") {    
+
+    if (d === "Incheon") {
+      // ytrans = -110;
+      xtrans = 60; ytrans = -5; rot = -90;
+    }
+    else if (d === "Kaohsiung") ytrans = -70;
+    else if (d === "Yilan") ytrans = -65;
+    else if (d === "Taoyuan") ytrans = -25;
+    else if (d === "Hong Kong") ytrans = 0;
+    else ytrans = -49 + (i*1.1);
+
+  } else if (thisCityGroup === "bar class_groupEurope") {
+                       
+    if (d === "Rotterdam" || d === "Ljubljana") {
+      xtrans = 60; ytrans = 20; rot = -90;
+    }
+    else ytrans = -30 + (i*1.9);
+
+  } else if (thisCityGroup === "bar class_groupCan") {
+    if (d === "Hamilton, ON" || d === "Windsor, ON" || d === "Edmonton") {
+      xtrans = 60; ytrans = 0; rot = -90;
+    }
+    else if (d === "Vancouver") ytrans = -10;
+    else if (d === "North Vancouver") ytrans = 5;
+    else if (d === "Ajax, ON") ytrans = 30;
+    else ytrans = -120 + (i*1.9);
+
+  } else if (thisCityGroup === "bar class_groupOceania") {
+    if (d === "Auckland") ytrans = -29;
+    else ytrans = -130 + (i*2.3);
+    
+  } else if (thisCityGroup === "bar class_groupLatinAmer") {
+    if (d === "Buenos Aires") ytrans = -15;
+    else ytrans = -110 + (i*1.9);
+    
+  } else if (thisCityGroup === "bar class_groupAfrica") ytrans = -160 + (i*2.2);
+}
+
+function fn_cityLabels_perGDP (d, i, thisCityGroup) {
+  // thisRegion = data_GHG.find(x => x.city.includes(d)).region;
+
+  if (thisCityGroup === "bar class_groupUSA") {
+    if (d === "Las Vegas") {rot = -90; xtrans = 60; ytrans = -15;}
+    else if (d === "D C" || d === "Nashville & Davidson" || d === "Cleveland") ytrans = -40 + (i*1.6);
+    else ytrans = -29 + (i*1.2);
+  } else if (thisCityGroup === "bar class_groupAsia") {
+    if (d === "Kaohsiung" || d === "Taoyuan") {
+      xtrans = 60; ytrans = -5; rot = -90;
+    }  else if (d === "Taoyuan") {rot = -65; ytrans = -25;}
+    else if (d === "Hong Kong") ytrans = -75;
+    else if (d === "Incheon") ytrans = -35;
+    else ytrans = -75 + (i*1.5);
+
+  } else if (thisCityGroup === "bar class_groupEurope") {          
+      if (d === "Manchester") ytrans = -20;
+      else if (d === "Warsaw" || d === "Rotterdam") ytrans = 0;
+      else ytrans = 20 + (i*0.7);
+
+  } else if (thisCityGroup === "bar class_groupCan") {
+      if (d === "Winnipeg") ytrans = -175 + (i*3.7);
+      else if (d === "Edmonton" || d === "Calgary") ytrans = -185 + (i*4.3);
+      else if (d === "Vancouver") {console.log("Vancouver"); ytrans = 0;}
+      else ytrans = -170 + (i*4.3);
+
+  } else if (thisCityGroup === "bar class_groupOceania") {
+      if (d === "Auckland") ytrans = -50;
+      else ytrans = -175 + (i*3.9);
+  } else if (thisCityGroup === "bar class_groupLatinAmer") {
+      if (d === "Caracas") {xtrans = 60; ytrans = -5; rot = -90;}
+      else if (d === "Santiago") ytrans = -36;
+      else ytrans = -135 + (i*2.2);
+    
+  } else if (thisCityGroup === "bar class_groupAfrica") {//ytrans = -160 + (i*2.2);
+      // xtrans = 60; ytrans = 15; rot = -90;
+      ytrans = -340 + (i*4.2);
+    }
 }
 
 //...............................
@@ -418,11 +502,11 @@ function fn_appendColourBar() {
     .attr("height", svg_height)
     .style("vertical-align", "middle");
 
-  //tooltip for rects  
-  var tool_tip = d3.tip()
+  //tooltip for rects
+   var tool_tip = d3.tip()
     .attr("class", "d3-tip")
     .offset([-10, 0])
-    .html(function (d, i) {
+    .html(function (d, i) {     
       return "<b>" + Object.keys(protocolDict)[i] + "</b>" + ": "
                    + Object.values(protocolDict)[i];
     });
@@ -625,7 +709,7 @@ function fn_svgHeadings (geogroup_id) {
 
   if (geogroup_id === "#barChart_EUCWLatAmerAfrica") {
     numHeadings = ["Europe","Canada", "Australia - NZ", "Latin Amer", "Africa"];
-    svgTrans = [ [64, 18], [623, 18], [791, 18], [925, 18], [1259, 18] ];
+    svgTrans = [ [64, 10], [623, 10], [791, 10], [925, 10], [1259, 10] ];
   } else {
     numHeadings = ["USA", "Asia"];
     svgTrans = [ [64, 15], [1069, 15] ]; //y=22?
@@ -645,7 +729,6 @@ function fn_svgHeadings (geogroup_id) {
           .attr('height', 100);
 
   for (idx = 0; idx < numHeadings.length; idx++) {
-    console.log("numHeading: ", numHeadings [idx])
     svgTitle.append("g")
       .append("text").attr("class", "headingClass")
       .text(numHeadings[idx])
