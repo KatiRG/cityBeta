@@ -145,23 +145,26 @@ ul {
 /*tooltips */
 /*Used for barChart protocol legend rects */
 .d3-tip {
-    /*line-height: 1.2; */
-    height: 50px;
-    width: 350px;
-    padding: 6px;
-    background: #F7F6E4;
-    color: #555;
-    border-radius: 4px;
-    font-size: 12px;
+  /*line-height: 1.2; */
+  height: 50px;
+  width: 350px;
+  padding: 6px;
+  background: #F7F6E4;
+  color: #555;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.d3-tip-deactive {
+  background: transparent;
 }
 .d3-tip-line {
-    height: 35px;
-    width: 111px;
-    padding: 6px;
-    background: #555;
-    color: #F7F6E4;
-    border-radius: 4px;
-    font-size: 12px;
+  height: 35px;
+  width: 111px;
+  padding: 6px;
+  background: #555;
+  color: #F7F6E4;
+  border-radius: 4px;
+  font-size: 12px;
 }
 /*Used for barChart rects */
 div.tooltip-bar {

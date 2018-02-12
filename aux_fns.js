@@ -285,7 +285,7 @@ function fn_reorderByEmissionsPerCapita(region, emissions_perGDP) {
 }
 
 //...............................
-// barChart colour mapping
+// barChart updates
 
 function fn_colour_barChart (attrFlag, attrValue) {
   
@@ -331,6 +331,23 @@ function fn_updateLegend (attrFlag) {
               .range(choose_colourArray[attrFlag]);
   }
 
+   //svg crated in fn_barChartLegend()
+  var svgCB = d3.select("#barChartLegend").select("svg");
+
+  //tooltip for rects  
+  var tool_tip = d3.tip()
+      .attr("class", function () {
+        if (attrFlag === "population density") return "d3-tip-deactive";
+        else return "d3-tip";
+      })
+      .offset([-10, 0])
+      .html(function (d, i) {
+        if (attrFlag === "population density") return "";
+        else return "<b>" + Object.keys(protocolDict)[i] + "</b>" + ": "
+                     + Object.values(protocolDict)[i];
+      });
+  svgCB.call(tool_tip);
+
   //Colour legend squares
   d3.select("#barChartLegend").select("svg")
     .selectAll('rect')
@@ -348,7 +365,10 @@ function fn_updateLegend (attrFlag) {
         // console.log("map 19000: ", colourmapDim(19000) );
       // }
       return updateColour;
-    });
+    })
+    .on('mouseover', tool_tip.show)
+    .on('mouseout', tool_tip.hide);
+
 
   //label the legend squares
   d3.select("#barChartLegend")
