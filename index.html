@@ -200,6 +200,7 @@ d3.select("select")
     svgBarChart = d3.select("#" + geogroupArray[0] + " .barSVG")
     svgBarChart.selectAll("rect").attr("fill", function (d) {
       //output the discretized colour according to selected attribute
+      //console.log("d[val]: ", d[attrFlag])
       return fn_colour_barChart(attrFlag, d[attrFlag]);
     });
 

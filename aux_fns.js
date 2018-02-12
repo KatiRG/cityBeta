@@ -28,7 +28,7 @@ function setupData(ghg){
     // GDP = d['GDP-PPP combined [USD]'] //units of USD
     scope1_cap = +d['s1 per capita'] //d['s1 per capita']  //scope1/popn
     scope1_gdp = +d['s1 per gdp [kgCO2/USD]']
-    // GDP_cap = d["GDP-PPP combined"]/d["pop to use"]*Math.pow(10,9)  //+d['GDP-PPP combined/cap']
+    GDP_cap = d["GDP-PPP combined"]/d["pop to use"]*Math.pow(10,9)  //+d['GDP-PPP combined/cap']
     pop_density = popn/area//[pop/km2]
     HDD155C = +d["HDD_15.5C"]
     CDD23C = +d["CDD_23C"]
@@ -102,7 +102,7 @@ function setupData(ghg){
       "per capita": scope1_cap,
       "per GDP": scope1_gdp,
       "population density": pop_density,
-      // "GDP/capita": GDP_cap,
+      "GDP/capita": GDP_cap,
       "HDD 15.5C": HDD155C,
       "CDD 23C": CDD23C,
       "diesel price": diesel_price,
