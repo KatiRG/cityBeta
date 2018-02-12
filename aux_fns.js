@@ -25,8 +25,9 @@ function setupData(ghg){
     totalEmissions = d['Total City-wide Emissions (metric tonnes CO2e) (CDP)'] //[tCO2]
     scope1 = d['s1 to use']
     GDP = d['GDP-PPP combined']
+    // GDP = d['GDP-PPP combined [USD]']
     scope1_cap = +d['s1 per capita'] //d['s1 per capita']  //scope1/popn
-    scope1_gdp = +d['s1 per gdp']
+    scope1_gdp = +d['s1 per gdp [kgCO2/USD]']
     GDP_cap = +d['GDP-PPP combined/cap']
     pop_density = popn/area//[pop/km2]
     HDD155C = +d["HDD_15.5C"]
@@ -140,7 +141,6 @@ function setupData(ghg){
     };
   })
 
-
 } // ./setupData()
 
 // Reset elements to original style before selection
@@ -148,12 +148,8 @@ function resetElements() {
   //reset bar opacity
   d3.selectAll(".bar")
     .style("fill-opacity", 1)
-    .style("stroke", "gray");
+    .style("stroke", "none");
 
-  //reset vcircle opacity
-  d3.selectAll(".node")
-    .style("fill-opacity", 1)
-    .style("stroke-opacity", 1);
 
   //clear previously highlighted country
   d3.selectAll(".countries").selectAll("path")
@@ -171,8 +167,235 @@ function resetElements() {
 }
 
 //----------------------------------------------
+// Functions for map
+//----------------------------------------------
+function highlightCountry(countryName, idName, dataObj)  {
+  var matchColour = regionColourMap[
+                        dataObj.find(x => x.idName.includes(idName)).region
+                      ];
+
+  if (countryName === "South Africa") {
+      d3.select("#mapSouth Africa")
+        .style("stroke-width", 4)
+        // .style("stroke", matchColour === "#A6D4FF" ? "blue" : matchColour);
+        .style("stroke", "#555");
+  }
+  else {
+    d3.select("#map" + countryName)
+      .style("stroke-width", 4)
+      .style("stroke", "#555")
+      .style("stroke-opacity", 1);
+      // .style("stroke", matchColour === "#A6D4FF" ? "blue" : matchColour);
+
+    // d3.selectAll(".countries")
+    //   .selectAll("path:not(#map" + countryName + ")")
+    //   .style("opacity", 0.3);
+  }
+}
+
+//----------------------------------------------
 // Functions for emissionsBarChart()
 //----------------------------------------------
+
+//...............................
+// barChart data fns
+
+//concatenate geogroups together, separated by a gap
+function fn_concat (barChartGroup, geogroupArray, this_dim) {
+  objArray = [];
+  count = 0; //for gap id labels
+  
+  for (idx=0; idx < geogroupArray.length; idx++) {   
+    //Extract data by region
+    ghg_extract = sortByRegion(geogroupArray[idx]);
+
+    //Sort by this_dim in descending order
+    ghg_extract.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
+
+    //Rotterdam -- special case
+    //Reduce bar height and indicate true value graphically on the chart
+    if (geogroupArray[idx] === "groupEurope") {
+      var selectedCity = data_GHG.find(x => x.city === "Rotterdam");
+      //Store actual value for later display
+      rotterdamEmissionsPerCap = formatDecimalSci(selectedCity[label_dataPerCap]);
+      //Assign a smaller value FOR SCALE PURPOSES ONLY
+      selectedCity[label_dataPerCap] = 11;
+    }
+
+    //Concatenate with a gap obj in between
+    if (idx % 2 == 0) {
+      objArray = objArray.concat(ghg_extract);
+    } else {
+      objArray = objArray.concat(
+        [{ "city":"gap" + barChartGroup + count,  
+           "region": barChartGroup,
+           "per capita":0, 
+           "per GDP": 0 }]
+      );
+      count++;
+    }
+  } //.for
+
+  //save cityOrder
+  if (this_dim === "per capita") {
+    if (barChartGroup === "groupUSAAsia") cityOrder_row1 = objArray.map(x => x["city"]);
+    else cityOrder_row2 = objArray.map(x => x["city"]);
+  }
+
+
+  return objArray;
+}
+
+//Abbreviate city name in x-axis
+function fn_abbr(d) {
+  if (d.indexOf(', ') >= 0) abbr = d.substring(0,3);
+  else if (d.indexOf(' ') >= 0) abbr = d.match(/\b\w/g).join(' ');
+  else abbr = d.substring(0,4);
+
+  return abbr;
+}
+
+function sortByRegion(region, this_dim) {
+  //console.log("region in sortByRegion: ", region)
+
+  ghg_byRegion = [];
+  data_GHG.forEach(function (d) {
+    if (d.region === region && d[this_dim] != "") ghg_byRegion.push(d);
+  });
+  return ghg_byRegion;
+}
+
+function fn_reorderByEmissionsPerCapita(region, emissions_perGDP) {
+  var city_order = [];
+  var objArray = [];
+
+  // if (region === "groupUSAAsia") {
+  //   city_order = cityOrder_row1;
+  // } else city_order = cityOrder_row2;
+
+  city_order = (region === "groupUSAAsia" ? cityOrder_row1 : cityOrder_row2);
+
+  //Re-order emissions_perGDP according to city_order of emissions per capita
+  for (idx = 0; idx < city_order.length; idx++) {
+    match = emissions_perGDP.filter(x => x.city === city_order[idx]); //in array form
+    if (match.length != 0) objArray.push(match[0]);
+  }
+
+  return objArray;
+}
+
+//...............................
+// barChart updates
+
+function fn_colour_barChart (attrFlag, attrValue) {
+  
+  if (attrFlag === "methodology") {//integers from 1-5, no mapping needed
+    return colour_methodNum[attrValue];
+  
+  } else {
+     
+    colourmapDim = fn_colourmapDim(attrFlag);
+
+    return colourmapDim(attrValue);
+  } 
+}
+function fn_colourmapDim (attrFlag) {
+  dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]];
+
+  //colour map to take data value and map it to the colour of the level bin it belongs to
+  colourmapDim = d3.scaleQuantize()  //d3.scale.linear() [old d3js notation]
+            .domain([dimExtent[0], dimExtent[1]])
+            .range(choose_colourArray[attrFlag]);
+
+  return colourmapDim;
+}
+function fn_updateLegend (attrFlag) {
+  if (attrFlag != "methodology") {  
+    dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]];
+    //difference between max and min values of selected attribute
+    delta = ( dimExtent[1] - dimExtent[0] )/num_levels;
+    delta = Math.round(delta/1000)*1000
+    console.log("delta: ", delta)
+    console.log("dimExtent: ", dimExtent)
+
+    cb_values=[]; //clear
+    for (idx=0; idx < num_levels; idx++) {
+      cb_values.push(Math.round((dimExtent[0] + idx*delta)/1000)*1000);
+      //Math.round(value/1000)*1000
+    }
+    console.log("cb_values: ", cb_values)
+
+    //colour map to take data value and map it to the colour of the level bin it belongs to
+    var colourmapDim = d3.scaleQuantize()  //d3.scale.linear() [old d3js notation]
+              .domain([dimExtent[0], dimExtent[1]])
+              .range(choose_colourArray[attrFlag]);
+  }
+
+   //svg crated in fn_barChartLegend()
+  var svgCB = d3.select("#barChartLegend").select("svg");
+
+  //tooltip for rects  
+  var tool_tip = d3.tip()
+      .attr("class", function () {
+        if (attrFlag === "population density") return "d3-tip-deactive";
+        else return "d3-tip";
+      })
+      .offset([-10, 0])
+      .html(function (d, i) {
+        if (attrFlag === "population density") return "";
+        else return "<b>" + Object.keys(protocolDict)[i] + "</b>" + ": "
+                     + Object.values(protocolDict)[i];
+      });
+  svgCB.call(tool_tip);
+
+  //Colour legend squares
+  d3.select("#barChartLegend").select("svg")
+    .selectAll('rect')
+    .attr("fill", function (i, j) {
+      var updateColour = attrFlag === "methodology" ?
+                choose_colourArray[attrFlag][j]: colourmapDim(cb_values[j])
+      // if (attrFlag != "methodology") {
+      //   console.log("cb_values: ", cb_values[j]);
+      //   console.log("updateColour: ", colourmapDim(cb_values[j])) ;
+        // console.log("map 0: ", colourmapDim(0) );
+        // console.log("map 5000: ", colourmapDim(5000) );
+        // console.log("map 10000: ", colourmapDim(10000) );
+        // console.log("map 14000: ", colourmapDim(14000) );
+        // console.log("map 15000: ", colourmapDim(15000) );
+        // console.log("map 19000: ", colourmapDim(19000) );
+      // }
+      return updateColour;
+    })
+    .on('mouseover', tool_tip.show)
+    .on('mouseout', tool_tip.hide);
+
+
+  //label the legend squares
+  d3.select("#barChartLegend")
+    .selectAll("text")
+    .text(function (i, j) {
+      if (attrFlag === "methodology") {
+        updateText = choose_textArray[attrFlag][j]
+    } else {
+      if (j === 0) updateText = "< " + cb_values[j + 1];
+      else updateText = "> " + cb_values[j];      
+    }
+      return updateText;
+    })
+    .attr("x", function (d, i) {
+      if (attrFlag === "methodology") xpos = [10,63,150,215,284];
+      else xpos = [0,70,135,205,275];
+      return xpos[i];
+    });
+
+    //update the units displayed in the legend
+    d3.select("#barChartLegendUnits")
+      .text(function () {return dimUnits[attrFlag]});
+}
+
+//...............................
+// barChart visual interactivity
+
 //Enlarge x-axis labels and reset
 function fn_enlargeName(geogroup_name, cityName) {
   idName = format_idName(cityName);
@@ -185,60 +408,107 @@ function fn_enlargeName(geogroup_name, cityName) {
   else if (geogroup_name === "groupAfrica") newSize = "18px";
   else if (geogroup_name === "groupAsia") newSize = "18px";
   
-  d3.select("#tick" + idName).text(cityName).style("font-size", newSize)
+  d3.select("#tick" + idName).text(cityName)
+    .style("font-size", newSize).style("opacity", 1)
     .attr("fill", colour_labelsHighlight);
 }
-//Discretize selected attribute value
-function fn_discretize (attrFlag, dimExtent, d) {
-   if (attrFlag === "methodology") {//integers from 1-5, no mapping needed
-    //change legend text
-    d3.select("#barChartLegend").selectAll("text")
-      .text(function (d,  i) {
-        if (i < 5) { //hack for now
-          return choose_textArray[attrFlag][i];
-        }
-      });
 
-    //change legend colour
-    return colour_methodNum[d['methodology']];
-  
-  } else {
-    //do the discretization into 5 levels
-
-    //difference between max and min values of selected attribute
-    delta = ( dimExtent[1] - dimExtent[0] )/num_levels;  
-    
-    cb_values=[]; //clear
-    for (idx=0; idx < num_levels; idx++) {
-      cb_values.push(dimExtent[0] + idx*delta);
+function fn_cityLabels_perCapita (d, i, thisCityGroup) {
+  if (thisCityGroup === "bar class_groupUSA") {    
+    if (d === "Cleveland" || d === "Las Vegas") {
+      xtrans = 60; ytrans = -5; rot = -90;
     }
-    //console.log("cb_values: ", cb_values)
+    else if (d === "Savannah") ytrans = -75;
+    else if (d === "Emeryville, CA" || d === "Knoxville") ytrans = -45 + (i*1.3);
+    else ytrans = -35 + (i*1.1);
+  } else if (thisCityGroup === "bar class_groupAsia") {    
 
-    //colour map to take data value and map it to the colour of the level bin it belongs to
-    colourmapDim = d3.scaleQuantize()  //d3.scale.linear() [old d3js notation]
-              .domain([dimExtent[0], dimExtent[1]])
-              .range(choose_colourArray[attrFlag]);
+    if (d === "Incheon") {
+      // ytrans = -110;
+      xtrans = 60; ytrans = -5; rot = -90;
+    }
+    else if (d === "Kaohsiung") ytrans = -70;
+    else if (d === "Yilan") ytrans = -65;
+    else if (d === "Taoyuan") ytrans = -25;
+    else if (d === "Hong Kong") ytrans = 0;
+    else ytrans = -49 + (i*1.1);
 
-    //label the legend colourbar boxes
-    d3.select("#barChartLegend").selectAll("text")
-      .text(function (d,  i) {
-        if (i < 5) { //hack for now
-          //console.log("cb_values here: ", Math.round(cb_values[i]))
-          return Math.round(cb_values[i]);
-        }
-      });
+  } else if (thisCityGroup === "bar class_groupEurope") {
+                       
+    if (d === "Rotterdam" || d === "Ljubljana") {
+      xtrans = 60; ytrans = 20; rot = -90;
+    }
+    else ytrans = -30 + (i*1.9);
 
+  } else if (thisCityGroup === "bar class_groupCan") {
+    if (d === "Hamilton, ON" || d === "Windsor, ON" || d === "Edmonton") {
+      xtrans = 60; ytrans = 0; rot = -90;
+    }
+    else if (d === "Vancouver") ytrans = -10;
+    else if (d === "North Vancouver") ytrans = 5;
+    else if (d === "Ajax, ON") ytrans = 30;
+    else ytrans = -120 + (i*1.9);
+
+  } else if (thisCityGroup === "bar class_groupOceania") {
+    if (d === "Auckland") ytrans = -29;
+    else ytrans = -130 + (i*2.3);
     
-    return colourmapDim(d[attrFlag]);
-  }  
-  
+  } else if (thisCityGroup === "bar class_groupLatinAmer") {
+    if (d === "Buenos Aires") ytrans = -15;
+    else ytrans = -110 + (i*1.9);
+    
+  } else if (thisCityGroup === "bar class_groupAfrica") ytrans = -160 + (i*2.2);
 }
+
+function fn_cityLabels_perGDP (d, i, thisCityGroup) {
+  // thisRegion = data_GHG.find(x => x.city.includes(d)).region;
+
+  if (thisCityGroup === "bar class_groupUSA") {
+    if (d === "Las Vegas") {rot = -90; xtrans = 60; ytrans = -15;}
+    else if (d === "D C" || d === "Nashville & Davidson" || d === "Cleveland") ytrans = -40 + (i*1.6);
+    else ytrans = -29 + (i*1.2);
+  } else if (thisCityGroup === "bar class_groupAsia") {
+    if (d === "Kaohsiung" || d === "Taoyuan") {
+      xtrans = 60; ytrans = -5; rot = -90;
+    }  else if (d === "Taoyuan") {rot = -65; ytrans = -25;}
+    else if (d === "Hong Kong") ytrans = -75;
+    else if (d === "Incheon") ytrans = -35;
+    else ytrans = -75 + (i*1.5);
+
+  } else if (thisCityGroup === "bar class_groupEurope") {          
+      if (d === "Manchester") ytrans = -20;
+      else if (d === "Warsaw" || d === "Rotterdam") ytrans = 0;
+      else ytrans = 20 + (i*0.7);
+
+  } else if (thisCityGroup === "bar class_groupCan") {
+      if (d === "Winnipeg") ytrans = -175 + (i*3.7);
+      else if (d === "Edmonton" || d === "Calgary") ytrans = -185 + (i*4.3);
+      else if (d === "Vancouver") {console.log("Vancouver"); ytrans = 0;}
+      else ytrans = -170 + (i*4.3);
+
+  } else if (thisCityGroup === "bar class_groupOceania") {
+      if (d === "Auckland") ytrans = -50;
+      else ytrans = -175 + (i*3.9);
+  } else if (thisCityGroup === "bar class_groupLatinAmer") {
+      if (d === "Caracas") {xtrans = 60; ytrans = -5; rot = -90;}
+      else if (d === "Santiago") ytrans = -36;
+      else ytrans = -135 + (i*2.2);
+    
+  } else if (thisCityGroup === "bar class_groupAfrica") {//ytrans = -160 + (i*2.2);
+      // xtrans = 60; ytrans = 15; rot = -90;
+      ytrans = -340 + (i*4.2);
+    }
+}
+
+//...............................
+// create barChart SVGs
+
 //Create colour bar boxes
-function fn_appendColourBar() {
+function fn_barChartLegend() {
   
   //setup params
-  var margin = {top: 7, right: 0, bottom: 0, left: 0};
-  var svg_width = 450 - margin.left - margin.right,
+  var margin = {top: 7, right: 0, bottom: 0, left: 10};
+  var svg_width = 750 - margin.left - margin.right,
       svg_height = 35 - margin.top - margin.bottom;
 
   var rect_dim = 15;
@@ -273,7 +543,7 @@ function fn_appendColourBar() {
                   .attr("height", rect_dim)
                   .attr("y", 5)
                   .attr("x", function (d, i) {
-                    return 28 + i * 70;
+                    return 38 + i * 70;
                   })
                   .attr("fill", function (d, i) {
                     //return colour_methodNum[i + 1];                    
@@ -288,7 +558,7 @@ function fn_appendColourBar() {
         })
         .attr("y", 10)
         .attr("x", function (d, i) {
-          var xpos = [0,53,140,205,274];
+          var xpos = [10,63,150,215,284];
           return xpos[i];
         })
         .attr("dy", "6px")
@@ -381,63 +651,112 @@ function fn_appendRegionalMeans(svg, geogroup_name, this_dim, data, x, y) {
     .on('mouseout', tool_tip.hide); 
 }
 
-//Abbreviate city name in x-axis
-function fn_abbr(d) {
-  if (d.indexOf(', ') >= 0) abbr = d.substring(0,3);
-  else if (d.indexOf(' ') >= 0) abbr = d.match(/\b\w/g).join(' ');
-  else abbr = d.substring(0,4);
+function fn_arrow() {
 
-  return abbr;
+  //define arrow name and path
+  var data = [
+  { id: 1, name: 'arrow', path: "M 2,2 L2,11 L10,6 L2,2" }
+  ];
+
+  margin = {top: 0, right: 0, bottom: 0, left: 0},
+      width = 150 - margin.left - margin.right,
+      height = 200 - margin.top - margin.bottom;
+
+
+  svg = d3.select("#barChart_EUCWLatAmerAfrica").select(".barSVG")
+           .append("g")
+           .attr('height', height + margin.top + margin.bottom)
+          .attr("transform", "translate(" + -56 + "," + -10 + ")") //posn of arrow and text
+           .append("svg")
+          .attr('width', width + margin.left + margin.right);
+          
+
+  var defs = svg.append('svg:defs')
+
+  var paths = svg.append('svg:g')
+    .attr('id', 'markers')
+    .attr('transform', 'translate(' + 42 + ',' + 63 + ')');
+
+  //http://tutorials.jenkov.com/svg/marker-element.html
+  var marker = defs.selectAll('marker')
+    .data(data)
+    .enter()
+    .append('svg:marker')
+      .attr('id', function(d){ return 'marker_' + d.name})
+      .attr('markerHeight', 13)
+      .attr('markerWidth', 13)
+      .attr('markerUnits', 'strokeWidth')
+      .attr('orient', 'auto')
+      .attr('refX', 2)
+      .attr('refY', 6)
+      .append('svg:path')
+        .attr('d', function(d){ return d.path; })
+        .attr('fill', function(d,i) { return "#565656"; });
+
+  var path = paths.selectAll('path')
+    .data(data)
+    .enter()
+    .append('svg:path')
+      .attr('d', function(d,i){
+        return 'M 100,' + 0 + ' V ' + 50 + ',' + 0 + ''
+      })
+      .attr('stroke', function(d,i) { return "#565656"; })
+      .attr('stroke-width', 1)
+      .attr('stroke-linecap', 'round')
+      .attr('marker-start', function(d,i){ return 'url(#marker_stub' + ')'; })
+      .attr('marker-end', function(d,i){ return 'url(#marker_arrow'   + ')'; })
+      .attr("transform", function (d) { //adjust arrow proportions
+        var xscale = 0.5, yscale = 0.8;         
+        return "scale(" + xscale + " " + yscale + ")";          
+      })
+      .append('svg:path')
+        .attr('d', function(d){ return d.path; });
+
+  // var rotterdamText = d3.select("#markers").append("text");
+  d3.select("#markers").append("text");
+  d3.select("#markers").select("text")
+    .text(rotterdamEmissionsPerCap + " " + "tCO2/cap")
+    .style("fill", "#565656")
+    .attr("transform", function (d) { //adjust arrow proportions
+        var xscale = 0.5, yscale = 1.9;         
+        
+        return "scale(" + xscale + " " + yscale + ")" + 
+              "translate(" + 109 + " " + 10 + ")" ;       
+      });
 }
 
-function sortByRegion(region, this_dim) {
+function fn_svgHeadings (geogroup_id) {
 
-  ghg_byRegion = [];
-  data_GHG.forEach(function (d) {
-    if (d.region === region && d[this_dim] != "") ghg_byRegion.push(d);
-  });
-  return ghg_byRegion;
-}
-
-function fn_reorderByEmissionsPerCapita(region, emissions_perGDP) {
-  var var_emissionsPerCap = label_dataPerCap;
-  var city_order = [];
-  var objArray = [];
-
-  //Get city order of emissions per capita
-  emissions_perCap = sortByRegion(region, var_emissionsPerCap);
-  emissions_perCap.sort((a, b) => d3.descending(a[var_emissionsPerCap], b[var_emissionsPerCap]));
-  city_order = emissions_perCap.map(x => x["city"]); //returns an array
-
-  //Re-order emissions_perGDP according to city_order of emissions per capita
-  for (idx = 0; idx < city_order.length; idx++) {
-    match = emissions_perGDP.filter(x => x.city === city_order[idx]); //in array form
-    if (match.length != 0) objArray.push(match[0]);
+  if (geogroup_id === "#barChart_EUCWLatAmerAfrica") {
+    numHeadings = ["Europe","Canada", "Australia - NZ", "Latin Amer", "Africa"];
+    svgTrans = [ [64, 10], [623, 10], [791, 10], [925, 10], [1259, 10] ];
+  } else {
+    numHeadings = ["USA", "Asia"];
+    svgTrans = [ [64, 15], [1069, 15] ]; //y=22?
   }
 
-  return objArray;
-}
 
-function highlightCountry(countryName, idName, dataObj)  {
-  var matchColour = regionColourMap[
-                        dataObj.find(x => x.idName.includes(idName)).region
-                      ];
+  var svgTitle = d3.select(geogroup_id).select(".barSVG")
+          .append("g")
+          .attr("transform", function () {
+            transx = 0;
+            transy = (geogroup_id === "#barChart_EUCWLatAmerAfrica") ? 0 : -30;
+            return "translate(" + transx + "," + transy + ")";
+          });
 
-  if (countryName === "South Africa") {
-      d3.select("#mapSouth Africa")
-        .style("stroke-width", 4)
-        // .style("stroke", matchColour === "#A6D4FF" ? "blue" : matchColour);
-        .style("stroke", "#555");
-  }
-  else {
-    d3.select("#map" + countryName)
-      .style("stroke-width", 4)
-      .style("stroke", "#555")
-      .style("stroke-opacity", 1);
-      // .style("stroke", matchColour === "#A6D4FF" ? "blue" : matchColour);
+  svgTitle.append("svg")
+          .attr('width', 700)
+          .attr('height', 100);
 
-    // d3.selectAll(".countries")
-    //   .selectAll("path:not(#map" + countryName + ")")
-    //   .style("opacity", 0.3);
+  for (idx = 0; idx < numHeadings.length; idx++) {
+    svgTitle.append("g")
+      .append("text").attr("class", "headingClass")
+      .text(numHeadings[idx])
+      .attr("transform", function (d) {
+          var xscale = 0.5, yscale = 1.9;
+          
+          return "scale(" + xscale + " " + yscale + ")" + 
+                "translate(" + svgTrans[idx][0] + " " + svgTrans[idx][1] + ")" ;
+        });
   }
 }
