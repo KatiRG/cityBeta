@@ -385,7 +385,7 @@ function fn_updateLegend (attrFlag) {
     })
     .attr("x", function (d, i) {
       if (attrFlag === "methodology") xpos = [10,63,150,215,284];
-      else xpos = [0,70,135,205,275];
+      else xpos = [0,70,132,203,272];
       return xpos[i];
     });
 
