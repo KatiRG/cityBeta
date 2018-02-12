@@ -181,9 +181,16 @@ div.tooltip-bar {
 }
 
 /*Used for toggle buttons */
+/*@-moz-document url-prefix()
+{
+div.tooltip {top: -440px; left: 1210px;}
+div.tooltip {top: 536px; left: 1130px;}
+}*/
 div.tooltip {
-  position: relative;
+  position: absolute;
   text-align: left;
+  top: 536px;
+  left: 1030px;
   width: 150px;
   height: 60px;
   padding: 6px;

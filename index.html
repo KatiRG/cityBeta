@@ -246,8 +246,10 @@ d3.select("#gdpButton")
 
     div.style("opacity", 1); //tooltip
     div.html(function () { return dictText; })
-       .style("left", 1140 + "px")
-       .style("top", -440 + "px");
+      .style("top", (d3.event.pageY + 16) + "px")
+      .style("left", (d3.event.pageX + 16) + "px");
+       // .style("left", 1140 + "px")
+       // .style("top", -440 + "px");
   })
   .on("mouseout", function () { div.style("opacity", 0); });
 
@@ -272,8 +274,10 @@ d3.select("#reorderButton")
                     "Back to original order in decreasing emissions per GDP-PPP."
     div.style("opacity", 1);
     div.html(tooltip_text)
-        .style("left", 1210 + "px")
-        .style("top", -440 + "px");
+      .style("top", (d3.event.pageY + 16) + "px")
+      .style("left", (d3.event.pageX + 16) + "px");
+        //.style("left", 1210 + "px");
+        // .style("top", -440 + "px");
   })
   .on("mouseout", function () { div.style("opacity", 0); });
 
