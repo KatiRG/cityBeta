@@ -74,6 +74,7 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
             <select id="d3-dropdown">
               <option value="methodology" selected="selected">Protocol</option>
               <option value="population density">population density</option>
+              <option value="GDP/capita">GDP/capita</option>
               <!--<option value="gas price">gas price</option>
               <option value="diesel price">diesel price</option>
               <option value="HDD 15.5C">HDD 15.5C</option>
@@ -192,6 +193,7 @@ d3.select("#d3-dropdown").node().value = "methodology";
 d3.select("select")
   .on("change",function(d){
     attrFlag = d3.select("#d3-dropdown").node().value;
+    console.log("attrFlag: ", attrFlag)
 
     var geogroupArray = ["barChart_USAAsia", "barChart_EUCWLatAmerAfrica"];
 
@@ -297,10 +299,14 @@ d3.select("#reorderButton")
 d3.tsv("data/cityApp_attributes.tsv", function(ghg) {  
   dimExtentDict = {
     "methodology": d3.extent(ghg, function (d) {return d['MethodNum'];}),
-    "population density": d3.extent(ghg, function (d) {return +d["pop to use"]/d["area [km2] (external)"];})
+    "population density": d3.extent(ghg, function (d) {return +d["pop to use"]/d["area [km2] (external)"];}),
+    "GDP/capita" : d3.extent(ghg, function (d) { return +d["GDP-PPP combined"]/d["pop to use"]*Math.pow(10,9);})
   }
 }) //end read tsv
-//console.log("dimExtentDict: ", dimExtentDict["methodology"])
+
+
+console.log("dimExtentDict: ", dimExtentDict[attrFlag])
+
 
 //barChart legends
 // fn_barChartLegend();
