@@ -271,7 +271,7 @@ d3.select("#reorderButton")
   .on("mouseover", function () {
     var tooltip_text = (d3.select(this).text() === "Re-order") ? 
                     "Re-order cities according to decreasing emissions <b>per capita</b>." :
-                    "Back to original order in decreasing emissions per GDP-PPP."
+                    "Back to original order (decreasing emissions per GDP-PPP)."
     div.style("opacity", 1);
     div.html(tooltip_text)
       .style("top", (d3.event.pageY + 16) + "px")
