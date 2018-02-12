@@ -1,5 +1,6 @@
-var formatDecimalSci = d3.format(".2n");
+var formatDecimalSci = d3.format(".3n");
 var formatDecimalk = d3.format(".1s"); //.2s //d3.format(".3n");
+var formatComma = d3.format(",");
 
 //------------------------------------------------
 //Technical labels
@@ -9,7 +10,7 @@ label_dataPerGDP = "per GDP";
 //------------------------------------------------
 //Variables to pass
 var attrFlag = "methodology"; //attribute to be used to fill barChart bars. Default "Protocol"
-
+var cityOrder_row1, cityOrder_row2; //save orignal city order
 //------------------------------------------------
 //COLOURS
 //barChart labels + highlight colour
@@ -19,8 +20,8 @@ var colour_labelsHighlight = "#3d3d3d";
 var regionColourMap = { 
   "groupEurope": "#6BACBF", //"#A6D4FF", 
   "groupUSA": "#C399D9", "groupCan": "green", 
-  "groupOceania": "#555",
-  "groupAfrica": "#BD1550", "groupAsia": "red",
+  "groupOceania": "#EB9F9F",
+  "groupAfrica": "#FFD880", "groupAsia": "#BD1550",
   "groupLatinAmer": "#F8CA00"
 };
 
@@ -30,8 +31,8 @@ var regionColourMap = {
 //http://www.colourlovers.com/palette/1645043/Vanilla_Blueberry
 //http://www.colourlovers.com/palette/2832327/nostalgia
 var colour_methodNum = {
-  1: "#FFA446", //GPC 
-  2: "#FFEAB3", //US ICLEI
+  1: "#9DD3DF", //GPC 
+  2: "#C3BBE2", //US ICLEI
   3: "#E35B5D", //IPCC
   4: "#EB9F9F", //ICLEI
   5: "#F18052" //OTHER
@@ -42,7 +43,7 @@ var num_levels = 5; //number of discrete levels
 var cb_values = [];
 
 var choose_colourArray = {
-  "methodology": ["#FFA446","#FFEAB3","#E35B5D","#EB9F9F","#F18052"],
+  "methodology": ["#9DD3DF","#C3BBE2","#E35B5D","#EB9F9F","#F18052"],
   "population density": ["#DED8B6","#F9C869","#5D5061","#2F274C","#6A3058"]
 }
 
@@ -67,6 +68,9 @@ var emissionsToggleDict = {
 }
 
 //------------------------------------------------
+//Variables to store data
+var rotterdamEmissionsPerCap; //acutal Scope1 Emissions/cap for Rotterdam
+
 //AVG REGIONAL EMISSIONS PER CAPITA
 //TO BE VERIFIED! AVGS TAKEN FROM GCA WEBSITE
 var regionalAvgs = {
@@ -99,11 +103,12 @@ var regionLabel_dict = {
 };
 
 var dimUnits =  {
+  "methodology": "",
   "total emissions": "[tCO2]",
   "per capita": "[tCO2/capita]",
   "per GDP": "[kgCO2/USD]",
-  "population": "",
-  "population density": "",
+  "population": "capita",
+  "population density": "per km2",
   "GDP-PPP/capita": "(PPP) [USD/capita]",
   "diesel price": "USD",
   "gas price": "USD",
