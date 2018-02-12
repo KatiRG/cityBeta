@@ -377,8 +377,9 @@ function fn_updateLegend (attrFlag) {
       if (attrFlag === "methodology") {
         updateText = choose_textArray[attrFlag][j]
     } else {
-      if (j === 0) updateText = "< " + cb_values[j + 1];
-      else updateText = "> " + cb_values[j];      
+      console.log("cb_values format: ", formatComma(cb_values[j]) )
+      if (j === 0) updateText = "< " + formatComma(cb_values[j + 1]);
+      else updateText = "> " + formatComma(cb_values[j]);      
     }
       return updateText;
     })
@@ -507,8 +508,8 @@ function fn_cityLabels_perGDP (d, i, thisCityGroup) {
 function fn_barChartLegend() {
   
   //setup params
-  var margin = {top: 7, right: 0, bottom: 0, left: 10};
-  var svg_width = 750 - margin.left - margin.right,
+  var margin = {top: 7, right: 0, bottom: 0, left: 20};
+  var svg_width = 450 - margin.left - margin.right,
       svg_height = 35 - margin.top - margin.bottom;
 
   var rect_dim = 15;
@@ -543,7 +544,7 @@ function fn_barChartLegend() {
                   .attr("height", rect_dim)
                   .attr("y", 5)
                   .attr("x", function (d, i) {
-                    return 38 + i * 70;
+                    return 41 + i * 70;
                   })
                   .attr("fill", function (d, i) {
                     //return colour_methodNum[i + 1];                    

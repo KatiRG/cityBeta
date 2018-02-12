@@ -1,5 +1,6 @@
 var formatDecimalSci = d3.format(".3n");
 var formatDecimalk = d3.format(".1s"); //.2s //d3.format(".3n");
+var formatComma = d3.format(",");
 
 //------------------------------------------------
 //Technical labels
