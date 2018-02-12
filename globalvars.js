@@ -45,7 +45,7 @@ var cb_values = [];
 var choose_colourArray = {
   "methodology": ["#9DD3DF","#C3BBE2","#E35B5D","#EB9F9F","#F18052"],
   "population density": ["#DED8B6","#F9C869","#5D5061","#2F274C","#6A3058"],
-  "GDP/capita": ["#9e9ac8","#756bb1","#54278f","#F8DE08","#41135B"]
+  "GDP/capita": ["#dadaeb","#9e9ac8","#3f007d"]
 }
 
 var choose_textArray = {

@@ -303,9 +303,8 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
     "GDP/capita" : d3.extent(ghg, function (d) { return +d["GDP-PPP combined"]/d["pop to use"]*Math.pow(10,9);})
   }
 }) //end read tsv
-
-
-console.log("dimExtentDict: ", dimExtentDict[attrFlag])
+console.log("attrFlag: ", attrFlag)
+// console.log("dimExtentDict: ", dimExtentDict[attrFlag])
 
 
 //barChart legends
