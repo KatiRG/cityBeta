@@ -484,7 +484,7 @@ function fn_cityLabels_perGDP (d, i, thisCityGroup) {
 // create barChart SVGs
 
 //Create colour bar boxes
-function fn_appendColourBar() {
+function fn_barChartLegend() {
   
   //setup params
   var margin = {top: 7, right: 0, bottom: 0, left: 10};
