@@ -802,7 +802,7 @@ function fn_svgCityCard (selectedCity) {
     .attr("text-anchor", "right")
     .text(selectedCity.city);
 
-  //city info sub-row
+  //city info sub-row: Emissions
   svgCityCard.append("text")
     .attr("transform", function (d) {
         var transx = 0, transy = 40;
@@ -817,7 +817,33 @@ function fn_svgCityCard (selectedCity) {
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowInfo")
-    .text(formatComma(parseInt(selectedCity["Scope1"]/1000)) + " MtCO₂");  
+    .text(formatComma(parseInt(selectedCity["Scope1"]/1000)) + " MtCO₂");
+
+   //city info sub-row: Emissions Change
+  svgCityCard.append("text")
+    .attr("transform", function (d) {
+        var transx = 0, transy = 90;
+        return "translate(" + transx + " " + transy + ")" ;
+      })
+    .attr("class", "cityCardSubrowTitle")
+    .text("Emissions Change:");
+
+  svgCityCard.append("text")
+    .attr("transform", function (d) {
+        var transx = 0, transy = 105;
+        return "translate(" + transx + " " + transy + ")" ;
+      })
+    .attr("class", "cityCardSubrowInfo")
+    .text(function () {
+      if (selectedCity.city === "Albany") return "Not measured";
+     else if (selectedCity.city === "Lancaster" ||
+        selectedCity.city === "Boulder"
+      || selectedCity.city === "San Francisco" || selectedCity.city === "Vancouver"
+      || selectedCity.city === "North Vancouver") return "N/A";
+      else if (selectedCity["change in emissions"] === "") return "N/A";
+    else if (selectedCity["change in emissions"] === "Other") return "N/A";
+      else return selectedCity["change in emissions"];
+    });
     
   
 }
