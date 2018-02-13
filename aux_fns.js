@@ -768,7 +768,8 @@ function fn_svgHeadings (geogroup_id) {
 //----------------------------------------------
 
 //Info text in svg
-function fn_svgCityCard (cityName) {
+function fn_svgCityCard (selectedCity) {
+  console.log("selectedCity in fn: ", selectedCity)
   
   //display city card to the left of the map
   var svgCityCard = d3.select("#map").select("svg")
@@ -797,27 +798,26 @@ function fn_svgCityCard (cityName) {
     .attr("stroke", "none");
 
   //city name
-  svgCityCard.append("text").attr("class", "cityCardg")
+  svgCityCard.append("text").attr("class", "cityCardName")
     .attr("text-anchor", "right")
-    .html(cityName);
+    .text(selectedCity.city);
 
   //city info sub-row
   svgCityCard.append("text")
     .attr("transform", function (d) {
-        var xscale = 1, yscale = 1.0, transx = 0, transy = 40;
-        
-        return "scale(" + xscale + " " + yscale + ")" + 
-              "translate(" + transx + " " + transy + ")" ;
+        var transx = 0, transy = 40;
+        return "translate(" + transx + " " + transy + ")" ;
       })
-    .attr("text-anchor", "right")
-    .style("fill", "#ffaa1b")
-    .style("font-size", "11px")
-    .style("font-weight", "700")
-    .style("text-shadow", "0 0 5px #333333")
-    .style("text-transform", "uppercase")
-    //  text-shadow: 0 0 5px #333333;
-    // text-transform: uppercase;
-    .html("Emissions:");  
+    .attr("class", "cityCardSubrowTitle")
+    .text("Emissions:");
+
+  svgCityCard.append("text")
+    .attr("transform", function (d) {
+        var transx = 0, transy = 55;
+        return "translate(" + transx + " " + transy + ")" ;
+      })
+    .attr("class", "cityCardSubrowInfo")
+    .text(formatComma(parseInt(selectedCity["Scope1"]/1000)) + " MtCO₂");  
     
   
 }

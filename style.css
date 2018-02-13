@@ -349,13 +349,34 @@ div.rtooltip {
   margin-top: 4px;
   margin-left: 819px;*/
 }
-.cityCardg {
+.cityCardName {
   font-weight: bold;
   font-size: 17px;
+  stroke: none;
   fill: #fff;
-  background: #4c87b5;
+  background: rgba(76, 135, 181, 0.7);
   text-shadow: 0 0 5px #333333;
 }
+.cityCardSubrowTitle {
+  font-weight: 700;
+  font-size: 11px;
+  stroke: none;
+  fill: #ffaa1b;
+  text-shadow: 0 0 5px #333333;
+  text-transform: uppercase;
+  text-align: right;
+}
+.cityCardSubrowInfo {
+  font-size: 11px;
+  stroke: none;
+  fill: #fff;
+  text-align: right;
+}
+
+
+
+ 
+    .style("text-transform", "uppercase")
 
 
 #ghgStory {
