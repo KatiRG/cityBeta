@@ -106,7 +106,7 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
       <div class="col-lg-12">
         <!--barChart legend-->
         <div class="row">
-          <div id="barChartCaption">Per capita emissions [tCO2/capita]</div>
+          <div id="barChartCaption">Per capita emissions [tCO₂/capita]</div>
           <ul class="nytg-sort" id="emissionsToggleButton">
               <li id="gdpButton">per GDP</li>
           </ul>
@@ -510,7 +510,7 @@ function drawMap() {
 } // ./drawMap()
 
 function highlightElements(idName) {
-  console.log("idName: ", idName)
+  // console.log("idName: ", idName)
 
   // clear any previous story first
   d3.select("#ghgStory").text("");
@@ -523,7 +523,7 @@ function highlightElements(idName) {
   d3.select("#cityCardg").remove();
 
   //Display city card
-  fn_svgCityCard (selectedCity);
+  fn_svgCityCard (selectedCity, attrFlag);
 
   //Highlight Current
   //-----------------

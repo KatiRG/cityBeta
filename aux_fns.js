@@ -35,7 +35,7 @@ function setupData(ghg){
     diesel_price = d["diesel_price (2014)"]//+d.diesel_price
     gas_price = +d["gasoline_price (2014)"]//+d.gasoline_price
     HH = +d["household_size (updated)"]
-    methodology_num = +d['MethodNum']
+    methodology_num = +d['MethodNum'] //1-5 for 5 protocols in total
     methodology_details = d['Methodology Details (CDP)']
     delta_emissions = d['Increase/Decrease from last year (CDP)'] //string
     delta_emissions_reason = d['Reason for increase/decrease in emissions (CDP)']//string
@@ -717,7 +717,7 @@ function fn_arrow() {
   // var rotterdamText = d3.select("#markers").append("text");
   d3.select("#markers").append("text");
   d3.select("#markers").select("text")
-    .text(rotterdamEmissionsPerCap + " " + "tCO2/cap")
+    .text(rotterdamEmissionsPerCap + " " + "tCO₂/cap")
     .style("fill", "#565656")
     .attr("transform", function (d) { //adjust arrow proportions
         var xscale = 0.5, yscale = 1.9;         
@@ -768,8 +768,9 @@ function fn_svgHeadings (geogroup_id) {
 //----------------------------------------------
 
 //Info text in svg
-function fn_svgCityCard (selectedCity) {
-  console.log("selectedCity in fn: ", selectedCity)
+function fn_svgCityCard (selectedCity, attrFlag) {
+  // console.log("selectedCity in fn: ", selectedCity)
+  // console.log("attrFlag in fn: ", attrFlag)
   
   //display city card to the left of the map
   var svgCityCard = d3.select("#map").select("svg")
@@ -791,7 +792,7 @@ function fn_svgCityCard (selectedCity) {
     
   svgCityCard.append("rect")
     .attr("width", 200)             //="142" height="31"
-    .attr("height", 301) //31
+    .attr("height", 250) //31
     .attr("x", -15)
     .attr("y", -20)
     .attr("fill", "#4c87b5")
@@ -844,6 +845,42 @@ function fn_svgCityCard (selectedCity) {
     else if (selectedCity["change in emissions"] === "Other") return "N/A";
       else return selectedCity["change in emissions"];
     });
+
+  //city info sub-row: Protocol
+  var protocolNum = selectedCity["methodology"];
+  svgCityCard.append("text")
+    .attr("transform", function (d) {
+        var transx = 0, transy = 140;
+        return "translate(" + transx + " " + transy + ")" ;
+      })
+    .attr("class", "cityCardSubrowTitle")
+    .text("Protocol:");
+
+  svgCityCard.append("text")
+    .attr("transform", function (d) {
+        var transx = 0, transy = 155;
+        return "translate(" + transx + " " + transy + ")" ;
+      })
+    .attr("class", "cityCardSubrowInfo")
+    .text(choose_textArray["methodology"][protocolNum - 1]);
     
-  
+  //city info sub-row: attribute selected in dropdown menu
+  if (attrFlag != "methodology") { //methodology already on display
+    var protocolNum = selectedCity["methodology"];
+    svgCityCard.append("text")
+      .attr("transform", function (d) {
+          var transx = 0, transy = 190;
+          return "translate(" + transx + " " + transy + ")" ;
+        })
+      .attr("class", "cityCardSubrowTitle")
+      .text(attrFlag + ":");
+
+    svgCityCard.append("text")
+      .attr("transform", function (d) {
+          var transx = 0, transy = 205;
+          return "translate(" + transx + " " + transy + ")" ;
+        })
+      .attr("class", "cityCardSubrowInfo")
+      .text(formatComma(parseInt(selectedCity[attrFlag])) + " " + dimUnits[attrFlag]);
+  }
 }
