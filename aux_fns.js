@@ -18,7 +18,7 @@ function setupData(ghg){
 
     city = d.city
     region = d['Geographic group'] //Global Carbon Atlas regions
-    cityLocation = [+d['lat (external)'], +d['lon (external)']]
+    cityLocation = [+d['lat (external)'], +d['lon (external)'] -360]
     country = d.country
     popn = +d['pop to use']
     area = d['area [km2] (external)']
