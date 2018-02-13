@@ -105,9 +105,9 @@ var regionLabel_dict = {
 
 var dimUnits =  {
   "methodology": "",
-  "total emissions": "[tCO2]",
-  "per capita": "[tCO2/capita]",
-  "per GDP": "[kgCO2/USD]",
+  "total emissions": "[tCO₂]",
+  "per capita": "[tCO₂/capita]",
+  "per GDP": "[kgCO₂/USD]",
   "population": "capita",
   "population density": "per km2",
   "GDP/capita": "(PPP) [$BN/capita]",
