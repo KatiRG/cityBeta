@@ -50,9 +50,9 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
       <div class="col-lg-6" id="infoText" style="text-align: left;">
        regions of the world. We present here city emissions grouped per continent, although different lifestyles and energy use make city emissions strongly different within a continent.
       </div>
-      <ul class="nytg-sort" style='position: absolute; left: 1250px; top: 119px;'>
+     <!--  <ul class="nytg-sort" style='position: absolute; left: 1250px; top: 119px;'>
         <li id="resetButton">Reset</li>
-      </ul>
+      </ul> -->
 
       <!-- <div class="col-lg-4" ></div> -->
     </div> <!-- ./row 1 -->
@@ -417,8 +417,9 @@ function drawMap() {
   d3.json("geojson/world_countries.json", function(error, world) {
     if (error) throw error;
    
-    d3.json("geojson/cities_edited.geojson", function(error, cities) {
+    d3.json("geojson/cities_edited2.geojson", function(error, cities) {
       if (error) throw error;
+      console.log(cities)
 
       //world countries
       svg.append("g")
@@ -462,8 +463,14 @@ function drawMap() {
           })
           .attr("class", "worldcity")
           .style("fill", function (d) {
+            if (d.id === "Cleveland") console.log("cleveland: ", d)
+            if (data_GHG.find(x => x.city === d.id)) {
+              console.log("x in fill: ", d)
+              console.log("x.id in fill: ", d.id)
+              console.log("find: ", data_GHG.find(x => x.city === d.id))
+            }
 
-            if (data_GHG.find(x => x.city === d.id)) {              
+            if (data_GHG.find(x => x.city === d.id)) {
               return regionColourMap[data_GHG.find(x => x.city === d.id).region];
             }
             else return "none";
@@ -484,7 +491,7 @@ function drawMap() {
     }); // ./inner d3.json
   }); // ./outer d3.json
   
-  svg.call(zoom);
+  //svg.call(zoom);
 
   function zoomed() {
   
