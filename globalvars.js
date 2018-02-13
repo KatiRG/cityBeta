@@ -44,12 +44,13 @@ var cb_values = [];
 
 var choose_colourArray = {
   "methodology": ["#9DD3DF","#C3BBE2","#E35B5D","#EB9F9F","#F18052"],
-  "population density": ["#DED8B6","#F9C869","#5D5061","#2F274C","#6A3058"]
+  "population density": ["#DED8B6","#F9C869","#5D5061","#2F274C","#6A3058"],
+  "GDP/capita": ["#fcc5c0","#7a0177","#49006a"]
 }
 
 var choose_textArray = {
-  "methodology": ["GPC","US ICLEI","IPCC","ICLEI","Other"],
-  "population density": [10,22,33,44,55]
+  "methodology": ["GPC","US ICLEI","IPCC","ICLEI","Other"]
+  // "population density": [10,22,33,44,55]
 }
 
 //------------------------------------------------
@@ -109,7 +110,7 @@ var dimUnits =  {
   "per GDP": "[kgCO2/USD]",
   "population": "capita",
   "population density": "per km2",
-  "GDP-PPP/capita": "(PPP) [USD/capita]",
+  "GDP/capita": "(PPP) [$BN/capita]",
   "diesel price": "USD",
   "gas price": "USD",
   "HDD 15.5C": "[deg C x days]",

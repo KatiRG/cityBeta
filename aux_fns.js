@@ -24,11 +24,11 @@ function setupData(ghg){
     area = d['area [km2] (external)']
     totalEmissions = d['Total City-wide Emissions (metric tonnes CO2e) (CDP)'] //[tCO2]
     scope1 = d['s1 to use']
-    GDP = d['GDP-PPP combined']
-    // GDP = d['GDP-PPP combined [USD]']
+    GDP = d['GDP-PPP combined'] //units of $BN USD
+    // GDP = d['GDP-PPP combined [USD]'] //units of USD
     scope1_cap = +d['s1 per capita'] //d['s1 per capita']  //scope1/popn
     scope1_gdp = +d['s1 per gdp [kgCO2/USD]']
-    GDP_cap = +d['GDP-PPP combined/cap']
+    GDP_cap = d["GDP-PPP combined"]/d["pop to use"]*Math.pow(10,9)  //+d['GDP-PPP combined/cap']
     pop_density = popn/area//[pop/km2]
     HDD155C = +d["HDD_15.5C"]
     CDD23C = +d["CDD_23C"]
@@ -102,6 +102,7 @@ function setupData(ghg){
       "per capita": scope1_cap,
       "per GDP": scope1_gdp,
       "population density": pop_density,
+      "GDP/capita": GDP_cap,
       "HDD 15.5C": HDD155C,
       "CDD 23C": CDD23C,
       "diesel price": diesel_price,
@@ -760,4 +761,89 @@ function fn_svgHeadings (geogroup_id) {
                 "translate(" + svgTrans[idx][0] + " " + svgTrans[idx][1] + ")" ;
         });
   }
+}
+
+//----------------------------------------------
+// Functions for city card info
+//----------------------------------------------
+
+//Info text in svg
+function fn_svgCityCard (selectedCity) {
+  console.log("selectedCity in fn: ", selectedCity)
+  
+  //display city card to the left of the map
+  var svgCityCard = d3.select("#map").select("svg")
+          .append("g").attr("id", "cityCardg")
+          .attr("transform", function () {
+            transx = 0;
+            transy = 0;
+            return "translate(" + transx + "," + transy + ")";
+          });
+
+  svgCityCard
+    // .append("g")
+    .attr("transform", function (d) {
+        var xscale = 1, yscale = 1.0, transx = 15, transy = 20;
+        
+        return "scale(" + xscale + " " + yscale + ")" + 
+              "translate(" + transx + " " + transy + ")" ;
+      });
+    
+  svgCityCard.append("rect")
+    .attr("width", 200)             //="142" height="31"
+    .attr("height", 301) //31
+    .attr("x", -15)
+    .attr("y", -20)
+    .attr("fill", "#4c87b5")
+    .attr("stroke", "none");
+
+  //city name
+  svgCityCard.append("text").attr("class", "cityCardName")
+    .attr("text-anchor", "right")
+    .text(selectedCity.city);
+
+  //city info sub-row: Emissions
+  svgCityCard.append("text")
+    .attr("transform", function (d) {
+        var transx = 0, transy = 40;
+        return "translate(" + transx + " " + transy + ")" ;
+      })
+    .attr("class", "cityCardSubrowTitle")
+    .text("Emissions:");
+
+  svgCityCard.append("text")
+    .attr("transform", function (d) {
+        var transx = 0, transy = 55;
+        return "translate(" + transx + " " + transy + ")" ;
+      })
+    .attr("class", "cityCardSubrowInfo")
+    .text(formatComma(parseInt(selectedCity["Scope1"]/1000)) + " MtCO₂");
+
+   //city info sub-row: Emissions Change
+  svgCityCard.append("text")
+    .attr("transform", function (d) {
+        var transx = 0, transy = 90;
+        return "translate(" + transx + " " + transy + ")" ;
+      })
+    .attr("class", "cityCardSubrowTitle")
+    .text("Emissions Change:");
+
+  svgCityCard.append("text")
+    .attr("transform", function (d) {
+        var transx = 0, transy = 105;
+        return "translate(" + transx + " " + transy + ")" ;
+      })
+    .attr("class", "cityCardSubrowInfo")
+    .text(function () {
+      if (selectedCity.city === "Albany") return "Not measured";
+     else if (selectedCity.city === "Lancaster" ||
+        selectedCity.city === "Boulder"
+      || selectedCity.city === "San Francisco" || selectedCity.city === "Vancouver"
+      || selectedCity.city === "North Vancouver") return "N/A";
+      else if (selectedCity["change in emissions"] === "") return "N/A";
+    else if (selectedCity["change in emissions"] === "Other") return "N/A";
+      else return selectedCity["change in emissions"];
+    });
+    
+  
 }

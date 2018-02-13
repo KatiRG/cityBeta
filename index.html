@@ -54,12 +54,12 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
         <li id="resetButton">Reset</li>
       </ul>
 
-      <div class="col-lg-4" ></div>
+      <!-- <div class="col-lg-4" ></div> -->
     </div> <!-- ./row 1 -->
   
     <!-- row for map and city card -->
     <div class="row">
-      <div class="col-lg-12">
+      <div id="mapRow" class="col-lg-12">
         <div id="map"></div>
 
       </div>
@@ -69,11 +69,12 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
     <!-- row 3 -->
     <div class="row">
 
-      <div class="col-lg-3">
+      <div class="col-lg-4">
           <div id="barChartLegendLabel">Colour bars by: 
             <select id="d3-dropdown">
               <option value="methodology" selected="selected">Protocol</option>
               <option value="population density">population density</option>
+              <!--<option value="GDP/capita">GDP/capita</option>-->
               <!--<option value="gas price">gas price</option>
               <option value="diesel price">diesel price</option>
               <option value="HDD 15.5C">HDD 15.5C</option>
@@ -192,12 +193,14 @@ d3.select("#d3-dropdown").node().value = "methodology";
 d3.select("select")
   .on("change",function(d){
     attrFlag = d3.select("#d3-dropdown").node().value;
+    console.log("attrFlag: ", attrFlag)
 
     var geogroupArray = ["barChart_USAAsia", "barChart_EUCWLatAmerAfrica"];
 
     svgBarChart = d3.select("#" + geogroupArray[0] + " .barSVG")
     svgBarChart.selectAll("rect").attr("fill", function (d) {
       //output the discretized colour according to selected attribute
+      //console.log("d[val]: ", d[attrFlag])
       return fn_colour_barChart(attrFlag, d[attrFlag]);
     });
 
@@ -297,10 +300,13 @@ d3.select("#reorderButton")
 d3.tsv("data/cityApp_attributes.tsv", function(ghg) {  
   dimExtentDict = {
     "methodology": d3.extent(ghg, function (d) {return d['MethodNum'];}),
-    "population density": d3.extent(ghg, function (d) {return +d["pop to use"]/d["area [km2] (external)"];})
+    "population density": d3.extent(ghg, function (d) {return +d["pop to use"]/d["area [km2] (external)"];}),
+    "GDP/capita" : d3.extent(ghg, function (d) { return +d["GDP-PPP combined"]/d["pop to use"]*Math.pow(10,9);})
   }
 }) //end read tsv
-//console.log("dimExtentDict: ", dimExtentDict["methodology"])
+console.log("attrFlag: ", attrFlag)
+// console.log("dimExtentDict: ", dimExtentDict[attrFlag])
+
 
 //barChart legends
 // fn_barChartLegend();
@@ -326,8 +332,11 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
 
 // d3js World Map
 //------------------
-var width = 1000,
-    height = 360; //cut off antarctica  //400;
+var margin = {top: 0, right: 0, bottom: 0, left: 20};
+var width = 1200 - margin.left - margin.right,
+    height = 360 - margin.top - margin.bottom;
+// var width = 1000,
+//     height = 360; //cut off antarctica  //400;
 
 function drawMap() {
   // Map reset button
@@ -387,9 +396,9 @@ function drawMap() {
       .attr("class", "line")
       .style("stroke", "#555")
       .style("stroke-width", "1.2px")
-      .attr("x1", 85)
+      .attr("x1", 194)
       .attr("y1", 359)
-      .attr("x2", 915)
+      .attr("x2", 1024)
       .attr("y2", 359);
 
   //draw top line of map
@@ -399,9 +408,9 @@ function drawMap() {
       .attr("class", "line")
       .style("stroke", "#555")
       .style("stroke-width", "1.2px")
-      .attr("x1", 163)
+      .attr("x1", 272)
       .attr("y1", 0)
-      .attr("x2", 839)
+      .attr("x2", 948)
       .attr("y2", 0);      
 
  
@@ -501,14 +510,20 @@ function drawMap() {
 } // ./drawMap()
 
 function highlightElements(idName) {
+  console.log("idName: ", idName)
+
   // clear any previous story first
   d3.select("#ghgStory").text("");
 
   var selectedCity = data_GHG.find(x => x.idName.includes(idName));
-  
+
   //Clear Previous
   //--------------
   resetElements();
+  d3.select("#cityCardg").remove();
+
+  //Display city card
+  fn_svgCityCard (selectedCity);
 
   //Highlight Current
   //-----------------
