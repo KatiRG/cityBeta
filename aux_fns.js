@@ -762,3 +762,43 @@ function fn_svgHeadings (geogroup_id) {
         });
   }
 }
+
+//----------------------------------------------
+// Functions for city card info
+//----------------------------------------------
+
+//Info text in svg
+function fn_svgCityCard (cityName) {
+  
+  //display city card to the left of the map
+  var svgCityCard = d3.select("#map").select("svg")
+          .append("g").attr("id", "cityCardg")
+          .attr("transform", function () {
+            transx = 0;
+            transy = 0;
+            return "translate(" + transx + "," + transy + ")";
+          });
+
+  svgCityCard
+    // .append("g")
+    .attr("transform", function (d) {
+        var xscale = 1, yscale = 1.0, transx = 20, transy = 20;
+        
+        return "scale(" + xscale + " " + yscale + ")" + 
+              "translate(" + transx + " " + transy + ")" ;
+      });
+    
+  svgCityCard.append("rect")
+    .attr("width", 200)             //="142" height="31"
+    .attr("height", 31)
+    .attr("x", -15)
+    .attr("y", -20)
+    .attr("fill", "#4c87b5")
+    .attr("stroke", "none");
+
+  svgCityCard.append("text").attr("class", "cityCardg")
+    .attr("fill", "#000")
+    .html(cityName)
+    .attr("text-anchor", "right");
+  
+}

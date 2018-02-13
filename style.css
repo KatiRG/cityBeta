@@ -9,7 +9,7 @@ body {
 
 [class*="col-"], footer {
   /*background-color: lightgreen; */
-  border: 2px solid white;
+  border: 2px solid gray;
   border-radius: 6px;
   line-height: 40px;
   text-align: center;
@@ -349,7 +349,13 @@ div.rtooltip {
   margin-top: 4px;
   margin-left: 819px;*/
 }
-
+.cityCardg {
+  font-weight: bold;
+  color: #565656;
+  font-size: 17px;
+  fill: white;
+  background: #4c87b5;
+}
 
 
 #ghgStory {
