@@ -9,7 +9,7 @@ body {
 
 [class*="col-"], footer {
   /*background-color: lightgreen; */
-  border: 2px solid gray;
+  border: 2px solid white;
   border-radius: 6px;
   line-height: 40px;
   text-align: center;
@@ -351,10 +351,10 @@ div.rtooltip {
 }
 .cityCardg {
   font-weight: bold;
-  color: #565656;
   font-size: 17px;
-  fill: white;
+  fill: #fff;
   background: #4c87b5;
+  text-shadow: 0 0 5px #333333;
 }
 
 
