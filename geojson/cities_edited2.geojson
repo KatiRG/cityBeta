@@ -7525,6 +7525,276 @@
         "city": "Nashville and Davidson"
       },
 		"id": "Nashville and Davidson"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-111.631, 35.199]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Flagstaff"
+      },
+		"id": "Flagstaff"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.211, 44.476]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Burlington"
+      },
+		"id": "Burlington"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-91.53, 41.66]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Iowa"
+      },
+		"id": "Iowa"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-78.91, 35.99]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Durham"
+      },
+		"id": "Durham"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-90.2, 38.63]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "St Louis"
+      },
+		"id": "St Louis"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-90.33, 38.66]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "University City, MO"
+      },
+		"id": "University City, MO"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-77.47, 37.53]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Richmond, VA"
+      },
+		"id": "Richmond, VA"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-123.09, 44.05]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Eugene"
+      },
+		"id": "Eugene"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.76, 42.65]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Albany"
+      },
+		"id": "Albany"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-122.37, 37.37]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Los Altos Hills"
+      },
+		"id": "Los Altos Hills"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-118.4, 33.89]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Hermosa Beach, CA"
+      },
+		"id": "Hermosa Beach, CA"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-76.30, 40.04]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Lancaster, PA"
+      },
+		"id": "Lancaster, PA"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-71.10, 42.39]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Somerville, MA"
+      },
+		"id": "Somerville, MA"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-77.14, 38.88]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Arlington, VA"
+      },
+		"id": "Arlington, VA"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-119.82, 39.53]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Reno"
+      },
+		"id": "Reno"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-77.02, 38.91]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "District of Columbia"
+      },
+		"id": "District of Columbia"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-73.86, 40.94]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Yonkers"
+      },
+		"id": "Yonkers"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-122.08, 37.67]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Hayward"
+      },
+		"id": "Hayward"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-121.74, 38.55]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Davis, CA"
+      },
+		"id": "Davis, CA"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-90.16, 38.90]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Alton, IL"
+      },
+		"id": "Alton, IL"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-105.08, 39.70]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Lakewood"
+      },
+		"id": "Lakewood"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-75.10, 40.1]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Abington"
+      },
+		"id": "Abington"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-80.42, 37.23]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Blacksburg"
+      },
+		"id": "Blacksburg"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-122.27, 37.80]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Oakland"
+      },
+		"id": "Oakland"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-122.14, 37.43]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Palo Alto"
+      },
+		"id": "Palo Alto"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-122.233, 37.817]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Piedmont, CA"
+      },
+		"id": "Piedmont, CA"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-122.233, 37.817]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Santa Monica"
+      },
+		"id": "Santa Monica"
     }
 	
 	]
