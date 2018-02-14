@@ -202,19 +202,19 @@ d3.select("select")
       //output the discretized colour according to selected attribute
       //console.log("d[val]: ", d[attrFlag])
       return fn_colour_barChart(attrFlag, d[attrFlag]);
-    })
-    .style("stroke", function (d) {
-      if (d[attrFlag] === 0) return "#565656";
     });
+    // .style("stroke", function (d) {
+    //   if (d[attrFlag] === 0) return "#E6E8E3";
+    // });
 
     svgBarChart = d3.select("#" + geogroupArray[1] + " .barSVG")
     svgBarChart.selectAll("rect").attr("fill", function (d) {
       //output the discretized colour according to selected attribute
       return fn_colour_barChart(attrFlag, d[attrFlag]);
-    })
-    .attr("stroke", function (d) {
-      if (d[attrFlag] === 0) return "#565656";
     });
+    // .attr("stroke", function (d) {
+    //   if (d[attrFlag] === 0) return "#E6E8E3";
+    // });
 
     //colour the legend squares
     fn_updateLegend(attrFlag);
@@ -546,7 +546,7 @@ function highlightElements(idName) {
     .style("stroke", "#363636"); 
 
   d3.selectAll(".bar:not(#bar" + idName + ")")
-    .style("fill-opacity", 0.1).style("stroke", "#E6E8E3"); 
+    .style("fill-opacity", 0.1); //.style("stroke", "#E6E8E3"); 
 
   d3.selectAll(".node:not(#node" + idName + ")")
     .style("fill-opacity", 0.1)

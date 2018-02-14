@@ -299,7 +299,7 @@ function fn_colour_barChart (attrFlag, attrValue) {
      
     colourmapDim = fn_colourmapDim(attrFlag);
 
-    return attrValue === 0 ? "#fff" : colourmapDim(attrValue);
+    return attrValue === 0 ? "#E6E8E3" : colourmapDim(attrValue);
   } 
 }
 function fn_colourmapDim (attrFlag) {
