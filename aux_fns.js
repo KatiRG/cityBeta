@@ -791,7 +791,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
       });
     
   svgCityCard.append("rect")
-    .attr("width", 200)             //="142" height="31"
+    .attr("width", 175)             //="142" height="31"
     .attr("height", 250) //31
     .attr("x", -15)
     .attr("y", -20)
@@ -843,6 +843,9 @@ function fn_svgCityCard (selectedCity, attrFlag) {
       || selectedCity.city === "North Vancouver") return "N/A";
       else if (selectedCity["change in emissions"] === "") return "N/A";
     else if (selectedCity["change in emissions"] === "Other") return "N/A";
+    else if (selectedCity["change in emissions"] === "This is our first year of calculation") {
+      return "First year of calculation";
+      }
       else return selectedCity["change in emissions"];
     });
 
