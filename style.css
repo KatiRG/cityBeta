@@ -356,6 +356,7 @@ div.rtooltip {
   fill: #fff;
   background: rgba(76, 135, 181, 0.7);
   text-shadow: 0 0 5px #333333;
+  text-align: right;
 }
 .cityCardSubrowTitle {
   font-weight: 700;
