@@ -156,6 +156,7 @@ function resetElements() {
   d3.selectAll(".countries").selectAll("path")
     .style("stroke","#555")
     .style("stroke-width", 1)
+    .style("fill", "#2b292e")
     .style("opacity", 1);
 
   //reset opacity of world cites and map

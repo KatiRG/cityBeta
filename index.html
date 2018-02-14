@@ -457,7 +457,7 @@ function drawMap() {
           .data(cities.features)
           .enter().append('path')
           .attr('d', path)
-          .attr("id", function (d, i) {
+          .attr("id", function (d, i) {            
             return "city" + format_idName(d.id);
           })
           .attr("class", "worldcity")
@@ -547,8 +547,13 @@ function highlightElements(idName) {
     .style("fill-opacity", 0.1)
     .style("stroke-opacity", 0.1);
   
-  d3.selectAll(".countries").selectAll("path").style("opacity", 0.1);
-  
+  //Dim all countries but current country
+  var thisCountry = data_GHG.find(x => x.idName === idName).country;
+  // d3.selectAll(".countries").selectAll("path").style("opacity", 0.1);
+  d3.select("#map" + thisCountry).style("fill", "#d3d3d3");
+  d3.selectAll(".countries path:not(#map" + thisCountry + ")")
+    .style("opacity", 0.1);
+
   d3.select("#city" + idName)
     .attr("stroke", "black")
     .attr("stroke-width", 2);
