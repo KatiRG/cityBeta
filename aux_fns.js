@@ -18,7 +18,7 @@ function setupData(ghg){
 
     city = d.city
     region = d['Geographic group'] //Global Carbon Atlas regions
-    cityLocation = [+d['lat (external)'], +d['lon (external)'] -360]
+    cityLocation = [ +d['lon (external)'] -360, +d['lat (external)']]
     country = d.country
     popn = +d['pop to use']
     area = d['area [km2] (external)']
@@ -437,7 +437,7 @@ function fn_cityLabels_perCapita (d, i, thisCityGroup) {
 
   } else if (thisCityGroup === "bar class_groupEurope") {
                        
-    if (d === "Rotterdam" || d === "Ljubljana") {
+    if (d === "Rotterdam") {// || d === "Ljubljana") {
       xtrans = 60; ytrans = 20; rot = -90;
     }
     else ytrans = -30 + (i*1.9);
@@ -448,7 +448,7 @@ function fn_cityLabels_perCapita (d, i, thisCityGroup) {
     }
     else if (d === "Vancouver") ytrans = -10;
     else if (d === "North Vancouver") ytrans = 5;
-    else if (d === "Ajax, ON") ytrans = 30;
+    else if (d === "Ajax") ytrans = 30;
     else ytrans = -120 + (i*1.9);
 
   } else if (thisCityGroup === "bar class_groupOceania") {
@@ -668,7 +668,7 @@ function fn_arrow() {
   svg = d3.select("#barChart_EUCWLatAmerAfrica").select(".barSVG")
            .append("g")
            .attr('height', height + margin.top + margin.bottom)
-          .attr("transform", "translate(" + -56 + "," + -10 + ")") //posn of arrow and text
+          .attr("transform", "translate(" + -56 + "," + -25 + ")") //posn of arrow and text
            .append("svg")
           .attr('width', width + margin.left + margin.right);
           
