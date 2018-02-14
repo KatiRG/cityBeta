@@ -7795,6 +7795,436 @@
         "city": "Santa Monica"
       },
 		"id": "Santa Monica"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-238.24, 24.75]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Yilan"
+      },
+		"id": "Yilan"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-238.69, 24.99]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Taoyuan"
+      },
+		"id": "Taoyuan"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-239.51, 22.675]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Pingtung"
+      },
+		"id": "Pingtung"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-232.98, 37.267]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Suwon"
+      },
+		"id": "Suwon"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-238.67, 25.033]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Taipei City"
+      },
+		"id": "Taipei City"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-238.554, 25.011]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "New Taipei"
+      },
+		"id": "New Taipei"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-239, 13.83]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Batangas"
+      },
+		"id": "Batangas"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-238.97, 14.55]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Makati"
+      },
+		"id": "Makati"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-226.083, 34.65]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Okayama"
+      },
+		"id": "Okayama"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-345.492, 46.056]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Ljubljana"
+      },
+		"id": "Ljubljana"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-334.35, 60.983]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Lahti"
+      },
+		"id": "Lahti"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-350.017, 57.467]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Hjørring"
+      },
+		"id": "Hjørring"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-346.77, 46.07]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Udine"
+      },
+		"id": "Udine"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-8.683, 39.233]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Santarém"
+      },
+		"id": "Santarém"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-352.4, 47.44]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Basel"
+      },
+		"id": "Basel"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-347.664, 45.438]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Venezia"
+      },
+		"id": "Venezia"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-347.73, 55.648]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Hoeje-Taastrup"
+      },
+		"id": "Hoeje-Taastrup"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-347.517, 55.733]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Gladsaxe Kommune"
+      },
+		"id": "Gladsaxe Kommune"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-353.366, 46.52]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Lausanne"
+      },
+		"id": "Lausanne"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-9.42, 38.7]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Cascais"
+      },
+		"id": "Cascais"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-9.067, 38.667]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Barreiro"
+      },
+		"id": "Barreiro"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-21.933, 64.133]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Reykjavík"
+      },
+		"id": "Reykjavík"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-333.447, 38.343]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Kadiovacik"
+      },
+		"id": "Kadiovacik"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-0.883, 41.65]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Zaragoza"
+      },
+		"id": "Zaragoza"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-337.733, 60.45]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Turku"
+      },
+		"id": "Turku"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-8.983, 38.65]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Moita"
+      },
+		"id": "Moita"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-347.8, 44.417]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Ravenna"
+      },
+		"id": "Ravenna"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-347.8, 44.417]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Faro"
+      },
+		"id": "Faro"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-79.867, 43.25]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Hamilton, ON"
+      },
+		"id": "Hamilton, ON"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-83, 42.283]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Windsor, ON"
+      },
+		"id": "Windsor, ON"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-81.25, 42.984]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "London, ON"
+      },
+		"id": "London, ON"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-123.067, 49.317]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "North Vancouver"
+      },
+		"id": "North Vancouver"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-45.228, -22.817]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Guaratinguetá"
+      },
+		"id": "Guaratinguetá"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-48.626, -27.572]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Florianópolis"
+      },
+		"id": "Florianópolis"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-48.334, -10.184]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Palmas"
+      },
+		"id": "Palmas"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-47.458, -23.502]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Sorocaba"
+      },
+		"id": "Sorocaba"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-100.976, 22.151]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "San Luis Potosí"
+      },
+		"id": "San Luis Potosí"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-43.933, -19.917]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Belo Horizonte"
+      },
+		"id": "Belo Horizonte"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-38.477, -12.975]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Salvador"
+      },
+		"id": "Salvador"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-328.95, -29.883]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Durban"
+      },
+		"id": "Durban"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-331.667, -25.667]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Pretoria Tshwane"
+      },
+		"id": "Pretoria Tshwane"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-321.26, 9.03]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Addis Ababa"
+      },
+		"id": "Addis Ababa"
+    },{      
+      "geometry": {
+        "type": "Point",
+        "coordinates": [-324.067, 31.95]
+      },
+      "type": "Feature",
+      "properties": {
+        "city": "Amman"
+      },
+		"id": "Amman"
     }
 	
 	]
