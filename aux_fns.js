@@ -342,14 +342,18 @@ function fn_updateLegend (attrFlag) {
   //tooltip for rects  
   var tool_tip = d3.tip()
       .attr("class", function () {
-        if (attrFlag === "population density") return "d3-tip-deactive";
+        if (attrFlag === "population density" || attrFlag === "GDP/capita") {
+          return "d3-tip-deactive";
+        }
         else return "d3-tip";
       })
       .offset([-10, 0])
       .html(function (d, i) {
-        if (attrFlag === "population density") return "";
-        else return "<b>" + Object.keys(protocolDict)[i] + "</b>" + ": "
+        if (attrFlag === "population density" || attrFlag === "GDP/capita") {return "";}
+        else {
+          return "<b>" + Object.keys(protocolDict)[i] + "</b>" + ": "
                      + Object.values(protocolDict)[i];
+        }
       });
   svgCB.call(tool_tip);
 
@@ -372,13 +376,24 @@ function fn_updateLegend (attrFlag) {
         updateText = choose_textArray[attrFlag][j]
     } else {
       console.log("cb_values format: ", formatComma(cb_values[j]) )
-      if (j === 0) updateText = "< " + formatComma(cb_values[j + 1]);
-      else updateText = "> " + formatComma(cb_values[j]);      
+
+      if (attrFlag === "GDP/capita") {
+        firstValue = formatDecimalk(cb_values[1]);
+        nextValues = formatDecimalk(cb_values[j]);
+      }
+      else {
+        firstValue = formatComma(cb_values[1]);
+        nextValues = formatComma(cb_values[j]);
+      }
+
+      if (j === 0) updateText = "< " + firstValue;
+      else updateText = "> " + nextValues;      
     }
       return updateText;
     })
     .attr("x", function (d, i) {
       if (attrFlag === "methodology") xpos = [10,63,150,215,284];
+      else if (attrFlag === "GDP/capita") xpos = [7,77,146,216,281];
       else xpos = [0,70,132,203,272];
       return xpos[i];
     });
