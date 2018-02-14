@@ -74,7 +74,7 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
             <select id="d3-dropdown">
               <option value="methodology" selected="selected">Protocol</option>
               <option value="population density">population density</option>
-              <!--<option value="GDP/capita">GDP/capita</option>-->
+              <option value="GDP/capita">GDP/capita</option>
               <!--<option value="gas price">gas price</option>
               <option value="diesel price">diesel price</option>
               <option value="HDD 15.5C">HDD 15.5C</option>
@@ -203,12 +203,18 @@ d3.select("select")
       //console.log("d[val]: ", d[attrFlag])
       return fn_colour_barChart(attrFlag, d[attrFlag]);
     });
+    // .style("stroke", function (d) {
+    //   if (d[attrFlag] === 0) return "#E6E8E3";
+    // });
 
     svgBarChart = d3.select("#" + geogroupArray[1] + " .barSVG")
     svgBarChart.selectAll("rect").attr("fill", function (d) {
       //output the discretized colour according to selected attribute
       return fn_colour_barChart(attrFlag, d[attrFlag]);
     });
+    // .attr("stroke", function (d) {
+    //   if (d[attrFlag] === 0) return "#E6E8E3";
+    // });
 
     //colour the legend squares
     fn_updateLegend(attrFlag);
@@ -299,9 +305,12 @@ d3.select("#reorderButton")
 //Find data range extent for each dim (to be used to discretize into colour values)
 d3.tsv("data/cityApp_attributes.tsv", function(ghg) {  
   dimExtentDict = {
-    "methodology": d3.extent(ghg, function (d) {return d['MethodNum'];}),
-    "population density": d3.extent(ghg, function (d) {return +d["pop to use"]/d["area [km2] (external)"];}),
-    "GDP/capita" : d3.extent(ghg, function (d) { return +d["GDP-PPP combined"]/d["pop to use"]*Math.pow(10,9);})
+    "methodology": 
+          d3.extent(ghg, function (d) {return d['MethodNum'];}),
+    "population density": 
+          d3.extent(ghg, function (d) {return +d["pop to use"]/d["area [km2] (external)"];}),
+    // "GDP/capita" : d3.extent(ghg, function (d) { return +d["GDP-PPP combined"]/d["pop to use"]*Math.pow(10,9);})
+    "GDP/capita": [1700, 128046]
   }
 }) //end read tsv
 console.log("attrFlag: ", attrFlag)
@@ -537,7 +546,7 @@ function highlightElements(idName) {
     .style("stroke", "#363636"); 
 
   d3.selectAll(".bar:not(#bar" + idName + ")")
-    .style("fill-opacity", 0.1).style("stroke", "#E6E8E3"); 
+    .style("fill-opacity", 0.1); //.style("stroke", "#E6E8E3"); 
 
   d3.selectAll(".node:not(#node" + idName + ")")
     .style("fill-opacity", 0.1)
@@ -712,7 +721,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
           .style("top", d3.event.pageY + tipy + "px");
 
       })
-      .on("mouseout", function (d) {
+      .on("mouseout", function (d) {       
         resetElements();
         
         d3.select("#tick" + idName).text(function (d) { return fn_abbr(d); })

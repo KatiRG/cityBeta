@@ -290,6 +290,7 @@ function fn_reorderByEmissionsPerCapita(region, emissions_perGDP) {
 // barChart updates
 
 function fn_colour_barChart (attrFlag, attrValue) {
+  //console.log("fn_colour_barChart")
   
   if (attrFlag === "methodology") {//integers from 1-5, no mapping needed
     return colour_methodNum[attrValue];
@@ -298,10 +299,11 @@ function fn_colour_barChart (attrFlag, attrValue) {
      
     colourmapDim = fn_colourmapDim(attrFlag);
 
-    return colourmapDim(attrValue);
+    return attrValue === 0 ? "#E6E8E3" : colourmapDim(attrValue);
   } 
 }
 function fn_colourmapDim (attrFlag) {
+  //console.log("fn_colourmapDim")
   dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]];
 
   //colour map to take data value and map it to the colour of the level bin it belongs to
@@ -312,6 +314,7 @@ function fn_colourmapDim (attrFlag) {
   return colourmapDim;
 }
 function fn_updateLegend (attrFlag) {
+  console.log("fn_updateLegend")
   if (attrFlag != "methodology") {  
     dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]];
     //difference between max and min values of selected attribute
@@ -354,19 +357,8 @@ function fn_updateLegend (attrFlag) {
   d3.select("#barChartLegend").select("svg")
     .selectAll('rect')
     .attr("fill", function (i, j) {
-      var updateColour = attrFlag === "methodology" ?
-                choose_colourArray[attrFlag][j]: colourmapDim(cb_values[j])
-      // if (attrFlag != "methodology") {
-      //   console.log("cb_values: ", cb_values[j]);
-      //   console.log("updateColour: ", colourmapDim(cb_values[j])) ;
-        // console.log("map 0: ", colourmapDim(0) );
-        // console.log("map 5000: ", colourmapDim(5000) );
-        // console.log("map 10000: ", colourmapDim(10000) );
-        // console.log("map 14000: ", colourmapDim(14000) );
-        // console.log("map 15000: ", colourmapDim(15000) );
-        // console.log("map 19000: ", colourmapDim(19000) );
-      // }
-      return updateColour;
+      //colourmapDim(cb_values[j]);
+      return choose_colourArray[attrFlag][j];
     })
     .on('mouseover', tool_tip.show)
     .on('mouseout', tool_tip.hide);
@@ -841,7 +833,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
 
   svgCityCard.append("text")
     .attr("transform", function (d) {
-        var transy = 105;
+        var transy = 40 + delta + 15;
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowInfo")
@@ -871,7 +863,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
 
   svgCityCard.append("text")
     .attr("transform", function (d) {
-        var transy = 155;
+        var transy = 40 + 2*delta + 15;
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowInfo")
@@ -882,7 +874,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
     var protocolNum = selectedCity["methodology"];
     svgCityCard.append("text")
       .attr("transform", function (d) {
-          var transy = 190;
+          var transy = 40 + 3*delta;
           return "translate(" + transx + " " + transy + ")" ;
         })
       .attr("class", "cityCardSubrowTitle")
@@ -890,7 +882,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
 
     svgCityCard.append("text")
       .attr("transform", function (d) {
-          var transy = 40 + 3*delta;
+          var transy = 40 + 3*delta + 15;
           return "translate(" + transx + " " + transy + ")" ;
         })
       .attr("class", "cityCardSubrowInfo")
