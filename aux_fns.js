@@ -772,6 +772,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
   // console.log("selectedCity in fn: ", selectedCity)
   // console.log("attrFlag in fn: ", attrFlag)
   
+  
   //display city card to the left of the map
   var svgCityCard = d3.select("#map").select("svg")
           .append("g").attr("id", "cityCardg")
@@ -782,7 +783,6 @@ function fn_svgCityCard (selectedCity, attrFlag) {
           });
 
   svgCityCard
-    // .append("g")
     .attr("transform", function (d) {
         var xscale = 1, yscale = 1.0, transx = 15, transy = 20;
         
@@ -800,13 +800,22 @@ function fn_svgCityCard (selectedCity, attrFlag) {
 
   //city name
   svgCityCard.append("text").attr("class", "cityCardName")
-    .attr("text-anchor", "right")
     .text(selectedCity.city);
+
+  var delta = 50; //amount to translate in y-dirn
+  var transx = 2;
+  svgCityCard.append("text")
+    .attr("transform", function (d) {
+        var transy = 16;
+        return "translate(" + transx + " " + transy + ")" ;
+      })
+    .attr("class", "cityCardSubrowInfo")
+    .text(selectedCity["country"]);
 
   //city info sub-row: Emissions
   svgCityCard.append("text")
     .attr("transform", function (d) {
-        var transx = 0, transy = 40;
+        var transy = 40;
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowTitle")
@@ -814,7 +823,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
 
   svgCityCard.append("text")
     .attr("transform", function (d) {
-        var transx = 0, transy = 55;
+        var transy = 55;
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowInfo")
@@ -823,7 +832,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
    //city info sub-row: Emissions Change
   svgCityCard.append("text")
     .attr("transform", function (d) {
-        var transx = 0, transy = 90;
+        var transy = 40 + delta;
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowTitle")
@@ -831,7 +840,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
 
   svgCityCard.append("text")
     .attr("transform", function (d) {
-        var transx = 0, transy = 105;
+        var transy = 105;
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowInfo")
@@ -853,7 +862,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
   var protocolNum = selectedCity["methodology"];
   svgCityCard.append("text")
     .attr("transform", function (d) {
-        var transx = 0, transy = 140;
+        var transy = 40 + 2*delta;
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowTitle")
@@ -861,7 +870,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
 
   svgCityCard.append("text")
     .attr("transform", function (d) {
-        var transx = 0, transy = 155;
+        var transy = 155;
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowInfo")
@@ -872,7 +881,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
     var protocolNum = selectedCity["methodology"];
     svgCityCard.append("text")
       .attr("transform", function (d) {
-          var transx = 0, transy = 190;
+          var transy = 190;
           return "translate(" + transx + " " + transy + ")" ;
         })
       .attr("class", "cityCardSubrowTitle")
@@ -880,7 +889,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
 
     svgCityCard.append("text")
       .attr("transform", function (d) {
-          var transx = 0, transy = 205;
+          var transy = 40 + 3*delta;
           return "translate(" + transx + " " + transy + ")" ;
         })
       .attr("class", "cityCardSubrowInfo")
