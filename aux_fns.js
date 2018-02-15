@@ -330,7 +330,7 @@ function fn_updateLegend (attrFlag) {
     for (idx=0; idx < num_levels; idx++) {
       if (attrFlag === "diesel price" || attrFlag === "gas price" ||
           attrFlag === "area" || attrFlag === "HDD 15.5C" || attrFlag === "CDD 23C" ||
-          attrFlag === "low BUA (2014)") {        
+          attrFlag === "low BUA (2014)" || attrFlag === "high BUA (2014)") {        
         cb_values.push(dimExtent[0] + idx*delta);
       }
       else {
