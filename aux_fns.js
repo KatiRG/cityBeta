@@ -42,24 +42,24 @@ function setupData(ghg){
 
     //Urban Areas
     UA_cluster = +d['Urban Area Cluster (FC)']
-    low_BUA_1990 = +d['Low BUA - 1990 (FC)']
-    low_BUA_2000 = +d['Low BUA \xe2\x80\x93 2000 (FC)']
-    low_BUA_2014 = +d['Low BUA \xe2\x80\x93 2014 (FC)']
-    high_BUA_1990 = +d['High BUA - 1990 (FC)']
-    high_BUA_2000 = +d['High BUA \xe2\x80\x93 2000 (FC)']
-    high_BUA_2014 = +d['High BUA \xe2\x80\x93 2014 (FC)']
-    low_BUApc_1990 = +d['Low BUA % - 1990 (FC)']
-    low_BUApc_2000 = +d['Low BUA % \xe2\x80\x93 2000 (FC)']
-    low_BUApc_2014 = +d['Low BUA % \xe2\x80\x93 2014 (FC)']
-    high_BUApc_1990 = +d['High BUA % - 1990 (FC)']
-    high_BUApc_2000 = +d['High BUA % \xe2\x80\x93 2000 (FC)']
-    high_BUApc_2014 = +d['High BUA % \xe2\x80\x93 2014 (FC)']
-    low_BUA_pdensity_1990 = +d['Low BUA pop density - 1990 (FC)']
-    high_BUA_pdensity_1990 = +d['High BUA pop density \xe2\x80\x93 1990 (FC)']
-    low_BUA_pdensity_2000 = +d['Low BUA pop density \xe2\x80\x93 2000 (FC)']
-    high_BUA_pdensity_2000 = +d['High BUA pop density - 2000 (FC)']
-    low_BUA_pdensity_2014 = +d['Low BUA pop density \xe2\x80\x93 2014 (FC)']
-    high_BUA_pdensity_2014 = +d['High BUA pop density - 2014 (FC)']
+    // low_BUA_1990 = +d['Low BUA - 1990 (FC)']
+    // low_BUA_2000 = +d['Low BUA - 2000 (FC)']
+    low_BUA_2014 = +d['Low BUA 2014 (FC)']
+    // high_BUA_1990 = +d['High BUA - 1990 (FC)']
+    // high_BUA_2000 = +d['High BUA - 2000 (FC)']
+    high_BUA_2014 = +d['High BUA 2014 (FC)']
+    // low_BUApc_1990 = +d['Low BUA % 1990 (FC)']
+    // low_BUApc_2000 = +d['Low BUA % 2000 (FC)']    
+    low_BUApc_2014 = +d['Low BUA % 2014 (FC)']
+    // high_BUApc_1990 = +d['High BUA % 1990 (FC)']
+    // high_BUApc_2000 = +d['High BUA % 2000 (FC)']
+    high_BUApc_2014 = +d['High BUA % 2014 (FC)']
+    // low_BUA_pdensity_1990 = +d['Low BUA pop density - 1990 (FC)']
+    // high_BUA_pdensity_1990 = +d['High BUA pop density - 1990 (FC)']
+    // low_BUA_pdensity_2000 = +d['Low BUA pop density - 2000 (FC)']
+    // high_BUA_pdensity_2000 = +d['High BUA pop density - 2000 (FC)']
+    low_BUA_pdensity_2014 = +d['Low BUA pop density 2014 (FC)']
+    high_BUA_pdensity_2014 = +d['High BUA pop density 2014 (FC)']
 
     //traffic and socio-economic indices
     inrix_congestion = +d['AVERAGE CONGESTION RATE (INRIX)']
@@ -113,12 +113,12 @@ function setupData(ghg){
       "methodology details": methodology_details,
       "change in emissions": delta_emissions,
       "reason for change": delta_emissions_reason,
-      "low BUA % (1990)": low_BUApc_1990,
-      "low BUA % (2000)": low_BUApc_2000,
+      "low BUA (2014)": low_BUA_2014,
       "low BUA % (2014)": low_BUApc_2014,
-      "high BUA % (1990)": high_BUApc_1990,
-      "high BUA % (2000)": high_BUApc_2000,
+      "high BUA (2014)": high_BUA_2014,     
       "high BUA % (2014)": high_BUApc_2014,
+      "low BUA density (2014)": low_BUA_pdensity_2014,
+      "high BUA density (2014)": high_BUA_pdensity_2014,
       "Avg congestion rate [%] (INRIX)": inrix_congestion,
       "Congestion Index (INRIX)": inrix_idx,
       "Peak hours spent in congestion (INRIX)": inrix_hours,
@@ -329,7 +329,8 @@ function fn_updateLegend (attrFlag) {
     cb_values=[]; //clear
     for (idx=0; idx < num_levels; idx++) {
       if (attrFlag === "diesel price" || attrFlag === "gas price" ||
-          attrFlag === "area" || attrFlag === "HDD 15.5C" || attrFlag === "CDD 23C") {        
+          attrFlag === "area" || attrFlag === "HDD 15.5C" || attrFlag === "CDD 23C" ||
+          attrFlag === "low BUA (2014)") {        
         cb_values.push(dimExtent[0] + idx*delta);
       }
       else {
