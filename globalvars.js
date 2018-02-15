@@ -47,7 +47,10 @@ var choose_colourArray = {
   "population density": ["#DED8B6","#F9C869","#5D5061","#2F274C","#6A3058"],
   "GDP/capita": ["#E6D8CB","#E394A7","#9e9ac8","#756bb1","#54278f"],
   "diesel price": ["#F1F2C4","#F2EA72","#fec44f","#CDAF7B","#634414"],
-  "gas price": ["#F1F2C4","#F2EA72","#fec44f","#CDAF7B","#634414"]
+  "gas price": ["#F1F2C4","#F2EA72","#fec44f","#CDAF7B","#634414"],
+  "HDD 15.5C": ["#e3dded", "#c8bcdc","#74a9cf","#26ADE4","#034e7b"],
+  "CDD 23C": ["#E1F5C4", "#ffeda0","#F9D423","#FC913A","#FF4E50"],
+  "area": ["#EDDAD0","#D5DED9","#99B2B7","#8DA597","#948C75"]
   
 }
 
@@ -114,6 +117,7 @@ var dimUnits =  {
   "population": "capita",
   "population density": "per km2",
   "GDP/capita": "(PPP) [$BN/capita]",
+  "area": "km2",
   "diesel price": "USD",
   "gas price": "USD",
   "HDD 15.5C": "[deg C x days]",
