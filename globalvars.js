@@ -52,7 +52,11 @@ var choose_colourArray = {
   "CDD 23C": ["#E1F5C4", "#ffeda0","#F9D423","#FC913A","#FF4E50"],
   "area": ["#EDDAD0","#D5DED9","#99B2B7","#8DA597","#948C75"],
   "low BUA (2014)": ["#d7b5d8","#CD7CB7","#885F9A","#B65873","#5F323F"],
-  "high BUA (2014)": ["#EEDAA7","#E6D472","#E79C74","#D45659","#7D4755"]
+  "low BUA % (2014)": ["#d7b5d8","#CD7CB7","#885F9A","#B65873","#5F323F"],
+  "low BUA density (2014)": ["#d7b5d8","#CD7CB7","#885F9A","#B65873","#5F323F"],
+  "high BUA (2014)": ["#EEDAA7","#E6D472","#E79C74","#D45659","#7D4755"],
+  "high BUA % (2014)": ["#EEDAA7","#E6D472","#E79C74","#D45659","#7D4755"],
+  "high BUA density (2014)": ["#EEDAA7","#E6D472","#E79C74","#D45659","#7D4755"]
   
 }
 
@@ -124,12 +128,12 @@ var dimUnits =  {
   "gas price": "USD",
   "HDD 15.5C": "[deg C x days]",
   "CDD 23C": "[deg C x days]",
-  "low BUA (2014)": "km2",
-  "high BUA (2014)": "km2",
-  "low BUA % (2014)": "%",
-  "high BUA % (2014)": "%",
-  "low BUA density (2014)": "pop/km2",
-  "high BUA density (2014)": "pop/km2",
+  "low BUA (2014)": "km2 (year 2014)",
+  "high BUA (2014)": "km2 (year 2014)",
+  "low BUA % (2014)": "% of total BUA (year 2014)",
+  "high BUA % (2014)": "% of total BUA (year 2014)",
+  "low BUA density (2014)": "pop/km2 (year 2014)",
+  "high BUA density (2014)": "pop/km2 (year 2014)",
   "household size": "",
   "region": "",
   "country": ""

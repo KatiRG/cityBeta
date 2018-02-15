@@ -81,13 +81,16 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
               <option value="CDD 23C">CDD 23C</option>
               <option value="area">area</option>
               <option value="low BUA (2014)">low BUA (2014)</option>
+              <option value="low BUA % (2014)">low BUA % (2014)</option>
+              <option value="low BUA density (2014)">low BUA density (2014)</option>
               <option value="high BUA (2014)">high BUA (2014)</option>
+              <option value="high BUA % (2014)">high BUA % (2014)</option>
+              <option value="high BUA density (2014)">high BUA density (2014)</option>
               <!--<option value="change in emissions">change in emissions</option>
-              <option value="low BUA %">low BUA % (2014)</option>
-              <option value="high BUA %">high BUA % (2014)</option>
               <option value="Congestion rank (INRIX)">Congestion rank (INRIX)</option>
               <option value="Congestion rank (TomTom)">Congestion rank (TomTom)</option>
-              <option value="CIMI ranking (IESE)">CIMI ranking (IESE)</option> -->
+              <option value="CIMI ranking (IESE)">CIMI ranking (IESE)</option> 
+              Cities in Motion index (IESE)-->
             </select>
             <p id="selected-dropdown"></p>
           </div>
@@ -312,8 +315,12 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
     "gas price": [0.5, 1.8],
     "HDD 15.5C": [0, 3000], "CDD 23C": [0, 1000], //FMB
     "area": [0, 2000], 
-    "low BUA (2014)": [0, 1000],
-    "high BUA (2014)": [0, 2500]
+    "low BUA (2014)": [0, 1000], "low BUA % (2014)": [0, 100],
+    "high BUA (2014)": [0, 2500], "high BUA % (2014)": [0, 100],
+    "low BUA density (2014)": [0,1500], "high BUA density (2014)": [0,25000],
+    "Congestion Index (INRIX)": [0,15], "Congestion Index (TomTom)": [0.1, 0.5],
+    "Cities in Motion index (IESE)": [30,100]
+
   }
 }) //end read tsv
 console.log("attrFlag: ", attrFlag)

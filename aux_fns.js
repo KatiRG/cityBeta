@@ -50,10 +50,10 @@ function setupData(ghg){
     high_BUA_2014 = +d['High BUA 2014 (FC)']
     // low_BUApc_1990 = +d['Low BUA % 1990 (FC)']
     // low_BUApc_2000 = +d['Low BUA % 2000 (FC)']    
-    low_BUApc_2014 = +d['Low BUA % 2014 (FC)']
+    low_BUApc_2014 = +d['Low BUA % 2014 (FC)']*100
     // high_BUApc_1990 = +d['High BUA % 1990 (FC)']
     // high_BUApc_2000 = +d['High BUA % 2000 (FC)']
-    high_BUApc_2014 = +d['High BUA % 2014 (FC)']
+    high_BUApc_2014 = +d['High BUA % 2014 (FC)']*100
     // low_BUA_pdensity_1990 = +d['Low BUA pop density - 1990 (FC)']
     // high_BUA_pdensity_1990 = +d['High BUA pop density - 1990 (FC)']
     // low_BUA_pdensity_2000 = +d['Low BUA pop density - 2000 (FC)']
@@ -120,10 +120,10 @@ function setupData(ghg){
       "low BUA density (2014)": low_BUA_pdensity_2014,
       "high BUA density (2014)": high_BUA_pdensity_2014,
       "Avg congestion rate [%] (INRIX)": inrix_congestion,
-      "Congestion Index (INRIX)": inrix_idx,
+      "congestion level (INRIX)": inrix_idx,
       "Peak hours spent in congestion (INRIX)": inrix_hours,
       "Congestion rank (INRIX)": inrix_rank,
-      "Congestion level [%] (TomTom)": tomtom_congestion,
+      "congestion level [%] (TomTom)": tomtom_congestion,
       "Congestion rank (TomTom)": tomtom_rank,
       "Congestion change [%] (TomTom)": tomtom_congestion_change,
       "Morning peak increase [%] (TomTom)": tomtom_am_peak,
@@ -330,13 +330,18 @@ function fn_updateLegend (attrFlag) {
     for (idx=0; idx < num_levels; idx++) {
       if (attrFlag === "diesel price" || attrFlag === "gas price" ||
           attrFlag === "area" || attrFlag === "HDD 15.5C" || attrFlag === "CDD 23C" ||
-          attrFlag === "low BUA (2014)" || attrFlag === "high BUA (2014)") {        
+          attrFlag === "low BUA (2014)" || attrFlag === "high BUA (2014)" ||
+          attrFlag === "low BUA density (2014)") {        
         cb_values.push(dimExtent[0] + idx*delta);
       }
+      else if (attrFlag === "low BUA % (2014)" || attrFlag === "high BUA % (2014)") {
+        //delta = Math.round(delta);
+        cb_values.push( 20 + idx*20 );
+      }      
       else {
         delta = Math.round(delta/1000)*1000;
         cb_values.push(Math.round((dimExtent[0] + idx*delta)/1000)*1000);
-      }      
+      }
     }
     console.log("cb_values: ", cb_values)
 
@@ -390,6 +395,9 @@ function fn_updateLegend (attrFlag) {
       if (attrFlag === "diesel price" || attrFlag === "gas price") {
         firstValue = cb_values[1];
         nextValues = cb_values[j];
+      } else if (attrFlag === "low BUA % (2014)" || attrFlag === "high BUA % (2014)") {
+        firstValue = 20;
+        nextValues = cb_values[j-1];
       } else {
         firstValue = formatDecimalk(cb_values[1]);
         nextValues = formatDecimalk(cb_values[j]);
@@ -404,7 +412,9 @@ function fn_updateLegend (attrFlag) {
       if (attrFlag === "methodology") xpos = [10,63,150,215,284];
       else if (attrFlag === "population density") xpos = [4,75,147,217,288];
       else if (attrFlag === "GDP/capita") xpos = [7,77,146,216,281];
-       else if (attrFlag === "diesel price" || attrFlag === "gas price") xpos = [4,75,145,215,285];
+      else if (attrFlag === "diesel price" || attrFlag === "gas price") xpos = [4,75,145,215,285];
+      else if (attrFlag === "low BUA % (2014)" ||
+               attrFlag === "high BUA % (2014)") xpos = [13,84,153,224,295];
       else xpos = [4,75,145,215,285];
       return xpos[i];
     });
