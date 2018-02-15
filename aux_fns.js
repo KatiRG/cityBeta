@@ -30,8 +30,8 @@ function setupData(ghg){
     scope1_gdp = +d['s1 per gdp [kgCO2/USD]']
     GDP_cap = d["GDP-PPP combined"]/d["pop to use"]*Math.pow(10,9)  //+d['GDP-PPP combined/cap']
     pop_density = popn/area//[pop/km2]
-    HDD155C = +d["HDD_15.5C"]
-    CDD23C = +d["CDD_23C"]
+    HDD155C = +d["HDD_15.5C (FMB)"] //+d["HDD_15.5C"]
+    CDD23C = +d["CDD_23C (FMB)"] //+d["CDD_23C"]
     diesel_price = d["diesel_price (2014)"]//+d.diesel_price
     gas_price = +d["gasoline_price (2014)"]//+d.gasoline_price
     HH = +d["household_size (updated)"]
@@ -102,6 +102,7 @@ function setupData(ghg){
       "per capita": scope1_cap,
       "per GDP": scope1_gdp,
       "population density": pop_density,
+      "GDP": GDP,
       "GDP/capita": GDP_cap,
       "HDD 15.5C": HDD155C,
       "CDD 23C": CDD23C,
@@ -299,7 +300,9 @@ function fn_colour_barChart (attrFlag, attrValue) {
      
     colourmapDim = fn_colourmapDim(attrFlag);
 
-    return attrValue === 0 ? "#E6E8E3" : colourmapDim(attrValue);
+    //plot missing data in light gray
+    if (attrFlag === "HDD 15.5C" || attrFlag === "CDD 23C") {return colourmapDim(attrValue);} //zeros are real
+    else {return attrValue === 0 ? "#E6E8E3" : colourmapDim(attrValue);}
   } 
 }
 function fn_colourmapDim (attrFlag) {
@@ -326,7 +329,7 @@ function fn_updateLegend (attrFlag) {
     cb_values=[]; //clear
     for (idx=0; idx < num_levels; idx++) {
       if (attrFlag === "diesel price" || attrFlag === "gas price" ||
-          attrFlag === "area") {        
+          attrFlag === "area" || attrFlag === "HDD 15.5C" || attrFlag === "CDD 23C") {        
         cb_values.push(dimExtent[0] + idx*delta);
       }
       else {
