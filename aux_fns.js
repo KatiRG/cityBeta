@@ -400,7 +400,8 @@ function fn_updateLegend (attrFlag) {
       if (attrFlag === "methodology") xpos = [10,63,150,215,284];
       else if (attrFlag === "population density") xpos = [4,75,147,217,288];
       else if (attrFlag === "GDP/capita") xpos = [7,77,146,216,281];
-      else xpos = [0,70,132,203,272];
+       else if (attrFlag === "diesel price") xpos = [4,75,145,215,285];
+      else xpos = [4,75,145,215,285];
       return xpos[i];
     });
 
