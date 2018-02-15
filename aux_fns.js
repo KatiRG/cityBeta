@@ -325,14 +325,14 @@ function fn_updateLegend (attrFlag) {
 
     cb_values=[]; //clear
     for (idx=0; idx < num_levels; idx++) {
-      if (attrFlag === "diesel price") {        
+      if (attrFlag === "diesel price" || attrFlag === "gas price" ||
+          attrFlag === "area") {        
         cb_values.push(dimExtent[0] + idx*delta);
       }
       else {
         delta = Math.round(delta/1000)*1000;
         cb_values.push(Math.round((dimExtent[0] + idx*delta)/1000)*1000);
-      }
-      //Math.round(value/1000)*1000
+      }      
     }
     console.log("cb_values: ", cb_values)
 
@@ -383,7 +383,7 @@ function fn_updateLegend (attrFlag) {
     } else {
       console.log("cb_values format: ", formatComma(cb_values[j]) )
 
-      if (attrFlag === "diesel price") {
+      if (attrFlag === "diesel price" || attrFlag === "gas price") {
         firstValue = cb_values[1];
         nextValues = cb_values[j];
       } else {
@@ -400,7 +400,7 @@ function fn_updateLegend (attrFlag) {
       if (attrFlag === "methodology") xpos = [10,63,150,215,284];
       else if (attrFlag === "population density") xpos = [4,75,147,217,288];
       else if (attrFlag === "GDP/capita") xpos = [7,77,146,216,281];
-       else if (attrFlag === "diesel price") xpos = [4,75,145,215,285];
+       else if (attrFlag === "diesel price" || attrFlag === "gas price") xpos = [4,75,145,215,285];
       else xpos = [4,75,145,215,285];
       return xpos[i];
     });
@@ -902,7 +902,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
       .attr("class", "cityCardSubrowTitle")
       .text(attrFlag + ":");
 
-    if (attrFlag === "diesel price") attrText = selectedCity[attrFlag];
+    if (attrFlag === "diesel price" || attrFlag === "gas price") attrText = selectedCity[attrFlag];
     else attrText = formatComma(parseInt(selectedCity[attrFlag]));
     svgCityCard.append("text")
       .attr("transform", function (d) {
