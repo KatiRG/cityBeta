@@ -319,13 +319,19 @@ function fn_updateLegend (attrFlag) {
     dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]];
     //difference between max and min values of selected attribute
     delta = ( dimExtent[1] - dimExtent[0] )/num_levels;
-    delta = Math.round(delta/1000)*1000
+    
     console.log("delta: ", delta)
     console.log("dimExtent: ", dimExtent)
 
     cb_values=[]; //clear
     for (idx=0; idx < num_levels; idx++) {
-      cb_values.push(Math.round((dimExtent[0] + idx*delta)/1000)*1000);
+      if (attrFlag === "diesel price") {        
+        cb_values.push(dimExtent[0] + idx*delta);
+      }
+      else {
+        delta = Math.round(delta/1000)*1000;
+        cb_values.push(Math.round((dimExtent[0] + idx*delta)/1000)*1000);
+      }
       //Math.round(value/1000)*1000
     }
     console.log("cb_values: ", cb_values)
@@ -377,14 +383,13 @@ function fn_updateLegend (attrFlag) {
     } else {
       console.log("cb_values format: ", formatComma(cb_values[j]) )
 
-      // if (attrFlag === "GDP/capita") {
+      if (attrFlag === "diesel price") {
+        firstValue = cb_values[1];
+        nextValues = cb_values[j];
+      } else {
         firstValue = formatDecimalk(cb_values[1]);
         nextValues = formatDecimalk(cb_values[j]);
-      // }
-      // else {
-      //   firstValue = formatComma(cb_values[1]);
-      //   nextValues = formatComma(cb_values[j]);
-      // }
+      }
 
       if (j === 0) updateText = "< " + firstValue;
       else updateText = "> " + nextValues;      
@@ -896,12 +901,15 @@ function fn_svgCityCard (selectedCity, attrFlag) {
       .attr("class", "cityCardSubrowTitle")
       .text(attrFlag + ":");
 
+    if (attrFlag === "diesel price") attrText = selectedCity[attrFlag];
+    else attrText = formatComma(parseInt(selectedCity[attrFlag]));
     svgCityCard.append("text")
       .attr("transform", function (d) {
           var transy = 40 + 3*delta + 15;
           return "translate(" + transx + " " + transy + ")" ;
         })
       .attr("class", "cityCardSubrowInfo")
-      .text(formatComma(parseInt(selectedCity[attrFlag])) + " " + dimUnits[attrFlag]);
+      // .text(formatComma(parseInt(selectedCity[attrFlag])) + " " + dimUnits[attrFlag]);
+      .text(attrText + " " + dimUnits[attrFlag]);
   }
 }
