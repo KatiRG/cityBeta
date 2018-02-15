@@ -76,6 +76,7 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
               <option value="population density">population density</option>
               <option value="GDP/capita">GDP/capita</option>
               <option value="diesel price">diesel price</option>
+              <option value="gas price">gas price</option>
               <!--<option value="gas price">gas price</option>
               <option value="diesel price">diesel price</option>
               <option value="HDD 15.5C">HDD 15.5C</option>
@@ -312,7 +313,8 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
           d3.extent(ghg, function (d) {return +d["pop to use"]/d["area [km2] (external)"];}),
     // "GDP/capita" : d3.extent(ghg, function (d) { return +d["GDP-PPP combined"]/d["pop to use"]*Math.pow(10,9);})
     "GDP/capita": [1700, 128046],
-    "diesel price": [0.5, 1.8]
+    "diesel price": [0.5, 1.8],
+    "gas price": [0.5, 1.8]
   }
 }) //end read tsv
 console.log("attrFlag: ", attrFlag)

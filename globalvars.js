@@ -46,8 +46,9 @@ var choose_colourArray = {
   "methodology": ["#9DD3DF","#C3BBE2","#E35B5D","#EB9F9F","#F18052"],
   "population density": ["#DED8B6","#F9C869","#5D5061","#2F274C","#6A3058"],
   "GDP/capita": ["#E6D8CB","#E394A7","#9e9ac8","#756bb1","#54278f"],
-  "diesel price": ["#F1F2C4","#F2EA72","#fec44f","#CDAF7B","#634414"]
-  //"GDP/capita": ["#E6D8CB","#E394A7","#906090","#604878","#942049"]
+  "diesel price": ["#F1F2C4","#F2EA72","#fec44f","#CDAF7B","#634414"],
+  "gas price": ["#F1F2C4","#F2EA72","#fec44f","#CDAF7B","#634414"]
+  
 }
 
 var choose_textArray = {
