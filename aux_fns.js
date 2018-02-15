@@ -377,14 +377,14 @@ function fn_updateLegend (attrFlag) {
     } else {
       console.log("cb_values format: ", formatComma(cb_values[j]) )
 
-      if (attrFlag === "GDP/capita") {
+      // if (attrFlag === "GDP/capita") {
         firstValue = formatDecimalk(cb_values[1]);
         nextValues = formatDecimalk(cb_values[j]);
-      }
-      else {
-        firstValue = formatComma(cb_values[1]);
-        nextValues = formatComma(cb_values[j]);
-      }
+      // }
+      // else {
+      //   firstValue = formatComma(cb_values[1]);
+      //   nextValues = formatComma(cb_values[j]);
+      // }
 
       if (j === 0) updateText = "< " + firstValue;
       else updateText = "> " + nextValues;      
@@ -393,6 +393,7 @@ function fn_updateLegend (attrFlag) {
     })
     .attr("x", function (d, i) {
       if (attrFlag === "methodology") xpos = [10,63,150,215,284];
+      else if (attrFlag === "population density") xpos = [4,75,147,217,288];
       else if (attrFlag === "GDP/capita") xpos = [7,77,146,216,281];
       else xpos = [0,70,132,203,272];
       return xpos[i];
