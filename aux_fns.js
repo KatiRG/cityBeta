@@ -24,6 +24,7 @@ function setupData(ghg){
     area = d['area [km2] (external)']
     totalEmissions = d['Total City-wide Emissions (metric tonnes CO2e) (CDP)'] //[tCO2]
     scope1 = d['s1 to use']
+    measurementYear = +d['Measurement year only (CDP)']
     GDP = d['GDP-PPP combined'] //units of $BN USD
     // GDP = d['GDP-PPP combined [USD]'] //units of USD
     scope1_cap = +d['s1 per capita'] //d['s1 per capita']  //scope1/popn
@@ -99,6 +100,7 @@ function setupData(ghg){
       "population": popn,
       "area": area,
       "Scope1": scope1,
+      "Measurement Year": measurementYear,
       "per capita": scope1_cap,
       "per GDP": scope1_gdp,
       "population density": pop_density,
@@ -804,7 +806,6 @@ function fn_svgCityCard (selectedCity, attrFlag) {
   // console.log("selectedCity in fn: ", selectedCity)
   // console.log("attrFlag in fn: ", attrFlag)
   
-  
   //display city card to the left of the map
   var svgCityCard = d3.select("#map").select("svg")
           .append("g").attr("id", "cityCardg")
@@ -823,7 +824,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
       });
     
   svgCityCard.append("rect")
-    .attr("width", 195)             //="142" height="31"
+    .attr("width", 200)             //="142" height="31"
     .attr("height", 250) //31
     .attr("x", 5)
     .attr("y", -20)
@@ -833,13 +834,13 @@ function fn_svgCityCard (selectedCity, attrFlag) {
   //city name
   svgCityCard.append("text").attr("class", "cityCardName")
     .attr("transform", function (d) {
-        var transx = 18;
+        var transx = 13;
         return "translate(" + transx + " " + 0 + ")" ;
       })
     .text(selectedCity.city);
 
   var delta = 50; //amount to translate in y-dirn
-  var transx = 20;
+  var transx = 13;
   svgCityCard.append("text")
     .attr("transform", function (d) {
         var transy = 16;
@@ -863,7 +864,8 @@ function fn_svgCityCard (selectedCity, attrFlag) {
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowInfo")
-    .text(formatComma(parseInt(selectedCity["Scope1"]/1000)) + " MtCO₂");
+    .text(formatComma(parseInt(selectedCity["Scope1"]/1000)) + 
+        " MtCO₂ (measurment yr " + selectedCity["Measurement Year"] +")");
 
    //city info sub-row: Emissions Change
   svgCityCard.append("text")
