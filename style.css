@@ -28,6 +28,12 @@ ul {
 /*    margin-top: 80px;*/
 }
 
+.headings {
+  font-size: 20px;
+  padding-left: 335px;
+  color: #565656;
+  text-align: left;
+}
 
 /*--------------------------*/
 /*$(window).width();*/
@@ -277,12 +283,12 @@ div.rtooltip {
   left: 690px; 
   top: 0px;
 }
-#barChartCaption {
+/*#barChartCaption {
   font-size: 20px;
   padding-left: 335px;
   color: #565656;
   text-align: left;
-}
+}*/
 #barChartLegendLabel {
   color: #565656;
   text-align: left;

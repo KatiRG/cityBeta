@@ -38,18 +38,19 @@
 
     <!-- header row -->
     <div class="row">
-      <div class="col-lg-12">entete</div>
+      <div class="col-lg-12 headings">Cities that reported emissions to the Carbon Disclosure Project</div>
     </div> <!-- ./header row -->
 
     <!-- info text row -->
     <div class="row">
-      <div class="col-lg-6" id="infoText" style="text-align: left;">
+      <!--<div class="col-lg-6" id="infoText" style="text-align: left;">
         Hover over a city on the world map to the corresponding city <a href="http://www.ghgprotocol.org/sites/default/files/ghgp/standards/GHGP_GPC_0.
 pdf" target="_blank"> emissions </a> data, either per capita (default) or per unit of Gross Domestic Product at Purchasing Power Parity rates. Note that the city source dataset does not have the same number of cities in different
-      </div>
-      <div class="col-lg-6" id="infoText" style="text-align: left;">
-       regions of the world. We present here city emissions grouped per continent, although different lifestyles and energy use make city emissions strongly different within a continent.
-      </div>
+      </div>-->
+      <!--<div class="col-lg-12" id="infoText" style="text-align: left;">
+        We present here city emissions grouped per continent, although different lifestyles and energy use make city emissions strongly different within a continent.
+      </div>-->
+
      <!--  <ul class="nytg-sort" style='position: absolute; left: 1250px; top: 119px;'>
         <li id="resetButton">Reset</li>
       </ul> -->
@@ -86,6 +87,7 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
               <option value="high BUA (2014)">high BUA (2014)</option>
               <option value="high BUA % (2014)">high BUA % (2014)</option>
               <option value="high BUA density (2014)">high BUA density (2014)</option>
+              <option value="Congestion rank (INRIX)">Congestion rank (INRIX)</option>
               <!--<option value="change in emissions">change in emissions</option>
               <option value="Congestion rank (INRIX)">Congestion rank (INRIX)</option>
               <option value="Congestion rank (TomTom)">Congestion rank (TomTom)</option>
@@ -112,7 +114,7 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
       <div class="col-lg-12">
         <!--barChart legend-->
         <div class="row">
-          <div id="barChartCaption">Per capita emissions [tCO₂/capita]</div>
+          <div id="barChartCaption" class="headings">Per capita emissions [tCO₂/capita]</div>
           <ul class="nytg-sort" id="emissionsToggleButton">
               <li id="gdpButton">per GDP</li>
           </ul>
@@ -318,7 +320,7 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
     "low BUA (2014)": [0, 1000], "low BUA % (2014)": [0, 100],
     "high BUA (2014)": [0, 2500], "high BUA % (2014)": [0, 100],
     "low BUA density (2014)": [0,1500], "high BUA density (2014)": [0,25000],
-    "Congestion Index (INRIX)": [0,15], "Congestion Index (TomTom)": [0.1, 0.5],
+    "Congestion rank (INRIX)": [0,15], "Congestion Index (TomTom)": [0.1, 0.5],
     "Cities in Motion index (IESE)": [30,100]
 
   }

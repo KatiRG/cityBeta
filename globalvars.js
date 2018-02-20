@@ -56,7 +56,8 @@ var choose_colourArray = {
   "low BUA density (2014)": ["#d7b5d8","#CD7CB7","#885F9A","#B65873","#5F323F"],
   "high BUA (2014)": ["#EEDAA7","#E6D472","#E79C74","#D45659","#7D4755"],
   "high BUA % (2014)": ["#EEDAA7","#E6D472","#E79C74","#D45659","#7D4755"],
-  "high BUA density (2014)": ["#EEDAA7","#E6D472","#E79C74","#D45659","#7D4755"]
+  "high BUA density (2014)": ["#EEDAA7","#E6D472","#E79C74","#D45659","#7D4755"],
+  "Congestion rank (INRIX)": ["#DEFAFB","#745C80","#66463F","#D643D0B","#8C4804"]
   
 }
 
