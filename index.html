@@ -42,7 +42,7 @@
     </div> <!-- ./header row -->
 
     <!-- info text row -->
-    <div class="row">
+    <!--<div class="row">-->
       <!--<div class="col-lg-6" id="infoText" style="text-align: left;">
         Hover over a city on the world map to the corresponding city <a href="http://www.ghgprotocol.org/sites/default/files/ghgp/standards/GHGP_GPC_0.
 pdf" target="_blank"> emissions </a> data, either per capita (default) or per unit of Gross Domestic Product at Purchasing Power Parity rates. Note that the city source dataset does not have the same number of cities in different
@@ -56,16 +56,17 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
       </ul> -->
 
       <!-- <div class="col-lg-4" ></div> -->
-    </div> <!-- ./row 1 -->
+   
+
   
     <!-- row for map and city card -->
-    <div class="row">
-      <div id="mapRow" class="col-lg-12">
-        <div id="map"></div>
+    <div class="row" id="map"> </div>
+      <!--<div id="map" class="col-lg-12"> -->
+        <!--<div id="map"></div> -->
 
-      </div>
 
-    </div> <!-- ./map and city card row -->
+
+    <!-- ./map and city card row -->
 
     <!-- row 3 -->
     <div class="row">
@@ -353,8 +354,8 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
 
 // d3js World Map
 //------------------
-var margin = {top: 0, right: 330, bottom: 0, left: 0};
-var width = 1500 - margin.left - margin.right,
+var margin = {top: 0, right: 120, bottom: 0, left: 0};
+var width = 1325 - margin.left - margin.right,
     height = 270 - margin.top - margin.bottom;
 // var width = 1000,
 //     height = 360; //cut off antarctica  //400;
@@ -417,9 +418,9 @@ function drawMap() {
       .attr("class", "line")
       .style("stroke", "#555")
       .style("stroke-width", "1.2px")
-      .attr("x1", 236)
+      .attr("x1", 257)
       .attr("y1", 270)
-      .attr("x2", 994)
+      .attr("x2", 1015)
       .attr("y2", 270);
 
   //draw top line of map
@@ -429,9 +430,9 @@ function drawMap() {
       .attr("class", "line")
       .style("stroke", "#555")
       .style("stroke-width", "1.2px")
-      .attr("x1", 282)
+      .attr("x1", 301)
       .attr("y1", 0)
-      .attr("x2", 948)
+      .attr("x2", 970)
       .attr("y2", 0);      
 
  

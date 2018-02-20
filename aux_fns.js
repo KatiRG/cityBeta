@@ -825,17 +825,21 @@ function fn_svgCityCard (selectedCity, attrFlag) {
   svgCityCard.append("rect")
     .attr("width", 195)             //="142" height="31"
     .attr("height", 250) //31
-    .attr("x", -15)
+    .attr("x", 5)
     .attr("y", -20)
     .attr("fill", "#4c87b5")
     .attr("stroke", "none");
 
   //city name
   svgCityCard.append("text").attr("class", "cityCardName")
+    .attr("transform", function (d) {
+        var transx = 18;
+        return "translate(" + transx + " " + 0 + ")" ;
+      })
     .text(selectedCity.city);
 
   var delta = 50; //amount to translate in y-dirn
-  var transx = 2;
+  var transx = 20;
   svgCityCard.append("text")
     .attr("transform", function (d) {
         var transy = 16;
