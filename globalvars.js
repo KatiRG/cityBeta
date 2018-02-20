@@ -15,8 +15,10 @@ var cityOrder_row1, cityOrder_row2; //save orignal city order
 //COLOURS
 
 //map
-var countryColour = "#172214"; //#2B292E", #000, "#d9d9d9"
-var countryHighlightColour = "#718351"; //"#d3d3d3";  "#44522F"; "#718351"
+//http://www.colourlovers.com/palette/1072/rainforest
+//http://www.colourlovers.com/palette/659861/Snowy_Pine_Forest
+var countryColour = "#18471B"; //"#172214"; //#2B292E", #000, "#d9d9d9"
+var countryHighlightColour = "#BEC3BC";//"#718351"; //"#d3d3d3";  "#44522F"; "#718351"
 
 //barChart labels + highlight colour
 var colour_labels = "#636363";
