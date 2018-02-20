@@ -71,41 +71,23 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
     <!-- row 3 -->
     <div class="row">
 
-      <div class="col-lg-4">
-          <div id="barChartLegendLabel">Colour bars by: 
-            <select id="d3-dropdown">
-              <option value="methodology" selected="selected">Protocol</option>
-              <option value="population density">population density</option>
-              <option value="GDP/capita">GDP/capita</option>
-              <option value="diesel price">diesel price</option>
-              <option value="gas price">gas price</option>
-              <option value="HDD 15.5C">HDD 15.5C</option>
-              <option value="CDD 23C">CDD 23C</option>
-              <option value="area">area</option>
-              <option value="low BUA (2014)">low BUA (2014)</option>
-              <option value="low BUA % (2014)">low BUA % (2014)</option>
-              <option value="low BUA density (2014)">low BUA density (2014)</option>
-              <option value="high BUA (2014)">high BUA (2014)</option>
-              <option value="high BUA % (2014)">high BUA % (2014)</option>
-              <option value="high BUA density (2014)">high BUA density (2014)</option>
-              <option value="Congestion rank (INRIX)">Congestion rank (INRIX)</option>
-              <!--<option value="change in emissions">change in emissions</option>
-              <option value="Congestion rank (INRIX)">Congestion rank (INRIX)</option>
-              <option value="Congestion rank (TomTom)">Congestion rank (TomTom)</option>
-              <option value="CIMI ranking (IESE)">CIMI ranking (IESE)</option> 
-              Cities in Motion index (IESE)-->
-            </select>
-            <p id="selected-dropdown"></p>
-          </div>
+      <div class="col-lg-12">
+        <div id="barChartCaption" class="headings">Per capita emissions [tCO₂/capita]</div>
+
+
+     
+
+        <ul class="nytg-sort" id="emissionsToggleButton">
+              <li id="gdpButton">per GDP</li>
+          </ul>
+          <ul class="nytg-sort">
+              <li id="reorderButton" style="display: none;">Re-order</li>
+          </ul>
+        
       </div>
 
-      <div class="col-lg-4">
-        <div id="barChartLegend">
-           <svg></svg>
-        </div>
-      </div>
-      <div class="col-lg-3" id="barChartLegendUnits">
-      </div>
+  
+      
 
     </div> <!-- ./row 3 -->
 
@@ -115,13 +97,21 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
       <div class="col-lg-12">
         <!--barChart legend-->
         <div class="row">
-          <div id="barChartCaption" class="headings">Per capita emissions [tCO₂/capita]</div>
-          <ul class="nytg-sort" id="emissionsToggleButton">
-              <li id="gdpButton">per GDP</li>
-          </ul>
-          <ul class="nytg-sort" style='position: absolute; left: 763px; top: 0px;'>
-              <li id="reorderButton" style="display: none;">Re-order</li>
-          </ul>
+            <div id="barChartLegendLabel">Colour bars by: 
+            <select id="d3-dropdown">
+              <option value="methodology" selected="selected">Protocol</option>
+              <option value="population density">population density</option>
+              <option value="GDP/capita">GDP/capita</option>
+            </select>
+            <p id="selected-dropdown"></p>
+          </div>
+          <div id="barChartLegend">
+           <svg></svg>
+          </div>
+
+          <!--<div class="col-lg-2" id="barChartLegendUnits"></div>-->
+          
+          
 
           </div>
         
@@ -234,12 +224,11 @@ d3.select("#gdpButton")
                       label_dataPerCap : label_dataPerGDP;
 
     if (buttonText === label_dataPerGDP) {
-      d3.select("#barChartCaption").text("Per capita emissions " + dimUnits[label_dataPerCap])
-        .style("padding-left", "335px");
+      d3.select("#barChartCaption").text("Per capita emissions " + dimUnits[label_dataPerCap]);
+        
     } else {
       d3.select("#barChartCaption").text("Emissions per unit of Gross Domestic Product " 
-        + dimUnits[label_dataPerGDP])
-        .style("padding-left", "123px");
+        + dimUnits[label_dataPerGDP]);
     }
 
     d3.select(this).text(buttonText);

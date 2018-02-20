@@ -9,7 +9,7 @@ body {
 
 [class*="col-"], footer {
   /*background-color: lightgreen; */
-  border: 2px solid white;
+  border: 2px solid gray;
   border-radius: 6px;
   line-height: 40px;
   text-align: center;
@@ -30,7 +30,7 @@ ul {
 
 .headings {
   font-size: 20px;
-  padding-left: 335px;
+  padding-left: 20px;
   color: #565656;
   text-align: left;
 }
@@ -280,7 +280,12 @@ div.rtooltip {
 }
 #emissionsToggleButton {
   position: absolute;
-  left: 680px; 
+  left: 600px; 
+  top: 0px;
+}
+#reorderButton {
+  position: absolute;
+  left: 750px; 
   top: 0px;
 }
 /*#barChartCaption {
