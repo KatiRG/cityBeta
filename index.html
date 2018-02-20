@@ -353,9 +353,9 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
 
 // d3js World Map
 //------------------
-var margin = {top: 0, right: 0, bottom: 0, left: 20};
-var width = 1200 - margin.left - margin.right,
-    height = 360 - margin.top - margin.bottom;
+var margin = {top: 0, right: 330, bottom: 0, left: 0};
+var width = 1500 - margin.left - margin.right,
+    height = 270 - margin.top - margin.bottom;
 // var width = 1000,
 //     height = 360; //cut off antarctica  //400;
 
@@ -383,7 +383,7 @@ function drawMap() {
 
   var projection = options[0]
               .projection
-              .scale(171) //141
+              .scale(151) //141, 171
               .translate([width/1.655, height/1.67  ]);  //1.633, 1.69
 
   var path = d3.geoPath()

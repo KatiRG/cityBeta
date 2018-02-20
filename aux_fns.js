@@ -823,7 +823,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
       });
     
   svgCityCard.append("rect")
-    .attr("width", 175)             //="142" height="31"
+    .attr("width", 195)             //="142" height="31"
     .attr("height", 250) //31
     .attr("x", -15)
     .attr("y", -20)
