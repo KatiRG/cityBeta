@@ -118,7 +118,7 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
           <ul class="nytg-sort" id="emissionsToggleButton">
               <li id="gdpButton">per GDP</li>
           </ul>
-          <ul class="nytg-sort" style='position: absolute; left: 773px; top: 0px;'>
+          <ul class="nytg-sort" style='position: absolute; left: 763px; top: 0px;'>
               <li id="reorderButton" style="display: none;">Re-order</li>
           </ul>
 
@@ -737,7 +737,8 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         resetElements();
         
         d3.select("#tick" + idName).text(function (d) { return fn_abbr(d); })
-          .style("font-size", "16px").style("opacity", 0.3)
+          //.style("font-size", "14px")
+          .style("opacity", 0.3)
           .attr("fill", colour_labels);
 
         div.style("opacity", 0);
@@ -784,7 +785,13 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
             } else if (this_dim === "per GDP") {
 
               if (d3.select("#reorderButton").text() === "Re-order") fn_cityLabels_perGDP(d, i, thisCityGroup);
-              else ytrans=-35;
+              else {
+                if (d === "New York City") ytrans = 5;
+                else if (d === "Austin" || d === "San Antonio") ytrans = -25;
+                else if (d === "DC") ytrans = -42;
+                else if (d === "Indianapolis") ytrans = 5;
+                else ytrans = -15;
+              }
 
             } //this_dim
            
@@ -807,7 +814,8 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         resetElements();
 
         d3.select("#tick" + idName).text(function (d) { return fn_abbr(d); })
-          .style("font-size", "16px").style("opacity", 0.3);
+          //.style("font-size", "14px")
+          .style("opacity", 0.3);
       });
 
   //hide x tick mark for "gap" bar  

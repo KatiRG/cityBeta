@@ -432,10 +432,10 @@ function fn_enlargeName(geogroup_name, cityName) {
   idName = format_idName(cityName);
 
   //Enlarge city label of selected bar
-  newSize="16px";
+  newSize="14px";
   //Need different sizes on account of the vieweBox scale stretching
   if (geogroup_name === "groupEurope" || geogroup_name === "groupLatinAmer" ||
-      geogroup_name === "groupUSA"|| geogroup_name === "groupOceania" ) newSize = "22px";
+      geogroup_name === "groupUSA"|| geogroup_name === "groupOceania" ) newSize = "21px";
   else if (geogroup_name === "groupAfrica") newSize = "18px";
   else if (geogroup_name === "groupAsia") newSize = "18px";
   
@@ -485,7 +485,8 @@ function fn_cityLabels_perCapita (d, i, thisCityGroup) {
     else ytrans = -130 + (i*2.3);
     
   } else if (thisCityGroup === "bar class_groupLatinAmer") {
-    if (d === "Buenos Aires") ytrans = -15;
+    if (d === "Buenos Aires") ytrans = -20;
+    else if (d === "Guaratinguetá") ytrans = -15;
     else ytrans = -110 + (i*1.9);
     
   } else if (thisCityGroup === "bar class_groupAfrica") ytrans = -160 + (i*2.2);
@@ -493,11 +494,14 @@ function fn_cityLabels_perCapita (d, i, thisCityGroup) {
 
 function fn_cityLabels_perGDP (d, i, thisCityGroup) {
   // thisRegion = data_GHG.find(x => x.city.includes(d)).region;
+  console.log("fn_cityLabels_perGDP")
 
   if (thisCityGroup === "bar class_groupUSA") {
     if (d === "Las Vegas") {rot = -90; xtrans = 60; ytrans = -15;}
-    else if (d === "D C" || d === "Nashville & Davidson" || d === "Cleveland") ytrans = -40 + (i*1.6);
-    else ytrans = -29 + (i*1.2);
+    else if (d === "DC") ytrans = -40; //-3 + (i*1.6);
+    else if (d === "Nashville & Davidson") ytrans = -20; //-3 + (i*1.6);
+    //else if (d === "Cleveland") ytrans = -3 + (i*1.6);
+    else ytrans = -36 + (i*1.2);
   } else if (thisCityGroup === "bar class_groupAsia") {
     if (d === "Kaohsiung" || d === "Taoyuan") {
       xtrans = 60; ytrans = -5; rot = -90;
