@@ -9,7 +9,7 @@ body {
 
 [class*="col-"], footer {
   /*background-color: lightgreen; */
-  border: 2px solid gray;
+  border: 2px solid white;
   border-radius: 6px;
   line-height: 40px;
   text-align: center;
@@ -288,15 +288,7 @@ div.rtooltip {
   left: 750px; 
   top: 0px;
 }
-/*#barChartCaption {
-  font-size: 20px;
-  padding-left: 335px;
-  color: #565656;
-  text-align: left;
-}*/
 #barChartLegendLabel {
- /* position: absolute;
-  left: 200px; */
   position: relative;
   left: 160px;
   color: #565656;

@@ -43,24 +43,7 @@
       </div>
     </div> <!-- ./header row -->
 
-    <!-- info text row -->
-    <!--<div class="row">-->
-      <!--<div class="col-lg-6" id="infoText" style="text-align: left;">
-        Hover over a city on the world map to the corresponding city <a href="http://www.ghgprotocol.org/sites/default/files/ghgp/standards/GHGP_GPC_0.
-pdf" target="_blank"> emissions </a> data, either per capita (default) or per unit of Gross Domestic Product at Purchasing Power Parity rates. Note that the city source dataset does not have the same number of cities in different
-      </div>-->
-      <!--<div class="col-lg-12" id="infoText" style="text-align: left;">
-        We present here city emissions grouped per continent, although different lifestyles and energy use make city emissions strongly different within a continent.
-      </div>-->
 
-     <!--  <ul class="nytg-sort" style='position: absolute; left: 1250px; top: 119px;'>
-        <li id="resetButton">Reset</li>
-      </ul> -->
-
-      <!-- <div class="col-lg-4" ></div> -->
-   
-
-  
     <!-- row for map and city card -->
     <div class="row" id="map"> </div>
   
@@ -80,34 +63,34 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
       </div>
     </div> <!-- .end row -->
 
-   <div class="row">
+    <div class="row">
 
-      <div class="col-lg-6">
-          <div id="barChartLegendLabel">Colour bars by: 
-            <select id="d3-dropdown">
-              <option value="methodology" selected="selected">Protocol</option>
-              <option value="population density">population density</option>
-              <option value="GDP/capita">GDP/capita</option>
-              <option value="diesel price">diesel price</option>
-              <option value="gas price">gas price</option>
-              <option value="HDD 15.5C">HDD 15.5C</option>
-              <option value="CDD 23C">CDD 23C</option>
-              <option value="area">area</option>
-              <option value="low BUA (2014)">low BUA (2014)</option>
-              <option value="low BUA % (2014)">low BUA % (2014)</option>
-              <option value="low BUA density (2014)">low BUA density (2014)</option>
-              <option value="high BUA (2014)">high BUA (2014)</option>
-              <option value="high BUA % (2014)">high BUA % (2014)</option>
-              <option value="high BUA density (2014)">high BUA density (2014)</option>
-              <option value="Congestion rank (INRIX)">Congestion rank (INRIX)</option>
-              <!--<option value="change in emissions">change in emissions</option>
-              <option value="Congestion rank (INRIX)">Congestion rank (INRIX)</option>
-              <option value="Congestion rank (TomTom)">Congestion rank (TomTom)</option>
-              <option value="CIMI ranking (IESE)">CIMI ranking (IESE)</option> 
-              Cities in Motion index (IESE)-->
-            </select>
-            <p id="selected-dropdown"></p>
-          </div>
+      <div class="col-lg-5">
+        <div id="barChartLegendLabel">Colour bars by: 
+          <select id="d3-dropdown">
+            <option value="methodology" selected="selected">Protocol</option>
+            <option value="population density">population density</option>
+            <option value="GDP/capita">GDP/capita</option>
+            <option value="diesel price">diesel price</option>
+            <option value="gas price">gas price</option>
+            <option value="HDD 15.5C">HDD 15.5C</option>
+            <option value="CDD 23C">CDD 23C</option>
+            <option value="area">area</option>
+            <option value="low BUA (2014)">low BUA (2014)</option>
+            <option value="low BUA % (2014)">low BUA % (2014)</option>
+            <option value="low BUA density (2014)">low BUA density (2014)</option>
+            <option value="high BUA (2014)">high BUA (2014)</option>
+            <option value="high BUA % (2014)">high BUA % (2014)</option>
+            <option value="high BUA density (2014)">high BUA density (2014)</option>
+            <!--<option value="Congestion rank (INRIX)">Congestion rank (INRIX)</option>
+            <option value="change in emissions">change in emissions</option>
+            <option value="Congestion rank (INRIX)">Congestion rank (INRIX)</option>
+            <option value="Congestion rank (TomTom)">Congestion rank (TomTom)</option>
+            <option value="CIMI ranking (IESE)">CIMI ranking (IESE)</option> 
+            Cities in Motion index (IESE)-->
+          </select>
+          <p id="selected-dropdown"></p>
+        </div>
       </div>
 
       <div class="col-lg-4">
@@ -120,7 +103,7 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
 
     <div class="row">
       <div class="col-lg-12">
-      <div id="barChart_USAAsia"></div>
+        <div id="barChart_USAAsia"></div>
       </div>
     </div> <!-- .end row -->
 
@@ -137,27 +120,11 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
       </div> <!-- .end col -->
     </div> <!-- .end row -->
     
-    <!--
-    <div class="row">
-      <div id="barChart_USAAsia"></div>         
-    </div> 
+    <footer class="row">
+      logos
+    </footer>
 
-    <div class="row">
-      <div id="barChart_EUCWLatAmerAfrica"></div>   
-    </div>
-
-    <div class="row" style="position:relative; top:10px;">city</div>
-  -->
-
-
-
-
-   
-      <footer class="row">
-        logos
-      </footer>
-
-</div>  <!-- ./container -->
+  </div>  <!-- ./container -->
 
 
 <script>
