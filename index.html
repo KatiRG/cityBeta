@@ -754,7 +754,8 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         .text(function (d) { 
           if (d.includes("gap")) return "";
           else if (this_dim === "per GDP" 
-                   && ! data_GHG.find(x => x.city.includes(d))['per GDP']) {
+                   // && ! data_GHG.find(x => x.city.includes(d))['per GDP']) {
+                  && ! data_GHG.find(x => x.city === d)['per GDP']) {           
                   return ""; }
           else return fn_abbr(d); 
         })
@@ -790,6 +791,9 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
                 else if (d === "Austin" || d === "San Antonio") ytrans = -25;
                 else if (d === "DC") ytrans = -42;
                 else if (d === "Indianapolis") ytrans = 5;
+                else if (d === "Edmonton") ytrans = -30;
+                else if (d === "Toronto") ytrans = 0;                
+                else if (d === "Winnipeg" || d === "Montreal") ytrans = -45;
                 else ytrans = -15;
               }
 

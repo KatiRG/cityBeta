@@ -517,8 +517,7 @@ function fn_cityLabels_perGDP (d, i, thisCityGroup) {
 
   } else if (thisCityGroup === "bar class_groupCan") {
       if (d === "Winnipeg") ytrans = -175 + (i*3.7);
-      else if (d === "Edmonton" || d === "Calgary") ytrans = -185 + (i*4.3);
-      else if (d === "Vancouver") {console.log("Vancouver"); ytrans = 0;}
+      else if (d === "Edmonton" || d === "Calgary") ytrans = -185 + (i*4.3);      
       else ytrans = -170 + (i*4.3);
 
   } else if (thisCityGroup === "bar class_groupOceania") {
