@@ -950,7 +950,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
     .text("Emission definitions")
     .on("touchmove mousemove", function () {d3.select(this).style("cursor", "pointer"); })  
     .on("click", function() { 
-      window.open("http://www.ghgprotocol.org/sites/default/files/ghgp/standards/GHGP_GPC_0.pdf");
+      window.open("http://www.ghgprotocol.org/sites/default/files/ghgp/standards/GHGP_GPC_0.pdf#page=13");
     });
 
 }
