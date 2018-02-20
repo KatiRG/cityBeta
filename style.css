@@ -295,10 +295,16 @@ div.rtooltip {
   text-align: left;
 }*/
 #barChartLegendLabel {
+ /* position: absolute;
+  left: 200px; */
+  position: relative;
+  left: 160px;
   color: #565656;
   text-align: left;
 }
 #barChartLegend {
+  position: relative;
+  left: 0px;
   stroke: gray;
 }
 #barChartLegendUnits {

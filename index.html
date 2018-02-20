@@ -38,7 +38,9 @@
 
     <!-- header row -->
     <div class="row">
-      <div class="col-lg-12 headings">Cities that reported emissions to the Carbon Disclosure Project</div>
+      <div class="col-lg-12 headings" style="text-align: center">
+        Cities that reported emissions to the Carbon Disclosure Project
+      </div>
     </div> <!-- ./header row -->
 
     <!-- info text row -->
@@ -61,90 +63,99 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
   
     <!-- row for map and city card -->
     <div class="row" id="map"> </div>
-      <!--<div id="map" class="col-lg-12"> -->
-        <!--<div id="map"></div> -->
+  
 
-
-
-    <!-- ./map and city card row -->
-
-    <!-- row 3 -->
+    <!-- row for barChart title and toggle buttons -->
     <div class="row">
-
       <div class="col-lg-12">
         <div id="barChartCaption" class="headings">Per capita emissions [tCO₂/capita]</div>
 
-
-     
-
         <ul class="nytg-sort" id="emissionsToggleButton">
-              <li id="gdpButton">per GDP</li>
-          </ul>
-          <ul class="nytg-sort">
-              <li id="reorderButton" style="display: none;">Re-order</li>
-          </ul>
+          <li id="gdpButton">per GDP</li>
+        </ul>
+        <ul class="nytg-sort">
+          <li id="reorderButton" style="display: none;">Re-order</li>
+        </ul>
         
       </div>
+    </div> <!-- .end row -->
 
-  
-      
+   <div class="row">
 
-    </div> <!-- ./row 3 -->
-
-    <!-- row 4 -->
-    <div class="row">
-
-      <div class="col-lg-12">
-        <!--barChart legend-->
-        <div class="row">
-            <div id="barChartLegendLabel">Colour bars by: 
+      <div class="col-lg-6">
+          <div id="barChartLegendLabel">Colour bars by: 
             <select id="d3-dropdown">
               <option value="methodology" selected="selected">Protocol</option>
               <option value="population density">population density</option>
               <option value="GDP/capita">GDP/capita</option>
+              <option value="diesel price">diesel price</option>
+              <option value="gas price">gas price</option>
+              <option value="HDD 15.5C">HDD 15.5C</option>
+              <option value="CDD 23C">CDD 23C</option>
+              <option value="area">area</option>
+              <option value="low BUA (2014)">low BUA (2014)</option>
+              <option value="low BUA % (2014)">low BUA % (2014)</option>
+              <option value="low BUA density (2014)">low BUA density (2014)</option>
+              <option value="high BUA (2014)">high BUA (2014)</option>
+              <option value="high BUA % (2014)">high BUA % (2014)</option>
+              <option value="high BUA density (2014)">high BUA density (2014)</option>
+              <option value="Congestion rank (INRIX)">Congestion rank (INRIX)</option>
+              <!--<option value="change in emissions">change in emissions</option>
+              <option value="Congestion rank (INRIX)">Congestion rank (INRIX)</option>
+              <option value="Congestion rank (TomTom)">Congestion rank (TomTom)</option>
+              <option value="CIMI ranking (IESE)">CIMI ranking (IESE)</option> 
+              Cities in Motion index (IESE)-->
             </select>
             <p id="selected-dropdown"></p>
           </div>
-          <div id="barChartLegend">
+      </div>
+
+      <div class="col-lg-4">
+        <div id="barChartLegend">
            <svg></svg>
-          </div>
+        </div>
+      </div>
+      <div class="col-lg-2" id="barChartLegendUnits"></div>
+    </div> <!-- .end row -->
 
-          <!--<div class="col-lg-2" id="barChartLegendUnits"></div>-->
-          
-          
+    <div class="row">
+      <div class="col-lg-12">
+      <div id="barChart_USAAsia"></div>
+      </div>
+    </div> <!-- .end row -->
 
-          </div>
-        
-
-        <!--barChart sub-rows-->
+    <div class="row">
+      <div class="col-lg-12">
+        <!--barChart sub-row-->
         <div class="row">
-          
-      <!--       <div class="col-lg-2 .barChartTitle" 
-                 style='position: relative; left: 67px; text-align: left; border:none; 
-                        font-weight:bold; color: white;'>
-                 USA
-            </div> -->
-            
-            <!-- barChart svg -->
-            <div id="barChart_USAAsia"></div>
-         
-        </div> <!-- ./sub-row 1 -->
-
-        <div class="row">        
-          <!-- barChart svg -->
-          <div id="barChart_EUCWLatAmerAfrica"></div>   
-        </div> <!-- ./sub-row 2 -->
-
+          <div id="barChart_EUCWLatAmerAfrica"></div>
+        </div>
+        
+        <!--barChart sub-row-->
         <div class="row" style="position:relative; top:10px;">city</div>
-
-      </div> <!-- ./col-lg-12 -->
-
       
-    </div> <!-- ./row 4-->
+      </div> <!-- .end col -->
+    </div> <!-- .end row -->
+    
+    <!--
+    <div class="row">
+      <div id="barChart_USAAsia"></div>         
+    </div> 
 
-    <footer class="row">
-      Pied de page
-    </footer>
+    <div class="row">
+      <div id="barChart_EUCWLatAmerAfrica"></div>   
+    </div>
+
+    <div class="row" style="position:relative; top:10px;">city</div>
+  -->
+
+
+
+
+   
+      <footer class="row">
+        logos
+      </footer>
 
 </div>  <!-- ./container -->
 
