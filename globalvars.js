@@ -13,6 +13,11 @@ var attrFlag = "methodology"; //attribute to be used to fill barChart bars. Defa
 var cityOrder_row1, cityOrder_row2; //save orignal city order
 //------------------------------------------------
 //COLOURS
+
+//map
+var countryColour = "#172214"; //#2B292E", #000, "#d9d9d9"
+var countryHighlightColour = "#718351"; //"#d3d3d3";  "#44522F"; "#718351"
+
 //barChart labels + highlight colour
 var colour_labels = "#636363";
 var colour_labelsHighlight = "#3d3d3d";

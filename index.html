@@ -452,7 +452,7 @@ function drawMap() {
             mapName = d.properties.name.replace(/\s/g, '_');
             return "map" + mapName;
           })
-          .style("fill", "#2B292E") //#000, "#d9d9d9"
+          .style("fill", countryColour)
           .style('stroke', '#555')  //#555
           .style('stroke-width', 1.5)
           // tooltips
@@ -571,7 +571,7 @@ function highlightElements(idName) {
   //Dim all countries but current country
   var thisCountry = data_GHG.find(x => x.idName === idName).country;
   // d3.selectAll(".countries").selectAll("path").style("opacity", 0.1);
-  d3.select("#map" + thisCountry).style("fill", "#d3d3d3");
+  d3.select("#map" + thisCountry).style("fill", countryHighlightColour);
   d3.selectAll(".countries path:not(#map" + thisCountry + ")")
     .style("opacity", 0.1);
 
