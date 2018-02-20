@@ -24,6 +24,7 @@ function setupData(ghg){
     area = d['area [km2] (external)']
     totalEmissions = d['Total City-wide Emissions (metric tonnes CO2e) (CDP)'] //[tCO2]
     scope1 = d['s1 to use']
+    measurementYear = +d['Measurement year only (CDP)']
     GDP = d['GDP-PPP combined'] //units of $BN USD
     // GDP = d['GDP-PPP combined [USD]'] //units of USD
     scope1_cap = +d['s1 per capita'] //d['s1 per capita']  //scope1/popn
@@ -50,10 +51,10 @@ function setupData(ghg){
     high_BUA_2014 = +d['High BUA 2014 (FC)']
     // low_BUApc_1990 = +d['Low BUA % 1990 (FC)']
     // low_BUApc_2000 = +d['Low BUA % 2000 (FC)']    
-    low_BUApc_2014 = +d['Low BUA % 2014 (FC)']
+    low_BUApc_2014 = +d['Low BUA % 2014 (FC)']*100
     // high_BUApc_1990 = +d['High BUA % 1990 (FC)']
     // high_BUApc_2000 = +d['High BUA % 2000 (FC)']
-    high_BUApc_2014 = +d['High BUA % 2014 (FC)']
+    high_BUApc_2014 = +d['High BUA % 2014 (FC)']*100
     // low_BUA_pdensity_1990 = +d['Low BUA pop density - 1990 (FC)']
     // high_BUA_pdensity_1990 = +d['High BUA pop density - 1990 (FC)']
     // low_BUA_pdensity_2000 = +d['Low BUA pop density - 2000 (FC)']
@@ -99,6 +100,7 @@ function setupData(ghg){
       "population": popn,
       "area": area,
       "Scope1": scope1,
+      "Measurement Year": measurementYear,
       "per capita": scope1_cap,
       "per GDP": scope1_gdp,
       "population density": pop_density,
@@ -120,10 +122,10 @@ function setupData(ghg){
       "low BUA density (2014)": low_BUA_pdensity_2014,
       "high BUA density (2014)": high_BUA_pdensity_2014,
       "Avg congestion rate [%] (INRIX)": inrix_congestion,
-      "Congestion Index (INRIX)": inrix_idx,
+      "congestion level (INRIX)": inrix_idx,
       "Peak hours spent in congestion (INRIX)": inrix_hours,
       "Congestion rank (INRIX)": inrix_rank,
-      "Congestion level [%] (TomTom)": tomtom_congestion,
+      "congestion level [%] (TomTom)": tomtom_congestion,
       "Congestion rank (TomTom)": tomtom_rank,
       "Congestion change [%] (TomTom)": tomtom_congestion_change,
       "Morning peak increase [%] (TomTom)": tomtom_am_peak,
@@ -157,7 +159,7 @@ function resetElements() {
   d3.selectAll(".countries").selectAll("path")
     .style("stroke","#555")
     .style("stroke-width", 1)
-    .style("fill", "#2b292e")
+    .style("fill", countryColour)
     .style("opacity", 1);
 
   //reset opacity of world cites and map
@@ -330,13 +332,18 @@ function fn_updateLegend (attrFlag) {
     for (idx=0; idx < num_levels; idx++) {
       if (attrFlag === "diesel price" || attrFlag === "gas price" ||
           attrFlag === "area" || attrFlag === "HDD 15.5C" || attrFlag === "CDD 23C" ||
-          attrFlag === "low BUA (2014)" || attrFlag === "high BUA (2014)") {        
+          attrFlag === "low BUA (2014)" || attrFlag === "high BUA (2014)" ||
+          attrFlag === "low BUA density (2014)") {        
         cb_values.push(dimExtent[0] + idx*delta);
       }
+      else if (attrFlag === "low BUA % (2014)" || attrFlag === "high BUA % (2014)") {
+        //delta = Math.round(delta);
+        cb_values.push( 20 + idx*20 );
+      }      
       else {
         delta = Math.round(delta/1000)*1000;
         cb_values.push(Math.round((dimExtent[0] + idx*delta)/1000)*1000);
-      }      
+      }
     }
     console.log("cb_values: ", cb_values)
 
@@ -390,6 +397,9 @@ function fn_updateLegend (attrFlag) {
       if (attrFlag === "diesel price" || attrFlag === "gas price") {
         firstValue = cb_values[1];
         nextValues = cb_values[j];
+      } else if (attrFlag === "low BUA % (2014)" || attrFlag === "high BUA % (2014)") {
+        firstValue = 20;
+        nextValues = cb_values[j-1];
       } else {
         firstValue = formatDecimalk(cb_values[1]);
         nextValues = formatDecimalk(cb_values[j]);
@@ -404,7 +414,9 @@ function fn_updateLegend (attrFlag) {
       if (attrFlag === "methodology") xpos = [10,63,150,215,284];
       else if (attrFlag === "population density") xpos = [4,75,147,217,288];
       else if (attrFlag === "GDP/capita") xpos = [7,77,146,216,281];
-       else if (attrFlag === "diesel price" || attrFlag === "gas price") xpos = [4,75,145,215,285];
+      else if (attrFlag === "diesel price" || attrFlag === "gas price") xpos = [4,75,145,215,285];
+      else if (attrFlag === "low BUA % (2014)" ||
+               attrFlag === "high BUA % (2014)") xpos = [13,84,153,224,295];
       else xpos = [4,75,145,215,285];
       return xpos[i];
     });
@@ -422,10 +434,10 @@ function fn_enlargeName(geogroup_name, cityName) {
   idName = format_idName(cityName);
 
   //Enlarge city label of selected bar
-  newSize="16px";
+  newSize="14px";
   //Need different sizes on account of the vieweBox scale stretching
   if (geogroup_name === "groupEurope" || geogroup_name === "groupLatinAmer" ||
-      geogroup_name === "groupUSA"|| geogroup_name === "groupOceania" ) newSize = "22px";
+      geogroup_name === "groupUSA"|| geogroup_name === "groupOceania" ) newSize = "21px";
   else if (geogroup_name === "groupAfrica") newSize = "18px";
   else if (geogroup_name === "groupAsia") newSize = "18px";
   
@@ -475,7 +487,8 @@ function fn_cityLabels_perCapita (d, i, thisCityGroup) {
     else ytrans = -130 + (i*2.3);
     
   } else if (thisCityGroup === "bar class_groupLatinAmer") {
-    if (d === "Buenos Aires") ytrans = -15;
+    if (d === "Buenos Aires") ytrans = -20;
+    else if (d === "Guaratinguetá") ytrans = -15;
     else ytrans = -110 + (i*1.9);
     
   } else if (thisCityGroup === "bar class_groupAfrica") ytrans = -160 + (i*2.2);
@@ -483,11 +496,14 @@ function fn_cityLabels_perCapita (d, i, thisCityGroup) {
 
 function fn_cityLabels_perGDP (d, i, thisCityGroup) {
   // thisRegion = data_GHG.find(x => x.city.includes(d)).region;
+  console.log("fn_cityLabels_perGDP")
 
   if (thisCityGroup === "bar class_groupUSA") {
     if (d === "Las Vegas") {rot = -90; xtrans = 60; ytrans = -15;}
-    else if (d === "D C" || d === "Nashville & Davidson" || d === "Cleveland") ytrans = -40 + (i*1.6);
-    else ytrans = -29 + (i*1.2);
+    else if (d === "DC") ytrans = -40; //-3 + (i*1.6);
+    else if (d === "Nashville & Davidson") ytrans = -20; //-3 + (i*1.6);
+    //else if (d === "Cleveland") ytrans = -3 + (i*1.6);
+    else ytrans = -36 + (i*1.2);
   } else if (thisCityGroup === "bar class_groupAsia") {
     if (d === "Kaohsiung" || d === "Taoyuan") {
       xtrans = 60; ytrans = -5; rot = -90;
@@ -503,8 +519,7 @@ function fn_cityLabels_perGDP (d, i, thisCityGroup) {
 
   } else if (thisCityGroup === "bar class_groupCan") {
       if (d === "Winnipeg") ytrans = -175 + (i*3.7);
-      else if (d === "Edmonton" || d === "Calgary") ytrans = -185 + (i*4.3);
-      else if (d === "Vancouver") {console.log("Vancouver"); ytrans = 0;}
+      else if (d === "Edmonton" || d === "Calgary") ytrans = -185 + (i*4.3);      
       else ytrans = -170 + (i*4.3);
 
   } else if (thisCityGroup === "bar class_groupOceania") {
@@ -791,41 +806,46 @@ function fn_svgCityCard (selectedCity, attrFlag) {
   // console.log("selectedCity in fn: ", selectedCity)
   // console.log("attrFlag in fn: ", attrFlag)
   
-  
   //display city card to the left of the map
   var svgCityCard = d3.select("#map").select("svg")
-          .append("g").attr("id", "cityCardg")
-          .attr("transform", function () {
-            transx = 0;
-            transy = 0;
-            return "translate(" + transx + "," + transy + ")";
-          });
+          .append("g").attr("id", "cityCardg");
+          // .attr("transform", function () {
+          //   transx = 0;
+          //   transy = 0;
+          //   return "translate(" + transx + "," + transy + ")";
+          // });
 
   svgCityCard
     .attr("transform", function (d) {
-        var xscale = 1, yscale = 1.0, transx = 15, transy = 20;
+        var xscale = 1, yscale = 1.0, transx = 15, transy = -10;
         
         return "scale(" + xscale + " " + yscale + ")" + 
               "translate(" + transx + " " + transy + ")" ;
       });
     
   svgCityCard.append("rect")
-    .attr("width", 175)             //="142" height="31"
-    .attr("height", 250) //31
-    .attr("x", -15)
+    .attr("width", 200)             //="142" height="31"
+    .attr("height", 300) //31
+    .attr("x", 5)
     .attr("y", -20)
     .attr("fill", "#4c87b5")
     .attr("stroke", "none");
 
   //city name
   svgCityCard.append("text").attr("class", "cityCardName")
+    .attr("transform", function (d) {
+        var transx = 13;
+        return "translate(" + transx + " " + 30 + ")" ;
+      })
     .text(selectedCity.city);
 
   var delta = 50; //amount to translate in y-dirn
-  var transx = 2;
+
+  //country
+  var transx = 13;
   svgCityCard.append("text")
     .attr("transform", function (d) {
-        var transy = 16;
+        var transy = 46;
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowInfo")
@@ -834,7 +854,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
   //city info sub-row: Emissions
   svgCityCard.append("text")
     .attr("transform", function (d) {
-        var transy = 40;
+        var transy = 70;
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowTitle")
@@ -842,16 +862,17 @@ function fn_svgCityCard (selectedCity, attrFlag) {
 
   svgCityCard.append("text")
     .attr("transform", function (d) {
-        var transy = 55;
+        var transy = 88;
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowInfo")
-    .text(formatComma(parseInt(selectedCity["Scope1"]/1000)) + " MtCO₂");
+    .text(formatComma(parseInt(selectedCity["Scope1"]/1000)) + 
+        " MtCO₂ (measurment yr " + selectedCity["Measurement Year"] +")");
 
-   //city info sub-row: Emissions Change
+  //city info sub-row: Emissions Change
   svgCityCard.append("text")
     .attr("transform", function (d) {
-        var transy = 40 + delta;
+        var transy = 70 + delta;
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowTitle")
@@ -859,7 +880,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
 
   svgCityCard.append("text")
     .attr("transform", function (d) {
-        var transy = 40 + delta + 15;
+        var transy = 70 + delta + 15;
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowInfo")
@@ -881,7 +902,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
   var protocolNum = selectedCity["methodology"];
   svgCityCard.append("text")
     .attr("transform", function (d) {
-        var transy = 40 + 2*delta;
+        var transy = 70 + 2*delta;
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowTitle")
@@ -889,7 +910,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
 
   svgCityCard.append("text")
     .attr("transform", function (d) {
-        var transy = 40 + 2*delta + 15;
+        var transy = 70 + 2*delta + 15;
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowInfo")
@@ -900,7 +921,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
     var protocolNum = selectedCity["methodology"];
     svgCityCard.append("text")
       .attr("transform", function (d) {
-          var transy = 40 + 3*delta;
+          var transy = 70 + 3*delta;
           return "translate(" + transx + " " + transy + ")" ;
         })
       .attr("class", "cityCardSubrowTitle")
@@ -910,11 +931,26 @@ function fn_svgCityCard (selectedCity, attrFlag) {
     else attrText = formatComma(parseInt(selectedCity[attrFlag]));
     svgCityCard.append("text")
       .attr("transform", function (d) {
-          var transy = 40 + 3*delta + 15;
+          var transy = 70 + 3*delta + 15;
           return "translate(" + transx + " " + transy + ")" ;
         })
       .attr("class", "cityCardSubrowInfo")
       // .text(formatComma(parseInt(selectedCity[attrFlag])) + " " + dimUnits[attrFlag]);
       .text(attrText + " " + dimUnits[attrFlag]);
   }
+
+  //Methods
+  //.on("click", function() { window.open("http://google.com"); });
+  svgCityCard.append("text")
+    .attr("transform", function (d) {
+        var transy = 70 + 4*delta;
+        return "translate(" + transx + " " + transy + ")" ;
+      })
+    .attr("class", "cityCardSubrowTitle")
+    .text("Emission definitions")
+    .on("touchmove mousemove", function () {d3.select(this).style("cursor", "pointer"); })  
+    .on("click", function() { 
+      window.open("http://www.ghgprotocol.org/sites/default/files/ghgp/standards/GHGP_GPC_0.pdf");
+    });
+
 }

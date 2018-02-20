@@ -13,6 +13,13 @@ var attrFlag = "methodology"; //attribute to be used to fill barChart bars. Defa
 var cityOrder_row1, cityOrder_row2; //save orignal city order
 //------------------------------------------------
 //COLOURS
+
+//map
+//http://www.colourlovers.com/palette/1072/rainforest
+//http://www.colourlovers.com/palette/659861/Snowy_Pine_Forest
+var countryColour = "#18471B"; //"#172214"; //#2B292E", #000, "#d9d9d9"
+var countryHighlightColour = "#BEC3BC";//"#718351"; //"#d3d3d3";  "#44522F"; "#718351"
+
 //barChart labels + highlight colour
 var colour_labels = "#636363";
 var colour_labelsHighlight = "#3d3d3d";
@@ -52,7 +59,12 @@ var choose_colourArray = {
   "CDD 23C": ["#E1F5C4", "#ffeda0","#F9D423","#FC913A","#FF4E50"],
   "area": ["#EDDAD0","#D5DED9","#99B2B7","#8DA597","#948C75"],
   "low BUA (2014)": ["#d7b5d8","#CD7CB7","#885F9A","#B65873","#5F323F"],
-  "high BUA (2014)": ["#EEDAA7","#E6D472","#E79C74","#D45659","#7D4755"]
+  "low BUA % (2014)": ["#d7b5d8","#CD7CB7","#885F9A","#B65873","#5F323F"],
+  "low BUA density (2014)": ["#d7b5d8","#CD7CB7","#885F9A","#B65873","#5F323F"],
+  "high BUA (2014)": ["#EEDAA7","#E6D472","#E79C74","#D45659","#7D4755"],
+  "high BUA % (2014)": ["#EEDAA7","#E6D472","#E79C74","#D45659","#7D4755"],
+  "high BUA density (2014)": ["#EEDAA7","#E6D472","#E79C74","#D45659","#7D4755"],
+  "Congestion rank (INRIX)": ["#DEFAFB","#745C80","#66463F","#D643D0B","#8C4804"]
   
 }
 
@@ -124,12 +136,12 @@ var dimUnits =  {
   "gas price": "USD",
   "HDD 15.5C": "[deg C x days]",
   "CDD 23C": "[deg C x days]",
-  "low BUA (2014)": "km2",
-  "high BUA (2014)": "km2",
-  "low BUA % (2014)": "%",
-  "high BUA % (2014)": "%",
-  "low BUA density (2014)": "pop/km2",
-  "high BUA density (2014)": "pop/km2",
+  "low BUA (2014)": "km2 (year 2014)",
+  "high BUA (2014)": "km2 (year 2014)",
+  "low BUA % (2014)": "% of total BUA (year 2014)",
+  "high BUA % (2014)": "% of total BUA (year 2014)",
+  "low BUA density (2014)": "pop/km2 (year 2014)",
+  "high BUA density (2014)": "pop/km2 (year 2014)",
   "household size": "",
   "region": "",
   "country": ""

@@ -28,6 +28,12 @@ ul {
 /*    margin-top: 80px;*/
 }
 
+.headings {
+  font-size: 20px;
+  padding-left: 20px;
+  color: #565656;
+  text-align: left;
+}
 
 /*--------------------------*/
 /*$(window).width();*/
@@ -235,7 +241,7 @@ div.rtooltip {
 /* map */
 #sphere {
   padding-top: 0px;
-  fill: #e6f3f7;   /*//#e6f3f7"); // "#add8e6" //"#fcfcef" */
+  fill: #F4F7F7;  /* #F2F4F2; #e6f3f7;   //#e6f3f7"); // "#add8e6" //"#fcfcef" */
 }
 /* #map {
   padding-top: 40px;
@@ -274,20 +280,23 @@ div.rtooltip {
 }
 #emissionsToggleButton {
   position: absolute;
-  left: 690px; 
+  left: 600px; 
   top: 0px;
 }
-#barChartCaption {
-  font-size: 20px;
-  padding-left: 335px;
-  color: #565656;
-  text-align: left;
+#reorderButton {
+  position: absolute;
+  left: 750px; 
+  top: 0px;
 }
 #barChartLegendLabel {
+  position: relative;
+  left: 160px;
   color: #565656;
   text-align: left;
 }
 #barChartLegend {
+  position: relative;
+  left: 0px;
   stroke: gray;
 }
 #barChartLegendUnits {
@@ -309,6 +318,11 @@ div.rtooltip {
 }
 .bar {
   /*stroke: gray;*/
+}
+.zerobar { /*bar where d[attrFlag] is zero */
+  stroke: #565656;
+  /*stroke-width: 0.5;*/
+  opacity: 0.3;
 }
 .axis {
   font: 14px sans-serif;
