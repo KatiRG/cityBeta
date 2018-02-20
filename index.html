@@ -69,6 +69,7 @@
         <div id="barChartLegendLabel">Colour bars by: 
           <select id="d3-dropdown">
             <option value="methodology" selected="selected">Protocol</option>
+            <option value="measurement year">measurement year</option>
             <option value="population density">population density</option>
             <option value="GDP/capita">GDP/capita</option>
             <option value="diesel price">diesel price</option>
@@ -280,6 +281,7 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
     "population density": 
           d3.extent(ghg, function (d) {return +d["pop to use"]/d["area [km2] (external)"];}),
     // "GDP/capita" : d3.extent(ghg, function (d) { return +d["GDP-PPP combined"]/d["pop to use"]*Math.pow(10,9);})
+    "measurement year": [2005, 2015], 
     "GDP/capita": [1700, 128046],
     "diesel price": [0.5, 1.8],
     "gas price": [0.5, 1.8],

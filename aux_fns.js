@@ -100,7 +100,7 @@ function setupData(ghg){
       "population": popn,
       "area": area,
       "Scope1": scope1,
-      "Measurement Year": measurementYear,
+      "measurement year": measurementYear,
       "per capita": scope1_cap,
       "per GDP": scope1_gdp,
       "population density": pop_density,
@@ -333,13 +333,13 @@ function fn_updateLegend (attrFlag) {
       if (attrFlag === "diesel price" || attrFlag === "gas price" ||
           attrFlag === "area" || attrFlag === "HDD 15.5C" || attrFlag === "CDD 23C" ||
           attrFlag === "low BUA (2014)" || attrFlag === "high BUA (2014)" ||
-          attrFlag === "low BUA density (2014)") {        
+          attrFlag === "low BUA density (2014)" || attrFlag === "measurement year") {
         cb_values.push(dimExtent[0] + idx*delta);
       }
       else if (attrFlag === "low BUA % (2014)" || attrFlag === "high BUA % (2014)") {
         //delta = Math.round(delta);
         cb_values.push( 20 + idx*20 );
-      }      
+      }
       else {
         delta = Math.round(delta/1000)*1000;
         cb_values.push(Math.round((dimExtent[0] + idx*delta)/1000)*1000);
@@ -394,7 +394,7 @@ function fn_updateLegend (attrFlag) {
     } else {
       console.log("cb_values format: ", formatComma(cb_values[j]) )
 
-      if (attrFlag === "diesel price" || attrFlag === "gas price") {
+      if (attrFlag === "diesel price" || attrFlag === "gas price" || attrFlag === "measurement year") {
         firstValue = cb_values[1];
         nextValues = cb_values[j];
       } else if (attrFlag === "low BUA % (2014)" || attrFlag === "high BUA % (2014)") {
@@ -928,15 +928,16 @@ function fn_svgCityCard (selectedCity, attrFlag) {
       .text(attrFlag + ":");
 
     if (attrFlag === "diesel price" || attrFlag === "gas price") attrText = selectedCity[attrFlag];
-    else attrText = formatComma(parseInt(selectedCity[attrFlag]));
+    else attrText = attrFlag === "measurement year" ? 
+          parseInt(selectedCity[attrFlag]) : 
+          formatComma(parseInt(selectedCity[attrFlag])) + " " + dimUnits[attrFlag];
     svgCityCard.append("text")
       .attr("transform", function (d) {
           var transy = 70 + 3*delta + 15;
           return "translate(" + transx + " " + transy + ")" ;
         })
       .attr("class", "cityCardSubrowInfo")
-      // .text(formatComma(parseInt(selectedCity[attrFlag])) + " " + dimUnits[attrFlag]);
-      .text(attrText + " " + dimUnits[attrFlag]);
+      .text(attrText);
   }
 
   //Methods
