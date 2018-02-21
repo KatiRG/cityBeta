@@ -94,7 +94,7 @@ var emissionsToggleDict = {
 
 //acutal Scope1 Emissions/cap or Emissions/GDP for cities that are off the scale
 var storeFlagCap = 0;
-var storeFlagGDP = 0;
+var storeFlagGDP = 0, storeFlagGDPAfrica = 0;
 var rotterdamEmissionsPerCap, kaohsiungEmissionsPerGDP, taoyuanEmissionsPerGDP,
     lagosEmissionsPerGDP;
 

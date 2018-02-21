@@ -232,26 +232,30 @@ function fn_concat (barChartGroup, geogroupArray, this_dim) {
       selectedCity[label_dataPerCap] = 11;
     } else if (geogroupArray[idx] === "groupAsia" && this_dim === "per GDP") {      
       var selectedCity1 = data_GHG.find(x => x.city === "Kaohsiung");
-      var selectedCity2 = data_GHG.find(x => x.city === "Taoyuan");
+      var selectedCity2 = data_GHG.find(x => x.city === "Taoyuan");     
 
       //Store actual value for later display.Store only once!!!
       if (storeFlagGDP === 0) {
         kaohsiungEmissionsPerGDP = formatDecimalSci(selectedCity1[label_dataPerGDP]);
-        taoyuanEmissionsPerGDP = formatDecimalSci(selectedCity2[label_dataPerGDP]);
+        taoyuanEmissionsPerGDP = formatDecimalSci(selectedCity2[label_dataPerGDP]);       
         storeFlagGDP = 1;
       }
       
       //Assign a smaller value FOR SCALE PURPOSES ONLY
       selectedCity1[label_dataPerGDP] = 0.114;
-      selectedCity2[label_dataPerGDP] = 0.114;
+      selectedCity2[label_dataPerGDP] = 0.114;    
 
-    } else if (geogroupArray[idx] === "groupAfrica") {
+    } else if (geogroupArray[idx] === "groupAfrica" && this_dim === "per GDP") {
       var selectedCity = data_GHG.find(x => x.city === "Lagos");
 
-      //Store actual value for later display
-      lagosEmissionsPerGDP = formatDecimalSci(selectedCity[label_dataPerGDP]);
+      //Store actual value for later display.Store only once!!!
+      if (storeFlagGDPAfrica === 0) {
+        lagosEmissionsPerGDP = formatDecimalSci(selectedCity[label_dataPerGDP]);
+        storeFlagGDPAfrica = 1;
+      }    
+
       //Assign a smaller value FOR SCALE PURPOSES ONLY
-      //selectedCity[label_dataPerGDP] = 0.2;
+      selectedCity[label_dataPerGDP] = 0.23;
     }
 
     //Concatenate with a gap obj in between
@@ -787,19 +791,24 @@ function fn_arrow() {
       });
 }
 function fn_arrow_asia() {
-  console.log("fn_arrow_asia")
+  console.log("fn_arrow_asia: ", lagosEmissionsPerGDP)
   if (d3.select("#reorderButton").text() === "Re-order") {
-    xpair = [449, 458]; ypair = [-55, -55]; //posn of arrow and text pair
-    xtext = [-27, -27]; ytext = [10, 40]; //posn of text
-  } else {
+    //bars sorted by emissions/GDP
+    xpair = [449, 458, 537]; ypair = [-55, -55, 265]; //posn of arrow and text pair
+    xtext = [-27, -27, -40]; ytext = [10, 40, 110]; //posn of text
+  } else { //bars sorted by emissions/capita
     xpair = [457.4, 476]; ypair = [-55, -55]; //posn of arrow and text pair
     xtext = [-27, 128]; ytext = [10, -5]; //posn of text
   }
+  emissionText = [kaohsiungEmissionsPerGDP + " kgCO₂/USD", 
+                  taoyuanEmissionsPerGDP + " kgCO₂/USD",
+                  0.752 + " kgCO₂/USD"];
 
   //define arrow name and path
   var data = [
-  { id: 1, name: 'arrow', path: "M 2,2 L2,11 L10,6 L2,2" },
-  { id: 2, name: 'arrow1', path: "M 2,2 L2,11 L10,6 L2,2" }
+  { id: 1, name: 'arrow0', path: "M 2,2 L2,11 L10,6 L2,2" }, //Kaohsiung
+  { id: 2, name: 'arrow1', path: "M 2,2 L2,11 L10,6 L2,2" }, //Taoyuan
+  { id: 3, name: 'arrow2', path: "M 2,2 L2,11 L10,6 L2,2" } //Lagos
   ];
 
   margin = {top: 0, right: 0, bottom: 0, left: 0},
@@ -807,8 +816,8 @@ function fn_arrow_asia() {
       height = 200 - margin.top - margin.bottom;
 
   
-  emissionText = [kaohsiungEmissionsPerGDP + " kgCO₂/USD", taoyuanEmissionsPerGDP + " kgCO₂/USD"];
-  for (idx = 0; idx < 2; idx++) {
+  
+  for (idx = 0; idx < 3; idx++) {
     svg = d3.select("#barChart_USAAsia").select(".barSVG")
              .append("g")
              .attr('height', height + margin.top + margin.bottom)
@@ -839,7 +848,7 @@ function fn_arrow_asia() {
           .attr('d', function(d){ return d.path; })
           .attr('fill', function(d,i) { return "#565656"; });
 
-    ypath = [50,80]; //arrow length
+    ypath = [50,80, 50]; //arrow length
     var path = paths.selectAll('path')
       .data(data)
       .enter()
