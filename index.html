@@ -623,7 +623,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
   //Fit barCharts responsively using viewBox
   //NB: viewBox stretches text labels as well, so they must be fixed later by adjusting the scale
-  my_width = "99%";
+  my_width = geogroup_id === "#barChart_EUCWLatAmerAfrica" ? "97%" : "100%";
   var svgBarChart = d3.select(geogroup_id).append("svg").attr("class", "barSVG")
     .attr('width', my_width)
     .attr('height', 125) // height)
