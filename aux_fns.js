@@ -799,7 +799,7 @@ function fn_arrow_asia() {
       width = 150 - margin.left - margin.right,
       height = 200 - margin.top - margin.bottom;
 
-  xpair = [449, 458]; ypair = [-55, -45]; //posn of arrow and text pair
+  xpair = [449, 458]; ypair = [-55, -55]; //posn of arrow and text pair
   xtext = [-27, -27]; ytext = [10, 40]; //posn of text
   emissionText = [kaohsiungEmissionsPerGDP + " kgCO₂/USD", taoyuanEmissionsPerGDP + " kgCO₂/USD"];
   for (idx = 0; idx < 2; idx++) {
@@ -833,19 +833,20 @@ function fn_arrow_asia() {
           .attr('d', function(d){ return d.path; })
           .attr('fill', function(d,i) { return "#565656"; });
 
+    ypath = [50,80];
     var path = paths.selectAll('path')
       .data(data)
       .enter()
       .append('svg:path')
-        .attr('d', function(d,i){
-          return 'M 100,' + 0 + ' V ' + 50 + ',' + 0 + ''
+        .attr('d', function (d, i){          
+          return 'M 100,' + 0 + ' V ' + ypath[idx] + ',' + 0 + '' //arrow length
         })
         .attr('stroke', function(d,i) { return "#565656"; })
         .attr('stroke-width', 1)
         .attr('stroke-linecap', 'round')
-        .attr('marker-start', function(d,i){ return 'url(#marker_stub' + ')'; })
-        .attr('marker-end', function(d,i){ return 'url(#marker_arrow'   + ')'; })
-        .attr("transform", function (d) { //adjust arrow proportions
+        .attr('marker-start', function(d,i){ return 'url(#marker_stub' + i + ')'; })
+        .attr('marker-end', function(d,i){ return 'url(#marker_arrow' + i  + ')'; })
+        .attr("transform", function (d) { //adjusts arrow proportions
           var xscale = 0.5, yscale = 0.8;         
           return "scale(" + xscale + " " + yscale + ")";          
         })
