@@ -522,8 +522,7 @@ function fn_cityLabels_perCapita (d, i, thisCityGroup) {
 }
 
 function fn_cityLabels_perGDP (d, i, thisCityGroup) {
-  // thisRegion = data_GHG.find(x => x.city.includes(d)).region;
-  console.log("fn_cityLabels_perGDP")
+  // thisRegion = data_GHG.find(x => x.city.includes(d)).region;  
 
   if (thisCityGroup === "bar class_groupUSA") {
     if (d === "Las Vegas") {rot = -90; xtrans = 60; ytrans = -15;}
@@ -792,74 +791,80 @@ function fn_arrow_asia() {
 
   //define arrow name and path
   var data = [
-  { id: 1, name: 'arrow', path: "M 2,2 L2,11 L10,6 L2,2" }
+  { id: 1, name: 'arrow', path: "M 2,2 L2,11 L10,6 L2,2" },
+  { id: 2, name: 'arrow1', path: "M 2,2 L2,11 L10,6 L2,2" }
   ];
 
   margin = {top: 0, right: 0, bottom: 0, left: 0},
       width = 150 - margin.left - margin.right,
       height = 200 - margin.top - margin.bottom;
 
+  xpair = [449, 458]; ypair = [-55, -45]; //posn of arrow and text pair
+  xtext = [-27, -27]; ytext = [10, 40]; //posn of text
+  emissionText = [kaohsiungEmissionsPerGDP + " kgCO₂/USD", taoyuanEmissionsPerGDP + " kgCO₂/USD"];
+  for (idx = 0; idx < 2; idx++) {
+    svg = d3.select("#barChart_USAAsia").select(".barSVG")
+             .append("g")
+             .attr('height', height + margin.top + margin.bottom)
+            .attr("transform", "translate(" + xpair[idx] + "," + ypair[idx] + ")") //posn of arrow and text
+             .append("svg")
+            .attr('width', width + margin.left + margin.right);
+            
 
-  svg = d3.select("#barChart_USAAsia").select(".barSVG")
-           .append("g")
-           .attr('height', height + margin.top + margin.bottom)
-          .attr("transform", "translate(" + 449 + "," + -55 + ")") //posn of arrow and text
-           .append("svg")
-          .attr('width', width + margin.left + margin.right);
-          
+    var defs = svg.append('svg:defs')
 
-  var defs = svg.append('svg:defs')
+    var paths = svg.append('svg:g')
+      .attr('id', 'markers')
+      .attr('transform', 'translate(' + 42 + ',' + 63 + ')');
 
-  var paths = svg.append('svg:g')
-    .attr('id', 'markers')
-    .attr('transform', 'translate(' + 42 + ',' + 63 + ')');
+    //http://tutorials.jenkov.com/svg/marker-element.html
+    var marker = defs.selectAll('marker')
+      .data(data)
+      .enter()
+      .append('svg:marker')
+        .attr('id', function(d){ return 'marker_' + d.name})
+        .attr('markerHeight', 13)
+        .attr('markerWidth', 13)
+        .attr('markerUnits', 'strokeWidth')
+        .attr('orient', 'auto')
+        .attr('refX', 2)
+        .attr('refY', 6)
+        .append('svg:path')
+          .attr('d', function(d){ return d.path; })
+          .attr('fill', function(d,i) { return "#565656"; });
 
-  //http://tutorials.jenkov.com/svg/marker-element.html
-  var marker = defs.selectAll('marker')
-    .data(data)
-    .enter()
-    .append('svg:marker')
-      .attr('id', function(d){ return 'marker_' + d.name})
-      .attr('markerHeight', 13)
-      .attr('markerWidth', 13)
-      .attr('markerUnits', 'strokeWidth')
-      .attr('orient', 'auto')
-      .attr('refX', 2)
-      .attr('refY', 6)
+    var path = paths.selectAll('path')
+      .data(data)
+      .enter()
       .append('svg:path')
-        .attr('d', function(d){ return d.path; })
-        .attr('fill', function(d,i) { return "#565656"; });
+        .attr('d', function(d,i){
+          return 'M 100,' + 0 + ' V ' + 50 + ',' + 0 + ''
+        })
+        .attr('stroke', function(d,i) { return "#565656"; })
+        .attr('stroke-width', 1)
+        .attr('stroke-linecap', 'round')
+        .attr('marker-start', function(d,i){ return 'url(#marker_stub' + ')'; })
+        .attr('marker-end', function(d,i){ return 'url(#marker_arrow'   + ')'; })
+        .attr("transform", function (d) { //adjust arrow proportions
+          var xscale = 0.5, yscale = 0.8;         
+          return "scale(" + xscale + " " + yscale + ")";          
+        })
+        .append('svg:path')
+          .attr('d', function(d){ return d.path; });
 
-  var path = paths.selectAll('path')
-    .data(data)
-    .enter()
-    .append('svg:path')
-      .attr('d', function(d,i){
-        return 'M 100,' + 0 + ' V ' + 50 + ',' + 0 + ''
-      })
-      .attr('stroke', function(d,i) { return "#565656"; })
-      .attr('stroke-width', 1)
-      .attr('stroke-linecap', 'round')
-      .attr('marker-start', function(d,i){ return 'url(#marker_stub' + ')'; })
-      .attr('marker-end', function(d,i){ return 'url(#marker_arrow'   + ')'; })
+    //arrow text
+    d3.select("#markers").append("text").attr("id", "text" + idx);
+    //d3.select("#markers").select("text")
+    d3.select("#text" + idx)
+      .text(emissionText[idx])
+      .style("fill", "#565656")
       .attr("transform", function (d) { //adjust arrow proportions
-        var xscale = 0.5, yscale = 0.8;         
-        return "scale(" + xscale + " " + yscale + ")";          
-      })
-      .append('svg:path')
-        .attr('d', function(d){ return d.path; });
-
-  //arrow text
-  d3.select("#markers").append("text");
-  d3.select("#markers").select("text")
-    .text(kaohsiungEmissionsPerGDP + " " + "kgCO₂/USD")
-    .style("fill", "#565656")
-    .attr("transform", function (d) { //adjust arrow proportions
-        var xscale = 0.5, yscale = 1.9;         
-        
-        return "scale(" + xscale + " " + yscale + ")" + 
-              "translate(" + -10 + " " + 10 + ")" ;       
-      });
+          var xscale = 0.5, yscale = 1.9;         
+          
+          return "scale(" + xscale + " " + yscale + ")" + 
+                "translate(" + xtext[idx] + " " + ytext[idx] + ")" ;       
+        });
+  }
 }
 
 

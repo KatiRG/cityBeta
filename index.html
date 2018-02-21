@@ -561,8 +561,7 @@ function highlightElements(idName) {
 
 function emissionsBarChart(geogroup_name, geogroup_id) {
   //dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]]
-  var reorderButton = d3.select("#reorderButton").text();
-  console.log("reorderButton: ", reorderButton)
+  var reorderButton = d3.select("#reorderButton").text();  
 
   // Remove any previous bar chart
   d3.select(geogroup_id).select("svg").remove();
