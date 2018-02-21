@@ -251,7 +251,7 @@ function fn_concat (barChartGroup, geogroupArray, this_dim) {
       //Store actual value for later display
       lagosEmissionsPerGDP = formatDecimalSci(selectedCity[label_dataPerGDP]);
       //Assign a smaller value FOR SCALE PURPOSES ONLY
-      selectedCity[label_dataPerGDP] = 0.2;
+      //selectedCity[label_dataPerGDP] = 0.2;
     }
 
     //Concatenate with a gap obj in between
@@ -383,7 +383,7 @@ function fn_updateLegend (attrFlag) {
    //svg crated in fn_barChartLegend()
   var svgCB = d3.select("#barChartLegend").select("svg");
 
-  //tooltip for rects  
+  //tooltip for legend rects  
   var tool_tip = d3.tip()
       .attr("class", function () {
         if (attrFlag === "population density" || attrFlag === "GDP/capita") {
@@ -584,7 +584,7 @@ function fn_barChartLegend() {
     .attr("height", svg_height)
     .style("vertical-align", "middle");
 
-  //tooltip for rects  
+  //tooltip for legend rects  
   var tool_tip = d3.tip()
     .attr("class", "d3-tip")
     .offset([-10, 0])
