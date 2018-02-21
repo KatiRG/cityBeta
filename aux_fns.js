@@ -217,14 +217,41 @@ function fn_concat (barChartGroup, geogroupArray, this_dim) {
     //Sort by this_dim in descending order
     ghg_extract.sort((a, b) => d3.descending(a[this_dim], b[this_dim]));
 
-    //Rotterdam -- special case
+    //Rotterdam, Kaohsiung, Taoyuan, Lagos -- special cases that do not fit on scale
     //Reduce bar height and indicate true value graphically on the chart
-    if (geogroupArray[idx] === "groupEurope") {
+    if (geogroupArray[idx] === "groupEurope" && this_dim === "per capita") {     
       var selectedCity = data_GHG.find(x => x.city === "Rotterdam");
-      //Store actual value for later display
-      rotterdamEmissionsPerCap = formatDecimalSci(selectedCity[label_dataPerCap]);
+      
+      //Store actual value for later display. Store only once!!!
+      if (storeFlagCap === 0) {
+        rotterdamEmissionsPerCap = formatDecimalSci(selectedCity[label_dataPerCap]);
+        storeFlagCap = 1;
+      }
+      
       //Assign a smaller value FOR SCALE PURPOSES ONLY
       selectedCity[label_dataPerCap] = 11;
+    } else if (geogroupArray[idx] === "groupAsia" && this_dim === "per GDP") {      
+      var selectedCity1 = data_GHG.find(x => x.city === "Kaohsiung");
+      var selectedCity2 = data_GHG.find(x => x.city === "Taoyuan");
+
+      //Store actual value for later display.Store only once!!!
+      if (storeFlagGDP === 0) {
+        kaohsiungEmissionsPerGDP = formatDecimalSci(selectedCity1[label_dataPerGDP]);
+        taoyuanEmissionsPerGDP = formatDecimalSci(selectedCity2[label_dataPerGDP]);
+        storeFlagGDP = 1;
+      }
+      
+      //Assign a smaller value FOR SCALE PURPOSES ONLY
+      selectedCity1[label_dataPerGDP] = 0.114;
+      selectedCity2[label_dataPerGDP] = 0.114;
+
+    } else if (geogroupArray[idx] === "groupAfrica") {
+      var selectedCity = data_GHG.find(x => x.city === "Lagos");
+
+      //Store actual value for later display
+      lagosEmissionsPerGDP = formatDecimalSci(selectedCity[label_dataPerGDP]);
+      //Assign a smaller value FOR SCALE PURPOSES ONLY
+      selectedCity[label_dataPerGDP] = 0.2;
     }
 
     //Concatenate with a gap obj in between
@@ -760,6 +787,81 @@ function fn_arrow() {
               "translate(" + 109 + " " + 10 + ")" ;       
       });
 }
+function fn_arrow_asia() {
+  console.log("fn_arrow_asia")
+
+  //define arrow name and path
+  var data = [
+  { id: 1, name: 'arrow', path: "M 2,2 L2,11 L10,6 L2,2" }
+  ];
+
+  margin = {top: 0, right: 0, bottom: 0, left: 0},
+      width = 150 - margin.left - margin.right,
+      height = 200 - margin.top - margin.bottom;
+
+
+  svg = d3.select("#barChart_USAAsia").select(".barSVG")
+           .append("g")
+           .attr('height', height + margin.top + margin.bottom)
+          .attr("transform", "translate(" + 449 + "," + -55 + ")") //posn of arrow and text
+           .append("svg")
+          .attr('width', width + margin.left + margin.right);
+          
+
+  var defs = svg.append('svg:defs')
+
+  var paths = svg.append('svg:g')
+    .attr('id', 'markers')
+    .attr('transform', 'translate(' + 42 + ',' + 63 + ')');
+
+  //http://tutorials.jenkov.com/svg/marker-element.html
+  var marker = defs.selectAll('marker')
+    .data(data)
+    .enter()
+    .append('svg:marker')
+      .attr('id', function(d){ return 'marker_' + d.name})
+      .attr('markerHeight', 13)
+      .attr('markerWidth', 13)
+      .attr('markerUnits', 'strokeWidth')
+      .attr('orient', 'auto')
+      .attr('refX', 2)
+      .attr('refY', 6)
+      .append('svg:path')
+        .attr('d', function(d){ return d.path; })
+        .attr('fill', function(d,i) { return "#565656"; });
+
+  var path = paths.selectAll('path')
+    .data(data)
+    .enter()
+    .append('svg:path')
+      .attr('d', function(d,i){
+        return 'M 100,' + 0 + ' V ' + 50 + ',' + 0 + ''
+      })
+      .attr('stroke', function(d,i) { return "#565656"; })
+      .attr('stroke-width', 1)
+      .attr('stroke-linecap', 'round')
+      .attr('marker-start', function(d,i){ return 'url(#marker_stub' + ')'; })
+      .attr('marker-end', function(d,i){ return 'url(#marker_arrow'   + ')'; })
+      .attr("transform", function (d) { //adjust arrow proportions
+        var xscale = 0.5, yscale = 0.8;         
+        return "scale(" + xscale + " " + yscale + ")";          
+      })
+      .append('svg:path')
+        .attr('d', function(d){ return d.path; });
+
+  //arrow text
+  d3.select("#markers").append("text");
+  d3.select("#markers").select("text")
+    .text(kaohsiungEmissionsPerGDP + " " + "kgCO₂/USD")
+    .style("fill", "#565656")
+    .attr("transform", function (d) { //adjust arrow proportions
+        var xscale = 0.5, yscale = 1.9;         
+        
+        return "scale(" + xscale + " " + yscale + ")" + 
+              "translate(" + -10 + " " + 10 + ")" ;       
+      });
+}
+
 
 function fn_svgHeadings (geogroup_id) {
 

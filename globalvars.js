@@ -91,7 +91,12 @@ var emissionsToggleDict = {
 
 //------------------------------------------------
 //Variables to store data
-var rotterdamEmissionsPerCap; //acutal Scope1 Emissions/cap for Rotterdam
+
+//acutal Scope1 Emissions/cap or Emissions/GDP for cities that are off the scale
+var storeFlagCap = 0;
+var storeFlagGDP = 0;
+var rotterdamEmissionsPerCap, kaohsiungEmissionsPerGDP, taoyuanEmissionsPerGDP,
+    lagosEmissionsPerGDP;
 
 //AVG REGIONAL EMISSIONS PER CAPITA
 //TO BE VERIFIED! AVGS TAKEN FROM GCA WEBSITE
