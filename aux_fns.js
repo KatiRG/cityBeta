@@ -788,6 +788,13 @@ function fn_arrow() {
 }
 function fn_arrow_asia() {
   console.log("fn_arrow_asia")
+  if (d3.select("#reorderButton").text() === "Re-order") {
+    xpair = [449, 458]; ypair = [-55, -55]; //posn of arrow and text pair
+    xtext = [-27, -27]; ytext = [10, 40]; //posn of text
+  } else {
+    xpair = [457.4, 476]; ypair = [-55, -55]; //posn of arrow and text pair
+    xtext = [-27, 128]; ytext = [10, -5]; //posn of text
+  }
 
   //define arrow name and path
   var data = [
@@ -796,11 +803,10 @@ function fn_arrow_asia() {
   ];
 
   margin = {top: 0, right: 0, bottom: 0, left: 0},
-      width = 150 - margin.left - margin.right,
+      width = 200 - margin.left - margin.right,
       height = 200 - margin.top - margin.bottom;
 
-  xpair = [449, 458]; ypair = [-55, -55]; //posn of arrow and text pair
-  xtext = [-27, -27]; ytext = [10, 40]; //posn of text
+  
   emissionText = [kaohsiungEmissionsPerGDP + " kgCO₂/USD", taoyuanEmissionsPerGDP + " kgCO₂/USD"];
   for (idx = 0; idx < 2; idx++) {
     svg = d3.select("#barChart_USAAsia").select(".barSVG")
@@ -833,13 +839,13 @@ function fn_arrow_asia() {
           .attr('d', function(d){ return d.path; })
           .attr('fill', function(d,i) { return "#565656"; });
 
-    ypath = [50,80];
+    ypath = [50,80]; //arrow length
     var path = paths.selectAll('path')
       .data(data)
       .enter()
       .append('svg:path')
         .attr('d', function (d, i){          
-          return 'M 100,' + 0 + ' V ' + ypath[idx] + ',' + 0 + '' //arrow length
+          return 'M 100,' + 0 + ' V ' + ypath[idx] + ',' + 0 + '';
         })
         .attr('stroke', function(d,i) { return "#565656"; })
         .attr('stroke-width', 1)
