@@ -365,7 +365,8 @@ function fn_updateLegend (attrFlag) {
       if (attrFlag === "diesel price" || attrFlag === "gas price" ||
           attrFlag === "area" || attrFlag === "HDD 15.5C" || attrFlag === "CDD 23C" ||
           attrFlag === "low BUA (2014)" || attrFlag === "high BUA (2014)" ||
-          attrFlag === "low BUA density (2014)" || attrFlag === "measurement year") {
+          attrFlag === "low BUA density (2014)" || attrFlag === "measurement year" ||
+          attrFlag === "Congestion rank (INRIX)") {
         cb_values.push(dimExtent[0] + idx*delta);
       }
       else if (attrFlag === "low BUA % (2014)" || attrFlag === "high BUA % (2014)") {
