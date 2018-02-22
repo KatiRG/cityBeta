@@ -718,18 +718,20 @@ function fn_appendRegionalMeans(svg, geogroup_name, this_dim, data, x, y) {
 }
 
 function fn_arrow(geogroup_id, city) {//used for Rotterdam (per cap) and Lagos (per GDP)
-  if (d3.select("#reorderButton").text() === "Re-order") {//bars sorted by emissions/GDP    
-    //posn of arrow and text pair
-    xpair = [(city === "Lagos" ? 544 : -56)]; ypair = [(city === "Lagos" ? -20 : -25)];
+  if (city === "Lagos") {
+    if (d3.select("#reorderButton").text() === "Re-order") {//bars sorted by emissions/GDP          
+      xpair = [544]; ypair = [-20]; //posn of arrow and text pair
+      xtext = [-27]; ytext = [10]; //posn of text
 
-    //posn of text
-    xtext = [(city === "Lagos" ? -27 : 109)]; ytext = [(city === "Lagos" ? 10: 10)];
-
-  } else { //bars sorted by emissions/capita
-    xpair = [568]; ypair = [-55]; //posn of arrow and text pair
-    xtext = [-18]; ytext = [19]; //posn of text
+    } else { //bars sorted by emissions/capita
+      xpair = [568]; ypair = [-55]; //posn of arrow and text pair
+      xtext = [-18]; ytext = [19]; //posn of text
+    }
+  } else if (city === "Rotterdam") {    
+      xpair = [-56]; ypair = [-25]; //posn of arrow and text pair    
+      xtext = [109]; ytext = [10]; //posn of text
   }
-
+  
   emissionText = [(city === "Lagos" ? lagosEmissionsPerGDP : rotterdamEmissionsPerCap)
                + " kgCO₂/USD"];
 

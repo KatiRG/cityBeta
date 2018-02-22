@@ -826,7 +826,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
   //svg arrow for Rotterdam bar only if on emissions/capita view
   if (geogroup_id === "#barChart_EUCWLatAmerAfrica" &&
-    d3.select("#gdpButton").text() === "per GDP") {
+    d3.select("#gdpButton").text() === "per GDP") {    
     fn_arrow(geogroup_id, "Rotterdam");
   } else if (geogroup_id === "#barChart_USAAsia" && 
     d3.select("#gdpButton").text() === "per capita") {
