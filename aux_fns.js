@@ -126,7 +126,7 @@ function setupData(ghg){
       "Peak hours spent in congestion (INRIX)": inrix_hours,
       "Congestion rank (INRIX)": inrix_rank,
       "congestion level [%] (TomTom)": tomtom_congestion,
-      "Congestion rank (TomTom)": tomtom_rank,
+      "World Rank (TomTom)": tomtom_rank,
       "Congestion change [%] (TomTom)": tomtom_congestion_change,
       "Morning peak increase [%] (TomTom)": tomtom_am_peak,
       "Evening peak increase [%] (TomTom)": tomtom_pm_peak,
@@ -140,8 +140,7 @@ function setupData(ghg){
       "Urban Planning index (IESE)": iese_urban,
       "International Impact index (IESE)": iese_intl,
       "Technology index (IESE)": iese_tech,
-      "Cities in Motion index (IESE)": iese_cimi,
-      "CIMI ranking (IESE)": iese_cimi_rank 
+      "Cities in Motion Index (IESE)": iese_cimi
     };
   })
 
@@ -365,7 +364,9 @@ function fn_updateLegend (attrFlag) {
       if (attrFlag === "diesel price" || attrFlag === "gas price" ||
           attrFlag === "area" || attrFlag === "HDD 15.5C" || attrFlag === "CDD 23C" ||
           attrFlag === "low BUA (2014)" || attrFlag === "high BUA (2014)" ||
-          attrFlag === "low BUA density (2014)" || attrFlag === "measurement year") {
+          attrFlag === "low BUA density (2014)" || attrFlag === "measurement year" ||
+          attrFlag === "Congestion rank (INRIX)" || attrFlag === "World Rank (TomTom)" ||
+          attrFlag === "Cities in Motion Index (IESE)") {
         cb_values.push(dimExtent[0] + idx*delta);
       }
       else if (attrFlag === "low BUA % (2014)" || attrFlag === "high BUA % (2014)") {
@@ -993,7 +994,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
     if (attrFlag === "diesel price" || attrFlag === "gas price") attrText = selectedCity[attrFlag];
     else attrText = attrFlag === "measurement year" ? 
           parseInt(selectedCity[attrFlag]) : 
-          formatComma(parseInt(selectedCity[attrFlag])) + " " + dimUnits[attrFlag];
+          formatComma(parseInt(selectedCity[attrFlag])) + " " + dimUnits[attrFlag];    
     svgCityCard.append("text")
       .attr("transform", function (d) {
           var transy = 70 + 3*delta + 15;

@@ -78,19 +78,16 @@
             <option value="diesel price">diesel price</option>
             <option value="gas price">gas price</option>
             <option value="HDD 15.5C">HDD 15.5C</option>
-            <option value="CDD 23C">CDD 23C</option>            
+            <option value="CDD 23C">CDD 23C</option>
             <option value="low BUA (2014)">low BUA (2014)</option>
             <option value="low BUA % (2014)">low BUA % (2014)</option>
             <option value="low BUA density (2014)">low BUA density (2014)</option>
             <option value="high BUA (2014)">high BUA (2014)</option>
             <option value="high BUA % (2014)">high BUA % (2014)</option>
             <option value="high BUA density (2014)">high BUA density (2014)</option>
-            <!--<option value="Congestion rank (INRIX)">Congestion rank (INRIX)</option>
-            <option value="change in emissions">change in emissions</option>
             <option value="Congestion rank (INRIX)">Congestion rank (INRIX)</option>
-            <option value="Congestion rank (TomTom)">Congestion rank (TomTom)</option>
-            <option value="CIMI ranking (IESE)">CIMI ranking (IESE)</option> 
-            Cities in Motion index (IESE)-->
+            <option value="World Rank (TomTom)">World Rank (TomTom)</option>
+            <option value="Cities in Motion Index (IESE)">Cities in Motion Index (IESE)</option>
           </select>
           <p id="selected-dropdown"></p>
         </div>
@@ -293,8 +290,8 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
     "low BUA (2014)": [0, 1000], "low BUA % (2014)": [0, 100],
     "high BUA (2014)": [0, 2500], "high BUA % (2014)": [0, 100],
     "low BUA density (2014)": [0,1500], "high BUA density (2014)": [0,25000],
-    "Congestion rank (INRIX)": [0,15], "Congestion Index (TomTom)": [0.1, 0.5],
-    "Cities in Motion index (IESE)": [30,100]
+    "Congestion rank (INRIX)": [200,700], "World Rank (TomTom)": [25, 150],
+    "Cities in Motion Index (IESE)": [40,90]
 
   }
 }) //end read tsv

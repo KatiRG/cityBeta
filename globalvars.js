@@ -67,8 +67,9 @@ var choose_colourArray = {
   "high BUA (2014)": ["#EEDAA7","#E6D472","#E79C74","#D45659","#7D4755"],
   "high BUA % (2014)": ["#EEDAA7","#E6D472","#E79C74","#D45659","#7D4755"],
   "high BUA density (2014)": ["#EEDAA7","#E6D472","#E79C74","#D45659","#7D4755"],
-  "Congestion rank (INRIX)": ["#DEFAFB","#745C80","#66463F","#D643D0B","#8C4804"]
-  
+  "Congestion rank (INRIX)": ["#F1F2C4","#F2EA72","#fec44f","#CDAF7B","#634414"],
+  "World Rank (TomTom)": ["#F1F2C4","#F2EA72","#fec44f","#CDAF7B","#634414"],
+  "Cities in Motion Index (IESE)": ["#F1F2C4","#F2EA72","#fec44f","#CDAF7B","#634414"]
 }
 
 var choose_textArray = {
@@ -163,6 +164,9 @@ var dimUnits =  {
   "high BUA % (2014)": "% of total BUA (year 2014)",
   "low BUA density (2014)": "pop/km2 (year 2014)",
   "high BUA density (2014)": "pop/km2 (year 2014)",
+  "Congestion rank (INRIX)": "",
+  "World Rank (TomTom)": "",
+  "Cities in Motion Index (IESE)": "",
   "household size": "",
   "region": "",
   "country": ""
