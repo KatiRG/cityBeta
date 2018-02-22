@@ -791,7 +791,6 @@ function fn_arrow() {
       });
 }
 function fn_arrow_asia() {
-  console.log("fn_arrow_asia: ", lagosEmissionsPerGDP)
   if (d3.select("#reorderButton").text() === "Re-order") {
     //bars sorted by emissions/GDP
     xpair = [449, 458, 537]; ypair = [-55, -55, 265]; //posn of arrow and text pair
@@ -881,14 +880,14 @@ function fn_arrow_asia() {
   }
 }
 function fn_arrow_africa() {
-  console.log("fn_arrow_africa: ", lagosEmissionsPerGDP)
+  
   if (d3.select("#reorderButton").text() === "Re-order") {
     //bars sorted by emissions/GDP
     xpair = [544]; ypair = [-20]; //posn of arrow and text pair
     xtext = [-27]; ytext = [10]; //posn of text
   } else { //bars sorted by emissions/capita
-    xpair = [476]; ypair = [-55]; //posn of arrow and text pair
-    xtext = [-27]; ytext = [10]; //posn of text
+    xpair = [568]; ypair = [-55]; //posn of arrow and text pair
+    xtext = [-18]; ytext = [19]; //posn of text
   }
   emissionText = [lagosEmissionsPerGDP + " kgCO₂/USD"];
 
