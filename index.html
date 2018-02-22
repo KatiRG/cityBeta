@@ -70,13 +70,14 @@
           <select id="d3-dropdown">
             <option value="methodology" selected="selected">Protocol</option>
             <option value="measurement year">measurement year</option>
+            <option value="population">population</option>
             <option value="population density">population density</option>
+            <option value="area">area</option>
             <option value="GDP/capita">GDP/capita</option>
             <option value="diesel price">diesel price</option>
             <option value="gas price">gas price</option>
             <option value="HDD 15.5C">HDD 15.5C</option>
-            <option value="CDD 23C">CDD 23C</option>
-            <option value="area">area</option>
+            <option value="CDD 23C">CDD 23C</option>            
             <option value="low BUA (2014)">low BUA (2014)</option>
             <option value="low BUA % (2014)">low BUA % (2014)</option>
             <option value="low BUA density (2014)">low BUA density (2014)</option>
@@ -277,9 +278,10 @@ d3.select("#reorderButton")
 d3.tsv("data/cityApp_attributes.tsv", function(ghg) {  
   dimExtentDict = {
     "methodology": 
-          d3.extent(ghg, function (d) {return d['MethodNum'];}),
+          d3.extent(ghg, function (d) { return d['MethodNum']; }),
+    "population": [1000, 8000000],          
     "population density": 
-          d3.extent(ghg, function (d) {return +d["pop to use"]/d["area [km2] (external)"];}),
+          d3.extent(ghg, function (d) { return +d["pop to use"]/d["area [km2] (external)"]; }),
     // "GDP/capita" : d3.extent(ghg, function (d) { return +d["GDP-PPP combined"]/d["pop to use"]*Math.pow(10,9);})
     "measurement year": [2005, 2015], 
     "GDP/capita": [1700, 128046],

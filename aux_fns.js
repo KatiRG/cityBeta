@@ -98,12 +98,12 @@ function setupData(ghg){
       "cityLocation": cityLocation,
       "total emissions": totalEmissions,
       "population": popn,
+      "population density": pop_density,
       "area": area,
       "Scope1": scope1,
       "measurement year": measurementYear,
       "per capita": scope1_cap,
-      "per GDP": scope1_gdp,
-      "population density": pop_density,
+      "per GDP": scope1_gdp,      
       "GDP": GDP,
       "GDP/capita": GDP_cap,
       "HDD 15.5C": HDD155C,
@@ -390,14 +390,16 @@ function fn_updateLegend (attrFlag) {
   //tooltip for legend rects  
   var tool_tip = d3.tip()
       .attr("class", function () {
-        if (attrFlag === "population density" || attrFlag === "GDP/capita") {
+        // if (attrFlag === "population density" || attrFlag === "GDP/capita") {
+        if (attrFlag != "methodology") {
           return "d3-tip-deactive";
         }
         else return "d3-tip";
       })
       .offset([-10, 0])
       .html(function (d, i) {
-        if (attrFlag === "population density" || attrFlag === "GDP/capita") {return "";}
+        // if (attrFlag === "population density" || attrFlag === "GDP/capita") {return "";}
+        if (attrFlag != "methodology") {return "";}
         else {
           return "<b>" + Object.keys(protocolDict)[i] + "</b>" + ": "
                      + Object.values(protocolDict)[i];
