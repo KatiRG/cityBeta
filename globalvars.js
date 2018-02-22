@@ -52,6 +52,7 @@ var cb_values = [];
 var choose_colourArray = {
   "methodology": ["#9DD3DF","#C3BBE2","#E35B5D","#EB9F9F","#F18052"],
   "measurement year": ["#D8E6DB","#DBC28F","#CCA26A","#997E68","#6B5344"],
+  "change in emissions": ["#53442F","#BABE98","#DBC28F","#BEC3BC","#E6E8E3"],
   "population density": ["#DED8B6","#F9C869","#5D5061","#2F274C","#6A3058"],
   "population": ["#DED8B6","#F9C869","#5D5061","#2F274C","#6A3058"],
   "GDP/capita": ["#E6D8CB","#E394A7","#9e9ac8","#756bb1","#54278f"],
@@ -71,12 +72,23 @@ var choose_colourArray = {
 }
 
 var choose_textArray = {
-  "methodology": ["GPC","US ICLEI","IPCC","ICLEI","Other"]
-  // "population density": [10,22,33,44,55]
+  "methodology": ["GPC","US ICLEI","IPCC","ICLEI","Other"],
+  "change in emissions": ["+","-","same","1st yr","N/A"]
 }
 
 //------------------------------------------------
-//TOOLTIP TEXT
+//Dictionaries
+
+//Change in emissions
+var emissionsChangeDict = {
+  "Increased": 0,
+  "Decreased": 1,
+  "Stayed the same": 2,
+  "First year of calculation": 3,
+  "N/A": 4
+}
+
+//TOOLTIPS
 var protocolDict = {
   "GPC": "Global Protocol for Community-Scale Greenhouse Gas Emissions Inventories (GPC), (WRI, C40 and ICLEI)",
   "US ICLEI": "U.S. Community Protocol for Accounting and Reporting of Greenhouse Gas Emissions (ICLEI)",
@@ -133,6 +145,7 @@ var regionLabel_dict = {
 var dimUnits =  {
   "methodology": "",
   "measurement year": "year",
+  "change in emissions": "",
   "total emissions": "[tCO₂]",
   "per capita": "[tCO₂/capita]",
   "per GDP": "[kgCO₂/USD]",

@@ -328,7 +328,8 @@ function fn_colour_barChart (attrFlag, attrValue) {
   
   if (attrFlag === "methodology") {//integers from 1-5, no mapping needed
     return colour_methodNum[attrValue];
-  
+  } else if (attrFlag === "change in emissions") {
+    return choose_colourArray[attrFlag][ emissionsChangeDict[attrValue] ];
   } else {
      
     colourmapDim = fn_colourmapDim(attrFlag);
@@ -422,29 +423,32 @@ function fn_updateLegend (attrFlag) {
   d3.select("#barChartLegend")
     .selectAll("text")
     .text(function (i, j) {
-      if (attrFlag === "methodology") {
-        updateText = choose_textArray[attrFlag][j]
-    } else {
-      console.log("cb_values format: ", formatComma(cb_values[j]) )
-
-      if (attrFlag === "diesel price" || attrFlag === "gas price" || attrFlag === "measurement year") {
-        firstValue = cb_values[1];
-        nextValues = cb_values[j];
-      } else if (attrFlag === "low BUA % (2014)" || attrFlag === "high BUA % (2014)") {
-        firstValue = 20;
-        nextValues = cb_values[j-1];
+      if (attrFlag === "methodology" || attrFlag === "change in emissions") {
+        updateText = choose_textArray[attrFlag][j];
+      // } else if (attrFlag === "change in emissions") {
+      //   updateText = Object.keys(emissionsChangeDict)[j];
       } else {
-        firstValue = formatDecimalk(cb_values[1]);
-        nextValues = formatDecimalk(cb_values[j]);
-      }
+        console.log("cb_values format: ", cb_values[j] )
 
-      if (j === 0) updateText = "< " + firstValue;
-      else updateText = "> " + nextValues;      
-    }
+        if (attrFlag === "diesel price" || attrFlag === "gas price" || attrFlag === "measurement year") {
+          firstValue = cb_values[1];
+          nextValues = cb_values[j];
+        } else if (attrFlag === "low BUA % (2014)" || attrFlag === "high BUA % (2014)") {
+          firstValue = 20;
+          nextValues = cb_values[j-1];
+        } else {
+          firstValue = formatDecimalk(cb_values[1]);
+          nextValues = formatDecimalk(cb_values[j]);
+        }
+
+        if (j === 0) updateText = "< " + firstValue;
+        else updateText = "> " + nextValues;
+      }
       return updateText;
     })
     .attr("x", function (d, i) {
       if (attrFlag === "methodology") xpos = [10,63,150,215,284];
+      else if (attrFlag === "change in emissions") xpos = [26,96,147,217,295];
       else if (attrFlag === "population density") xpos = [4,75,147,217,288];
       else if (attrFlag === "GDP/capita") xpos = [7,77,146,216,281];
       else if (attrFlag === "diesel price" || attrFlag === "gas price") xpos = [4,75,145,215,285];
@@ -954,17 +958,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
       })
     .attr("class", "cityCardSubrowInfo")
     .text(function () {
-      if (selectedCity.city === "Albany") return "Not measured";
-     else if (selectedCity.city === "Lancaster" ||
-        selectedCity.city === "Boulder"
-      || selectedCity.city === "San Francisco" || selectedCity.city === "Vancouver"
-      || selectedCity.city === "North Vancouver") return "N/A";
-      else if (selectedCity["change in emissions"] === "") return "N/A";
-    else if (selectedCity["change in emissions"] === "Other") return "N/A";
-    else if (selectedCity["change in emissions"] === "This is our first year of calculation") {
-      return "First year of calculation";
-      }
-      else return selectedCity["change in emissions"];
+      return selectedCity["change in emissions"];
     });
 
   //city info sub-row: Protocol
@@ -986,8 +980,8 @@ function fn_svgCityCard (selectedCity, attrFlag) {
     .text(choose_textArray["methodology"][protocolNum - 1]);
     
   //city info sub-row: attribute selected in dropdown menu
-  if (attrFlag != "methodology") { //methodology already on display
-    var protocolNum = selectedCity["methodology"];
+  if (attrFlag != "methodology" && attrFlag != "change in emissions") { //methodology already on display
+    //var protocolNum = selectedCity["methodology"];
     svgCityCard.append("text")
       .attr("transform", function (d) {
           var transy = 70 + 3*delta;
