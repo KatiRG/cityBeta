@@ -913,7 +913,7 @@ function fn_arrow_africa() {
     var defs = svg.append('svg:defs')
 
     var paths = svg.append('svg:g')
-      .attr('id', 'markers')
+      .attr('id', 'markersLagos')
       .attr('transform', 'translate(' + 42 + ',' + 63 + ')');
 
     //http://tutorials.jenkov.com/svg/marker-element.html
@@ -953,9 +953,9 @@ function fn_arrow_africa() {
           .attr('d', function(d){ return d.path; });
 
     //arrow text
-    d3.select("#markers").append("text").attr("id", "text" + idx);
+    d3.select("#markersLagos").append("text").attr("id", "textLagos");
     //d3.select("#markers").select("text")
-    d3.select("#text" + idx)
+    d3.select("#textLagos")
       .text(emissionText[idx])
       .style("fill", "#565656")
       .attr("transform", function (d) { //adjust arrow proportions
