@@ -140,8 +140,7 @@ function setupData(ghg){
       "Urban Planning index (IESE)": iese_urban,
       "International Impact index (IESE)": iese_intl,
       "Technology index (IESE)": iese_tech,
-      "Cities in Motion index (IESE)": iese_cimi,
-      "CIMI ranking (IESE)": iese_cimi_rank 
+      "Cities in Motion Index (IESE)": iese_cimi
     };
   })
 
@@ -366,7 +365,8 @@ function fn_updateLegend (attrFlag) {
           attrFlag === "area" || attrFlag === "HDD 15.5C" || attrFlag === "CDD 23C" ||
           attrFlag === "low BUA (2014)" || attrFlag === "high BUA (2014)" ||
           attrFlag === "low BUA density (2014)" || attrFlag === "measurement year" ||
-          attrFlag === "Congestion rank (INRIX)" || attrFlag === "World Rank (TomTom)") {
+          attrFlag === "Congestion rank (INRIX)" || attrFlag === "World Rank (TomTom)" ||
+          attrFlag === "Cities in Motion Index (IESE)") {
         cb_values.push(dimExtent[0] + idx*delta);
       }
       else if (attrFlag === "low BUA % (2014)" || attrFlag === "high BUA % (2014)") {
