@@ -831,6 +831,9 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
   } else if (geogroup_name === "groupUSAAsia" && 
     d3.select("#gdpButton").text() === "per capita") {
     fn_arrow_asia();
+  } else if (geogroup_name === "groupEUCWLatAmerAfrica" && 
+    d3.select("#gdpButton").text() === "per capita") {
+    fn_arrow_africa();
   }
 
   //svg chart titles
