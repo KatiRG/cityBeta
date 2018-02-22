@@ -70,6 +70,7 @@
           <select id="d3-dropdown">
             <option value="methodology" selected="selected">Protocol</option>
             <option value="measurement year">measurement year</option>
+            <option value="change in emissions">change in emissions</option>
             <option value="population">population</option>
             <option value="population density">population density</option>
             <option value="area">area</option>
@@ -179,8 +180,7 @@ d3.select("select")
     svgBarChart = d3.select("#" + geogroupArray[0] + " .barSVG")
     svgBarChart.selectAll("rect").attr("fill", function (d) {
       //output the discretized colour according to selected attribute
-      //console.log("d[val]: ", d[attrFlag])
-      return fn_colour_barChart(attrFlag, d[attrFlag]);
+      if (d.city.indexOf("gap") === -1) return fn_colour_barChart(attrFlag, d[attrFlag]);
     });
 
     svgBarChart = d3.select("#" + geogroupArray[1] + " .barSVG")
@@ -279,6 +279,7 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
   dimExtentDict = {
     "methodology": 
           d3.extent(ghg, function (d) { return d['MethodNum']; }),
+    "change in emissions": [1,5],
     "population": [1000, 8000000],          
     "population density": 
           d3.extent(ghg, function (d) { return +d["pop to use"]/d["area [km2] (external)"]; }),

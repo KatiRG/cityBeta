@@ -35,3 +35,11 @@ Chrome and Firefox are experimenting with implementing proposed parts of the SVG
 In this particular case Firefox has implemented the SVG 2 feature but Chrome has not.
 
 You can achieve the same result in browsers that do not support this SVG 2 feature either by replacing the <svg> element by a <g> element or by creating an <svg> child element on the <g> element and putting the transform on the <g> element.
+
+palettes
+--------
+http://www.colourlovers.com/palette/725298/Strawberry_Mousse
+http://www.colourlovers.com/palette/1733501/Evening_Traffic
+http://www.colourlovers.com/palette/2236415/Winter
+http://www.colourlovers.com/palette/1491252/Coal_Barge_at_Sunset
+http://www.colourlovers.com/palette/564375/Photosynthesis
