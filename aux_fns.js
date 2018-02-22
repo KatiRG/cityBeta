@@ -934,7 +934,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
       })
     .attr("class", "cityCardSubrowInfo")
     .text(formatComma(parseInt(selectedCity["Scope1"]/1000)) + 
-        " MtCO₂ (measurment yr " + selectedCity["Measurement Year"] +")");
+        " MtCO₂ (measurment yr " + selectedCity["measurement year"] +")");
 
   //city info sub-row: Emissions Change
   svgCityCard.append("text")
