@@ -717,8 +717,9 @@ function fn_appendRegionalMeans(svg, geogroup_name, this_dim, data, x, y) {
     .on('mouseout', tool_tip.hide); 
 }
 
+//Create arrow + text for off-scale emissions
 function fn_arrow(geogroup_id, city) {//used for Rotterdam (per cap) and Lagos (per GDP)
-  if (city === "Lagos") {
+  if (city[0] === "Lagos") {
     if (d3.select("#reorderButton").text() === "Re-order") {//bars sorted by emissions/GDP          
       xpair = [544]; ypair = [-20]; //posn of arrow and text pair
       xtext = [-27]; ytext = [10]; //posn of text
@@ -727,24 +728,35 @@ function fn_arrow(geogroup_id, city) {//used for Rotterdam (per cap) and Lagos (
       xpair = [568]; ypair = [-55]; //posn of arrow and text pair
       xtext = [-18]; ytext = [19]; //posn of text
     }
-  } else if (city === "Rotterdam") {    
+    emissionText = [lagosEmissionsPerGDP + " kgCO₂/USD"];
+  } else if (city[0] === "Rotterdam") {
       xpair = [-56]; ypair = [-25]; //posn of arrow and text pair    
       xtext = [109]; ytext = [10]; //posn of text
+      emissionText = [rotterdamEmissionsPerCap + " kgCO₂/USD"];
+  } else if (city[0] === "Kaohsiung" && city[1] === "Taoyuan") {
+    if (d3.select("#reorderButton").text() === "Re-order") {
+      //bars sorted by emissions/GDP
+      xpair = [449, 458]; ypair = [-55, -55]; //posn of arrow and text pair
+      xtext = [-27, -27]; ytext = [10, 40]; //posn of text
+    } else { //bars sorted by emissions/capita
+      xpair = [457.4, 476]; ypair = [-55, -55]; //posn of arrow and text pair
+      xtext = [-27, 128]; ytext = [10, -5]; //posn of text
+    }
+    emissionText = [kaohsiungEmissionsPerGDP + " kgCO₂/USD", 
+                    taoyuanEmissionsPerGDP + " kgCO₂/USD"];
+
+  }
+
+  var data = [];
+  for (idx = 0; idx < city.length; idx++) {
+    //define arrow name and path
+    data.push({ id:idx, name:"arrow" + city[idx], path:"M 2,2 L2,11 L10,6 L2,2" });
   }
   
-  emissionText = [(city === "Lagos" ? lagosEmissionsPerGDP : rotterdamEmissionsPerCap)
-               + " kgCO₂/USD"];
-
-  //define arrow name and path
-  var data = [
-  { id: 1, name: 'arrow' + city, path: "M 2,2 L2,11 L10,6 L2,2" }
-  ];
-
-  var cityArray = [city];
-  appendArrowSVG(geogroup_id, cityArray, data, xpair, ypair, xtext, ytext);
+  appendArrowSVG(geogroup_id, data, city);
 
 }
-function appendArrowSVG(geogroup_id, city, data, xpair, ypair, xtext, ytext) {
+function appendArrowSVG(geogroup_id, data, city) {  
   margin = {top: 0, right: 0, bottom: 0, left: 0},
         width = 200 - margin.left - margin.right,
         height = 200 - margin.top - margin.bottom;
@@ -814,32 +826,8 @@ function appendArrowSVG(geogroup_id, city, data, xpair, ypair, xtext, ytext) {
       });
   }
 }
-function fn_arrow_asia(geogroup_id) {//used for Kaohsiung and Taoyuan (per GDP) in Asia
-  var city = ["Kaohsiung", "Taoyuan"];
 
-  if (d3.select("#reorderButton").text() === "Re-order") {
-    //bars sorted by emissions/GDP
-    xpair = [449, 458, 537]; ypair = [-55, -55, 265]; //posn of arrow and text pair
-    xtext = [-27, -27, -40]; ytext = [10, 40, 110]; //posn of text
-  } else { //bars sorted by emissions/capita
-    xpair = [457.4, 476]; ypair = [-55, -55]; //posn of arrow and text pair
-    xtext = [-27, 128]; ytext = [10, -5]; //posn of text
-  }
-  emissionText = [kaohsiungEmissionsPerGDP + " kgCO₂/USD", 
-                  taoyuanEmissionsPerGDP + " kgCO₂/USD",
-                  0.752 + " kgCO₂/USD"];
-
-  //define arrow name and path
-  var data = [
-  { id: 1, name: 'arrow' + city[0], path: "M 2,2 L2,11 L10,6 L2,2" }, //Kaohsiung
-  { id: 2, name: 'arrow' + city[1], path: "M 2,2 L2,11 L10,6 L2,2" } //Taoyuan
-  // { id: 3, name: 'arrow2', path: "M 2,2 L2,11 L10,6 L2,2" } //Lagos
-  ];
-
-  appendArrowSVG(geogroup_id, city, data, xpair, ypair, xtext, ytext);
-  
-}
-
+//Create barChart titles for each geographic region
 function fn_svgHeadings (geogroup_id) {
 
   if (geogroup_id === "#barChart_EUCWLatAmerAfrica") {

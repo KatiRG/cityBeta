@@ -826,14 +826,17 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
 
   //svg arrow for Rotterdam bar only if on emissions/capita view
   if (geogroup_id === "#barChart_EUCWLatAmerAfrica" &&
-    d3.select("#gdpButton").text() === "per GDP") {    
-    fn_arrow(geogroup_id, "Rotterdam");
+    d3.select("#gdpButton").text() === "per GDP") {
+    var city = ["Rotterdam"];
+    fn_arrow(geogroup_id, city);
   } else if (geogroup_id === "#barChart_USAAsia" && 
     d3.select("#gdpButton").text() === "per capita") {
-    fn_arrow_asia(geogroup_id);
+    var city = ["Kaohsiung","Taoyuan"];
+    fn_arrow(geogroup_id, city);
   } else if (geogroup_id === "#barChart_EUCWLatAmerAfrica" &&
     d3.select("#gdpButton").text() === "per capita") {
-    fn_arrow(geogroup_id, "Lagos");
+    var city = ["Lagos"];
+    fn_arrow(geogroup_id, city);
   }
 
   //svg chart titles
