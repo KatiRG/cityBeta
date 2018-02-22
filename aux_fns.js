@@ -740,9 +740,14 @@ function fn_arrow(geogroup_id, city) {//used for Rotterdam (per cap) and Lagos (
   { id: 1, name: 'arrow' + city, path: "M 2,2 L2,11 L10,6 L2,2" }
   ];
 
+  var cityArray = [city];
+  appendArrowSVG(geogroup_id, cityArray, data, xpair, ypair, xtext, ytext);
+
+}
+function appendArrowSVG(geogroup_id, city, data, xpair, ypair, xtext, ytext) {
   margin = {top: 0, right: 0, bottom: 0, left: 0},
-      width = 200 - margin.left - margin.right,
-      height = 200 - margin.top - margin.bottom;
+        width = 200 - margin.left - margin.right,
+        height = 200 - margin.top - margin.bottom;
 
   for (idx = 0; idx < data.length; idx++) {
     svg = d3.select(geogroup_id).select(".barSVG")
@@ -756,7 +761,7 @@ function fn_arrow(geogroup_id, city) {//used for Rotterdam (per cap) and Lagos (
     var defs = svg.append('svg:defs')
 
     var paths = svg.append('svg:g')
-      .attr('id', 'markers' + city)
+      .attr('id', 'markers' + city[idx])
       .attr('transform', 'translate(' + 42 + ',' + 63 + ')');
 
     //http://tutorials.jenkov.com/svg/marker-element.html
@@ -775,7 +780,7 @@ function fn_arrow(geogroup_id, city) {//used for Rotterdam (per cap) and Lagos (
           .attr('d', function(d){ return d.path; })
           .attr('fill', function(d,i) { return "#565656"; });
 
-    ypath = [50]; //arrow length
+    ypath = [50, 80]; //arrow length
     var path = paths.selectAll('path')
       .data(data)
       .enter()
@@ -786,8 +791,8 @@ function fn_arrow(geogroup_id, city) {//used for Rotterdam (per cap) and Lagos (
         .attr('stroke', function(d,i) { return "#565656"; })
         .attr('stroke-width', 1)
         .attr('stroke-linecap', 'round')
-        .attr('marker-start', function(d,i){ return 'url(#marker_stub' + city + ')'; })
-        .attr('marker-end', function(d,i){ return 'url(#marker_arrow' + city  + ')'; })
+        .attr('marker-start', function(d,i){ return 'url(#marker_stub' + city[idx] + ')'; })
+        .attr('marker-end', function(d,i){ return 'url(#marker_arrow' + city[idx]  + ')'; })
         .attr("transform", function (d) { //adjusts arrow proportions
           var xscale = 0.5, yscale = 0.8;         
           return "scale(" + xscale + " " + yscale + ")";          
@@ -796,9 +801,9 @@ function fn_arrow(geogroup_id, city) {//used for Rotterdam (per cap) and Lagos (
           .attr('d', function(d){ return d.path; });
 
     //arrow text
-    d3.select("#markers" + city).append("text").attr("id", "text" + city);
+    d3.select("#markers" + city[idx]).append("text").attr("id", "text" + city[idx]);
    
-    d3.select("#text" + city)
+    d3.select("#text" + city[idx])
       .text(emissionText[idx])
       .style("fill", "#565656")
       .attr("transform", function (d) { //adjust arrow proportions
@@ -806,10 +811,12 @@ function fn_arrow(geogroup_id, city) {//used for Rotterdam (per cap) and Lagos (
           
           return "scale(" + xscale + " " + yscale + ")" + 
                 "translate(" + xtext[idx] + " " + ytext[idx] + ")" ;       
-        });
+      });
   }
 }
-function fn_arrow_asia() {//used for Kaohsiung and Taoyuan (per GDP) in Asia
+function fn_arrow_asia(geogroup_id) {//used for Kaohsiung and Taoyuan (per GDP) in Asia
+  var city = ["Kaohsiung", "Taoyuan"];
+
   if (d3.select("#reorderButton").text() === "Re-order") {
     //bars sorted by emissions/GDP
     xpair = [449, 458, 537]; ypair = [-55, -55, 265]; //posn of arrow and text pair
@@ -824,167 +831,14 @@ function fn_arrow_asia() {//used for Kaohsiung and Taoyuan (per GDP) in Asia
 
   //define arrow name and path
   var data = [
-  { id: 1, name: 'arrow0', path: "M 2,2 L2,11 L10,6 L2,2" }, //Kaohsiung
-  { id: 2, name: 'arrow1', path: "M 2,2 L2,11 L10,6 L2,2" }//, //Taoyuan
+  { id: 1, name: 'arrow' + city[0], path: "M 2,2 L2,11 L10,6 L2,2" }, //Kaohsiung
+  { id: 2, name: 'arrow' + city[1], path: "M 2,2 L2,11 L10,6 L2,2" } //Taoyuan
   // { id: 3, name: 'arrow2', path: "M 2,2 L2,11 L10,6 L2,2" } //Lagos
   ];
 
-  margin = {top: 0, right: 0, bottom: 0, left: 0},
-      width = 200 - margin.left - margin.right,
-      height = 200 - margin.top - margin.bottom;
+  appendArrowSVG(geogroup_id, city, data, xpair, ypair, xtext, ytext);
   
-  for (idx = 0; idx < data.length; idx++) {
-    svg = d3.select("#barChart_USAAsia").select(".barSVG")
-             .append("g")
-             .attr('height', height + margin.top + margin.bottom)
-            .attr("transform", "translate(" + xpair[idx] + "," + ypair[idx] + ")") //posn of arrow and text
-             .append("svg")
-            .attr('width', width + margin.left + margin.right);
-            
-
-    var defs = svg.append('svg:defs')
-
-    var paths = svg.append('svg:g')
-      .attr('id', 'markers')
-      .attr('transform', 'translate(' + 42 + ',' + 63 + ')');
-
-    //http://tutorials.jenkov.com/svg/marker-element.html
-    var marker = defs.selectAll('marker')
-      .data(data)
-      .enter()
-      .append('svg:marker')
-        .attr('id', function(d){ return 'marker_' + d.name})
-        .attr('markerHeight', 13)
-        .attr('markerWidth', 13)
-        .attr('markerUnits', 'strokeWidth')
-        .attr('orient', 'auto')
-        .attr('refX', 2)
-        .attr('refY', 6)
-        .append('svg:path')
-          .attr('d', function(d){ return d.path; })
-          .attr('fill', function(d,i) { return "#565656"; });
-
-    ypath = [50,80, 50]; //arrow length
-    var path = paths.selectAll('path')
-      .data(data)
-      .enter()
-      .append('svg:path')
-        .attr('d', function (d, i){          
-          return 'M 100,' + 0 + ' V ' + ypath[idx] + ',' + 0 + '';
-        })
-        .attr('stroke', function(d,i) { return "#565656"; })
-        .attr('stroke-width', 1)
-        .attr('stroke-linecap', 'round')
-        .attr('marker-start', function(d,i){ return 'url(#marker_stub' + i + ')'; })
-        .attr('marker-end', function(d,i){ return 'url(#marker_arrow' + i  + ')'; })
-        .attr("transform", function (d) { //adjusts arrow proportions
-          var xscale = 0.5, yscale = 0.8;         
-          return "scale(" + xscale + " " + yscale + ")";          
-        })
-        .append('svg:path')
-          .attr('d', function(d){ return d.path; });
-
-    //arrow text
-    d3.select("#markers").append("text").attr("id", "text" + idx);
-    //d3.select("#markers").select("text")
-    d3.select("#text" + idx)
-      .text(emissionText[idx])
-      .style("fill", "#565656")
-      .attr("transform", function (d) { //adjust arrow proportions
-          var xscale = 0.5, yscale = 1.9;         
-          
-          return "scale(" + xscale + " " + yscale + ")" + 
-                "translate(" + xtext[idx] + " " + ytext[idx] + ")" ;       
-        });
-  }
 }
-function fn_arrow_africa() {
-  
-  if (d3.select("#reorderButton").text() === "Re-order") {
-    //bars sorted by emissions/GDP
-    xpair = [544]; ypair = [-20]; //posn of arrow and text pair
-    xtext = [-27]; ytext = [10]; //posn of text
-  } else { //bars sorted by emissions/capita
-    xpair = [568]; ypair = [-55]; //posn of arrow and text pair
-    xtext = [-18]; ytext = [19]; //posn of text
-  }
-  emissionText = [lagosEmissionsPerGDP + " kgCO₂/USD"];
-
-  //define arrow name and path
-  var data = [
-  { id: 1, name: 'arrowLagos', path: "M 2,2 L2,11 L10,6 L2,2" } //Lagos
-  ];
-
-  margin = {top: 0, right: 0, bottom: 0, left: 0},
-      width = 200 - margin.left - margin.right,
-      height = 200 - margin.top - margin.bottom;
-
-  for (idx = 0; idx < data.length; idx++) {
-    svg = d3.select("#barChart_EUCWLatAmerAfrica").select(".barSVG")
-             .append("g")
-             .attr('height', height + margin.top + margin.bottom)
-            .attr("transform", "translate(" + xpair[idx] + "," + ypair[idx] + ")") //posn of arrow and text
-             .append("svg")
-            .attr('width', width + margin.left + margin.right);
-            
-
-    var defs = svg.append('svg:defs')
-
-    var paths = svg.append('svg:g')
-      .attr('id', 'markersLagos')
-      .attr('transform', 'translate(' + 42 + ',' + 63 + ')');
-
-    //http://tutorials.jenkov.com/svg/marker-element.html
-    var marker = defs.selectAll('marker')
-      .data(data)
-      .enter()
-      .append('svg:marker')
-        .attr('id', function(d){ return 'marker_' + d.name})
-        .attr('markerHeight', 13)
-        .attr('markerWidth', 13)
-        .attr('markerUnits', 'strokeWidth')
-        .attr('orient', 'auto')
-        .attr('refX', 2)
-        .attr('refY', 6)
-        .append('svg:path')
-          .attr('d', function(d){ return d.path; })
-          .attr('fill', function(d,i) { return "#565656"; });
-
-    ypath = [50,80, 50]; //arrow length
-    var path = paths.selectAll('path')
-      .data(data)
-      .enter()
-      .append('svg:path')
-        .attr('d', function (d, i){          
-          return 'M 100,' + 0 + ' V ' + ypath[idx] + ',' + 0 + '';
-        })
-        .attr('stroke', function(d,i) { return "#565656"; })
-        .attr('stroke-width', 1)
-        .attr('stroke-linecap', 'round')
-        .attr('marker-start', function(d,i){ return 'url(#marker_stub' + i + ')'; })
-        .attr('marker-end', function(d,i){ return 'url(#marker_arrow' + i  + ')'; })
-        .attr("transform", function (d) { //adjusts arrow proportions
-          var xscale = 0.5, yscale = 0.8;         
-          return "scale(" + xscale + " " + yscale + ")";          
-        })
-        .append('svg:path')
-          .attr('d', function(d){ return d.path; });
-
-    //arrow text
-    d3.select("#markersLagos").append("text").attr("id", "textLagos");
-    //d3.select("#markers").select("text")
-    d3.select("#textLagos")
-      .text(emissionText[idx])
-      .style("fill", "#565656")
-      .attr("transform", function (d) { //adjust arrow proportions
-          var xscale = 0.5, yscale = 1.9;         
-          
-          return "scale(" + xscale + " " + yscale + ")" + 
-                "translate(" + xtext[idx] + " " + ytext[idx] + ")" ;       
-        });
-  }
-}
-
 
 function fn_svgHeadings (geogroup_id) {
 

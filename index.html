@@ -830,7 +830,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
     fn_arrow(geogroup_id, "Rotterdam");
   } else if (geogroup_id === "#barChart_USAAsia" && 
     d3.select("#gdpButton").text() === "per capita") {
-    fn_arrow_asia();
+    fn_arrow_asia(geogroup_id);
   } else if (geogroup_id === "#barChart_EUCWLatAmerAfrica" &&
     d3.select("#gdpButton").text() === "per capita") {
     fn_arrow(geogroup_id, "Lagos");
