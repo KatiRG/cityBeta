@@ -1,5 +1,6 @@
 var formatDecimalSci = d3.format(".3n");
-var formatDecimalk = d3.format(".1s"); //.2s //d3.format(".3n");
+var formatDecimalk = d3.format(".2s"); //.2s //d3.format(".3n");
+var formatComma = d3.format(",");
 
 //------------------------------------------------
 //Technical labels
@@ -12,6 +13,13 @@ var attrFlag = "methodology"; //attribute to be used to fill barChart bars. Defa
 var cityOrder_row1, cityOrder_row2; //save orignal city order
 //------------------------------------------------
 //COLOURS
+
+//map
+//http://www.colourlovers.com/palette/1072/rainforest
+//http://www.colourlovers.com/palette/659861/Snowy_Pine_Forest
+var countryColour = "#18471B"; //"#172214"; //#2B292E", #000, "#d9d9d9"
+var countryHighlightColour = "#BEC3BC";//"#718351"; //"#d3d3d3";  "#44522F"; "#718351"
+
 //barChart labels + highlight colour
 var colour_labels = "#636363";
 var colour_labelsHighlight = "#3d3d3d";
@@ -43,12 +51,27 @@ var cb_values = [];
 
 var choose_colourArray = {
   "methodology": ["#9DD3DF","#C3BBE2","#E35B5D","#EB9F9F","#F18052"],
-  "population density": ["#DED8B6","#F9C869","#5D5061","#2F274C","#6A3058"]
+  "measurement year": ["#D8E6DB","#DBC28F","#CCA26A","#997E68","#6B5344"],
+  "population density": ["#DED8B6","#F9C869","#5D5061","#2F274C","#6A3058"],
+  "GDP/capita": ["#E6D8CB","#E394A7","#9e9ac8","#756bb1","#54278f"],
+  "diesel price": ["#F1F2C4","#F2EA72","#fec44f","#CDAF7B","#634414"],
+  "gas price": ["#F1F2C4","#F2EA72","#fec44f","#CDAF7B","#634414"],
+  "HDD 15.5C": ["#e3dded", "#c8bcdc","#74a9cf","#26ADE4","#034e7b"],
+  "CDD 23C": ["#E1F5C4", "#ffeda0","#F9D423","#FC913A","#FF4E50"],
+  "area": ["#EDDAD0","#D5DED9","#99B2B7","#8DA597","#948C75"],
+  "low BUA (2014)": ["#d7b5d8","#CD7CB7","#885F9A","#B65873","#5F323F"],
+  "low BUA % (2014)": ["#d7b5d8","#CD7CB7","#885F9A","#B65873","#5F323F"],
+  "low BUA density (2014)": ["#d7b5d8","#CD7CB7","#885F9A","#B65873","#5F323F"],
+  "high BUA (2014)": ["#EEDAA7","#E6D472","#E79C74","#D45659","#7D4755"],
+  "high BUA % (2014)": ["#EEDAA7","#E6D472","#E79C74","#D45659","#7D4755"],
+  "high BUA density (2014)": ["#EEDAA7","#E6D472","#E79C74","#D45659","#7D4755"],
+  "Congestion rank (INRIX)": ["#DEFAFB","#745C80","#66463F","#D643D0B","#8C4804"]
+  
 }
 
 var choose_textArray = {
-  "methodology": ["GPC","US ICLEI","IPCC","ICLEI","Other"],
-  "population density": [10,22,33,44,55]
+  "methodology": ["GPC","US ICLEI","IPCC","ICLEI","Other"]
+  // "population density": [10,22,33,44,55]
 }
 
 //------------------------------------------------
@@ -103,16 +126,24 @@ var regionLabel_dict = {
 
 var dimUnits =  {
   "methodology": "",
-  "total emissions": "[tCO2]",
-  "per capita": "[tCO2/capita]",
-  "per GDP": "[kgCO2/USD]",
+  "measurement year": "year",
+  "total emissions": "[tCO₂]",
+  "per capita": "[tCO₂/capita]",
+  "per GDP": "[kgCO₂/USD]",
   "population": "capita",
   "population density": "per km2",
-  "GDP-PPP/capita": "(PPP) [USD/capita]",
+  "GDP/capita": "(PPP) [$BN/capita]",
+  "area": "km2",
   "diesel price": "USD",
   "gas price": "USD",
   "HDD 15.5C": "[deg C x days]",
   "CDD 23C": "[deg C x days]",
+  "low BUA (2014)": "km2 (year 2014)",
+  "high BUA (2014)": "km2 (year 2014)",
+  "low BUA % (2014)": "% of total BUA (year 2014)",
+  "high BUA % (2014)": "% of total BUA (year 2014)",
+  "low BUA density (2014)": "pop/km2 (year 2014)",
+  "high BUA density (2014)": "pop/km2 (year 2014)",
   "household size": "",
   "region": "",
   "country": ""

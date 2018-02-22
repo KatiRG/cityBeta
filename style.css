@@ -9,7 +9,7 @@ body {
 
 [class*="col-"], footer {
   /*background-color: lightgreen; */
-  border: 2px solid white; 
+  border: 2px solid white;
   border-radius: 6px;
   line-height: 40px;
   text-align: center;
@@ -28,6 +28,12 @@ ul {
 /*    margin-top: 80px;*/
 }
 
+.headings {
+  font-size: 20px;
+  padding-left: 20px;
+  color: #565656;
+  text-align: left;
+}
 
 /*--------------------------*/
 /*$(window).width();*/
@@ -74,19 +80,19 @@ ul {
 /*--------------------------*/
 /*buttons*/
 .nytg-sort li {
-	background: none repeat scroll 0 0 #f9f9f9;
-	border-bottom: 1px solid #ccc;
-	border-left: 1px solid #ccc;
-	border-right: 1px solid #ccc;
-	border-top: 1px solid #ccc;
-	color: #555;
+  background: none repeat scroll 0 0 #f9f9f9;
+  border-bottom: 1px solid #ccc;
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  color: #555;
   font-weight: bold;
-	cursor: pointer;
-	float: left;
-	font-size: 12px;
-	margin: 0;
-	padding: 0px 4px;
-	border-radius: 4px 4px 4px 4px;
+  cursor: pointer;
+  float: left;
+  font-size: 12px;
+  margin: 0;
+  padding: 0px 4px;
+  border-radius: 4px 4px 4px 4px;
 }
 /*drop-down menu*/
 .dropbtn {
@@ -145,23 +151,26 @@ ul {
 /*tooltips */
 /*Used for barChart protocol legend rects */
 .d3-tip {
-    /*line-height: 1.2; */
-    height: 50px;
-    width: 350px;
-    padding: 6px;
-    background: #F7F6E4;
-    color: #555;
-    border-radius: 4px;
-    font-size: 12px;
+  /*line-height: 1.2; */
+  height: 50px;
+  width: 350px;
+  padding: 6px;
+  background: #F7F6E4;
+  color: #555;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.d3-tip-deactive {
+  background: transparent;
 }
 .d3-tip-line {
-    height: 35px;
-    width: 111px;
-    padding: 6px;
-    background: #555;
-    color: #F7F6E4;
-    border-radius: 4px;
-    font-size: 12px;
+  height: 35px;
+  width: 111px;
+  padding: 6px;
+  background: #555;
+  color: #F7F6E4;
+  border-radius: 4px;
+  font-size: 12px;
 }
 /*Used for barChart rects */
 div.tooltip-bar {
@@ -178,9 +187,16 @@ div.tooltip-bar {
 }
 
 /*Used for toggle buttons */
+/*@-moz-document url-prefix()
+{
+div.tooltip {top: -440px; left: 1210px;}
+div.tooltip {top: 536px; left: 1130px;}
+}*/
 div.tooltip {
-  position: relative;
+  position: absolute;
   text-align: left;
+  top: 536px;
+  left: 1030px;
   width: 150px;
   height: 60px;
   padding: 6px;
@@ -225,7 +241,7 @@ div.rtooltip {
 /* map */
 #sphere {
   padding-top: 0px;
-  fill: #e6f3f7;   /*//#e6f3f7"); // "#add8e6" //"#fcfcef" */
+  fill: #F4F7F7;  /* #F2F4F2; #e6f3f7;   //#e6f3f7"); // "#add8e6" //"#fcfcef" */
 }
 /* #map {
   padding-top: 40px;
@@ -264,20 +280,23 @@ div.rtooltip {
 }
 #emissionsToggleButton {
   position: absolute;
-  left: 690px; 
+  left: 600px; 
   top: 0px;
 }
-#barChartCaption {
-  font-size: 22px;
-  padding-left: 335px;
-  color: #565656;
-  text-align: left;
+#reorderButton {
+  position: absolute;
+  left: 750px; 
+  top: 0px;
 }
 #barChartLegendLabel {
+  position: relative;
+  left: 160px;
   color: #565656;
   text-align: left;
 }
 #barChartLegend {
+  position: relative;
+  left: 0px;
   stroke: gray;
 }
 #barChartLegendUnits {
@@ -299,6 +318,11 @@ div.rtooltip {
 }
 .bar {
   /*stroke: gray;*/
+}
+.zerobar { /*bar where d[attrFlag] is zero */
+  stroke: #565656;
+  /*stroke-width: 0.5;*/
+  opacity: 0.3;
 }
 .axis {
   font: 14px sans-serif;
@@ -339,7 +363,35 @@ div.rtooltip {
   margin-top: 4px;
   margin-left: 819px;*/
 }
+.cityCardName {
+  font-weight: bold;
+  font-size: 17px;
+  stroke: none;
+  fill: #fff;
+  background: rgba(76, 135, 181, 0.7);
+  text-shadow: 0 0 5px #333333;
+  text-align: right;
+}
+.cityCardSubrowTitle {
+  font-weight: 700;
+  font-size: 11px;
+  stroke: none;
+  fill: #ffaa1b;
+  text-shadow: 0 0 5px #333333;
+  text-transform: uppercase;
+  text-align: right;
+}
+.cityCardSubrowInfo {
+  font-size: 11px;
+  stroke: none;
+  fill: #fff;
+  text-align: right;
+}
 
+
+
+ 
+    .style("text-transform", "uppercase")
 
 
 #ghgStory {

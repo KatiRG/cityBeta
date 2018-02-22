@@ -38,55 +38,60 @@
 
     <!-- header row -->
     <div class="row">
-      <div class="col-lg-12">entete</div>
+      <div class="col-lg-12 headings" style="text-align: center">
+        Cities that reported emissions to the Carbon Disclosure Project
+      </div>
     </div> <!-- ./header row -->
 
-    <!-- info text row -->
-    <div class="row">
-      <div class="col-lg-6" id="infoText" style="text-align: left;">
-        Hover over a city on the world map to the corresponding city <a href="http://www.ghgprotocol.org/sites/default/files/ghgp/standards/GHGP_GPC_0.
-pdf" target="_blank"> emissions </a> data, either per capita (default) or per unit of Gross Domestic Product at Purchasing Power Parity rates. Note that the city source dataset does not have the same number of cities in different
-      </div>
-      <div class="col-lg-6" id="infoText" style="text-align: left;">
-       regions of the world. We present here city emissions grouped per continent, although different lifestyles and energy use make city emissions strongly different within a continent.
-      </div>
-      <ul class="nytg-sort" style='position: absolute; left: 1250px; top: 119px;'>
-        <li id="resetButton">Reset</li>
-      </ul>
 
-      <div class="col-lg-4" ></div>
-    </div> <!-- ./row 1 -->
-  
     <!-- row for map and city card -->
+    <div class="row" id="map"> </div>
+  
+
+    <!-- row for barChart title and toggle buttons -->
     <div class="row">
       <div class="col-lg-12">
-        <div id="map"></div>
+        <div id="barChartCaption" class="headings">Per capita emissions [tCO₂/capita]</div>
 
+        <ul class="nytg-sort" id="emissionsToggleButton">
+          <li id="gdpButton">per GDP</li>
+        </ul>
+        <ul class="nytg-sort">
+          <li id="reorderButton" style="display: none;">Re-order</li>
+        </ul>
+        
       </div>
+    </div> <!-- .end row -->
 
-    </div> <!-- ./map and city card row -->
-
-    <!-- row 3 -->
     <div class="row">
 
-      <div class="col-lg-3">
-          <div id="barChartLegendLabel">Colour bars by: 
-            <select id="d3-dropdown">
-              <option value="methodology" selected="selected">Protocol</option>
-              <option value="population density">population density</option>
-              <!--<option value="gas price">gas price</option>
-              <option value="diesel price">diesel price</option>
-              <option value="HDD 15.5C">HDD 15.5C</option>
-              <option value="CDD 23C">CDD 23C</option>
-              <option value="change in emissions">change in emissions</option>
-              <option value="low BUA %">low BUA % (2014)</option>
-              <option value="high BUA %">high BUA % (2014)</option>
-              <option value="Congestion rank (INRIX)">Congestion rank (INRIX)</option>
-              <option value="Congestion rank (TomTom)">Congestion rank (TomTom)</option>
-              <option value="CIMI ranking (IESE)">CIMI ranking (IESE)</option> -->
-            </select>
-            <p id="selected-dropdown"></p>
-          </div>
+      <div class="col-lg-5">
+        <div id="barChartLegendLabel">Colour bars by: 
+          <select id="d3-dropdown">
+            <option value="methodology" selected="selected">Protocol</option>
+            <option value="measurement year">measurement year</option>
+            <option value="population density">population density</option>
+            <option value="GDP/capita">GDP/capita</option>
+            <option value="diesel price">diesel price</option>
+            <option value="gas price">gas price</option>
+            <option value="HDD 15.5C">HDD 15.5C</option>
+            <option value="CDD 23C">CDD 23C</option>
+            <option value="area">area</option>
+            <option value="low BUA (2014)">low BUA (2014)</option>
+            <option value="low BUA % (2014)">low BUA % (2014)</option>
+            <option value="low BUA density (2014)">low BUA density (2014)</option>
+            <option value="high BUA (2014)">high BUA (2014)</option>
+            <option value="high BUA % (2014)">high BUA % (2014)</option>
+            <option value="high BUA density (2014)">high BUA density (2014)</option>
+            <!--<option value="Congestion rank (INRIX)">Congestion rank (INRIX)</option>
+            <option value="change in emissions">change in emissions</option>
+            <option value="Congestion rank (INRIX)">Congestion rank (INRIX)</option>
+            <option value="Congestion rank (TomTom)">Congestion rank (TomTom)</option>
+            <option value="CIMI ranking (IESE)">CIMI ranking (IESE)</option> 
+            Cities in Motion index (IESE)-->
+          </select>
+          <p id="selected-dropdown"></p>
+        </div>
       </div>
 
       <div class="col-lg-4">
@@ -94,59 +99,33 @@ pdf" target="_blank"> emissions </a> data, either per capita (default) or per un
            <svg></svg>
         </div>
       </div>
-      <div class="col-lg-3" id="barChartLegendUnits">
-      </div>
+      <div class="col-lg-2" id="barChartLegendUnits"></div>
+    </div> <!-- .end row -->
 
-    </div> <!-- ./row 3 -->
-
-    <!-- row 4 -->
     <div class="row">
-
       <div class="col-lg-12">
-        <!--barChart legend-->
-        <div class="row">
-          <div id="barChartCaption">Per capita emissions [tCO2/capita]</div>
-          <ul class="nytg-sort" id="emissionsToggleButton">
-              <li id="gdpButton">per GDP</li>
-          </ul>
-          <ul class="nytg-sort" style='position: absolute; left: 773px; top: 0px;'>
-              <li id="reorderButton" style="display: none;">Re-order</li>
-          </ul>
+        <div id="barChart_USAAsia"></div>
+      </div>
+    </div> <!-- .end row -->
 
-          </div>
+    <div class="row">
+      <div class="col-lg-12">
+        <!--barChart sub-row-->
+        <div class="row">
+          <div id="barChart_EUCWLatAmerAfrica"></div>
+        </div>
         
-
-        <!--barChart sub-rows-->
-        <div class="row">
-          
-      <!--       <div class="col-lg-2 .barChartTitle" 
-                 style='position: relative; left: 67px; text-align: left; border:none; 
-                        font-weight:bold; color: white;'>
-                 USA
-            </div> -->
-            
-            <!-- barChart svg -->
-            <div id="barChart_USAAsia"></div>
-         
-        </div> <!-- ./sub-row 1 -->
-
-        <div class="row">        
-          <!-- barChart svg -->
-          <div id="barChart_EUCWLatAmerAfrica"></div>   
-        </div> <!-- ./sub-row 2 -->
-
+        <!--barChart sub-row-->
         <div class="row" style="position:relative; top:10px;">city</div>
-
-      </div> <!-- ./col-lg-12 -->
-
       
-    </div> <!-- ./row 4-->
-
+      </div> <!-- .end col -->
+    </div> <!-- .end row -->
+    
     <footer class="row">
-      Pied de page
+      logos
     </footer>
 
-</div>  <!-- ./container -->
+  </div>  <!-- ./container -->
 
 
 <script>
@@ -186,15 +165,20 @@ window.onresize = function() {
 // Buttons
 // ----------------------------------------------------
 //Attribute dropdown button
+//Default to "Protocol"
+d3.select("#d3-dropdown").node().value = "methodology";
+
 d3.select("select")
   .on("change",function(d){
     attrFlag = d3.select("#d3-dropdown").node().value;
+    console.log("attrFlag: ", attrFlag)
 
     var geogroupArray = ["barChart_USAAsia", "barChart_EUCWLatAmerAfrica"];
 
     svgBarChart = d3.select("#" + geogroupArray[0] + " .barSVG")
     svgBarChart.selectAll("rect").attr("fill", function (d) {
       //output the discretized colour according to selected attribute
+      //console.log("d[val]: ", d[attrFlag])
       return fn_colour_barChart(attrFlag, d[attrFlag]);
     });
 
@@ -219,12 +203,11 @@ d3.select("#gdpButton")
                       label_dataPerCap : label_dataPerGDP;
 
     if (buttonText === label_dataPerGDP) {
-      d3.select("#barChartCaption").text("Per capita emissions " + dimUnits[label_dataPerCap])
-        .style("padding-left", "335px");
+      d3.select("#barChartCaption").text("Per capita emissions " + dimUnits[label_dataPerCap]);
+        
     } else {
       d3.select("#barChartCaption").text("Emissions per unit of Gross Domestic Product " 
-        + dimUnits[label_dataPerGDP])
-        .style("padding-left", "123px");
+        + dimUnits[label_dataPerGDP]);
     }
 
     d3.select(this).text(buttonText);
@@ -243,8 +226,10 @@ d3.select("#gdpButton")
 
     div.style("opacity", 1); //tooltip
     div.html(function () { return dictText; })
-       .style("left", 820 + "px")
-       .style("top", -940 + "px");
+      .style("top", (d3.event.pageY + 16) + "px")
+      .style("left", (d3.event.pageX + 16) + "px");
+       // .style("left", 1140 + "px")
+       // .style("top", -440 + "px");
   })
   .on("mouseout", function () { div.style("opacity", 0); });
 
@@ -266,11 +251,13 @@ d3.select("#reorderButton")
   .on("mouseover", function () {
     var tooltip_text = (d3.select(this).text() === "Re-order") ? 
                     "Re-order cities according to decreasing emissions <b>per capita</b>." :
-                    "Back to original order in decreasing emissions per GDP-PPP."
+                    "Back to original order (decreasing emissions per GDP-PPP)."
     div.style("opacity", 1);
     div.html(tooltip_text)
-        .style("left", 900 + "px")
-        .style("top", -940 + "px");
+      .style("top", (d3.event.pageY + 16) + "px")
+      .style("left", (d3.event.pageX + 16) + "px");
+        //.style("left", 1210 + "px");
+        // .style("top", -440 + "px");
   })
   .on("mouseout", function () { div.style("opacity", 0); });
 
@@ -289,14 +276,31 @@ d3.select("#reorderButton")
 //Find data range extent for each dim (to be used to discretize into colour values)
 d3.tsv("data/cityApp_attributes.tsv", function(ghg) {  
   dimExtentDict = {
-    "methodology": d3.extent(ghg, function (d) {return d['MethodNum'];}),
-    "population density": d3.extent(ghg, function (d) {return +d["pop to use"]/d["area [km2] (external)"];})
+    "methodology": 
+          d3.extent(ghg, function (d) {return d['MethodNum'];}),
+    "population density": 
+          d3.extent(ghg, function (d) {return +d["pop to use"]/d["area [km2] (external)"];}),
+    // "GDP/capita" : d3.extent(ghg, function (d) { return +d["GDP-PPP combined"]/d["pop to use"]*Math.pow(10,9);})
+    "measurement year": [2005, 2015], 
+    "GDP/capita": [1700, 128046],
+    "diesel price": [0.5, 1.8],
+    "gas price": [0.5, 1.8],
+    "HDD 15.5C": [0, 3000], "CDD 23C": [0, 1000], //FMB
+    "area": [0, 2000], 
+    "low BUA (2014)": [0, 1000], "low BUA % (2014)": [0, 100],
+    "high BUA (2014)": [0, 2500], "high BUA % (2014)": [0, 100],
+    "low BUA density (2014)": [0,1500], "high BUA density (2014)": [0,25000],
+    "Congestion rank (INRIX)": [0,15], "Congestion Index (TomTom)": [0.1, 0.5],
+    "Cities in Motion index (IESE)": [30,100]
+
   }
 }) //end read tsv
-//console.log("dimExtentDict: ", dimExtentDict["methodology"])
+console.log("attrFlag: ", attrFlag)
+// console.log("dimExtentDict: ", dimExtentDict[attrFlag])
+
 
 //barChart legends
-fn_appendColourBar();
+// fn_barChartLegend();
 //fn_appendRegionalLine();
 
 // d3.csv("data/Creutzig2014_dataset_wb.csv", function(ghg) {
@@ -307,6 +311,7 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
   drawMap();
   emissionsBarChart("groupUSAAsia", "#barChart_USAAsia");
   emissionsBarChart("groupEUCWLatAmerAfrica", "#barChart_EUCWLatAmerAfrica");
+  fn_barChartLegend();
 
 });
 // //Customize some city names
@@ -318,8 +323,11 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
 
 // d3js World Map
 //------------------
-var width = 1000,
-    height = 360; //cut off antarctica  //400;
+var margin = {top: 0, right: 120, bottom: 0, left: 0};
+var width = 1325 - margin.left - margin.right,
+    height = 270 - margin.top - margin.bottom;
+// var width = 1000,
+//     height = 360; //cut off antarctica  //400;
 
 function drawMap() {
   // Map reset button
@@ -345,7 +353,7 @@ function drawMap() {
 
   var projection = options[0]
               .projection
-              .scale(171) //141
+              .scale(151) //141, 171
               .translate([width/1.655, height/1.67  ]);  //1.633, 1.69
 
   var path = d3.geoPath()
@@ -379,10 +387,10 @@ function drawMap() {
       .attr("class", "line")
       .style("stroke", "#555")
       .style("stroke-width", "1.2px")
-      .attr("x1", 85)
-      .attr("y1", 359)
-      .attr("x2", 915)
-      .attr("y2", 359);
+      .attr("x1", 257)
+      .attr("y1", 270)
+      .attr("x2", 1015)
+      .attr("y2", 270);
 
   //draw top line of map
   svg.append("g").selectAll("line")
@@ -391,16 +399,16 @@ function drawMap() {
       .attr("class", "line")
       .style("stroke", "#555")
       .style("stroke-width", "1.2px")
-      .attr("x1", 163)
+      .attr("x1", 301)
       .attr("y1", 0)
-      .attr("x2", 839)
+      .attr("x2", 970)
       .attr("y2", 0);      
 
  
   d3.json("geojson/world_countries.json", function(error, world) {
     if (error) throw error;
    
-    d3.json("geojson/cities_edited.geojson", function(error, cities) {
+    d3.json("geojson/cities_edited2.geojson", function(error, cities) {
       if (error) throw error;
 
       //world countries
@@ -414,7 +422,7 @@ function drawMap() {
             mapName = d.properties.name.replace(/\s/g, '_');
             return "map" + mapName;
           })
-          .style("fill", "#2B292E") //#000, "#d9d9d9"
+          .style("fill", countryColour)
           .style('stroke', '#555')  //#555
           .style('stroke-width', 1.5)
           // tooltips
@@ -440,13 +448,19 @@ function drawMap() {
           .data(cities.features)
           .enter().append('path')
           .attr('d', path)
-          .attr("id", function (d, i) {
+          .attr("id", function (d, i) {            
             return "city" + format_idName(d.id);
           })
           .attr("class", "worldcity")
           .style("fill", function (d) {
+            // if (d.id === "Cleveland") console.log("cleveland: ", d)
+            // if (data_GHG.find(x => x.city === d.id)) {
+            //   console.log("x in fill: ", d)
+            //   console.log("x.id in fill: ", d.id)
+            //   console.log("find: ", data_GHG.find(x => x.city === d.id))
+            // }
 
-            if (data_GHG.find(x => x.city === d.id)) {              
+            if (data_GHG.find(x => x.city === d.id)) {
               return regionColourMap[data_GHG.find(x => x.city === d.id).region];
             }
             else return "none";
@@ -467,7 +481,7 @@ function drawMap() {
     }); // ./inner d3.json
   }); // ./outer d3.json
   
-  svg.call(zoom);
+  //svg.call(zoom);
 
   function zoomed() {
   
@@ -493,14 +507,20 @@ function drawMap() {
 } // ./drawMap()
 
 function highlightElements(idName) {
+  // console.log("idName: ", idName)
+
   // clear any previous story first
   d3.select("#ghgStory").text("");
 
   var selectedCity = data_GHG.find(x => x.idName.includes(idName));
-  
+
   //Clear Previous
   //--------------
   resetElements();
+  d3.select("#cityCardg").remove();
+
+  //Display city card
+  fn_svgCityCard (selectedCity, attrFlag);
 
   //Highlight Current
   //-----------------
@@ -508,7 +528,7 @@ function highlightElements(idName) {
     .style("stroke", "#363636"); 
 
   d3.selectAll(".bar:not(#bar" + idName + ")")
-    .style("fill-opacity", 0.1).style("stroke", "#E6E8E3"); 
+    .style("fill-opacity", 0.1);
 
   d3.selectAll(".node:not(#node" + idName + ")")
     .style("fill-opacity", 0.1)
@@ -518,8 +538,13 @@ function highlightElements(idName) {
     .style("fill-opacity", 0.1)
     .style("stroke-opacity", 0.1);
   
-  d3.selectAll(".countries").selectAll("path").style("opacity", 0.1);
-  
+  //Dim all countries but current country
+  var thisCountry = data_GHG.find(x => x.idName === idName).country;
+  // d3.selectAll(".countries").selectAll("path").style("opacity", 0.1);
+  d3.select("#map" + thisCountry).style("fill", countryHighlightColour);
+  d3.selectAll(".countries path:not(#map" + thisCountry + ")")
+    .style("opacity", 0.1);
+
   d3.select("#city" + idName)
     .attr("stroke", "black")
     .attr("stroke-width", 2);
@@ -535,6 +560,9 @@ function highlightElements(idName) {
 // }
 
 function emissionsBarChart(geogroup_name, geogroup_id) {
+  //dimExtent = [dimExtentDict[attrFlag][0], dimExtentDict[attrFlag][1]]
+  var reorderButton = d3.select("#reorderButton").text();
+  console.log("reorderButton: ", reorderButton)
 
   // Remove any previous bar chart
   d3.select(geogroup_id).select("svg").remove();
@@ -675,11 +703,12 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
           .style("top", d3.event.pageY + tipy + "px");
 
       })
-      .on("mouseout", function (d) {
+      .on("mouseout", function (d) {       
         resetElements();
         
         d3.select("#tick" + idName).text(function (d) { return fn_abbr(d); })
-          .style("font-size", "16px").style("opacity", 0.3)
+          //.style("font-size", "14px")
+          .style("opacity", 0.3)
           .attr("fill", colour_labels);
 
         div.style("opacity", 0);
@@ -695,7 +724,8 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
         .text(function (d) { 
           if (d.includes("gap")) return "";
           else if (this_dim === "per GDP" 
-                   && ! data_GHG.find(x => x.city.includes(d))['per GDP']) {
+                   // && ! data_GHG.find(x => x.city.includes(d))['per GDP']) {
+                  && ! data_GHG.find(x => x.city === d)['per GDP']) {           
                   return ""; }
           else return fn_abbr(d); 
         })
@@ -726,7 +756,16 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
             } else if (this_dim === "per GDP") {
 
               if (d3.select("#reorderButton").text() === "Re-order") fn_cityLabels_perGDP(d, i, thisCityGroup);
-              else ytrans=-35;
+              else {
+                if (d === "New York City") ytrans = 5;
+                else if (d === "Austin" || d === "San Antonio") ytrans = -25;
+                else if (d === "DC") ytrans = -42;
+                else if (d === "Indianapolis") ytrans = 5;
+                else if (d === "Edmonton") ytrans = -30;
+                else if (d === "Toronto") ytrans = 0;                
+                else if (d === "Winnipeg" || d === "Montreal") ytrans = -45;
+                else ytrans = -15;
+              }
 
             } //this_dim
            
@@ -741,10 +780,16 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
       // })
       .on("touchmove mousemove", function (d) {
         fn_enlargeName(geogroup_name, d);
+
+        idName = format_idName(d);
+        highlightElements(idName);
       })
       .on("mouseout", function (d) {
+        resetElements();
+
         d3.select("#tick" + idName).text(function (d) { return fn_abbr(d); })
-          .style("font-size", "16px").style("opacity", 0.3);
+          //.style("font-size", "14px")
+          .style("opacity", 0.3);
       });
 
   //hide x tick mark for "gap" bar  
