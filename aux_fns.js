@@ -791,10 +791,13 @@ function fn_arrow() {
       });
 }
 function fn_arrowtmp(geogroup_id, city) {
-  if (d3.select("#reorderButton").text() === "Re-order") {
-    //bars sorted by emissions/GDP
-    xpair = [544]; ypair = [-20]; //posn of arrow and text pair
-    xtext = [-27]; ytext = [10]; //posn of text
+  if (d3.select("#reorderButton").text() === "Re-order") {//bars sorted by emissions/GDP    
+    //posn of arrow and text pair
+    xpair = [(city === "Lagos" ? 544 : -56)]; ypair = [(city === "Lagos" ? -20 : -25)];
+
+    //posn of text
+    xtext = [(city === "Lagos" ? -27 : 109)]; ytext = [(city === "Lagos" ? 10: 10)];
+
   } else { //bars sorted by emissions/capita
     xpair = [568]; ypair = [-55]; //posn of arrow and text pair
     xtext = [-18]; ytext = [19]; //posn of text
@@ -805,7 +808,7 @@ function fn_arrowtmp(geogroup_id, city) {
 
   //define arrow name and path
   var data = [
-  { id: 1, name: 'arrow' + city, path: "M 2,2 L2,11 L10,6 L2,2" } //Lagos
+  { id: 1, name: 'arrow' + city, path: "M 2,2 L2,11 L10,6 L2,2" }
   ];
 
   margin = {top: 0, right: 0, bottom: 0, left: 0},
@@ -843,7 +846,7 @@ function fn_arrowtmp(geogroup_id, city) {
           .attr('d', function(d){ return d.path; })
           .attr('fill', function(d,i) { return "#565656"; });
 
-    ypath = [50,80, 50]; //arrow length
+    ypath = [50]; //arrow length
     var path = paths.selectAll('path')
       .data(data)
       .enter()
@@ -876,9 +879,6 @@ function fn_arrowtmp(geogroup_id, city) {
                 "translate(" + xtext[idx] + " " + ytext[idx] + ")" ;       
         });
   }
-
-
- 
 }
 function fn_arrow_asia() {
   if (d3.select("#reorderButton").text() === "Re-order") {
