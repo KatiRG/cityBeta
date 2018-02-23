@@ -37,15 +37,18 @@
   <div class="container">
 
     <!-- header row -->
-    <div class="row">
+    <div class="row">     
       <div class="col-lg-12 headings" style="text-align: center">
         Cities that reported emissions to the Carbon Disclosure Project
       </div>
     </div> <!-- ./header row -->
 
+    <!-- 2nd row -->
+    <div class="row">
+      <div class="col-lg-2" id="mycityCardDiv"> </div>
+      <div class="col-lg-10" id="map"> </div>
+    </div>
 
-    <!-- row for map and city card -->
-    <div class="row" id="map"> </div>
   
 
     <!-- row for barChart title and toggle buttons -->
@@ -134,7 +137,7 @@
 // ----------------------------------------------------
 
 var container = d3.select("body").append("div")
-    .style("width",width);
+    .style("width",1205);
 
 // Leaflet map variables
 // ---------------------------------
@@ -151,6 +154,46 @@ var div = d3.select("body").append("div")
     .style("opacity", 0);
 
 
+// SVGs
+// ----------------------------------------------------
+// d3js World Map
+var mapMargin = {top: 0, right: 0, bottom: 0, left: 0};
+var mapWidth = 850 - mapMargin.left - mapMargin.right,
+    mapHeight = 270 - mapMargin.top - mapMargin.bottom;
+
+//city card
+var svgCityCard = d3.select("#mycityCardDiv").append("svg")
+    .attr("width", 273)
+    .attr("height", mapHeight);
+
+svgCityCard = d3.select("#mycityCardDiv").select("svg")
+          .append("g").attr("id", "cityCardg");
+svgCityCard.append("rect")
+    .attr("width", 200)
+    .attr("height", 300) //31
+    .attr("x", 5)
+    .attr("y", -20)
+    .attr("fill", "#4c87b5")
+    .attr("stroke", "none");
+
+//setup text node for city name
+svgCityCard.append("text").attr("class", "cityCardName")
+  .attr("id", "cityCardCity")
+  .attr("transform", function (d) {
+      var transx = 13;
+      return "translate(" + transx + " " + 30 + ")" ;
+    });
+
+//set up text node for country
+  var transx = 13;
+  svgCityCard.append("text")
+    .attr("transform", function (d) {
+        var transy = 46;
+        return "translate(" + transx + " " + transy + ")" ;
+      })
+    .attr("class", "cityCardSubrowInfo")
+    .attr("id", "cityCardCountry");
+
 // ----------------------------------------------------
 // Code
 // ----------------------------------------------------
@@ -160,6 +203,9 @@ window.onresize = function() {
   $(window).width();   // returns width of browser viewport
   $(document).width(); // returns width of HTML document (same as pageWidth in screenshot)
 }
+
+
+
 // ----------------------------------------------------
 // Buttons
 // ----------------------------------------------------
@@ -321,13 +367,7 @@ d3.tsv("data/cityApp_attributes.tsv", function(ghg) {
 // Main Functions
 // ----------------------------------------------------
 
-// d3js World Map
-//------------------
-var margin = {top: 0, right: 120, bottom: 0, left: 0};
-var width = 1325 - margin.left - margin.right,
-    height = 270 - margin.top - margin.bottom;
-// var width = 1000,
-//     height = 360; //cut off antarctica  //400;
+
 
 function drawMap() {
   // Map reset button
@@ -354,7 +394,7 @@ function drawMap() {
   var projection = options[0]
               .projection
               .scale(151) //141, 171
-              .translate([width/1.655, height/1.67  ]);  //1.633, 1.69
+              .translate([mapWidth/1.655, mapHeight/1.67  ]);  //1.633, 1.69
 
   var path = d3.geoPath()
       .projection(projection)
@@ -363,8 +403,8 @@ function drawMap() {
   var graticule = d3.geoGraticule();
 
   var svg = d3.select("#map").append("svg")
-      .attr("width", width)
-      .attr("height", height)
+      .attr("width", mapWidth)
+      .attr("height", mapHeight);
 
   svg.append("defs").append("path")
     .datum({type: "Sphere"})
@@ -380,30 +420,35 @@ function drawMap() {
     .attr("class", "graticule")
     .attr("d", path);
 
+  var g = svg.append('g');
+
+  //----------------------------------------
   //draw bottom line of map
-  svg.append("g").selectAll("line")
-      .data([0])
-      .enter().append("line")
-      .attr("class", "line")
-      .style("stroke", "#555")
-      .style("stroke-width", "1.2px")
-      .attr("x1", 257)
-      .attr("y1", 270)
-      .attr("x2", 1015)
-      .attr("y2", 270);
+  // svg.append("g").selectAll("line")
+  // g.selectAll("line")
+  //   .data([0])
+  //   .enter().append("line")
+  //   .attr("class", "line")
+  //   .style("stroke", "#555")
+  //   .style("stroke-width", "1.2px")
+  //   .attr("x1", 257)
+  //   .attr("y1", 270)
+  //   .attr("x2", 1015)
+  //   .attr("y2", 270);
 
-  //draw top line of map
-  svg.append("g").selectAll("line")
-      .data([0])
-      .enter().append("line")
-      .attr("class", "line")
-      .style("stroke", "#555")
-      .style("stroke-width", "1.2px")
-      .attr("x1", 301)
-      .attr("y1", 0)
-      .attr("x2", 970)
-      .attr("y2", 0);      
-
+  // //draw top line of map
+  // // svg.append("g").selectAll("line")
+  // g.selectAll("line")
+  //   .data([0])
+  //   .enter().append("line")
+  //   .attr("class", "line")
+  //   .style("stroke", "#555")
+  //   .style("stroke-width", "1.2px")
+  //   .attr("x1", 301)
+  //   .attr("y1", 0)
+  //   .attr("x2", 970)
+  //   .attr("y2", 0);
+  //----------------------------------------
  
   d3.json("geojson/world_countries.json", function(error, world) {
     if (error) throw error;
@@ -411,9 +456,10 @@ function drawMap() {
     d3.json("geojson/cities_edited2.geojson", function(error, cities) {
       if (error) throw error;
 
+
       //world countries
-      svg.append("g")
-          .attr("class", "countries")
+      // svg.append("g")
+      countries = g.attr("class", "countries")
         .selectAll("path")
           .data(world.features)
         .enter().append("path")
@@ -442,6 +488,7 @@ function drawMap() {
             //     .style("stroke","white")
             //     .style("stroke-width",0.3);
             // });
+     
       
       // City markers from geojson file     
       svg.selectAll('path')
@@ -481,15 +528,28 @@ function drawMap() {
     }); // ./inner d3.json
   }); // ./outer d3.json
   
-  //svg.call(zoom);
+  svg.call(zoom);
 
+  var MIN = {x: -1000, y: -500},     //top-left corner
+    MAX = {x: 2000, y: 500};   //bottom-right corner
   function zoomed() {
+
+  var transform = d3.event.transform;
+
+  console.log("transform: ", transform)
+
+   // limiting tranformation by MIN and MAX bounds
+   // transform.x = d3.max([transform.x, MIN.x]);
+   // transform.y = d3.max([transform.y, MIN.y]);
+   // transform.x = d3.min([transform.x, MAX.x]);
+   // transform.y = d3.min([transform.y, MAX.y]);
+
+   svg.attr("transform", transform);
+
+    // svg.attr("transform", d3.event.transform);  
   
     // path.pointRadius([0.1])
     // console.log("path: ", path.pointRadius())
-
-    svg.attr("transform", d3.event.transform);
-    
 
     // gX.call(xAxis.scale(d3.event.transform.rescaleX(x)));
     // gY.call(yAxis.scale(d3.event.transform.rescaleY(y)));
@@ -521,7 +581,7 @@ function highlightElements(idName) {
   //Clear Previous
   //--------------
   resetElements();
-  d3.select("#cityCardg").remove();
+  //d3.select("#mycityCardg").remove();
 
   //Display city card
   fn_svgCityCard (selectedCityObj, attrFlag);
@@ -542,8 +602,7 @@ function highlightElements(idName) {
     .style("fill-opacity", 0.1)
     .style("stroke-opacity", 0.1);
   
-  //Dim all countries but current country
-  // var thisCountry = format_idName(data_GHG.find(x => x.idName === idName).country);
+  //Dim all countries but current country  
   var thisCountry = data_GHG.find(x => x.idName === idName).country.replace(/\s/g, '_');  
   d3.select("#map" + thisCountry).style("fill", countryHighlightColour);
   d3.selectAll(".countries path:not(#map" + thisCountry + ")")

@@ -880,136 +880,113 @@ function fn_svgCityCard (selectedCityObj, attrFlag) {
   // console.log("selectedCityObj in fn: ", selectedCityObj)
   // console.log("attrFlag in fn: ", attrFlag)
   
-  //display city card to the left of the map
-  var svgCityCard = d3.select("#map").select("svg")
-          .append("g").attr("id", "cityCardg");
-
-  svgCityCard
-    .attr("transform", function (d) {
-        var xscale = 1, yscale = 1.0, transx = 15, transy = -10;
-        
-        return "scale(" + xscale + " " + yscale + ")" + 
-              "translate(" + transx + " " + transy + ")" ;
-      });
-    
-  svgCityCard.append("rect")
-    .attr("width", 200)
-    .attr("height", 300) //31
-    .attr("x", 5)
-    .attr("y", -20)
-    .attr("fill", "#4c87b5")
-    .attr("stroke", "none");
-
   //city name
-  svgCityCard.append("text").attr("class", "cityCardName")
-    .attr("transform", function (d) {
-        var transx = 13;
-        return "translate(" + transx + " " + 30 + ")" ;
-      })
-    .text(selectedCityObj.city);
+  svgCityCard.select("#cityCardCity").text(selectedCityObj.city);
 
   var delta = 50; //amount to translate in y-dirn
 
   //country
-  var transx = 13;
-  svgCityCard.append("text")
-    .attr("transform", function (d) {
-        var transy = 46;
-        return "translate(" + transx + " " + transy + ")" ;
-      })
-    .attr("class", "cityCardSubrowInfo")
-    .text(selectedCityObj["country"]);
+  svgCityCard.select("#cityCardCountry").text(selectedCityObj["country"]);
 
-  //city info sub-row: Emissions
-  svgCityCard.append("text")
-    .attr("transform", function (d) {
-        var transy = 70;
-        return "translate(" + transx + " " + transy + ")" ;
-      })
-    .attr("class", "cityCardSubrowTitle")
-    .text("Emissions:");
+  // var transx = 13;
+  // svgCityCard.append("text")
+  //   .attr("transform", function (d) {
+  //       var transy = 46;
+  //       return "translate(" + transx + " " + transy + ")" ;
+  //     })
+  //   .attr("class", "cityCardSubrowInfo")
+  //   .text(selectedCityObj["country"]);
 
-  svgCityCard.append("text")
-    .attr("transform", function (d) {
-        var transy = 88;
-        return "translate(" + transx + " " + transy + ")" ;
-      })
-    .attr("class", "cityCardSubrowInfo")
-    .text(formatDecimalSci(selectedCityObj["Scope1"]/1e6) + 
-        " MtCO₂eq (measurment yr " + selectedCityObj["measurement year"] +")");
+  // //city info sub-row: Emissions
+  // svgCityCard.append("text")
+  //   .attr("transform", function (d) {
+  //       var transy = 70;
+  //       return "translate(" + transx + " " + transy + ")" ;
+  //     })
+  //   .attr("class", "cityCardSubrowTitle")
+  //   .text("Emissions:");
 
-  //city info sub-row: Emissions Change
-  svgCityCard.append("text")
-    .attr("transform", function (d) {
-        var transy = 70 + delta;
-        return "translate(" + transx + " " + transy + ")" ;
-      })
-    .attr("class", "cityCardSubrowTitle")
-    .text("Emissions Change:");
+  // svgCityCard.append("text")
+  //   .attr("transform", function (d) {
+  //       var transy = 88;
+  //       return "translate(" + transx + " " + transy + ")" ;
+  //     })
+  //   .attr("class", "cityCardSubrowInfo")
+  //   .text(formatDecimalSci(selectedCityObj["Scope1"]/1e6) + 
+  //       " MtCO₂eq (measurment yr " + selectedCityObj["measurement year"] +")");
 
-  svgCityCard.append("text")
-    .attr("transform", function (d) {
-        var transy = 70 + delta + 15;
-        return "translate(" + transx + " " + transy + ")" ;
-      })
-    .attr("class", "cityCardSubrowInfo")
-    .text(function () {
-      return selectedCityObj["change in emissions"];
-    });
+  // //city info sub-row: Emissions Change
+  // svgCityCard.append("text")
+  //   .attr("transform", function (d) {
+  //       var transy = 70 + delta;
+  //       return "translate(" + transx + " " + transy + ")" ;
+  //     })
+  //   .attr("class", "cityCardSubrowTitle")
+  //   .text("Emissions Change:");
 
-  //city info sub-row: Protocol
-  var protocolNum = selectedCityObj["methodology"];
-  svgCityCard.append("text")
-    .attr("transform", function (d) {
-        var transy = 70 + 2*delta;
-        return "translate(" + transx + " " + transy + ")" ;
-      })
-    .attr("class", "cityCardSubrowTitle")
-    .text("Protocol:");
+  // svgCityCard.append("text")
+  //   .attr("transform", function (d) {
+  //       var transy = 70 + delta + 15;
+  //       return "translate(" + transx + " " + transy + ")" ;
+  //     })
+  //   .attr("class", "cityCardSubrowInfo")
+  //   .text(function () {
+  //     return selectedCityObj["change in emissions"];
+  //   });
 
-  svgCityCard.append("text")
-    .attr("transform", function (d) {
-        var transy = 70 + 2*delta + 15;
-        return "translate(" + transx + " " + transy + ")" ;
-      })
-    .attr("class", "cityCardSubrowInfo")
-    .text(choose_textArray["methodology"][protocolNum - 1]);
+  // //city info sub-row: Protocol
+  // var protocolNum = selectedCityObj["methodology"];
+  // svgCityCard.append("text")
+  //   .attr("transform", function (d) {
+  //       var transy = 70 + 2*delta;
+  //       return "translate(" + transx + " " + transy + ")" ;
+  //     })
+  //   .attr("class", "cityCardSubrowTitle")
+  //   .text("Protocol:");
+
+  // svgCityCard.append("text")
+  //   .attr("transform", function (d) {
+  //       var transy = 70 + 2*delta + 15;
+  //       return "translate(" + transx + " " + transy + ")" ;
+  //     })
+  //   .attr("class", "cityCardSubrowInfo")
+  //   .text(choose_textArray["methodology"][protocolNum - 1]);
     
-  //city info sub-row: attribute selected in dropdown menu
-  if (attrFlag != "methodology" && attrFlag != "change in emissions") { //methodology already on display    
-    svgCityCard.append("text")
-      .attr("transform", function (d) {
-          var transy = 70 + 3*delta;
-          return "translate(" + transx + " " + transy + ")" ;
-        })
-      .attr("class", "cityCardSubrowTitle")
-      .text(attrFlag + ":");
+  // //city info sub-row: attribute selected in dropdown menu
+  // if (attrFlag != "methodology" && attrFlag != "change in emissions") { //methodology already on display    
+  //   svgCityCard.append("text")
+  //     .attr("transform", function (d) {
+  //         var transy = 70 + 3*delta;
+  //         return "translate(" + transx + " " + transy + ")" ;
+  //       })
+  //     .attr("class", "cityCardSubrowTitle")
+  //     .text(attrFlag + ":");
 
-    if (attrFlag === "diesel price" || attrFlag === "gas price") attrText = selectedCityObj[attrFlag];
-    else attrText = attrFlag === "measurement year" ? 
-          parseInt(selectedCityObj[attrFlag]) : 
-          formatComma(parseInt(selectedCityObj[attrFlag])) + " " + dimUnits[attrFlag];    
-    svgCityCard.append("text")
-      .attr("transform", function (d) {
-          var transy = 70 + 3*delta + 15;
-          return "translate(" + transx + " " + transy + ")" ;
-        })
-      .attr("class", "cityCardSubrowInfo")
-      .text(attrText);
-  }
+  //   if (attrFlag === "diesel price" || attrFlag === "gas price") attrText = selectedCityObj[attrFlag];
+  //   else attrText = attrFlag === "measurement year" ? 
+  //         parseInt(selectedCityObj[attrFlag]) : 
+  //         formatComma(parseInt(selectedCityObj[attrFlag])) + " " + dimUnits[attrFlag];    
+  //   svgCityCard.append("text")
+  //     .attr("transform", function (d) {
+  //         var transy = 70 + 3*delta + 15;
+  //         return "translate(" + transx + " " + transy + ")" ;
+  //       })
+  //     .attr("class", "cityCardSubrowInfo")
+  //     .text(attrText);
+  // }
 
-  //Methods
-  //.on("click", function() { window.open("http://google.com"); });
-  svgCityCard.append("text")
-    .attr("transform", function (d) {
-        var transy = 70 + 4*delta;
-        return "translate(" + transx + " " + transy + ")" ;
-      })
-    .attr("class", "cityCardSubrowTitle")
-    .text("Emission definitions")
-    .on("touchmove mousemove", function () {d3.select(this).style("cursor", "pointer"); })  
-    .on("click", function() { 
-      window.open("http://www.ghgprotocol.org/sites/default/files/ghgp/standards/GHGP_GPC_0.pdf#page=13");
-    });
+  // //Methods
+  // //.on("click", function() { window.open("http://google.com"); });
+  // svgCityCard.append("text")
+  //   .attr("transform", function (d) {
+  //       var transy = 70 + 4*delta;
+  //       return "translate(" + transx + " " + transy + ")" ;
+  //     })
+  //   .attr("class", "cityCardSubrowTitle")
+  //   .text("Emission definitions")
+  //   .on("touchmove mousemove", function () {d3.select(this).style("cursor", "pointer"); })  
+  //   .on("click", function() { 
+  //     window.open("http://www.ghgprotocol.org/sites/default/files/ghgp/standards/GHGP_GPC_0.pdf#page=13");
+  //   });
 
 }
