@@ -512,7 +512,11 @@ function highlightElements(idName) {
   // clear any previous story first
   d3.select("#ghgStory").text("");
 
-  var selectedCity = data_GHG.find(x => x.idName.includes(idName));
+  //var selectedCity = data_GHG.find(x => x.idName.includes(idName));
+  var selectedCity = d3.select("#tick" + idName)
+                       ._groups[0]
+                       .map(function(d) { return d.__data__; })[0];
+  var selectedCityObj = data_GHG.find(x => x.city === selectedCity);
 
   //Clear Previous
   //--------------
@@ -520,7 +524,7 @@ function highlightElements(idName) {
   d3.select("#cityCardg").remove();
 
   //Display city card
-  fn_svgCityCard (selectedCity, attrFlag);
+  fn_svgCityCard (selectedCityObj, attrFlag);
 
   //Highlight Current
   //-----------------
@@ -735,7 +739,7 @@ function emissionsBarChart(geogroup_name, geogroup_id) {
           if (d.includes("gap")) return "";
           else if (this_dim === "per GDP" 
                    // && ! data_GHG.find(x => x.city.includes(d))['per GDP']) {
-                  && ! data_GHG.find(x => x.city === d)['per GDP']) {           
+                  && ! data_GHG.find(x => x.city === d)['per GDP']) {
                   return ""; }
           else return fn_abbr(d); 
         })
