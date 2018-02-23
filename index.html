@@ -162,6 +162,8 @@ var mapWidth = 850 - mapMargin.left - mapMargin.right,
     mapHeight = 270 - mapMargin.top - mapMargin.bottom;
 
 //city card
+var delta = 50; //amount to translate in y-dirn
+
 var svgCityCard = d3.select("#mycityCardDiv").append("svg")
     .attr("width", 273)
     .attr("height", mapHeight);
@@ -185,14 +187,97 @@ svgCityCard.append("text").attr("class", "cityCardName")
     });
 
 //set up text node for country
-  var transx = 13;
-  svgCityCard.append("text")
+var transx = 13;
+svgCityCard.append("text")
+  .attr("transform", function (d) {
+      var transy = 46;
+      return "translate(" + transx + " " + transy + ")" ;
+    })
+  .attr("class", "cityCardSubrowInfo")
+  .attr("id", "cityCardCountry");
+
+//set up text node for Emissions
+//i) label
+svgCityCard.append("text")
+  .attr("transform", function (d) {
+      var transy = 70;
+      return "translate(" + transx + " " + transy + ")" ;
+    })
+  .attr("class", "cityCardSubrowTitle")
+  .attr("id", "cityCardEmissionsLabel");
+//ii) value
+ svgCityCard.append("text")
     .attr("transform", function (d) {
-        var transy = 46;
+        var transy = 88;
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowInfo")
-    .attr("id", "cityCardCountry");
+    .attr("id", "cityCardEmissions");
+
+//setup text node for Emissions Change
+//i) label
+svgCityCard.append("text")
+  .attr("transform", function (d) {
+      var transy = 70 + delta;
+      return "translate(" + transx + " " + transy + ")" ;
+    })
+  .attr("class", "cityCardSubrowTitle")
+  .attr("id", "cityCardChangeLabel");
+//ii) value
+svgCityCard.append("text")
+  .attr("transform", function (d) {
+      var transy = 70 + delta + 15;
+      return "translate(" + transx + " " + transy + ")" ;
+    })
+  .attr("class", "cityCardSubrowInfo")
+  .attr("id", "cityCardChange");
+
+//setup text node for protocol
+//i) label
+svgCityCard.append("text")
+  .attr("transform", function (d) {
+      var transy = 70 + 2*delta;
+      return "translate(" + transx + " " + transy + ")" ;
+    })
+  .attr("class", "cityCardSubrowTitle")
+  .attr("id", "cityCardProtocolLabel");
+//ii) value
+svgCityCard.append("text")
+  .attr("transform", function (d) {
+      var transy = 70 + 2*delta + 15;
+      return "translate(" + transx + " " + transy + ")" ;
+    })
+  .attr("class", "cityCardSubrowInfo")
+  .attr("id", "cityCardProtocol");
+
+//setup text node for selected attribute
+//i) label
+svgCityCard.append("text")
+  .attr("transform", function (d) {
+      var transy = 70 + 3*delta;
+      return "translate(" + transx + " " + transy + ")" ;
+    })
+  .attr("class", "cityCardSubrowTitle")
+  .attr("id", "cityCardAttrLabel");
+//ii) value
+svgCityCard.append("text")
+  .attr("transform", function (d) {
+      var transy = 70 + 3*delta + 15;
+      return "translate(" + transx + " " + transy + ")" ;
+    })
+  .attr("class", "cityCardSubrowInfo")
+  .attr("id", "cityCardAttr");
+
+//Link to Emissions Defns
+svgCityCard.append("text")
+  .attr("transform", function (d) {
+      var transy = 70 + 4*delta - 11;
+      return "translate(" + transx + " " + transy + ")" ;
+    })
+  .attr("class", "cityCardSubrowTitle")
+  .attr("id", "cityCardDefs");
+
+
 
 // ----------------------------------------------------
 // Code
