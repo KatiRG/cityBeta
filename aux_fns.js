@@ -876,8 +876,8 @@ function fn_svgHeadings (geogroup_id) {
 //----------------------------------------------
 
 //Info text in svg
-function fn_svgCityCard (selectedCity, attrFlag) {
-  // console.log("selectedCity in fn: ", selectedCity)
+function fn_svgCityCard (selectedCityObj, attrFlag) {
+  // console.log("selectedCityObj in fn: ", selectedCityObj)
   // console.log("attrFlag in fn: ", attrFlag)
   
   //display city card to the left of the map
@@ -906,7 +906,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
         var transx = 13;
         return "translate(" + transx + " " + 30 + ")" ;
       })
-    .text(selectedCity.city);
+    .text(selectedCityObj.city);
 
   var delta = 50; //amount to translate in y-dirn
 
@@ -918,7 +918,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowInfo")
-    .text(selectedCity["country"]);
+    .text(selectedCityObj["country"]);
 
   //city info sub-row: Emissions
   svgCityCard.append("text")
@@ -935,8 +935,8 @@ function fn_svgCityCard (selectedCity, attrFlag) {
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowInfo")
-    .text(formatDecimalSci(selectedCity["Scope1"]/1e6) + 
-        " MtCO₂eq (measurment yr " + selectedCity["measurement year"] +")");
+    .text(formatDecimalSci(selectedCityObj["Scope1"]/1e6) + 
+        " MtCO₂eq (measurment yr " + selectedCityObj["measurement year"] +")");
 
   //city info sub-row: Emissions Change
   svgCityCard.append("text")
@@ -954,11 +954,11 @@ function fn_svgCityCard (selectedCity, attrFlag) {
       })
     .attr("class", "cityCardSubrowInfo")
     .text(function () {
-      return selectedCity["change in emissions"];
+      return selectedCityObj["change in emissions"];
     });
 
   //city info sub-row: Protocol
-  var protocolNum = selectedCity["methodology"];
+  var protocolNum = selectedCityObj["methodology"];
   svgCityCard.append("text")
     .attr("transform", function (d) {
         var transy = 70 + 2*delta;
@@ -976,8 +976,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
     .text(choose_textArray["methodology"][protocolNum - 1]);
     
   //city info sub-row: attribute selected in dropdown menu
-  if (attrFlag != "methodology" && attrFlag != "change in emissions") { //methodology already on display
-    //var protocolNum = selectedCity["methodology"];
+  if (attrFlag != "methodology" && attrFlag != "change in emissions") { //methodology already on display    
     svgCityCard.append("text")
       .attr("transform", function (d) {
           var transy = 70 + 3*delta;
@@ -986,10 +985,10 @@ function fn_svgCityCard (selectedCity, attrFlag) {
       .attr("class", "cityCardSubrowTitle")
       .text(attrFlag + ":");
 
-    if (attrFlag === "diesel price" || attrFlag === "gas price") attrText = selectedCity[attrFlag];
+    if (attrFlag === "diesel price" || attrFlag === "gas price") attrText = selectedCityObj[attrFlag];
     else attrText = attrFlag === "measurement year" ? 
-          parseInt(selectedCity[attrFlag]) : 
-          formatComma(parseInt(selectedCity[attrFlag])) + " " + dimUnits[attrFlag];    
+          parseInt(selectedCityObj[attrFlag]) : 
+          formatComma(parseInt(selectedCityObj[attrFlag])) + " " + dimUnits[attrFlag];    
     svgCityCard.append("text")
       .attr("transform", function (d) {
           var transy = 70 + 3*delta + 15;
