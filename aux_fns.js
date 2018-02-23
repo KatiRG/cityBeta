@@ -729,28 +729,28 @@ function fn_arrow(geogroup_id, city) {//used for Rotterdam (per cap) and Lagos (
   if (city[0] === "Lagos") {
     if (d3.select("#reorderButton").text() === "Re-order") {//bars sorted by emissions/GDP          
       xpair = [544]; ypair = [-20]; //posn of arrow and text pair
-      xtext = [-27]; ytext = [10]; //posn of text
+      xtext = [-35]; ytext = [10]; //posn of text
 
     } else { //bars sorted by emissions/capita
       xpair = [568]; ypair = [-55]; //posn of arrow and text pair
-      xtext = [-18]; ytext = [19]; //posn of text
+      xtext = [-34]; ytext = [19]; //posn of text
     }
-    emissionText = [lagosEmissionsPerGDP + " kgCO₂/USD"];
+    emissionText = [lagosEmissionsPerGDP + " kgCO₂eq/USD"];
   } else if (city[0] === "Rotterdam") {
       xpair = [-56]; ypair = [-25]; //posn of arrow and text pair    
       xtext = [109]; ytext = [10]; //posn of text
-      emissionText = [rotterdamEmissionsPerCap + " kgCO₂/USD"];
+      emissionText = [rotterdamEmissionsPerCap + " kgCO₂eq/USD"];
   } else if (city[0] === "Kaohsiung" && city[1] === "Taoyuan") {
     if (d3.select("#reorderButton").text() === "Re-order") {
       //bars sorted by emissions/GDP
-      xpair = [449, 458]; ypair = [-55, -55]; //posn of arrow and text pair
-      xtext = [-27, -27]; ytext = [10, 40]; //posn of text
+      xpair = [449, 457.5]; ypair = [-55, -55]; //posn of arrow and text pair
+      xtext = [-39, -53]; ytext = [10, 36]; //posn of text
     } else { //bars sorted by emissions/capita
       xpair = [457.4, 476]; ypair = [-55, -55]; //posn of arrow and text pair
-      xtext = [-27, 128]; ytext = [10, -5]; //posn of text
+      xtext = [-38, 105]; ytext = [10, -5]; //posn of text
     }
-    emissionText = [kaohsiungEmissionsPerGDP + " kgCO₂/USD", 
-                    taoyuanEmissionsPerGDP + " kgCO₂/USD"];
+    emissionText = [kaohsiungEmissionsPerGDP + " kgCO₂eq/USD", 
+                    taoyuanEmissionsPerGDP + " kgCO₂eq/USD"];
 
   }
 
@@ -883,11 +883,6 @@ function fn_svgCityCard (selectedCity, attrFlag) {
   //display city card to the left of the map
   var svgCityCard = d3.select("#map").select("svg")
           .append("g").attr("id", "cityCardg");
-          // .attr("transform", function () {
-          //   transx = 0;
-          //   transy = 0;
-          //   return "translate(" + transx + "," + transy + ")";
-          // });
 
   svgCityCard
     .attr("transform", function (d) {
@@ -898,7 +893,7 @@ function fn_svgCityCard (selectedCity, attrFlag) {
       });
     
   svgCityCard.append("rect")
-    .attr("width", 200)             //="142" height="31"
+    .attr("width", 200)
     .attr("height", 300) //31
     .attr("x", 5)
     .attr("y", -20)
@@ -940,8 +935,8 @@ function fn_svgCityCard (selectedCity, attrFlag) {
         return "translate(" + transx + " " + transy + ")" ;
       })
     .attr("class", "cityCardSubrowInfo")
-    .text(formatComma(parseInt(selectedCity["Scope1"]/1000)) + 
-        " MtCO₂ (measurment yr " + selectedCity["measurement year"] +")");
+    .text(formatDecimalSci(selectedCity["Scope1"]/1e6) + 
+        " MtCO₂eq (measurment yr " + selectedCity["measurement year"] +")");
 
   //city info sub-row: Emissions Change
   svgCityCard.append("text")
