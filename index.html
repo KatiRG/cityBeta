@@ -543,8 +543,7 @@ function highlightElements(idName) {
     .style("stroke-opacity", 0.1);
   
   //Dim all countries but current country
-  var thisCountry = data_GHG.find(x => x.idName === idName).country;
-  // d3.selectAll(".countries").selectAll("path").style("opacity", 0.1);
+  var thisCountry = format_idName(data_GHG.find(x => x.idName === idName).country);  
   d3.select("#map" + thisCountry).style("fill", countryHighlightColour);
   d3.selectAll(".countries path:not(#map" + thisCountry + ")")
     .style("opacity", 0.1);
