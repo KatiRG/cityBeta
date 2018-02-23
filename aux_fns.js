@@ -879,6 +879,9 @@ function fn_svgHeadings (geogroup_id) {
 function fn_svgCityCard (selectedCityObj, attrFlag) {
   // console.log("selectedCityObj in fn: ", selectedCityObj)
   // console.log("attrFlag in fn: ", attrFlag)
+
+  //show city card
+  d3.select("#cityCardg").select("rect").style("opacity", 1);
   
   //city name
   svgCityCard.select("#cityCardCity").text(selectedCityObj.city);

@@ -162,6 +162,8 @@ var mapWidth = 850 - mapMargin.left - mapMargin.right,
     mapHeight = 270 - mapMargin.top - mapMargin.bottom;
 
 //city card
+//---------
+
 var delta = 50; //amount to translate in y-dirn
 
 var svgCityCard = d3.select("#mycityCardDiv").append("svg")
@@ -177,6 +179,9 @@ svgCityCard.append("rect")
     .attr("y", -20)
     .attr("fill", "#4c87b5")
     .attr("stroke", "none");
+
+//hide city card on page load
+d3.select("#cityCardg").select("rect").style("opacity", 0);
 
 //setup text node for city name
 svgCityCard.append("text").attr("class", "cityCardName")
