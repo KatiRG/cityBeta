@@ -38,7 +38,7 @@
 
     <!-- header row -->
     <div class="row">     
-      <div class="col-lg-12 headings" style="text-align: center">
+      <div class="col-lg-7 headings" style="text-align: center; left:307px;">
         Cities that reported emissions to the Carbon Disclosure Project
       </div>
     </div> <!-- ./header row -->
@@ -46,7 +46,7 @@
     <!-- 2nd row -->
     <div class="row">
       <div class="col-lg-2" id="mycityCardDiv"> </div>
-      <div class="col-lg-10" id="map"> </div>
+      <div class="col-lg-10" id="map" style="padding-left: 0px; padding-right:75px;"> </div>
     </div>
 
   
@@ -158,8 +158,8 @@ var div = d3.select("body").append("div")
 // ----------------------------------------------------
 // d3js World Map
 var mapMargin = {top: 0, right: 0, bottom: 0, left: 0};
-var mapWidth = 850 - mapMargin.left - mapMargin.right,
-    mapHeight = 270 - mapMargin.top - mapMargin.bottom;
+var mapWidth = 903 - mapMargin.left - mapMargin.right,
+    mapHeight = 290 - mapMargin.top - mapMargin.bottom;
 
 //city card
 //---------
@@ -514,17 +514,17 @@ function drawMap() {
 
   //----------------------------------------
   //draw bottom line of map
-  // svg.append("g").selectAll("line")
-  // g.selectAll("line")
-  //   .data([0])
-  //   .enter().append("line")
-  //   .attr("class", "line")
-  //   .style("stroke", "#555")
-  //   .style("stroke-width", "1.2px")
-  //   .attr("x1", 257)
-  //   .attr("y1", 270)
-  //   .attr("x2", 1015)
-  //   .attr("y2", 270);
+  svg.append("g").selectAll("line")
+  g.selectAll("line")
+    .data([0])
+    .enter().append("line")
+    .attr("class", "line")
+    .style("stroke", "#555")
+    .style("stroke-width", "1.2px")
+    .attr("x1", 80)
+    .attr("y1", 289)
+    .attr("x2", 828)
+    .attr("y2", 289);
 
   // //draw top line of map
   // // svg.append("g").selectAll("line")
@@ -618,7 +618,7 @@ function drawMap() {
     }); // ./inner d3.json
   }); // ./outer d3.json
   
-  svg.call(zoom);
+  // svg.call(zoom);
 
   var MIN = {x: -1000, y: -500},     //top-left corner
     MAX = {x: 2000, y: 500};   //bottom-right corner

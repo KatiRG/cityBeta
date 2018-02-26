@@ -890,10 +890,15 @@ function fn_svgCityCard (selectedCityObj, attrFlag) {
   svgCityCard.select("#cityCardCountry").text(selectedCityObj["country"]);
 
   //emissions
-  svgCityCard.select("#cityCardEmissionsLabel").text("Emissions:");
+  svgCityCard.select("#cityCardEmissionsLabel").text("Scope 1 Emissions:")
+    .style("text-decoration", "underline")
+    .on("touchmove mousemove", function () {d3.select(this).style("cursor", "pointer"); })  
+    .on("click", function() { 
+      window.open("http://www.ghgprotocol.org/sites/default/files/ghgp/standards/GHGP_GPC_0.pdf#page=13");
+  });
   svgCityCard.select("#cityCardEmissions")
     .text(formatDecimalSci(selectedCityObj["Scope1"]/1e6) + 
-        " MtCO₂eq (measurment yr " + selectedCityObj["measurement year"] +")");
+        " MtCO₂eq (measurement yr " + selectedCityObj["measurement year"] +")");
 
   //change in emissions
   svgCityCard.select("#cityCardChangeLabel").text("Emissions Change:");
@@ -921,14 +926,5 @@ function fn_svgCityCard (selectedCityObj, attrFlag) {
 
 
   }
-  
-
-  //Methods
-  svgCityCard.select("#cityCardDefs").text("Emission definitions")
-    .style("text-decoration", "underline")
-    .on("touchmove mousemove", function () {d3.select(this).style("cursor", "pointer"); })  
-    .on("click", function() { 
-      window.open("http://www.ghgprotocol.org/sites/default/files/ghgp/standards/GHGP_GPC_0.pdf#page=13");
-  });
 
 }
