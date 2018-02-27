@@ -58,6 +58,7 @@ var choose_colourArray = {
   "GDP/capita": ["#E6D8CB","#E394A7","#9e9ac8","#756bb1","#54278f"],
   "diesel price": ["#F1F2C4","#F2EA72","#fec44f","#CDAF7B","#634414"],
   "gas price": ["#F1F2C4","#F2EA72","#fec44f","#CDAF7B","#634414"],
+  "household size": ["#F8ECC9","#F1BBBA","#D8E6DB","#DBC28F","#997E68"],
   "HDD 15.5C": ["#e3dded", "#c8bcdc","#74a9cf","#26ADE4","#034e7b"],
   "CDD 23C": ["#E1F5C4", "#ffeda0","#F9D423","#FC913A","#FF4E50"],
   "area": ["#EDDAD0","#D5DED9","#99B2B7","#8DA597","#948C75"],
@@ -112,28 +113,6 @@ var storeFlagGDP = 0, storeFlagGDPAfrica = 0;
 var rotterdamEmissionsPerCap, kaohsiungEmissionsPerGDP, taoyuanEmissionsPerGDP,
     lagosEmissionsPerGDP;
 
-//AVG REGIONAL EMISSIONS PER CAPITA
-//TO BE VERIFIED! AVGS TAKEN FROM GCA WEBSITE
-var regionalAvgs = {
-  "groupUSA": 13.1,
-  "groupCan": 13.1,
-  "groupOceania": 11,
-  "groupEurope": 7.5,
-  "groupAfrica": 1.2, //***made up for now!!!***
-  "groupAsia": 4, //***made up for now!!!***
-  "groupLatinAmer": 2.4
-}
-
-var regionalAvgs_GDP = {
-  "groupUSA": 38000,
-  "groupCan": 38000,
-  "groupOceania": 30000,
-  "groupEurope": 30000,
-  "groupAfrica": 10000,
-  "groupAsia": 40000,
-  "groupLatinAmer": 30000
-}
-
 //------------------------------------------------
 //FOR DISPLAY TEXTS
 var regionLabel_dict = {
@@ -156,6 +135,7 @@ var dimUnits =  {
   "area": "km2",
   "diesel price": "USD",
   "gas price": "USD",
+  "household size": "persons/household", 
   "HDD 15.5C": "[deg C x days]",
   "CDD 23C": "[deg C x days]",
   "low BUA (2014)": "km2 (year 2014)",
@@ -166,8 +146,7 @@ var dimUnits =  {
   "high BUA density (2014)": "pop/km2 (year 2014)",
   "Congestion rank (INRIX)": "",
   "World Rank (TomTom)": "",
-  "Cities in Motion Index (IESE)": "",
-  "household size": "",
+  "Cities in Motion Index (IESE)": "",  
   "region": "",
   "country": ""
 }
