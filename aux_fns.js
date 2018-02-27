@@ -875,8 +875,18 @@ function fn_svgHeadings (geogroup_id) {
 // Functions for city card info
 //----------------------------------------------
 
+function fn_setupSVGCityCard(svgCityCard, className, idName, transX, transY) {
+  //setup text node for city name
+  svgCityCard.append("text").attr("class", className)
+    .attr("id", idName)
+    .attr("transform", function (d) {
+        return "translate(" + transX + " " + transY + ")" ;
+      });
+
+}
+
 //Info text in svg
-function fn_svgCityCard (selectedCityObj, attrFlag) {
+function fn_fillSVGCityCard (selectedCityObj, attrFlag) {
   // console.log("selectedCityObj in fn: ", selectedCityObj)
   // console.log("attrFlag in fn: ", attrFlag)
 
@@ -903,7 +913,7 @@ function fn_svgCityCard (selectedCityObj, attrFlag) {
   //change in emissions
   svgCityCard.select("#cityCardChangeLabel").text("Emissions Change:");
   svgCityCard.select("#cityCardChange").text(function () {
-    return selectedCityObj["change in emissions"];
+    return selectedCityObj["change in emissions"] + " from measurement year";
   });
 
   //protocol

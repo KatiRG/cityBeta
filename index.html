@@ -116,9 +116,6 @@
         <div class="row">
           <div id="barChart_EUCWLatAmerAfrica"></div>
         </div>
-        
-        <!--barChart sub-row-->
-        <div class="row" style="position:relative; top:10px;">city</div>
       
       </div> <!-- .end col -->
     </div> <!-- .end row -->
@@ -183,104 +180,107 @@ svgCityCard.append("rect")
 //hide city card on page load
 d3.select("#cityCardg").select("rect").style("opacity", 0);
 
-//setup text node for city name
-svgCityCard.append("text").attr("class", "cityCardName")
-  .attr("id", "cityCardCity")
-  .attr("transform", function (d) {
-      var transx = 13;
-      return "translate(" + transx + " " + 30 + ")" ;
-    });
+fn_setupSVGCityCard(svgCityCard, "cityCardName", "cityCardCity", 13, 30);
 
-//set up text node for country
-var transx = 13;
-svgCityCard.append("text")
-  .attr("transform", function (d) {
-      var transy = 46;
-      return "translate(" + transx + " " + transy + ")" ;
-    })
-  .attr("class", "cityCardSubrowInfo")
-  .attr("id", "cityCardCountry");
+// //setup text node for city name
+// svgCityCard.append("text").attr("class", "cityCardName")
+//   .attr("id", "cityCardCity")
+//   .attr("transform", function (d) {
+//       var transx = 13;
+//       return "translate(" + transx + " " + 30 + ")" ;
+//     });
 
-//set up text node for Emissions
-//i) label
-svgCityCard.append("text")
-  .attr("transform", function (d) {
-      var transy = 70;
-      return "translate(" + transx + " " + transy + ")" ;
-    })
-  .attr("class", "cityCardSubrowTitle")
-  .attr("id", "cityCardEmissionsLabel");
-//ii) value
- svgCityCard.append("text")
-    .attr("transform", function (d) {
-        var transy = 88;
-        return "translate(" + transx + " " + transy + ")" ;
-      })
-    .attr("class", "cityCardSubrowInfo")
-    .attr("id", "cityCardEmissions");
+// //set up text node for country
+// var transx = 13;
+// svgCityCard.append("text")
+//   .attr("transform", function (d) {
+//       var transy = 46;
+//       return "translate(" + transx + " " + transy + ")" ;
+//     })
+//   .attr("class", "cityCardSubrowInfo")
+//   .attr("id", "cityCardCountry");
 
-//setup text node for Emissions Change
-//i) label
-svgCityCard.append("text")
-  .attr("transform", function (d) {
-      var transy = 70 + delta;
-      return "translate(" + transx + " " + transy + ")" ;
-    })
-  .attr("class", "cityCardSubrowTitle")
-  .attr("id", "cityCardChangeLabel");
-//ii) value
-svgCityCard.append("text")
-  .attr("transform", function (d) {
-      var transy = 70 + delta + 15;
-      return "translate(" + transx + " " + transy + ")" ;
-    })
-  .attr("class", "cityCardSubrowInfo")
-  .attr("id", "cityCardChange");
+// //set up text node for Emissions
+// //i) label
+// svgCityCard.append("text")
+//   .attr("transform", function (d) {
+//       var transy = 70;
+//       return "translate(" + transx + " " + transy + ")" ;
+//     })
+//   .attr("class", "cityCardSubrowTitle")
+//   .attr("id", "cityCardEmissionsLabel");
+// //ii) value
+//  svgCityCard.append("text")
+//     .attr("transform", function (d) {
+//         var transy = 88;
+//         return "translate(" + transx + " " + transy + ")" ;
+//       })
+//     .attr("class", "cityCardSubrowInfo")
+//     .attr("id", "cityCardEmissions");
 
-//setup text node for protocol
-//i) label
-svgCityCard.append("text")
-  .attr("transform", function (d) {
-      var transy = 70 + 2*delta;
-      return "translate(" + transx + " " + transy + ")" ;
-    })
-  .attr("class", "cityCardSubrowTitle")
-  .attr("id", "cityCardProtocolLabel");
-//ii) value
-svgCityCard.append("text")
-  .attr("transform", function (d) {
-      var transy = 70 + 2*delta + 15;
-      return "translate(" + transx + " " + transy + ")" ;
-    })
-  .attr("class", "cityCardSubrowInfo")
-  .attr("id", "cityCardProtocol");
+// //setup text node for Emissions Change
+// var starty = 70;
+// //i) label
+// svgCityCard.append("text")
+//   .attr("transform", function (d) {
+//       var transy = starty + delta;
+//       return "translate(" + transx + " " + transy + ")" ;
+//     })
+//   .attr("class", "cityCardSubrowTitle")
+//   .attr("id", "cityCardChangeLabel");
+// //ii) value
+// svgCityCard.append("text")
+//   .attr("transform", function (d) {
+//       var transy = starty + delta + 15;
+//       return "translate(" + transx + " " + transy + ")" ;
+//     })
+//   .attr("class", "cityCardSubrowInfo")
+//   .attr("id", "cityCardChange");
 
-//setup text node for selected attribute
-//i) label
-svgCityCard.append("text")
-  .attr("transform", function (d) {
-      var transy = 70 + 3*delta;
-      return "translate(" + transx + " " + transy + ")" ;
-    })
-  .attr("class", "cityCardSubrowTitle")
-  .attr("id", "cityCardAttrLabel");
-//ii) value
-svgCityCard.append("text")
-  .attr("transform", function (d) {
-      var transy = 70 + 3*delta + 15;
-      return "translate(" + transx + " " + transy + ")" ;
-    })
-  .attr("class", "cityCardSubrowInfo")
-  .attr("id", "cityCardAttr");
+// //setup text node for protocol
+// //i) label
+// svgCityCard.append("text")
+//   .attr("transform", function (d) {
+//       var transy = starty + 2*delta;
+//       return "translate(" + transx + " " + transy + ")" ;
+//     })
+//   .attr("class", "cityCardSubrowTitle")
+//   .attr("id", "cityCardProtocolLabel");
+// //ii) value
+// svgCityCard.append("text")
+//   .attr("transform", function (d) {
+//       var transy = starty + 2*delta + 15;
+//       return "translate(" + transx + " " + transy + ")" ;
+//     })
+//   .attr("class", "cityCardSubrowInfo")
+//   .attr("id", "cityCardProtocol");
 
-//Link to Emissions Defns
-svgCityCard.append("text")
-  .attr("transform", function (d) {
-      var transy = 70 + 4*delta - 11;
-      return "translate(" + transx + " " + transy + ")" ;
-    })
-  .attr("class", "cityCardSubrowTitle")
-  .attr("id", "cityCardDefs");
+// //setup text node for selected attribute
+// //i) label
+// svgCityCard.append("text")
+//   .attr("transform", function (d) {
+//       var transy = 70 + 3*delta;
+//       return "translate(" + transx + " " + transy + ")" ;
+//     })
+//   .attr("class", "cityCardSubrowTitle")
+//   .attr("id", "cityCardAttrLabel");
+// //ii) value
+// svgCityCard.append("text")
+//   .attr("transform", function (d) {
+//       var transy = starty + 3*delta + 15;
+//       return "translate(" + transx + " " + transy + ")" ;
+//     })
+//   .attr("class", "cityCardSubrowInfo")
+//   .attr("id", "cityCardAttr");
+
+// //Link to Emissions Defns
+// svgCityCard.append("text")
+//   .attr("transform", function (d) {
+//       var transy = starty + 4*delta - 11;
+//       return "translate(" + transx + " " + transy + ")" ;
+//     })
+//   .attr("class", "cityCardSubrowTitle")
+//   .attr("id", "cityCardDefs");
 
 
 
@@ -674,7 +674,7 @@ function highlightElements(idName) {
   //d3.select("#mycityCardg").remove();
 
   //Display city card
-  fn_svgCityCard (selectedCityObj, attrFlag);
+  fn_fillSVGCityCard (selectedCityObj, attrFlag);
 
   //Highlight Current
   //-----------------
