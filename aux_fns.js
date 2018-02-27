@@ -366,7 +366,7 @@ function fn_updateLegend (attrFlag) {
           attrFlag === "low BUA (2014)" || attrFlag === "high BUA (2014)" ||
           attrFlag === "low BUA density (2014)" || attrFlag === "measurement year" ||
           attrFlag === "Congestion rank (INRIX)" || attrFlag === "World Rank (TomTom)" ||
-          attrFlag === "Cities in Motion Index (IESE)") {
+          attrFlag === "Cities in Motion Index (IESE)" || attrFlag === "household size") {
         cb_values.push(dimExtent[0] + idx*delta);
       }
       else if (attrFlag === "low BUA % (2014)" || attrFlag === "high BUA % (2014)") {
@@ -937,8 +937,9 @@ function fn_fillSVGCityCard (selectedCityObj, attrFlag) {
     svgCityCard.select("#cityCardAttrLabel").text(attrText + ":");
 
     if (attrFlag === "diesel price" || attrFlag === "gas price") attrValue = selectedCityObj[attrFlag];
+    else if (attrFlag === "household size") attrValue = formatDecimalSci(selectedCityObj[attrFlag]);
     else attrValue = formatComma(parseInt(selectedCityObj[attrFlag]));
-
+    
     svgCityCard.select("#cityCardAttr")
       .text(attrValue + " " + dimUnits[attrFlag]);
   }
