@@ -906,7 +906,7 @@ function fn_fillSVGCityCard (selectedCityObj, attrFlag) {
       window.open("http://www.ghgprotocol.org/sites/default/files/ghgp/standards/GHGP_GPC_0.pdf#page=13");
   });
   svgCityCard.select("#cityCardEmissions")
-    .text(formatDecimalSci(selectedCityObj["Scope1"]/1e6) + " MtCO₂eq");
+    .text(formatDecimalSci(selectedCityObj["Scope1"]/1e6) + " MtCO₂");
 
   //measurement year
   svgCityCard.select("#cityCardYearLabel").text("Measurement Year:");
