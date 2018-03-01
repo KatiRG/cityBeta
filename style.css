@@ -35,6 +35,9 @@ ul {
   color: #565656;
   text-align: left;
 }
+#footerID{
+  color: #fff;
+}
 
 /*--------------------------*/
 /*$(window).width();*/
