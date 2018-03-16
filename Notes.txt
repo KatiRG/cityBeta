@@ -43,3 +43,18 @@ http://www.colourlovers.com/palette/1733501/Evening_Traffic
 http://www.colourlovers.com/palette/2236415/Winter
 http://www.colourlovers.com/palette/1491252/Coal_Barge_at_Sunset
 http://www.colourlovers.com/palette/564375/Photosynthesis
+http://www.colourlovers.com/palette/2236415/Winter
+
+
+maps
+----
+http://bl.ocks.org/patricksurry/6621971
+https://stackoverflow.com/questions/38459765/d3-zoom-and-pan-upgrade-to-version-4
+https://coderwall.com/p/psogia/simplest-way-to-add-zoom-pan-on-d3-js
+https://bl.ocks.org/sgruhier/50990c01fe5b6993e82b8994951e23d0
+
+geotiff: https://bl.ocks.org/rveciana/e395f2ef1f872fa69c2182a57e127326
+
+d3-tip stylings
+---------------
+https://gist.github.com/deanmalmgren/6638585
